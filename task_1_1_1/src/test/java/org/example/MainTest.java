@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tests for sorter
+ * Tests for sorter.
  */
 public class MainTest {
     @Test

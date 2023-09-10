@@ -1,7 +1,7 @@
 package org.example;
 
 /**
- * Main sorter class
+ * Main sorter class.
  */
 public class HeapSorter {
     private int[] arr;
@@ -22,16 +22,15 @@ public class HeapSorter {
             if (this.arr[left] > this.arr[index]) {
                 swapCandidateIndex = left;
             }
-            if (left + 1 < this.heapSize &&
-                    this.arr[left + 1] > this.arr[swapCandidateIndex]) {
+            if (left + 1 < this.heapSize
+                    && this.arr[left + 1] > this.arr[swapCandidateIndex]) {
                 swapCandidateIndex = left + 1;
             }
             if (swapCandidateIndex != index) {
                 swap(swapCandidateIndex, index);
                 index = swapCandidateIndex;
                 left = index * 2 + 1;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -51,6 +50,11 @@ public class HeapSorter {
         }
     }
 
+    /**
+     * Main sorter\'s method.
+     *
+     * @param arr Unsorted ints\' array.
+     */
     public void heapsort(int[] arr) {
         this.arr = arr.clone();
         this.heapSize = this.arr.length;
