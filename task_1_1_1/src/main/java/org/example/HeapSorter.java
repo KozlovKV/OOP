@@ -51,9 +51,9 @@ public class HeapSorter {
     }
 
     /**
-     * Main sorter\'s method.
+     * Main sorter's method.
      *
-     * @param arr Unsorted ints\' array.
+     * @param arr Unsorted ints' array.
      */
     public void heapsort(int[] arr) {
         this.arr = arr.clone();
