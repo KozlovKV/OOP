@@ -14,29 +14,33 @@ public class HeapSorter {
         int index = i, left = i*2 + 1, swapCandidateIndex;
         while (left < this.heapSize) {
             swapCandidateIndex = index;
-            if (this.arr[left] > this.arr[index])
+            if (this.arr[left] > this.arr[index]) {
                 swapCandidateIndex = left;
+            }
             if (left + 1 < this.heapSize &&
-                    this.arr[left + 1] > this.arr[swapCandidateIndex])
+                    this.arr[left + 1] > this.arr[swapCandidateIndex]) {
                 swapCandidateIndex = left + 1;
+            }
             if (swapCandidateIndex != index) {
                 swap(swapCandidateIndex, index);
                 index = swapCandidateIndex;
                 left = index*2 + 1;
             }
-            else
+            else {
                 break;
+            }
         }
     }
 
     private void heapify() {
-        for (int i = this.arr.length / 2 - 1; i >= 0; --i)
+        for (int i = this.arr.length / 2 - 1; i >= 0; --i) {
             this.siftDown(i);
+        }
     }
 
     private void constructSortedArr() {
         for (int i = 0; i < this.arr.length - 1; ++i) {
-            swap(0, this.heapSize-1);
+            swap(0, this.heapSize - 1);
             this.heapSize--;
             siftDown(0);
         }
@@ -49,5 +53,7 @@ public class HeapSorter {
         this.constructSortedArr();
     }
 
-    public int[] getArr() { return this.arr; }
+    public int[] getArr() {
+        return this.arr;
+    }
 }
