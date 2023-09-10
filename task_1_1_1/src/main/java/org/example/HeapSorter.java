@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Main sorter class
+ */
 public class HeapSorter {
     private int[] arr;
     private int heapSize;
@@ -11,7 +14,9 @@ public class HeapSorter {
     }
 
     private void siftDown(int i) {
-        int index = i, left = i*2 + 1, swapCandidateIndex;
+        int index = i;
+        int left = i * 2 + 1;
+        int swapCandidateIndex;
         while (left < this.heapSize) {
             swapCandidateIndex = index;
             if (this.arr[left] > this.arr[index]) {
@@ -24,7 +29,7 @@ public class HeapSorter {
             if (swapCandidateIndex != index) {
                 swap(swapCandidateIndex, index);
                 index = swapCandidateIndex;
-                left = index*2 + 1;
+                left = index * 2 + 1;
             }
             else {
                 break;
