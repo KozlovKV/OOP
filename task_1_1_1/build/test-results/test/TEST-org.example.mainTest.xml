@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.mainTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-09-09T10:47:35" hostname="KIRILL-LAPTOP" time="0.041">
+<testsuite name="org.example.MainTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-09-10T05:51:48" hostname="KIRILL-LAPTOP" time="0.078">
   <properties/>
-  <testcase name="voidTest()" classname="org.example.mainTest" time="0.027"/>
-  <testcase name="simpleSort()" classname="org.example.mainTest" time="0.0"/>
-  <testcase name="intMaxMin()" classname="org.example.mainTest" time="0.001"/>
-  <testcase name="callMain()" classname="org.example.mainTest" time="0.006"/>
-  <testcase name="largeTest()" classname="org.example.mainTest" time="0.001"/>
+  <testcase name="voidTest()" classname="org.example.MainTest" time="0.051"/>
+  <testcase name="simpleSort()" classname="org.example.MainTest" time="0.001"/>
+  <testcase name="intMaxMin()" classname="org.example.MainTest" time="0.001"/>
+  <testcase name="callMain()" classname="org.example.MainTest" time="0.013"/>
+  <testcase name="largeTest()" classname="org.example.MainTest" time="0.003"/>
   <system-out><![CDATA[-5 1 4 6 8 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
