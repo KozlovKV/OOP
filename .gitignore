@@ -1,4 +1,7 @@
 /private/*
+*/.idea
+*/.gradle
+*/build
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij+all,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,intellij+all,git
@@ -120,7 +123,6 @@ fabric.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
