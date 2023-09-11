@@ -1,4 +1,4 @@
-package org.example;
+package org.heapsort;
 
 /**
  * Main sorter class.
@@ -15,21 +15,23 @@ public class HeapSorter {
 
     private void siftDown(int i) {
         int index = i;
-        int left = i * 2 + 1;
+        int leftChildIndex = i * 2 + 1;
+        int rightChildIndex = i * 2 + 2;
         int swapCandidateIndex;
-        while (left < this.heapSize) {
+        while (leftChildIndex < this.heapSize) {
             swapCandidateIndex = index;
-            if (this.arr[left] > this.arr[index]) {
-                swapCandidateIndex = left;
+            if (this.arr[leftChildIndex] > this.arr[index]) {
+                swapCandidateIndex = leftChildIndex;
             }
-            if (left + 1 < this.heapSize
-                    && this.arr[left + 1] > this.arr[swapCandidateIndex]) {
-                swapCandidateIndex = left + 1;
+            if (rightChildIndex < this.heapSize
+                    && this.arr[rightChildIndex] > this.arr[swapCandidateIndex]) {
+                swapCandidateIndex = leftChildIndex + 1;
             }
             if (swapCandidateIndex != index) {
                 swap(swapCandidateIndex, index);
                 index = swapCandidateIndex;
-                left = index * 2 + 1;
+                leftChildIndex = index * 2 + 1;
+                rightChildIndex = index * 2 + 2;
             } else {
                 break;
             }
@@ -54,12 +56,15 @@ public class HeapSorter {
      * Main sorter's method.
      *
      * @param arr Unsorted ints' array.
+     *
+     * @return sorted arr.
      */
-    public void heapsort(int[] arr) {
+    public int[] heapsort(int[] arr) {
         this.arr = arr.clone();
         this.heapSize = this.arr.length;
         this.heapify();
         this.constructSortedArr();
+        return this.arr;
     }
 
     public int[] getArr() {
