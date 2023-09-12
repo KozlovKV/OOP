@@ -159,19 +159,19 @@ public class Polynomial {
      * @param isFirst this boolean flag is set <code>true</code> when we process the first string token.
      * @return element's string.
      *
-     *      <p>For zero coefficient method returns empty string.
+     * <p>For zero coefficient method returns empty string.
      *
-     *      <p>For negative coefficient <code>` - `</code> will be placed in front.
+     * <p>For negative coefficient <code>` - `</code> will be placed in front.
      *
-     *      <p>For positive non-first coefficient <code>` + `</code> will be placed in front.
+     * <p>For positive non-first coefficient <code>` + `</code> will be placed in front.
      *
-     *      <p>Common element format - <code>`[coefficient]x^[power]`</code>.
+     * <p>Common element format - <code>`[coefficient]x^[power]`</code>.
      *
-     *      <p>For <code>power == 1</code> part <code>`^[power]`</code> will be excluded.
+     * <p>For <code>power == 1</code> part <code>`^[power]`</code> will be excluded.
      *
-     *      <p>For <code>power == 0</code> part <code>`x^[power]`</code> will be excluded.
+     * <p>For <code>power == 0</code> part <code>`x^[power]`</code> will be excluded.
      *
-     *      <p>(Actually, this Polynomial realizations assumes only natural powers).
+     * <p>(Actually, this Polynomial realizations assumes only natural powers).
      */
     public static String getPolyElement(
         int coefficient, int power, boolean isFirst
@@ -202,7 +202,7 @@ public class Polynomial {
      * String converter.
      *
      * @return String representation of polynomial.
-     * Every element is got from <code>getPolyElement</code> method.
+     *      Every element is got from <code>getPolyElement</code> method.
      */
     public String toString() {
         int power = this.length() - 1;
