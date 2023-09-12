@@ -2,14 +2,16 @@ package org.polynom;
 
 /**
  * Polynomial class.
- * <p>
- * All methods return new instance with new coefficients
+ *
+ * <p>All methods return new instance with new coefficients
  * so we can use one instance in a lot of computations.
  */
 public class Polynomial {
     private final int[] coefficients;
 
     /**
+     * Polynomial class constructor.
+     *
      * @param coefficients int array which is copied to new instance of Polynomial.
      */
     public Polynomial(int[] coefficients) {
@@ -17,6 +19,8 @@ public class Polynomial {
     }
 
     /**
+     * Coefficients' length getter.
+     *
      * @return coefficients length.
      */
     public int length() {
@@ -24,6 +28,8 @@ public class Polynomial {
     }
 
     /**
+     * Evaluate Polynomial in point.
+     *
      * @param x int value for x parameter.
      * @return int value for p(x).
      */
@@ -41,7 +47,9 @@ public class Polynomial {
     }
 
     /**
-     * @param otherP second polynomial for the sum.
+     * Method for summing.
+     *
+     * @param otherP second polynomial for summing.
      * @return new Polynomial that represents result of
      *      summing two Polynomial.
      */
@@ -63,7 +71,9 @@ public class Polynomial {
     }
 
     /**
-     * @param otherP second polynomial for subtract.
+     * Method for subtraction.
+     *
+     * @param otherP second polynomial for subtraction.
      * @return new Polynomial that represents result of subtraction.
      */
     public Polynomial minus(Polynomial otherP) {
@@ -75,7 +85,9 @@ public class Polynomial {
     }
 
     /**
-     * @param otherP second polynomial for multiply.
+     * Method for multiplying.
+     *
+     * @param otherP second polynomial to multiply.
      * @return new Polynomial that represents result of
      *      multiplying two Polynomial
      */
@@ -91,6 +103,8 @@ public class Polynomial {
     }
 
     /**
+     * Method for differentiation.
+     *
      * @param power the order of differentiation.
      * @return the result of differentiation.
      */
@@ -116,6 +130,8 @@ public class Polynomial {
     }
 
     /**
+     * Method for comparing.
+     *
      * @param otherP the second Polynomial for comparing.
      * @return boolean result of comparing.
      *      Two empty Polynomial are assumed as equals.
@@ -139,13 +155,20 @@ public class Polynomial {
      * @param power int power of x
      * @param isFirst this boolean flag is set <code>true</code> when we process the first string token.
      * @return element's string.
+     *
      *      <p>For zero coefficient method returns empty string.
+     *
      *      <p>For negative coefficient <code>` - `</code> will be placed in front.
+     *
      *      <p>For positive non-first coefficient <code>` + `</code> will be placed in front.
+     *
      *      <p>Common element format - <code>`[coefficient]x^[power]`</code>.
+     *
      *      <p>For <code>power == 1</code> part <code>`^[power]`</code> will be excluded.
-     *      <p>For <code>power < 1</code> part <code>`x^[power]`</code> will be excluded
-     *      <p>(Actually, this Polynomial realizations assumes only <code>power >= 0</code>).
+     *
+     *      <p>For <code>power \< 1</code> part <code>`x^[power]`</code> will be excluded.
+     *
+     *      <p>(Actually, this Polynomial realizations assumes only <code>power \>= 0</code>).
      */
     static public String getPolyElement(
         int coefficient, int power, boolean isFirst
@@ -173,8 +196,10 @@ public class Polynomial {
     }
 
     /**
+     * String converter.
+     *
      * @return String representation of polynomial.
-     * Every element is got from `getPolyElement` method.
+     * Every element is got from <code>getPolyElement</code> method.
      */
     public String toString() {
         int power = this.length() - 1;
