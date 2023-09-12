@@ -149,7 +149,10 @@ public class Polynomial {
     }
 
     /**
-     * Static method that returns string representation of one polynomial element
+     * String converter for one element.
+     *
+     * <p>Static method that returns string representation of
+     * one polynomial element.
      *
      * @param coefficient int coefficient that is multiplied on x
      * @param power int power of x
@@ -166,11 +169,11 @@ public class Polynomial {
      *
      *      <p>For <code>power == 1</code> part <code>`^[power]`</code> will be excluded.
      *
-     *      <p>For <code>power \< 1</code> part <code>`x^[power]`</code> will be excluded.
+     *      <p>For <code>power == 0</code> part <code>`x^[power]`</code> will be excluded.
      *
-     *      <p>(Actually, this Polynomial realizations assumes only <code>power \>= 0</code>).
+     *      <p>(Actually, this Polynomial realizations assumes only natural powers).
      */
-    static public String getPolyElement(
+    public static String getPolyElement(
         int coefficient, int power, boolean isFirst
     ) {
         String res = "";
