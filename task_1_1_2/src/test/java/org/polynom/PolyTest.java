@@ -8,6 +8,12 @@ import org.junit.jupiter.api.Test;
  */
 public class PolyTest {
     @Test
+    void testMainRunning() {
+        Main.main(new String[]{});
+        Assertions.assertTrue(true);
+    }
+
+    @Test
     void simpleSum1() {
         Polynomial p1 = new Polynomial(new int[]{1, 2, 3});
         Polynomial p2 = new Polynomial(new int[]{3, 2, 1});
