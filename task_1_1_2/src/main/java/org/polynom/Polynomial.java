@@ -14,19 +14,22 @@ public class Polynomial {
     /**
      * Polynomial class constructor.
      *
-     * @param coefficients int array which is copied to new instance of Polynomial. (void array is assumed as [0])
+     * @param coefficients int array which is copied to new instance of Polynomial.
+     *                     (void array is assumed as [0])
      */
     public Polynomial(int[] coefficients) {
-        if (coefficients.length == 0)
+        if (coefficients.length == 0) {
             this.coefficients = new int[]{0};
-        else
+        }
+        else {
             this.coefficients = coefficients.clone();
+        }
     }
 
     private void reduce() {
         int meaninglessZeros = 0;
-        while (this.length() - 1 - meaninglessZeros > 0 &&
-                this.coefficients[this.length() - 1 - meaninglessZeros] == 0) {
+        while (this.length() - 1 - meaninglessZeros > 0
+                && this.coefficients[this.length() - 1 - meaninglessZeros] == 0) {
             meaninglessZeros++;
         }
         this.coefficients = Arrays.copyOf(
@@ -158,10 +161,12 @@ public class Polynomial {
     @Override
     public boolean equals(Object obj) {
         Polynomial otherP = null;
-        if (obj instanceof int[])
-            otherP = new Polynomial((int[])obj);
-        else if (obj instanceof Polynomial)
+        if (obj instanceof int[]) {
+            otherP = new Polynomial((int[]) obj);
+        }
+        else if (obj instanceof Polynomial) {
             otherP = (Polynomial) obj;
+        }
         if (this.length() != otherP.length()) {
             return false;
         }
