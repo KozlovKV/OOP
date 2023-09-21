@@ -1,5 +1,7 @@
 package org.polynom;
 
+import java.util.Arrays;
+
 /**
  * Polynomial class.
  *
@@ -7,15 +9,29 @@ package org.polynom;
  * so we can use one instance in a lot of computations.
  */
 public class Polynomial {
-    private final int[] coefficients;
+    private int[] coefficients;
 
     /**
      * Polynomial class constructor.
      *
-     * @param coefficients int array which is copied to new instance of Polynomial.
+     * @param coefficients int array which is copied to new instance of Polynomial. (void array is assumed as [0])
      */
     public Polynomial(int[] coefficients) {
-        this.coefficients = coefficients.clone();
+        if (coefficients.length == 0)
+            this.coefficients = new int[]{0};
+        else
+            this.coefficients = coefficients.clone();
+    }
+
+    private void reduce() {
+        int meaninglessZeros = 0;
+        while (this.length() - 1 - meaninglessZeros > 0 &&
+                this.coefficients[this.length() - 1 - meaninglessZeros] == 0) {
+            meaninglessZeros++;
+        }
+        this.coefficients = Arrays.copyOf(
+                this.coefficients, this.length() - meaninglessZeros
+        );
     }
 
     /**
@@ -67,7 +83,9 @@ public class Polynomial {
                 newCoeffs[i] = otherP.coefficients[i];
             }
         }
-        return new Polynomial(newCoeffs);
+        var result = new Polynomial(newCoeffs);
+        result.reduce();
+        return result;
     }
 
     /**
@@ -99,7 +117,9 @@ public class Polynomial {
                 newCoeffs[i + j] += (otherP.coefficients[i] * this.coefficients[j]);
             }
         }
-        return new Polynomial(newCoeffs);
+        var result = new Polynomial(newCoeffs);
+        result.reduce();
+        return result;
     }
 
     /**
@@ -115,10 +135,7 @@ public class Polynomial {
         if (this.length() - power <= 0) {
             return new Polynomial(new int[]{0});
         }
-        int[] newCoeffs = new int[this.length() - power];
-        for (int i = 0; i < newCoeffs.length; ++i) {
-            newCoeffs[i] = this.coefficients[power + i];
-        }
+        int[] newCoeffs = Arrays.copyOfRange(this.coefficients, power, this.length());
         int tmpPower = power;
         while (tmpPower > 0) {
             for (int i = 0; i < newCoeffs.length; ++i) {
@@ -126,17 +143,25 @@ public class Polynomial {
             }
             tmpPower--;
         }
-        return new Polynomial(newCoeffs);
+        var result = new Polynomial(newCoeffs);
+        result.reduce();
+        return result;
     }
 
     /**
      * Method for comparing.
      *
-     * @param otherP the second Polynomial for comparing.
+     * @param obj the second Polynomial for comparing.
      * @return boolean result of comparing.
      *      Two empty Polynomial are assumed as equals.
      */
-    public boolean isEqual(Polynomial otherP) {
+    @Override
+    public boolean equals(Object obj) {
+        Polynomial otherP = null;
+        if (obj instanceof int[])
+            otherP = new Polynomial((int[])obj);
+        else if (obj instanceof Polynomial)
+            otherP = (Polynomial) obj;
         if (this.length() != otherP.length()) {
             return false;
         }
@@ -199,6 +224,7 @@ public class Polynomial {
      * @return String representation of polynomial.
      *      Every element is got from <code>getPolyElement</code> method.
      */
+    @Override
     public String toString() {
         int power = this.length() - 1;
         if (power < 0) {
