@@ -20,8 +20,7 @@ public class Polynomial {
     public Polynomial(int[] coefficients) {
         if (coefficients.length == 0) {
             this.coefficients = new int[]{0};
-        }
-        else {
+        } else {
             this.coefficients = coefficients.clone();
         }
     }
@@ -163,8 +162,7 @@ public class Polynomial {
         Polynomial otherP = null;
         if (obj instanceof int[]) {
             otherP = new Polynomial((int[]) obj);
-        }
-        else if (obj instanceof Polynomial) {
+        } else if (obj instanceof Polynomial) {
             otherP = (Polynomial) obj;
         }
         if (this.length() != otherP.length()) {
