@@ -191,4 +191,12 @@ public class PolyTest {
         Polynomial p2 = new Polynomial(new int[]{});
         Assertions.assertEquals(p1, p2);
     }
+
+    @Test
+    void stringTest() {
+        Polynomial p1 = new Polynomial(new int[]{1, -2, 3, -4, 5, -6});
+        Assertions.assertEquals(
+                p1.toString(), " - 6x^5 + 5x^4 - 4x^3 + 3x^2 - 2x + 1"
+        );
+    }
 }
