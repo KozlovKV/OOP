@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"org.polynom"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"kozlov.kirill.polynom"}]

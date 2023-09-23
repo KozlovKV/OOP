@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"org.polynom","l":"Main"},{"p":"org.polynom","l":"Polynomial"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"kozlov.kirill.polynom","l":"Main"},{"p":"kozlov.kirill.polynom","l":"Polynomial"}]
