@@ -1,6 +1,7 @@
-package org.polynom;
+package kozlov.kirill.polynom;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Polynomial class.
@@ -151,7 +152,7 @@ public class Polynomial {
     }
 
     /**
-     * Method for comparing.
+     * Overrided equals method.
      *
      * @param obj the second Polynomial for comparing.
      * @return boolean result of comparing.
@@ -174,6 +175,16 @@ public class Polynomial {
             }
         }
         return true;
+    }
+
+    /**
+     * Overrided hashCode method.
+     *
+     * @return hash code which is calculated from coefficients
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash((Object) this.coefficients);
     }
 
     /**

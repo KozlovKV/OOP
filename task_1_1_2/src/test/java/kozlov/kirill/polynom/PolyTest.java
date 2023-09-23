@@ -1,4 +1,4 @@
-package org.polynom;
+package kozlov.kirill.polynom;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -179,14 +179,14 @@ public class PolyTest {
     }
 
     @Test
-    void voidEqual1() {
+    void voidSecond() {
         Polynomial p1 = new Polynomial(new int[]{1, 2, 3});
         Polynomial p2 = new Polynomial(new int[]{});
         Assertions.assertNotEquals(p1, p2);
     }
 
     @Test
-    void voidEqual2() {
+    void voidBoth() {
         Polynomial p1 = new Polynomial(new int[]{});
         Polynomial p2 = new Polynomial(new int[]{});
         Assertions.assertEquals(p1, p2);

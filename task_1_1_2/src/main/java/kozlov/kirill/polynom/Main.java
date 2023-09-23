@@ -1,4 +1,4 @@
-package org.polynom;
+package kozlov.kirill.polynom;
 
 /**
  * Main class.
