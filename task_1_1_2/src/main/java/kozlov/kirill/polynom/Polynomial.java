@@ -165,6 +165,8 @@ public class Polynomial {
             otherP = new Polynomial((int[]) obj);
         } else if (obj instanceof Polynomial) {
             otherP = (Polynomial) obj;
+        } else {
+            return false;
         }
         if (this.length() != otherP.length()) {
             return false;
