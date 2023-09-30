@@ -61,4 +61,25 @@ public class TreeTest {
         }
         Assertions.assertEquals(crawlList, List.of(new Integer[]{4, 5}));
     }
+
+    @Test
+    void testEqualsTrue() {
+        Tree<Integer> root = new Tree<>(4);
+        root.addChild(1);
+        root.addChild(5);
+        Tree<Integer> root2 = new Tree<>(4);
+        root2.addChild(5);
+        root2.addChild(1);
+        Assertions.assertEquals(root, root2);
+    }
+
+    @Test
+    void testEqualsWithSubtree() {
+        Tree<Integer> root = new Tree<>(4);
+        var subtree = root.addChild(4);
+        root.addChild(5);
+        subtree.addChild(4);
+        subtree.addChild(5);
+        Assertions.assertEquals(root, subtree);
+    }
 }

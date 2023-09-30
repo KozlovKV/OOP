@@ -179,8 +179,7 @@ public class Tree<T> implements Iterable<Tree<T>> {
             return false;
         }
         return otherTree.children.size() == this.children.size()
-                || otherTree.children.stream().sorted()
-                .toList().equals(this.children.stream().sorted().toList());
+                || otherTree.children.stream().sorted().equals(this.children.stream().sorted());
     }
 
     /**
@@ -221,12 +220,11 @@ public class Tree<T> implements Iterable<Tree<T>> {
      */
     public static void main(String[] args) {
         Tree<Integer> root = new Tree<>(4);
-        root.addChild(1).addChild(0);
+        root.addChild(1);
         root.addChild(5);
-        for (var elem : root) {
-            if (elem.node == 1)
-                elem.addChild(555);
-            System.out.println(elem);
-        }
+        Tree<Integer> root2 = new Tree<>(4);
+        root2.addChild(5);
+        root2.addChild(1);
+        System.out.println(root.equals(root2));
     }
 }
