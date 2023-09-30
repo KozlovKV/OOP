@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"kozlov.kirill.tree","l":"Tree.BFSTreeIterator"},{"p":"kozlov.kirill.tree","l":"Tree.DFSTreeIterator"},{"p":"kozlov.kirill.tree","l":"Tree"}]
