@@ -164,12 +164,12 @@ implements java.lang.Iterable&lt;<a href="Tree.html" title="class in kozlov.kiri
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="Tree.BFSTreeIterator.html" title="class in kozlov.kirill.tree">Tree.BFSTreeIterator</a>&lt;<a href="Tree.BFSTreeIterator.html" title="type parameter in Tree.BFSTreeIterator">E</a>&gt;</span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="Tree.BfsTreeIterator.html" title="class in kozlov.kirill.tree">Tree.BfsTreeIterator</a>&lt;<a href="Tree.BfsTreeIterator.html" title="type parameter in Tree.BfsTreeIterator">E</a>&gt;</span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="Tree.DFSTreeIterator.html" title="class in kozlov.kirill.tree">Tree.DFSTreeIterator</a>&lt;<a href="Tree.DFSTreeIterator.html" title="type parameter in Tree.DFSTreeIterator">E</a>&gt;</span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="Tree.DfsTreeIterator.html" title="class in kozlov.kirill.tree">Tree.DfsTreeIterator</a>&lt;<a href="Tree.DfsTreeIterator.html" title="type parameter in Tree.DfsTreeIterator">E</a>&gt;</span></code></th>
 <td class="colLast">
 <div class="block">DFS iterator class.</div>
 </td>
@@ -370,7 +370,6 @@ implements java.lang.Iterable&lt;<a href="Tree.html" title="class in kozlov.kiri
 <h4>remove</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;remove()</pre>
 <div class="block">Removes vertex.
-
  Removes vertex from parent's children list and clear its own children list
  (children vertices can be accessed from other sources if they was saved)</div>
 </li>
@@ -399,7 +398,6 @@ implements java.lang.Iterable&lt;<a href="Tree.html" title="class in kozlov.kiri
 <h4>equals</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;obj)</pre>
 <div class="block">Overrided equals method.
-
  We assume that 2 vertices are equal when their nodes and their children
  (order is ignored) are equal.
  Thus equals method work recursively from root to leafs like DFS</div>
