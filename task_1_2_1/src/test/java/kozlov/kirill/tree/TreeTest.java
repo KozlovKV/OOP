@@ -1,10 +1,9 @@
 package kozlov.kirill.tree;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for Polynomial.
@@ -12,7 +11,7 @@ import java.util.List;
 public class TreeTest {
 
     @Test
-    void treeConstructingTestWithDFSIteration() {
+    void treeConstructingTestWithDfsIteration() {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
         a.addChild("B");
@@ -29,7 +28,7 @@ public class TreeTest {
     }
 
     @Test
-    void treeConstructingTestWithBFSIteration() {
+    void treeConstructingTestWithBfsIteration() {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
         a.addChild("B");
@@ -39,7 +38,7 @@ public class TreeTest {
         tree.addChild(subtree);
 
         ArrayList<String> crawlList = new ArrayList<>();
-        var bfsIterator = new Tree.BFSTreeIterator<>(tree);
+        var bfsIterator = new Tree.BfsTreeIterator<>(tree);
         while (bfsIterator.hasNext()) {
             var vertex = bfsIterator.next();
             crawlList.add(vertex.getNode());
@@ -81,5 +80,14 @@ public class TreeTest {
         subtree.addChild(4);
         subtree.addChild(5);
         Assertions.assertEquals(root, subtree);
+    }
+
+    @Test
+    void testToString() {
+        Tree<Integer> integerTree = new Tree<>(4);
+        Tree<String> stringTree = new Tree<>("test");
+        Assertions.assertTrue(
+                integerTree.toString().equals("4") && stringTree.toString().equals("test")
+        );
     }
 }

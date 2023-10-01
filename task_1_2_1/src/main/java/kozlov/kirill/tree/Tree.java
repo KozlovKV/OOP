@@ -1,6 +1,11 @@
 package kozlov.kirill.tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Iterator;
+import java.util.HashMap;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Tree class.
@@ -41,7 +46,6 @@ public class Tree<T> implements Iterable<Tree<T>> {
 
     /**
      * Removes vertex.
-     *
      * Removes vertex from parent's children list and clear its own children list
      * (children vertices can be accessed from other sources if they was saved)
      */
@@ -59,7 +63,7 @@ public class Tree<T> implements Iterable<Tree<T>> {
      */
     @Override
     public Iterator<Tree<T>> iterator() {
-        return new DFSTreeIterator<>(this);
+        return new DfsTreeIterator<>(this);
     }
 
     /**
@@ -67,13 +71,18 @@ public class Tree<T> implements Iterable<Tree<T>> {
      *
      * @param <E> must be the same as Tree T
      */
-    public static class DFSTreeIterator<E> implements Iterator<Tree<E>> {
+    public static class DfsTreeIterator<E> implements Iterator<Tree<E>> {
 
         private Tree<E> currentVertex;
         private HashMap<Tree<E>, Integer> vertexChildIndexMap;
         boolean isFirst = true;
 
-        public DFSTreeIterator(Tree<E> currentVertex) {
+        /**
+         * DfsTreeIterator construct.
+         *
+         * @param currentVertex root vertex
+         */
+        public DfsTreeIterator(Tree<E> currentVertex) {
             this.currentVertex = currentVertex;
             vertexChildIndexMap = new HashMap<>();
             vertexChildIndexMap.put(currentVertex, 0);
@@ -112,7 +121,7 @@ public class Tree<T> implements Iterable<Tree<T>> {
             while (true) {
                 int childIndex = vertexChildIndexMap.get(currentVertex);
                 if (childIndex < currentVertex.children.size()) {
-                    vertexChildIndexMap.replace(currentVertex, childIndex+1);
+                    vertexChildIndexMap.replace(currentVertex, childIndex + 1);
                     currentVertex = currentVertex.children.get(childIndex);
                     vertexChildIndexMap.put(currentVertex, 0);
                     return currentVertex;
@@ -125,10 +134,15 @@ public class Tree<T> implements Iterable<Tree<T>> {
         }
     }
 
-    public static class BFSTreeIterator<E> implements Iterator<Tree<E>> {
+    public static class BfsTreeIterator<E> implements Iterator<Tree<E>> {
         private ArrayDeque<Tree<E>> deque;
 
-        public BFSTreeIterator(Tree<E> currentVertex) {
+        /**
+         * BfsTreeIterator construct.
+         *
+         * @param currentVertex root vertex
+         */
+        public BfsTreeIterator(Tree<E> currentVertex) {
             deque = new ArrayDeque<>();
             deque.add(currentVertex);
         }
@@ -161,7 +175,6 @@ public class Tree<T> implements Iterable<Tree<T>> {
 
     /**
      * Overrided equals method.
-     *
      * We assume that 2 vertices are equal when their nodes and their children
      * (order is ignored) are equal.
      * Thus equals method work recursively from root to leafs like DFS
@@ -219,12 +232,12 @@ public class Tree<T> implements Iterable<Tree<T>> {
      * @param args cmd args.
      */
     public static void main(String[] args) {
-        Tree<Integer> root = new Tree<>(4);
-        root.addChild(1);
-        root.addChild(5);
-        Tree<Integer> root2 = new Tree<>(4);
-        root2.addChild(5);
-        root2.addChild(1);
-        System.out.println(root.equals(root2));
+//        Tree<Integer> root = new Tree<>(4);
+//        root.addChild(1);
+//        root.addChild(5);
+//        Tree<Integer> root2 = new Tree<>(4);
+//        root2.addChild(5);
+//        root2.addChild(1);
+//        System.out.println(root.equals(root2));
     }
 }
