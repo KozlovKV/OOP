@@ -1,9 +1,9 @@
 package kozlov.kirill.tree;
 
-import java.util.ArrayList;
 import java.util.ArrayDeque;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -126,14 +126,20 @@ public class Tree<T> implements Iterable<Tree<T>> {
                     vertexChildIndexMap.put(currentVertex, 0);
                     return currentVertex;
                 }
-                if (currentVertex.parent == null)
+                if (currentVertex.parent == null) {
                     break;
+                }
                 currentVertex = currentVertex.parent;
             }
             throw new NoSuchElementException("There is no unvisited elements in the tree.");
         }
     }
 
+    /**
+     * BFS iterator class.
+     *
+     * @param <E> must be the same as Tree T
+     */
     public static class BfsTreeIterator<E> implements Iterator<Tree<E>> {
         private ArrayDeque<Tree<E>> deque;
 
@@ -232,12 +238,12 @@ public class Tree<T> implements Iterable<Tree<T>> {
      * @param args cmd args.
      */
     public static void main(String[] args) {
-//        Tree<Integer> root = new Tree<>(4);
-//        root.addChild(1);
-//        root.addChild(5);
-//        Tree<Integer> root2 = new Tree<>(4);
-//        root2.addChild(5);
-//        root2.addChild(1);
-//        System.out.println(root.equals(root2));
+        Tree<Integer> root = new Tree<>(4);
+        root.addChild(1);
+        root.addChild(5);
+        Tree<Integer> root2 = new Tree<>(4);
+        root2.addChild(5);
+        root2.addChild(1);
+        System.out.println(root.equals(root2));
     }
 }
