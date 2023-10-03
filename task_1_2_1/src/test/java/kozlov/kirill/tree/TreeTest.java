@@ -28,6 +28,59 @@ public class TreeTest {
     }
 
     @Test
+    void testDfsIteratorWithChildRemoving() {
+        Tree<Integer> root = new Tree<>(4);
+        root.addChild(1).addChild(8);
+        root.addChild(5);
+        Tree.DfsTreeIterator<Integer> iterator = new Tree.DfsTreeIterator<>(root);
+
+        ArrayList<Integer> crawlList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            var elem = iterator.next();
+            if (elem.getNode() == 1)
+                iterator.remove();
+            else {
+                crawlList.add(elem.getNode());
+            }
+        }
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{4, 5}));
+    }
+
+    @Test
+    void testDfsIteratorWithRootOutsideRemoving() {
+        Tree<Integer> root = new Tree<>(4);
+        root.addChild(1).addChild(8);
+        root.addChild(5);
+        root.remove();
+        Tree.DfsTreeIterator<Integer> iterator = new Tree.DfsTreeIterator<>(root);
+
+        ArrayList<Integer> crawlList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            crawlList.add(iterator.next().getNode());
+        }
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{4}));
+    }
+
+    @Test
+    void testDfsIteratorWithRottInsideRemoving() {
+        Tree<Integer> root = new Tree<>(4);
+        root.addChild(1).addChild(8);
+        root.addChild(5);
+        Tree.DfsTreeIterator<Integer> iterator = new Tree.DfsTreeIterator<>(root);
+
+        ArrayList<Integer> crawlList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            var elem = iterator.next();
+            if (elem.equals(root))
+                iterator.remove();
+            else {
+                crawlList.add(elem.getNode());
+            }
+        }
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{}));
+    }
+
+    @Test
     void treeConstructingTestWithBfsIteration() {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
@@ -44,6 +97,59 @@ public class TreeTest {
             crawlList.add(vertex.getNode());
         }
         Assertions.assertEquals(crawlList, List.of(new String[]{"R1", "A", "R2", "B", "C", "D"}));
+    }
+
+    @Test
+    void testBfsIteratorWithChildRemoving() {
+        Tree<Integer> root = new Tree<>(4);
+        root.addChild(1).addChild(8);
+        root.addChild(5);
+        Tree.BfsTreeIterator<Integer> iterator = new Tree.BfsTreeIterator<>(root);
+
+        ArrayList<Integer> crawlList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            var elem = iterator.next();
+            if (elem.getNode() == 1)
+                iterator.remove();
+            else {
+                crawlList.add(elem.getNode());
+            }
+        }
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{4, 5}));
+    }
+
+    @Test
+    void testBfsIteratorWithRootOutsideRemoving() {
+        Tree<Integer> root = new Tree<>(4);
+        root.addChild(1).addChild(8);
+        root.addChild(5);
+        root.remove();
+        Tree.BfsTreeIterator<Integer> iterator = new Tree.BfsTreeIterator<>(root);
+
+        ArrayList<Integer> crawlList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            crawlList.add(iterator.next().getNode());
+        }
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{4}));
+    }
+
+    @Test
+    void testBfsIteratorWithRottInsideRemoving() {
+        Tree<Integer> root = new Tree<>(4);
+        root.addChild(1).addChild(8);
+        root.addChild(5);
+        Tree.BfsTreeIterator<Integer> iterator = new Tree.BfsTreeIterator<>(root);
+
+        ArrayList<Integer> crawlList = new ArrayList<>();
+        while (iterator.hasNext()) {
+            var elem = iterator.next();
+            if (elem.equals(root))
+                iterator.remove();
+            else {
+                crawlList.add(elem.getNode());
+            }
+        }
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{}));
     }
 
     @Test
@@ -89,5 +195,20 @@ public class TreeTest {
         Assertions.assertTrue(
                 integerTree.toString().equals("4") && stringTree.toString().equals("test")
         );
+    }
+
+    @Test
+    void testStringFullTree() {
+        Tree<String> tree = new Tree<>("R1");
+        var a = tree.addChild("A");
+        var b = a.addChild("B");
+        Tree<String> subtree = new Tree<>("R2");
+        subtree.addChild("C");
+        subtree.addChild("D");
+        tree.addChild(subtree);
+        tree.addChild("AAA");
+        b.addChild("CCC").addChild("DDD").addChild("EEE");
+        Assertions.assertEquals(tree.getStringTree(0),
+                "R1 ( A [ B { CCC [ DDD ( EEE ) ] } ], R2 [ C, D ], AAA )");
     }
 }
