@@ -39,8 +39,7 @@ public class TreeTest {
             var elem = iterator.next();
             if (elem.getNode() == 1) {
                 iterator.remove();
-            }
-            else {
+            } else {
                 crawlList.add(elem.getNode());
             }
         }
@@ -74,8 +73,7 @@ public class TreeTest {
             var elem = iterator.next();
             if (elem.equals(root)) {
                 iterator.remove();
-            }
-            else {
+            } else {
                 crawlList.add(elem.getNode());
             }
         }
@@ -113,8 +111,7 @@ public class TreeTest {
             var elem = iterator.next();
             if (elem.getNode() == 1) {
                 iterator.remove();
-            }
-            else {
+            } else {
                 crawlList.add(elem.getNode());
             }
         }
@@ -148,8 +145,7 @@ public class TreeTest {
             var elem = iterator.next();
             if (elem.equals(root)) {
                 iterator.remove();
-            }
-            else {
+            } else {
                 crawlList.add(elem.getNode());
             }
         }
