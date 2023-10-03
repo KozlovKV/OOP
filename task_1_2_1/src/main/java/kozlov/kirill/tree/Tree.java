@@ -1,6 +1,11 @@
 package kozlov.kirill.tree;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Tree class.
@@ -239,7 +244,9 @@ public class Tree<T> implements Iterable<Tree<T>> {
     }
 
     /**
-     * @return Full tree as a string of format "node [children]"
+     * Returns full tree as a string.
+     *
+     * @return Full tree as a string of format "node [ children ]"
      */
     public String getStringTree(int staplesIndex) {
         StringBuilder result = new StringBuilder();
@@ -251,7 +258,7 @@ public class Tree<T> implements Iterable<Tree<T>> {
             )).toArray()) {
                 result.append(String.format("%s, ", childStr));
             }
-            result.delete(result.length()-2, result.length());
+            result.delete(result.length() - 2, result.length());
             result.append(String.format(" %c", staples.charAt(staplesIndex + 1)));
         }
         return result.toString();
@@ -274,13 +281,12 @@ public class Tree<T> implements Iterable<Tree<T>> {
     public static void main(String[] args) {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
-        var b = a.addChild("B");
+        a.addChild("B").addChild("CCC").addChild("DDD").addChild("EEE");
         Tree<String> subtree = new Tree<>("R2");
         subtree.addChild("C");
         subtree.addChild("D");
         tree.addChild(subtree);
         tree.addChild("AAA");
-        b.addChild("CCC").addChild("DDD").addChild("EEE");
         System.out.println(tree.getStringTree(0));
     }
 }

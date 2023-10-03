@@ -37,8 +37,9 @@ public class TreeTest {
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
             var elem = iterator.next();
-            if (elem.getNode() == 1)
+            if (elem.getNode() == 1) {
                 iterator.remove();
+            }
             else {
                 crawlList.add(elem.getNode());
             }
@@ -71,8 +72,9 @@ public class TreeTest {
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
             var elem = iterator.next();
-            if (elem.equals(root))
+            if (elem.equals(root)) {
                 iterator.remove();
+            }
             else {
                 crawlList.add(elem.getNode());
             }
@@ -109,8 +111,9 @@ public class TreeTest {
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
             var elem = iterator.next();
-            if (elem.getNode() == 1)
+            if (elem.getNode() == 1) {
                 iterator.remove();
+            }
             else {
                 crawlList.add(elem.getNode());
             }
@@ -143,8 +146,9 @@ public class TreeTest {
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
             var elem = iterator.next();
-            if (elem.equals(root))
+            if (elem.equals(root)) {
                 iterator.remove();
+            }
             else {
                 crawlList.add(elem.getNode());
             }
@@ -201,13 +205,12 @@ public class TreeTest {
     void testStringFullTree() {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
-        var b = a.addChild("B");
+        a.addChild("B").addChild("CCC").addChild("DDD").addChild("EEE");
         Tree<String> subtree = new Tree<>("R2");
         subtree.addChild("C");
         subtree.addChild("D");
         tree.addChild(subtree);
         tree.addChild("AAA");
-        b.addChild("CCC").addChild("DDD").addChild("EEE");
         Assertions.assertEquals(tree.getStringTree(0),
                 "R1 ( A [ B { CCC [ DDD ( EEE ) ] } ], R2 [ C, D ], AAA )");
     }
