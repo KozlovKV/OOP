@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"kozlov.kirill.tree","l":"Tree.BfsTreeIterator"},{"p":"kozlov.kirill.tree","l":"Tree.DfsTreeIterator"},{"p":"kozlov.kirill.tree","l":"Tree"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"kozlov.kirill.tree","l":"BfsTreeCollection"},{"p":"kozlov.kirill.tree","l":"BfsTreeCollection.BfsTreeIterator"},{"p":"kozlov.kirill.tree","l":"DfsTreeCollection"},{"p":"kozlov.kirill.tree","l":"DfsTreeCollection.DfsTreeIterator"},{"p":"kozlov.kirill.tree","l":"Tree"}]
