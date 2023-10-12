@@ -164,6 +164,7 @@ public class Tree<T> {
      *
      * @param args cmd args.
      */
+    @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         Tree<Integer> root = new Tree<>(4);
         var one = root.addChild(1);
@@ -179,16 +180,6 @@ public class Tree<T> {
             }
             crawlList.add(value);
         }
-        System.out.println(crawlList);
-        crawlList.clear();
-        for (var value : new DfsTreeCollection<>(root)) {
-            if (root.node.equals(value)) {
-                three.remove();
-            }
-            crawlList.add(value);
-        }
-        three.remove();
-
         System.out.println(crawlList);
     }
 }
