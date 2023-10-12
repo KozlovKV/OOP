@@ -1,6 +1,7 @@
 package kozlov.kirill.tree;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,8 +22,8 @@ public class TreeTest {
         tree.addChild(subtree);
 
         ArrayList<String> crawlList = new ArrayList<>();
-        for (var vertex : tree) {
-            crawlList.add(vertex.getNode());
+        for (var value : new DfsTreeCollection<>(tree)) {
+            crawlList.add(value);
         }
         Assertions.assertEquals(crawlList, List.of(new String[]{"R1", "A", "B", "R2", "C", "D"}));
     }
@@ -32,15 +33,15 @@ public class TreeTest {
         Tree<Integer> root = new Tree<>(4);
         root.addChild(1).addChild(8);
         root.addChild(5);
-        Tree.DfsTreeIterator<Integer> iterator = new Tree.DfsTreeIterator<>(root);
+        var iterator = new DfsTreeCollection.DfsTreeIterator<Integer>(root);
 
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
             var elem = iterator.next();
-            if (elem.getNode() == 1) {
+            if (elem == 1) {
                 iterator.remove();
             } else {
-                crawlList.add(elem.getNode());
+                crawlList.add(elem);
             }
         }
         Assertions.assertEquals(crawlList, List.of(new Integer[]{4, 5}));
@@ -52,32 +53,89 @@ public class TreeTest {
         root.addChild(1).addChild(8);
         root.addChild(5);
         root.remove();
-        Tree.DfsTreeIterator<Integer> iterator = new Tree.DfsTreeIterator<>(root);
+        var iterator = new DfsTreeCollection.DfsTreeIterator<Integer>(root);
 
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
-            crawlList.add(iterator.next().getNode());
+            crawlList.add(iterator.next());
         }
         Assertions.assertEquals(crawlList, List.of(new Integer[]{4}));
     }
 
     @Test
-    void testDfsIteratorWithRottInsideRemoving() {
+    void testDfsIteratorWithRootInsideRemoving() {
         Tree<Integer> root = new Tree<>(4);
         root.addChild(1).addChild(8);
         root.addChild(5);
-        Tree.DfsTreeIterator<Integer> iterator = new Tree.DfsTreeIterator<>(root);
+        var iterator = new DfsTreeCollection.DfsTreeIterator<Integer>(root);
 
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
             var elem = iterator.next();
-            if (elem.equals(root)) {
+            if (elem.equals(root.node)) {
                 iterator.remove();
             } else {
-                crawlList.add(elem.getNode());
+                crawlList.add(elem);
             }
         }
         Assertions.assertEquals(crawlList, List.of(new Integer[]{}));
+    }
+
+    @Test
+    void testDfsIterationConcurrentException() {
+        Tree<Integer> root = new Tree<>(4);
+        var one = root.addChild(1);
+        var three = root.addChild(3);
+        var five = root.addChild(5);
+        var eight = three.addChild(8);
+        three.addChild(9);
+
+        var crawlList = new ArrayList<Integer>();
+        for (var value : new DfsTreeCollection<>(root)) {
+            if (root.node.equals(value)) {
+                Assertions.assertThrows(ConcurrentModificationException.class, three::remove);
+            }
+            crawlList.add(value);
+        }
+    }
+
+    @Test
+    void testRemovingNotIterableVertexWhileIteratingDfs() {
+        Tree<Integer> root = new Tree<>(4);
+        var one = root.addChild(1);
+        var three = root.addChild(3);
+        var five = root.addChild(5);
+        var eight = three.addChild(8);
+        three.addChild(9);
+        eight.addChild(10);
+
+        var crawlList = new ArrayList<Integer>();
+        for (var value : new DfsTreeCollection<>(three)) {
+            if (three.node.equals(value)) {
+                one.remove();
+            }
+            crawlList.add(value);
+        }
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{3, 8, 9, 10}));
+    }
+
+    @Test
+    void testTwoDfsIterationsWithUnblockedDeletionAfterFirst() {
+        Tree<Integer> root = new Tree<>(4);
+        var one = root.addChild(1);
+        var three = root.addChild(3);
+        var five = root.addChild(5);
+        var eight = three.addChild(8);
+        three.addChild(9);
+        eight.addChild(10);
+
+        var crawlList = new ArrayList<Integer>();
+        new DfsTreeCollection<>(root).forEach(crawlList::add);
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{4,1,3,8,10,9,5}));
+        root.remove();
+        crawlList.clear();
+        new DfsTreeCollection<>(three).forEach(crawlList::add);
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{3,8,10,9}));
     }
 
     @Test
@@ -91,10 +149,8 @@ public class TreeTest {
         tree.addChild(subtree);
 
         ArrayList<String> crawlList = new ArrayList<>();
-        var bfsIterator = new Tree.BfsTreeIterator<>(tree);
-        while (bfsIterator.hasNext()) {
-            var vertex = bfsIterator.next();
-            crawlList.add(vertex.getNode());
+        for (var value : new BfsTreeCollection<>(tree)) {
+            crawlList.add(value);
         }
         Assertions.assertEquals(crawlList, List.of(new String[]{"R1", "A", "R2", "B", "C", "D"}));
     }
@@ -104,15 +160,15 @@ public class TreeTest {
         Tree<Integer> root = new Tree<>(4);
         root.addChild(1).addChild(8);
         root.addChild(5);
-        Tree.BfsTreeIterator<Integer> iterator = new Tree.BfsTreeIterator<>(root);
+        var iterator = new BfsTreeCollection.BfsTreeIterator<Integer>(root);
 
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
             var elem = iterator.next();
-            if (elem.getNode() == 1) {
+            if (elem == 1) {
                 iterator.remove();
             } else {
-                crawlList.add(elem.getNode());
+                crawlList.add(elem);
             }
         }
         Assertions.assertEquals(crawlList, List.of(new Integer[]{4, 5}));
@@ -124,11 +180,11 @@ public class TreeTest {
         root.addChild(1).addChild(8);
         root.addChild(5);
         root.remove();
-        Tree.BfsTreeIterator<Integer> iterator = new Tree.BfsTreeIterator<>(root);
+        var iterator = new BfsTreeCollection.BfsTreeIterator<Integer>(root);
 
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
-            crawlList.add(iterator.next().getNode());
+            crawlList.add(iterator.next());
         }
         Assertions.assertEquals(crawlList, List.of(new Integer[]{4}));
     }
@@ -138,18 +194,75 @@ public class TreeTest {
         Tree<Integer> root = new Tree<>(4);
         root.addChild(1).addChild(8);
         root.addChild(5);
-        Tree.BfsTreeIterator<Integer> iterator = new Tree.BfsTreeIterator<>(root);
+        var iterator = new BfsTreeCollection.BfsTreeIterator<Integer>(root);
 
         ArrayList<Integer> crawlList = new ArrayList<>();
         while (iterator.hasNext()) {
             var elem = iterator.next();
-            if (elem.equals(root)) {
+            if (elem.equals(root.node)) {
                 iterator.remove();
             } else {
-                crawlList.add(elem.getNode());
+                crawlList.add(elem);
             }
         }
         Assertions.assertEquals(crawlList, List.of(new Integer[]{}));
+    }
+
+    @Test
+    void testBfsIterationConcurrentException() {
+        Tree<Integer> root = new Tree<>(4);
+        var one = root.addChild(1);
+        var three = root.addChild(3);
+        var five = root.addChild(5);
+        var eight = three.addChild(8);
+        three.addChild(9);
+
+        var crawlList = new ArrayList<Integer>();
+        for (var value : new BfsTreeCollection<>(root)) {
+            if (root.node.equals(value)) {
+                Assertions.assertThrows(ConcurrentModificationException.class, three::remove);
+            }
+            crawlList.add(value);
+        }
+    }
+
+    @Test
+    void testRemovingNotIterableVertexWhileIteratingBfs() {
+        Tree<Integer> root = new Tree<>(4);
+        var one = root.addChild(1);
+        var three = root.addChild(3);
+        var eight = three.addChild(8);
+        eight.addChild(10);
+        three.addChild(9);
+        var five = root.addChild(5);
+
+        var crawlList = new ArrayList<Integer>();
+        for (var value : new DfsTreeCollection<>(three)) {
+            if (three.node.equals(value)) {
+                one.remove();
+            }
+            crawlList.add(value);
+        }
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{3, 8, 9, 10}));
+    }
+
+    @Test
+    void testTwoBfsIterationsWithUnblockedDeletionAfterFirst() {
+        Tree<Integer> root = new Tree<>(4);
+        var one = root.addChild(1);
+        var three = root.addChild(3);
+        var five = root.addChild(5);
+        var eight = three.addChild(8);
+        three.addChild(9);
+        eight.addChild(10);
+
+        var crawlList = new ArrayList<Integer>();
+        new BfsTreeCollection<>(root).forEach(crawlList::add);
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{4,1,3,5,8,9,10}));
+        root.remove();
+        crawlList.clear();
+        new BfsTreeCollection<>(three).forEach(crawlList::add);
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{3,8,9,10}));
     }
 
     @Test
@@ -161,8 +274,8 @@ public class TreeTest {
         oneVertex.remove();
 
         ArrayList<Integer> crawlList = new ArrayList<>();
-        for (var vertex : root) {
-            crawlList.add(vertex.getNode());
+        for (var vertex : new DfsTreeCollection<>(root)) {
+            crawlList.add(vertex);
         }
         Assertions.assertEquals(crawlList, List.of(new Integer[]{4, 5}));
     }

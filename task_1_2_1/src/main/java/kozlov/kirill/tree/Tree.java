@@ -1,10 +1,7 @@
 package kozlov.kirill.tree;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.ConcurrentModificationException;
 import java.util.Objects;
 
 /**
@@ -12,192 +9,60 @@ import java.util.Objects;
  *
  * @param <T> type of nodes
  */
-public class Tree<T> implements Iterable<Tree<T>> {
-    private final T node;
-    private Tree<T> parent = null;
-    private final ArrayList<Tree<T>> children = new ArrayList<>();
+public class Tree<T> {
+    public final T node;
+    public Tree<T> parent = null;
+    public final ArrayList<Tree<T>> children = new ArrayList<>();
     private static final String staples = "()[]{}[]";
+    private boolean isChangesBlocked = false;
 
     public Tree(T node) {
         this.node = node;
     }
 
     /**
-     * Add child method.
+     * Add child method with block flag checking.
      *
      * @param child child with type Tree
      * @return added child
      */
     public Tree<T> addChild(Tree<T> child) {
+        testBlocking();
         child.parent = this;
         this.children.add(child);
         return child;
     }
 
     /**
-     * Add child method.
+     * Add child method with block flag checking.
      *
      * @param node child of type T
      * @return added child
      */
     public Tree<T> addChild(T node) {
+        testBlocking();
         Tree<T> child = new Tree<>(node);
         return this.addChild(child);
     }
 
     /**
-     * Removes vertex from tree.
+     * Removes vertex from tree with block flag checking.
+     */
+    public void remove() {
+        testBlocking();
+        forceRemove();
+    }
+
+    /**
+     * Removes vertex from tree without block flag checking.
      * Removes vertex from parent's children list and clear its own children list,
      * doesn't remove node's value.
      * (children vertices can be accessed from other sources if they was saved)
      */
-    public void remove() {
-        this.children.clear();
-        if (this.parent != null) {
-            this.parent.children.remove(this);
-        }
-    }
-
-    /**
-     * DFS iterator.
-     *
-     * @return iterator DFSTreeIterator
-     */
-    @Override
-    public Iterator<Tree<T>> iterator() {
-        return new DfsTreeIterator<>(this);
-    }
-
-    /**
-     * DFS iterator class.
-     *
-     * @param <E> must be the same as Tree T
-     */
-    public static class DfsTreeIterator<E> implements Iterator<Tree<E>> {
-        private Tree<E> currentVertex;
-        private final HashMap<Tree<E>, Integer> vertexChildIndexMap;
-        boolean isFirst = true;
-
-        /**
-         * DfsTreeIterator construct.
-         *
-         * @param currentVertex root vertex
-         */
-        public DfsTreeIterator(Tree<E> currentVertex) {
-            this.currentVertex = new Tree<>(currentVertex.node);
-            this.currentVertex.addChild(currentVertex);
-            vertexChildIndexMap = new HashMap<>();
-            vertexChildIndexMap.put(this.currentVertex, 0);
-        }
-
-        /**
-         * Overrided hasNext method.
-         *
-         * @return true when next DFS element exists
-         */
-        @Override
-        public boolean hasNext() {
-            while (currentVertex.parent != null) {
-                if (vertexChildIndexMap.get(currentVertex) < currentVertex.children.size()) {
-                    return true;
-                }
-                currentVertex = currentVertex.parent;
-            }
-            return vertexChildIndexMap.get(currentVertex) < currentVertex.children.size();
-        }
-
-        /**
-         * Overrided next method.
-         *
-         * @return next element in DFS
-         */
-        @Override
-        public Tree<E> next() throws NoSuchElementException {
-            while (true) {
-                int childIndex = vertexChildIndexMap.get(currentVertex);
-                if (childIndex < currentVertex.children.size()) {
-                    vertexChildIndexMap.replace(currentVertex, childIndex + 1);
-                    currentVertex = currentVertex.children.get(childIndex);
-                    vertexChildIndexMap.put(currentVertex, 0);
-                    return currentVertex;
-                }
-                if (currentVertex.parent == null) {
-                    break;
-                }
-                currentVertex = currentVertex.parent;
-            }
-            throw new NoSuchElementException("There is no unvisited elements in the tree.");
-        }
-
-        /**
-         * Removes vertex from collection.
-         * Changes hashmap relating to changed parent's children' list
-         */
-        @Override
-        public void remove() {
-            currentVertex.remove();
-            var parent = currentVertex.parent;
-            if (parent == null) {
-                return;
-            }
-            int parentChildIndex = vertexChildIndexMap.get(parent);
-            vertexChildIndexMap.replace(parent, parentChildIndex - 1);
-        }
-    }
-
-    /**
-     * BFS iterator class.
-     *
-     * @param <E> must be the same as Tree T
-     */
-    public static class BfsTreeIterator<E> implements Iterator<Tree<E>> {
-        private Tree<E> currentVertex;
-        private final ArrayDeque<Tree<E>> deque;
-        private final boolean isFirst = true;
-
-        /**
-         * BfsTreeIterator construct.
-         *
-         * @param currentVertex root vertex
-         */
-        public BfsTreeIterator(Tree<E> currentVertex) {
-            this.currentVertex = new Tree<>(currentVertex.node);
-            this.currentVertex.addChild(currentVertex);
-            deque = new ArrayDeque<>();
-        }
-
-        /**
-         * Overrided hasNext method.
-         *
-         * @return true when next BFS element exists
-         */
-        @Override
-        public boolean hasNext() {
-            return !(deque.isEmpty() && currentVertex.children.isEmpty());
-        }
-
-        /**
-         * Overrided next method.
-         *
-         * @return next element in BFS
-         */
-        @Override
-        public Tree<E> next() throws NoSuchElementException {
-            deque.addAll(currentVertex.children);
-            if (deque.isEmpty()) {
-                throw new NoSuchElementException("There is no unvisited elements in the tree.");
-            }
-            currentVertex = deque.pollFirst();
-            return currentVertex;
-        }
-
-
-        /**
-         * Removes vertex from collection.
-         */
-        @Override
-        public void remove() {
-            currentVertex.remove();
+    public void forceRemove() {
+        children.clear();
+        if (parent != null) {
+            parent.children.remove(this);
         }
     }
 
@@ -265,12 +130,33 @@ public class Tree<T> implements Iterable<Tree<T>> {
     }
 
     /**
-     * Node getter.
+     * Checks is it possible to change vertex.
+     * We can change vertex if there are no blocked vertices in their ancestors.
      *
-     * @return node
+     * @throws ConcurrentModificationException if any ancestor is blocked.
      */
-    public T getNode() {
-        return node;
+    private void testBlocking() throws ConcurrentModificationException {
+        var vertex = this;
+        while (vertex != null) {
+            if (vertex.isChangesBlocked) {
+                throw new ConcurrentModificationException("Vertex is below iteration root");
+            }
+            vertex = vertex.parent;
+        }
+    }
+
+    /**
+     * Blocks vertex-tree for changing.
+     */
+    public void block() {
+        isChangesBlocked = true;
+    }
+
+    /**
+     * Unblocks vertex-tree for changing.
+     */
+    public void unblock() {
+        isChangesBlocked = false;
     }
 
     /**
@@ -279,14 +165,30 @@ public class Tree<T> implements Iterable<Tree<T>> {
      * @param args cmd args.
      */
     public static void main(String[] args) {
-        Tree<String> tree = new Tree<>("R1");
-        var a = tree.addChild("A");
-        a.addChild("B").addChild("CCC").addChild("DDD").addChild("EEE");
-        Tree<String> subtree = new Tree<>("R2");
-        subtree.addChild("C");
-        subtree.addChild("D");
-        tree.addChild(subtree);
-        tree.addChild("AAA");
-        System.out.println(tree.getStringTree(0));
+        Tree<Integer> root = new Tree<>(4);
+        var one = root.addChild(1);
+        var three = root.addChild(3);
+        var eight = three.addChild(8);
+        three.addChild(9);
+        var five = root.addChild(5);
+
+        var crawlList = new ArrayList<Integer>();
+        for (var value : new DfsTreeCollection<>(three)) {
+            if (three.node.equals(value)) {
+                one.remove();
+            }
+            crawlList.add(value);
+        }
+        System.out.println(crawlList);
+        crawlList.clear();
+        for (var value : new DfsTreeCollection<>(root)) {
+            if (root.node.equals(value)) {
+                three.remove();
+            }
+            crawlList.add(value);
+        }
+        three.remove();
+
+        System.out.println(crawlList);
     }
 }
