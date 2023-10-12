@@ -116,7 +116,7 @@ public class TreeTest {
             }
             crawlList.add(value);
         }
-        Assertions.assertEquals(crawlList, List.of(new Integer[]{3, 8, 9, 10}));
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{3, 8, 10, 9}));
     }
 
     @Test
@@ -243,7 +243,7 @@ public class TreeTest {
             }
             crawlList.add(value);
         }
-        Assertions.assertEquals(crawlList, List.of(new Integer[]{3, 8, 9, 10}));
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{3, 8, 10, 9}));
     }
 
     @Test
