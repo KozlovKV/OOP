@@ -3,6 +3,7 @@ package kozlov.kirill.tree;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -131,11 +132,11 @@ public class TreeTest {
 
         var crawlList = new ArrayList<Integer>();
         new DfsTreeCollection<>(root).forEach(crawlList::add);
-        Assertions.assertEquals(crawlList, List.of(new Integer[]{4,1,3,8,10,9,5}));
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{4, 1, 3, 8, 10, 9, 5}));
         root.remove();
         crawlList.clear();
         new DfsTreeCollection<>(three).forEach(crawlList::add);
-        Assertions.assertEquals(crawlList, List.of(new Integer[]{3,8,10,9}));
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{3, 8, 10, 9}));
     }
 
     @Test
@@ -258,11 +259,11 @@ public class TreeTest {
 
         var crawlList = new ArrayList<Integer>();
         new BfsTreeCollection<>(root).forEach(crawlList::add);
-        Assertions.assertEquals(crawlList, List.of(new Integer[]{4,1,3,5,8,9,10}));
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{4, 1, 3, 5, 8, 9, 10}));
         root.remove();
         crawlList.clear();
         new BfsTreeCollection<>(three).forEach(crawlList::add);
-        Assertions.assertEquals(crawlList, List.of(new Integer[]{3,8,9,10}));
+        Assertions.assertEquals(crawlList, List.of(new Integer[]{3, 8, 9, 10}));
     }
 
     @Test
