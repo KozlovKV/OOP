@@ -10,9 +10,9 @@ import java.util.Objects;
  * @param <T> type of nodes
  */
 public class Tree<T> {
-    public final T node;
-    public Tree<T> parent = null;
-    public final ArrayList<Tree<T>> children = new ArrayList<>();
+    final T node;
+    Tree<T> parent = null;
+    final ArrayList<Tree<T>> children = new ArrayList<>();
     private static final String staples = "()[]{}[]";
     private boolean isChangesBlocked = false;
 
@@ -59,7 +59,7 @@ public class Tree<T> {
      * doesn't remove node's value.
      * (children vertices can be accessed from other sources if they was saved)
      */
-    public void forceRemove() {
+    void forceRemove() {
         children.clear();
         if (parent != null) {
             parent.children.remove(this);
@@ -148,14 +148,14 @@ public class Tree<T> {
     /**
      * Blocks vertex-tree for changing.
      */
-    public void block() {
+    void block() {
         isChangesBlocked = true;
     }
 
     /**
      * Unblocks vertex-tree for changing.
      */
-    public void unblock() {
+    void unblock() {
         isChangesBlocked = false;
     }
 
