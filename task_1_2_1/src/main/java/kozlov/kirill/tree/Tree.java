@@ -1,8 +1,7 @@
 package kozlov.kirill.tree;
 
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Tree class.
@@ -81,11 +80,25 @@ public class Tree<T> {
             return false;
         }
         Tree<T> otherTree = (Tree<T>) obj;
-        if (!otherTree.node.equals(this.node)) {
+        if (!otherTree.node.equals(this.node) || otherTree.children.size() != this.children.size()) {
             return false;
         }
-        return otherTree.children.size() == this.children.size()
-                || otherTree.children.stream().sorted().equals(this.children.stream().sorted());
+        boolean[] arr = new boolean[children.size()];
+        int i = 0;
+        for (var vertex : children) {
+            if (!arr[i]) {
+                for (var otherV : otherTree.children) {
+                    if (vertex.equals(otherV)) {
+                        arr[i] = true;
+                        break;
+                    }
+                }
+                if (!arr[i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -167,19 +180,10 @@ public class Tree<T> {
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         Tree<Integer> root = new Tree<>(4);
-        var one = root.addChild(1);
-        var three = root.addChild(3);
-        var eight = three.addChild(8);
-        three.addChild(9);
-        var five = root.addChild(5);
-
-        var crawlList = new ArrayList<Integer>();
-        for (var value : new DfsTreeCollection<>(three)) {
-            if (three.node.equals(value)) {
-                one.remove();
-            }
-            crawlList.add(value);
-        }
-        System.out.println(crawlList);
+        var subtree = root.addChild(4);
+        root.addChild(5);
+        subtree.addChild(4);
+        subtree.addChild(5);
+        System.out.println(root.equals(subtree));
     }
 }
