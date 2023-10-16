@@ -81,8 +81,8 @@ public class Tree<T> {
             return false;
         }
         Tree<T> otherTree = (Tree<T>) obj;
-        if (!otherTree.node.equals(this.node) ||
-                otherTree.children.size() != this.children.size()) {
+        if (!otherTree.node.equals(this.node)
+                || otherTree.children.size() != this.children.size()) {
             return false;
         }
         boolean[] arr = new boolean[children.size()];
