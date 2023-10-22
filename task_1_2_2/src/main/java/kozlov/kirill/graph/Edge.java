@@ -2,6 +2,11 @@ package kozlov.kirill.graph;
 
 import java.util.Objects;
 
+/**
+ * Edge class.
+ *
+ * @param <T> type of edge's vertices.
+ */
 public class Edge<T> {
     private final T from;
     private final T to;

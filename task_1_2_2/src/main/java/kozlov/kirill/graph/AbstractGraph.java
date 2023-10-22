@@ -13,11 +13,11 @@ import java.util.Set;
  *
  * @param <T> type of graph's vertices
  */
-abstract class Graph<T> {
+abstract class AbstractGraph<T> {
     Map<T, Vertex<T>> vertexMap = new HashMap<>();
     boolean oriented = false;
 
-    public Graph(boolean oriented) {
+    public AbstractGraph(boolean oriented) {
         this.oriented = oriented;
     }
 
@@ -26,15 +26,18 @@ abstract class Graph<T> {
     }
 
     public Vertex<T> addVertex(T value) {
-        if (vertexMap.containsKey(value))
+        if (vertexMap.containsKey(value)) {
             return vertexMap.get(value);
+        }
         var newVertex = new Vertex<>(value);
         vertexMap.putIfAbsent(value, newVertex);
         return newVertex;
     }
+
     public Vertex<T> removeVertex(T value) {
-        if (!vertexMap.containsKey(value))
+        if (!vertexMap.containsKey(value)) {
             return null;
+        }
         var vertex = vertexMap.get(value);
         vertexMap.remove(value);
         return vertex;
@@ -67,8 +70,9 @@ abstract class Graph<T> {
         }
         startVertex.setDistance(0);
         // Choose algorithm
-        if (hasNegativeEdges())
+        if (hasNegativeEdges()) {
             return bellmanFord();
+        }
         return dijkstra();
     }
 

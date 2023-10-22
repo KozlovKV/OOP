@@ -13,7 +13,7 @@ public class Main {
      * @param graph graph upcasted to Graph abstract class.
      * @param filename file with data.
      */
-    public static void readDataForGraphFromFile(Graph<String> graph, String filename) {
+    public static void readDataForGraphFromFile(AbstractGraph<String> graph, String filename) {
         try (FileReader reader = new FileReader(filename)) {
             char[] buf = new char[65536];
             int len = reader.read(buf);

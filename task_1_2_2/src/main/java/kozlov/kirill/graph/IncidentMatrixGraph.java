@@ -1,8 +1,18 @@
 package kozlov.kirill.graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class IncidentMatrixGraph<T> extends Graph<T> {
+/**
+ * Graph implementation with incident matrix.
+ *
+ * @param <T> type of graph's vertices.
+ */
+public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
     Map<Vertex<T>, Map<Edge<T>, Integer>> incidentMatrix = new HashMap<>();
 
     public IncidentMatrixGraph() {

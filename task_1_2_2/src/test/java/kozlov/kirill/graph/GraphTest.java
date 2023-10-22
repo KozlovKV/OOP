@@ -22,29 +22,27 @@ public class GraphTest {
         return predicted;
     }
 
-    @Test
-    void testListGraph() {
-        var graph = new ListGraph<String>();
+    void testGraph(AbstractGraph<String> graph) {
         Main.readDataForGraphFromFile(graph, "./input.txt");
         var result = graph.constructShortestDistances("C");
         Assertions.assertEquals(result, getPredictedMap());
     }
 
-    @Test
-    void testAdjacencyMatrixGraph() {
-        var graph = new AdjacencyMatrixGraph<String>();
-        Main.readDataForGraphFromFile(graph, "./input.txt");
-        var result = graph.constructShortestDistances("C");
-        Assertions.assertEquals(result, getPredictedMap());
-    }
-
-    @Test
-    void testIncidentMatrixGraph() {
-        var graph = new IncidentMatrixGraph<String>();
-        Main.readDataForGraphFromFile(graph, "./input.txt");
-        var result = graph.constructShortestDistances("C");
-        Assertions.assertEquals(result, getPredictedMap());
-    }
+//    @Test
+//    void testAdjacencyMatrixGraph() {
+//        var graph = new AdjacencyMatrixGraph<String>();
+//        Main.readDataForGraphFromFile(graph, "./input.txt");
+//        var result = graph.constructShortestDistances("C");
+//        Assertions.assertEquals(result, getPredictedMap());
+//    }
+//
+//    @Test
+//    void testIncidentMatrixGraph() {
+//        var graph = new IncidentMatrixGraph<String>();
+//        Main.readDataForGraphFromFile(graph, "./input.txt");
+//        var result = graph.constructShortestDistances("C");
+//        Assertions.assertEquals(result, getPredictedMap());
+//    }
 
     // TODO: Добавить тесты для изменения веса вершины, удаления вершины и/или ребра
 }

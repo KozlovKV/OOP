@@ -2,6 +2,11 @@ package kozlov.kirill.graph;
 
 import java.util.Objects;
 
+/**
+ * Vertex class.
+ *
+ * @param <T> type of vertex's value.
+ */
 public class Vertex<T> {
     private final T value;
     private double distance = Double.MAX_VALUE;

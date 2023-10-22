@@ -1,8 +1,16 @@
 package kozlov.kirill.graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class AdjacencyMatrixGraph<T> extends Graph<T> {
+/**
+ * Graph implementation with adjacency matrix.
+ *
+ * @param <T> type of graph's vertices.
+ */
+public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
     Map<Vertex<T>, Map<Vertex<T>, Edge<T>>> adjacencyMatrix = new HashMap<>();
 
     public AdjacencyMatrixGraph() {

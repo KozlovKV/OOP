@@ -5,7 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListGraph<T> extends Graph<T> {
+/**
+ * Graph implementation with adjacency lists.
+ *
+ * @param <T> type of graph's vertices.
+ */
+public class ListGraph<T> extends AbstractGraph<T> {
     Map<Vertex<T>, List<Edge<T>>> adjacencyLists = new HashMap<>();
 
     public ListGraph() {
