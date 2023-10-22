@@ -25,7 +25,7 @@ public class GraphTest {
     @Test
     void testListGraph() {
         var graph = new ListGraph<String>();
-        Main.readDataForGraphFromFile(graph, "input.txt");
+        Main.readDataForGraphFromFile(graph, "./input.txt");
         var result = graph.constructShortestDistances("C");
         Assertions.assertEquals(result, getPredictedMap());
     }
@@ -33,7 +33,7 @@ public class GraphTest {
     @Test
     void testAdjacencyMatrixGraph() {
         var graph = new AdjacencyMatrixGraph<String>();
-        Main.readDataForGraphFromFile(graph, "input.txt");
+        Main.readDataForGraphFromFile(graph, "./input.txt");
         var result = graph.constructShortestDistances("C");
         Assertions.assertEquals(result, getPredictedMap());
     }
@@ -41,7 +41,7 @@ public class GraphTest {
     @Test
     void testIncidentMatrixGraph() {
         var graph = new IncidentMatrixGraph<String>();
-        Main.readDataForGraphFromFile(graph, "input.txt");
+        Main.readDataForGraphFromFile(graph, "./input.txt");
         var result = graph.constructShortestDistances("C");
         Assertions.assertEquals(result, getPredictedMap());
     }
