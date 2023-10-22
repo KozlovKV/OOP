@@ -17,7 +17,7 @@ public class Main {
         try (FileReader reader = new FileReader(filename)) {
             char[] buf = new char[65536];
             int len = reader.read(buf);
-            var strings = String.copyValueOf(buf).split("[\r]\n");
+            var strings = String.copyValueOf(buf).split("\r?\n");
             for (var string : strings) {
                 var edgeData = string.split(" ");
                 graph.addEdge(edgeData[0], edgeData[1], Double.parseDouble(edgeData[2]));
