@@ -414,7 +414,6 @@ extends java.lang.Object</pre>
 <h4>addVertex</h4>
 <pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;addVertex&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;value)</pre>
 <div class="block">Vertex creation.
-
  Add vertex with specified value if vertex with it doesn't exist.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -434,7 +433,6 @@ extends java.lang.Object</pre>
 <h4>removeVertex</h4>
 <pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;removeVertex&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;value)</pre>
 <div class="block">Vertex removing.
-
  Removes vertex and all incident edges if vertex exists.
  Edges deletion MUST BE SPECIFIED in child-classes!</div>
 <dl>
@@ -481,7 +479,6 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;removeEdge&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;a,
                           <a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;b)</pre>
 <div class="block">Edge removing.
-
  Removes edge (a,b) if it exists and (b,a) if graph is undirected and this edge exists.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -565,7 +562,6 @@ extends java.lang.Object</pre>
 <h4>changeDirectionType</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;changeDirectionType&#8203;(boolean&nbsp;newOrientation)</pre>
 <div class="block">Directed flag setter.
-
  We can change direction type for graph without edges.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -629,7 +625,6 @@ extends java.lang.Object</pre>
 <h4>constructShortestDistances</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;T,&#8203;java.lang.Double&gt;&nbsp;constructShortestDistances&#8203;(T&nbsp;start)</pre>
 <div class="block">Shortest paths finder.
-
  Calls dijkstra algorithm for non-negative graphs and bellman-ford otherwise</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
