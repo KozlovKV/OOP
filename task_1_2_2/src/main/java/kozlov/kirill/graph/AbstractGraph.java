@@ -70,7 +70,6 @@ abstract class AbstractGraph<T> {
      * Vertex removing.
      *
      * Removes vertex and all incident edges if vertex exists.
-     *
      * Edges deletion MUST BE SPECIFIED in child-classes!
      *
      * @param value value of vertex
@@ -87,11 +86,8 @@ abstract class AbstractGraph<T> {
 
     /**
      * Edge creation.
-     * <p>
      * Creates edge (a,b) with specified weight if edge (a,b) doesn't exist.
-     * <p>
      * Creates vertices `a` and `b` if they don't exist
-     * <p>
      * If `directed == false` also creates edge (b,a) with specified weight
      *
      * @param a first vertex
