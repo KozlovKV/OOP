@@ -105,7 +105,7 @@ abstract class AbstractGraph<T> {
     public abstract boolean removeEdge(T a, T b);
 
     /**
-     * Edge getter
+     * Edge getter.
      *
      * @param a first vertex value
      * @param b second vertex value
