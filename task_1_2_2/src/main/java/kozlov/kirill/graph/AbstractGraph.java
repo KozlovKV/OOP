@@ -28,7 +28,6 @@ abstract class AbstractGraph<T> {
 
     /**
      * Directed flag setter.
-     *
      * We can change direction type for graph without edges.
      *
      * @param newOrientation new value for `directed` field
@@ -51,7 +50,6 @@ abstract class AbstractGraph<T> {
 
     /**
      * Vertex creation.
-     *
      * Add vertex with specified value if vertex with it doesn't exist.
      *
      * @param value value of vertex
@@ -68,7 +66,6 @@ abstract class AbstractGraph<T> {
 
     /**
      * Vertex removing.
-     *
      * Removes vertex and all incident edges if vertex exists.
      * Edges deletion MUST BE SPECIFIED in child-classes!
      *
@@ -99,7 +96,6 @@ abstract class AbstractGraph<T> {
 
     /**
      * Edge removing.
-     *
      * Removes edge (a,b) if it exists and (b,a) if graph is undirected and this edge exists.
      *
      * @param a first vertex value
@@ -160,7 +156,6 @@ abstract class AbstractGraph<T> {
 
     /**
      * Shortest paths finder.
-     *
      * Calls dijkstra algorithm for non-negative graphs and bellman-ford otherwise
      *
      * @param start value of start vertex
