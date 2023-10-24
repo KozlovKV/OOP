@@ -88,13 +88,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -143,6 +143,34 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directed">directed</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected java.util.Map&lt;T,&#8203;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#vertexMap">vertexMap</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -187,79 +215,109 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEdge(T,T,double)">addEdge</a></span>&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;a,
        <a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;b,
        double&nbsp;weight)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Edge creation.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addVertex(T)">addVertex</a></span>&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Vertex creation.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected java.util.Map&lt;T,&#8203;java.lang.Double&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bellmanFord()">bellmanFord</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Bellman-ford pathfinder.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#changeDirectionType(boolean)">changeDirectionType</a></span>&#8203;(boolean&nbsp;newOrientation)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Directed flag setter.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;T,&#8203;java.lang.Double&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#constructShortestDistances(T)">constructShortestDistances</a></span>&#8203;(T&nbsp;start)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Shortest paths finder.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected java.util.Map&lt;T,&#8203;java.lang.Double&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dijkstra()">dijkstra</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Dijkstra pathfinder.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEdge(T,T)">getEdge</a></span>&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;a,
        <a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;b)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Edge getter</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;T&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEdgeSet()">getEdgeSet</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Edges set getter.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEdgesFromVertex(kozlov.kirill.graph.Vertex)">getEdgesFromVertex</a></span>&#8203;(<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;vertex)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Getter for edges from specified vertex.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEdgesToVertex(kozlov.kirill.graph.Vertex)">getEdgesToVertex</a></span>&#8203;(<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;vertex)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Getter for edges to specified vertex.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVertex(T)">getVertex</a></span>&#8203;(T&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Vertex getter.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasNegativeEdges()">hasNegativeEdges</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Method-flag for negative edges.</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relaxEdge(kozlov.kirill.graph.Edge)">relaxEdge</a></span>&#8203;(<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;T&gt;&nbsp;edge)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Edge relaxation.</div>
+</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEdge(T,T)">removeEdge</a></span>&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;a,
           <a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;b)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Edge removing.</div>
+</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeVertex(T)">removeVertex</a></span>&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Vertex removing.</div>
+</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -283,6 +341,34 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="vertexMap">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>vertexMap</h4>
+<pre>protected&nbsp;java.util.Map&lt;T,&#8203;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;&gt; vertexMap</pre>
+</li>
+</ul>
+<a id="directed">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>directed</h4>
+<pre>protected&nbsp;boolean directed</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section>
 <ul class="blockList">
@@ -327,6 +413,15 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>addVertex</h4>
 <pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;addVertex&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;value)</pre>
+<div class="block">Vertex creation.
+
+ Add vertex with specified value if vertex with it doesn't exist.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>value</code> - value of vertex</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>created or got vertex</dd>
+</dl>
 </li>
 </ul>
 <a id="removeVertex(java.lang.Object)">
@@ -338,6 +433,17 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>removeVertex</h4>
 <pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;removeVertex&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;value)</pre>
+<div class="block">Vertex removing.
+
+ Removes vertex and all incident edges if vertex exists.
+
+ Edges deletion MUST BE SPECIFIED in child-classes!</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>value</code> - value of vertex</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>deleted vertex or null if it doesn't exist</dd>
+</dl>
 </li>
 </ul>
 <a id="addEdge(java.lang.Object,java.lang.Object,double)">
@@ -351,6 +457,21 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;addEdge&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;a,
                        <a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;b,
                        double&nbsp;weight)</pre>
+<div class="block">Edge creation.
+ <p>
+ Creates edge (a,b) with specified weight if edge (a,b) doesn't exist.
+ <p>
+ Creates vertices `a` and `b` if they don't exist
+ <p>
+ If `directed == false` also creates edge (b,a) with specified weight</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>a</code> - first vertex</dd>
+<dd><code>b</code> - second vertex</dd>
+<dd><code>weight</code> - double value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>`true` if edge was created</dd>
+</dl>
 </li>
 </ul>
 <a id="removeEdge(java.lang.Object,java.lang.Object)">
@@ -363,6 +484,16 @@ extends java.lang.Object</pre>
 <h4>removeEdge</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;removeEdge&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;a,
                           <a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;b)</pre>
+<div class="block">Edge removing.
+
+ Removes edge (a,b) if it exists and (b,a) if graph is undirected and this edge exists.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>a</code> - first vertex value</dd>
+<dd><code>b</code> - second vertex value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>`true` if all deletions were successful</dd>
+</dl>
 </li>
 </ul>
 <a id="getEdge(java.lang.Object,java.lang.Object)">
@@ -375,6 +506,14 @@ extends java.lang.Object</pre>
 <h4>getEdge</h4>
 <pre class="methodSignature">public&nbsp;<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;getEdge&#8203;(<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;a,
                        <a href="ListGraph.html" title="type parameter in ListGraph">T</a>&nbsp;b)</pre>
+<div class="block">Edge getter</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>a</code> - first vertex value</dd>
+<dd><code>b</code> - second vertex value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>edge (a, b) if it exists and `null` otherwise</dd>
+</dl>
 </li>
 </ul>
 <a id="getEdgesFromVertex(kozlov.kirill.graph.Vertex)">
@@ -384,6 +523,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getEdgesFromVertex</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&gt;&nbsp;getEdgesFromVertex&#8203;(<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;vertex)</pre>
+<div class="block">Getter for edges from specified vertex.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>vertex</code> - object</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of edges with `vertex`'s value on the first position</dd>
+</dl>
 </li>
 </ul>
 <a id="getEdgesToVertex(kozlov.kirill.graph.Vertex)">
@@ -393,6 +539,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getEdgesToVertex</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&gt;&nbsp;getEdgesToVertex&#8203;(<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="ListGraph.html" title="type parameter in ListGraph">T</a>&gt;&nbsp;vertex)</pre>
+<div class="block">Getter for edges to specified vertex.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>vertex</code> - object</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of edges with `vertex`'s value on the second position</dd>
+</dl>
 </li>
 </ul>
 <a id="toString()">
@@ -408,6 +561,22 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="changeDirectionType(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>changeDirectionType</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;changeDirectionType&#8203;(boolean&nbsp;newOrientation)</pre>
+<div class="block">Directed flag setter.
+
+ We can change direction type for graph without edges.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>newOrientation</code> - new value for `directed` field</dd>
+</dl>
+</li>
+</ul>
 <a id="getVertex(java.lang.Object)">
 <!--   -->
 </a><a id="getVertex(T)">
@@ -417,15 +586,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getVertex</h4>
 <pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;&nbsp;getVertex&#8203;(T&nbsp;value)</pre>
-</li>
-</ul>
-<a id="changeDirectionType(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>changeDirectionType</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;changeDirectionType&#8203;(boolean&nbsp;newOrientation)</pre>
+<div class="block">Vertex getter.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>value</code> - value of vertex</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>`Vertex` object if it exists otherwise `null`</dd>
+</dl>
 </li>
 </ul>
 <a id="getEdgeSet()">
@@ -435,6 +602,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getEdgeSet</h4>
 <pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;T&gt;&gt;&nbsp;getEdgeSet()</pre>
+<div class="block">Edges set getter.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>set of graph's edges</dd>
+</dl>
 </li>
 </ul>
 <a id="hasNegativeEdges()">
@@ -444,6 +616,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>hasNegativeEdges</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;hasNegativeEdges()</pre>
+<div class="block">Method-flag for negative edges.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>`true` if there is at least one edge with negative weight</dd>
+</dl>
 </li>
 </ul>
 <a id="constructShortestDistances(java.lang.Object)">
@@ -455,6 +632,15 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>constructShortestDistances</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;T,&#8203;java.lang.Double&gt;&nbsp;constructShortestDistances&#8203;(T&nbsp;start)</pre>
+<div class="block">Shortest paths finder.
+
+ Calls dijkstra algorithm for non-negative graphs and bellman-ford otherwise</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>start</code> - value of start vertex</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>map with vertices and path lengths or `null` if negative cycle was detected</dd>
+</dl>
 </li>
 </ul>
 <a id="relaxEdge(kozlov.kirill.graph.Edge)">
@@ -464,6 +650,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>relaxEdge</h4>
 <pre class="methodSignature">protected&nbsp;boolean&nbsp;relaxEdge&#8203;(<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;T&gt;&nbsp;edge)</pre>
+<div class="block">Edge relaxation.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>edge</code> - edge for relaxing</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>`true` if edge was relaxed so that second vertex distance was reduced</dd>
+</dl>
 </li>
 </ul>
 <a id="dijkstra()">
@@ -473,6 +666,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>dijkstra</h4>
 <pre class="methodSignature">protected&nbsp;java.util.Map&lt;T,&#8203;java.lang.Double&gt;&nbsp;dijkstra()</pre>
+<div class="block">Dijkstra pathfinder.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>map with vertices and path lengths</dd>
+</dl>
 </li>
 </ul>
 <a id="bellmanFord()">
@@ -482,6 +680,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>bellmanFord</h4>
 <pre class="methodSignature">protected&nbsp;java.util.Map&lt;T,&#8203;java.lang.Double&gt;&nbsp;bellmanFord()</pre>
+<div class="block">Bellman-ford pathfinder.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>map with vertices and path lengths or `null` if negative cycle was detected</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -535,13 +738,13 @@ extends java.lang.Object</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
