@@ -94,7 +94,7 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
 
     @Override
     List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
-        List<Edge<T>> edges = new ArrayList<>();
+        ArrayList<Edge<T>> edges = new ArrayList<>();
         for (var verticesToMaps : adjacencyMatrix.values()) {
             var edge = verticesToMaps.get(vertex);
             if (edge == null) {

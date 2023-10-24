@@ -91,7 +91,7 @@ public class ListGraph<T> extends AbstractGraph<T> {
 
     @Override
     List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
-        List<Edge<T>> edges = new ArrayList<>();
+        ArrayList<Edge<T>> edges = new ArrayList<>();
         for (var edgesLists : adjacencyLists.values()) {
             edges.addAll(edgesLists.stream().filter(
                     edge -> edge.getTo().equals(vertex.getValue())
