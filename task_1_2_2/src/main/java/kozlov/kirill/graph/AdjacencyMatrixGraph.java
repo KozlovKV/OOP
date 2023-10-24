@@ -65,11 +65,11 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
         if (vertexFrom == null || vertexTo == null) {
             return false;
         }
-        var res = adjacencyMatrix.get(vertexFrom).put(vertexTo, null);
+        boolean flag = adjacencyMatrix.get(vertexFrom).put(vertexTo, null) != null;
         if (!directed) {
-            adjacencyMatrix.get(vertexTo).put(vertexFrom, null);
+            flag = flag && adjacencyMatrix.get(vertexTo).put(vertexFrom, null) != null;
         }
-        return res != null;
+        return flag;
     }
 
     @Override

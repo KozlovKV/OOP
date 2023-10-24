@@ -91,13 +91,14 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
         if (vertexFrom == null || vertexTo == null) {
             return false;
         }
+        boolean flag = true;
         for (var edgesMap : incidentMatrix.values()) {
-            edgesMap.remove(new Edge<>(a, b));
+            flag = flag && edgesMap.remove(new Edge<>(a, b)) != null;
             if (!directed) {
-                edgesMap.remove(new Edge<>(b, a));
+                flag = flag && edgesMap.remove(new Edge<>(b, a)) != null;
             }
         }
-        return true;
+        return flag;
     }
 
     @Override
