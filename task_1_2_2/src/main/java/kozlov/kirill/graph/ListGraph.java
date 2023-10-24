@@ -93,9 +93,11 @@ public class ListGraph<T> extends AbstractGraph<T> {
     List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
         ArrayList<Edge<T>> edges = new ArrayList<>();
         for (var edgesLists : adjacencyLists.values()) {
-            edges.addAll(edgesLists.stream().filter(
-                    edge -> edge.getTo().equals(vertex.getValue())
-            ).toList());
+            for (var edge : edgesLists) {
+                if (edge.getTo().equals(vertex.getValue())) {
+                    edges.add(edge);
+                }
+            }
         }
         return edges;
     }
