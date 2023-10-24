@@ -51,7 +51,7 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
         }
         var edgeFromTo = new Edge<>(a, b, weight);
         adjacencyMatrix.get(vertexFrom).put(vertexTo, edgeFromTo);
-        if (!oriented) {
+        if (!directed) {
             var edgeToFrom = new Edge<>(b, a, weight);
             adjacencyMatrix.get(vertexTo).put(vertexFrom, edgeToFrom);
         }
@@ -66,7 +66,7 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
             return false;
         }
         var res = adjacencyMatrix.get(vertexFrom).put(vertexTo, null);
-        if (!oriented) {
+        if (!directed) {
             adjacencyMatrix.get(vertexTo).put(vertexFrom, null);
         }
         return res != null;
@@ -80,7 +80,7 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    List<Edge<T>> getVertexEdges(Vertex<T> vertex) {
+    List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
         var edgesList = new ArrayList<Edge<T>>();
         for (var vertexTo : adjacencyMatrix.get(vertex).keySet()) {
             var edge = adjacencyMatrix.get(vertex).get(vertexTo);
@@ -92,6 +92,20 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
         return edgesList;
     }
 
+    @Override
+    List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
+        List<Edge<T>> edges = new ArrayList<>();
+        for (var verticesToMaps : adjacencyMatrix.values()) {
+            var edge = verticesToMaps.get(vertex);
+            if (edge == null) {
+                continue;
+            }
+            edges.add(edge);
+        }
+        return edges;
+    }
+
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {
         var builder = new StringBuilder("    | ");

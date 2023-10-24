@@ -2,6 +2,7 @@ package kozlov.kirill.graph;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Main class
@@ -34,10 +35,18 @@ public class Main {
      */
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
-        var graph = new IncidentMatrixGraph<String>();
-        readDataForGraphFromFile(graph, "./input.txt");
-        var result = graph.constructShortestDistances("C");
+        var graph = new AdjacencyMatrixGraph<String>(true);
+        graph.addEdge("A", "B", 1);
+        graph.addEdge("B", "C", 1);
+        graph.addEdge("B", "D", 1);
+        graph.addEdge("D", "E", 1);
+
+        var result = graph.constructShortestDistances("B");
         System.out.println(result);
-        System.out.println(graph);
+        graph.removeEdge("B", "D");
+        var result2 = graph.constructShortestDistances("B");
+        System.out.println(result2);
+//        System.out.println(graph.getEdgesFromVertex(graph.getVertex("A")));
+//        System.out.println(graph.getEdgesToVertex(graph.getVertex("A")));
     }
 }

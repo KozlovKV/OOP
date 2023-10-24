@@ -31,9 +31,9 @@ public class ListGraph<T> extends AbstractGraph<T> {
     @Override
     public Vertex<T> removeVertex(T value) {
         var vertex = super.removeVertex(value);
-        for (var edge : adjacencyLists.get(vertex)) {
-            var toVertex = getVertex(edge.getTo());
-            adjacencyLists.get(toVertex).remove(edge);
+        for (var edge : getEdgesToVertex(vertex)) {
+            var fromVertex = getVertex(edge.getFrom());
+            adjacencyLists.get(fromVertex).remove(edge);
         }
         adjacencyLists.remove(vertex);
         return vertex;
@@ -48,7 +48,7 @@ public class ListGraph<T> extends AbstractGraph<T> {
             return false;
         }
         adjacencyLists.get(vertexFrom).add(edgeFromTo);
-        if (!oriented) {
+        if (!directed) {
             var edgeToFrom = new Edge<>(b, a, weight);
             adjacencyLists.get(vertexTo).add(edgeToFrom);
         }
@@ -63,7 +63,7 @@ public class ListGraph<T> extends AbstractGraph<T> {
             return false;
         }
         var res = adjacencyLists.get(vertexFrom).remove(new Edge<>(a, b));
-        if (!oriented) {
+        if (!directed) {
             return adjacencyLists.get(vertexTo).remove(new Edge<>(b, a));
         }
         return res;
@@ -85,10 +85,22 @@ public class ListGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    List<Edge<T>> getVertexEdges(Vertex<T> vertex) {
+    List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
         return adjacencyLists.get(vertex);
     }
 
+    @Override
+    List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
+        List<Edge<T>> edges = new ArrayList<>();
+        for (var edgesLists : adjacencyLists.values()) {
+            edges.addAll(edgesLists.stream().filter(
+                    edge -> edge.getTo().equals(vertex.getValue())
+            ).toList());
+        }
+        return edges;
+    }
+
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {
         var builder = new StringBuilder();

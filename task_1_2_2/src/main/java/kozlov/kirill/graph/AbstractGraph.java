@@ -15,14 +15,20 @@ import java.util.Set;
  */
 abstract class AbstractGraph<T> {
     Map<T, Vertex<T>> vertexMap = new HashMap<>();
-    boolean oriented = false;
+    boolean directed = false;
 
-    public AbstractGraph(boolean oriented) {
-        this.oriented = oriented;
+    public AbstractGraph(boolean directed) {
+        this.directed = directed;
     }
 
     public Vertex<T> getVertex(T value) {
         return vertexMap.getOrDefault(value, null);
+    }
+
+    public void changeDirectionType(boolean newOrientation) {
+        if (getEdgeSet().isEmpty()) {
+            directed = newOrientation;
+        }
     }
 
     public Vertex<T> addVertex(T value) {
@@ -44,14 +50,20 @@ abstract class AbstractGraph<T> {
     }
 
     abstract public boolean addEdge(T a, T b, double weight);
+
     abstract boolean removeEdge(T a, T b);
+
     abstract Edge<T> getEdge(T a, T b);
-    abstract List<Edge<T>> getVertexEdges(Vertex<T> vertex);
+
+    abstract List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex);
+
+    abstract List<Edge<T>> getEdgesToVertex(Vertex<T> vertex);
 
     public Set<Edge<T>> getEdgeSet() {
         var edgesSet = new HashSet<Edge<T>>();
         for (var vertex : vertexMap.values()) {
-            edgesSet.addAll(getVertexEdges(vertex));
+            edgesSet.addAll(getEdgesFromVertex(vertex));
+            edgesSet.addAll(getEdgesToVertex(vertex));
         }
         return edgesSet;
     }
@@ -94,7 +106,7 @@ abstract class AbstractGraph<T> {
         while (!minHeap.isEmpty()) {
             var currentVertex = minHeap.poll();
             resultDistances.put(currentVertex.getValue(), currentVertex.getDistance());
-            for (var edge : getVertexEdges(currentVertex)) {
+            for (var edge : getEdgesFromVertex(currentVertex)) {
                 if (relaxEdge(edge)) {
                     var toVertex = getVertex(edge.getTo());
                     minHeap.remove(toVertex);

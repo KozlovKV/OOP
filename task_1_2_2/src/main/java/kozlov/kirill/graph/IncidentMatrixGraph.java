@@ -40,6 +40,16 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
     @Override
     public Vertex<T> removeVertex(T value) {
         var vertex = super.removeVertex(value);
+        if (vertex == null) {
+            return null;
+        }
+        var edgesForDeletion = getEdgesFromVertex(vertex);
+        edgesForDeletion.addAll(getEdgesToVertex(vertex));
+        for (var edgesMaps : incidentMatrix.values()) {
+            for (var edge : edgesForDeletion) {
+                edgesMaps.remove(edge);
+            }
+        }
         incidentMatrix.remove(vertex);
         return vertex;
     }
@@ -67,7 +77,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
                 return false;
             }
             vertexMap.put(fromToEdge, chooseValueForMatrixCell(vertex, vertexFrom, vertexTo));
-            if (!oriented) {
+            if (!directed) {
                 vertexMap.put(toFromEdge, chooseValueForMatrixCell(vertex, vertexTo, vertexFrom));
             }
         }
@@ -83,7 +93,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
         }
         for (var edgesMap : incidentMatrix.values()) {
             edgesMap.remove(new Edge<>(a, b));
-            if (!oriented) {
+            if (!directed) {
                 edgesMap.remove(new Edge<>(b, a));
             }
         }
@@ -108,11 +118,23 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    List<Edge<T>> getVertexEdges(Vertex<T> vertex) {
+    List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
         var edgesList = new ArrayList<Edge<T>>();
         var edgesMap = incidentMatrix.get(vertex);
         for (var edge : edgesMap.keySet()) {
             if (edgesMap.get(edge) == -1) {
+                edgesList.add(edge);
+            }
+        }
+        return edgesList;
+    }
+
+    @Override
+    List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
+        var edgesList = new ArrayList<Edge<T>>();
+        var edgesMap = incidentMatrix.get(vertex);
+        for (var edge : edgesMap.keySet()) {
+            if (edgesMap.get(edge) == 1) {
                 edgesList.add(edge);
             }
         }
@@ -127,6 +149,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
         return new HashSet<>();
     }
 
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {
         var builder = new StringBuilder("  | ");
