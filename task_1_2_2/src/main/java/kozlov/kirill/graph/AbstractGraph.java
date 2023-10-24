@@ -49,15 +49,15 @@ abstract class AbstractGraph<T> {
         return vertex;
     }
 
-    abstract public boolean addEdge(T a, T b, double weight);
+    public abstract boolean addEdge(T a, T b, double weight);
 
-    abstract boolean removeEdge(T a, T b);
+    public abstract boolean removeEdge(T a, T b);
 
-    abstract Edge<T> getEdge(T a, T b);
+    public abstract Edge<T> getEdge(T a, T b);
 
-    abstract List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex);
+    public abstract List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex);
 
-    abstract List<Edge<T>> getEdgesToVertex(Vertex<T> vertex);
+    public abstract List<Edge<T>> getEdgesToVertex(Vertex<T> vertex);
 
     public Set<Edge<T>> getEdgeSet() {
         var edgesSet = new HashSet<Edge<T>>();
@@ -100,7 +100,6 @@ abstract class AbstractGraph<T> {
 
     protected Map<T, Double> dijkstra() {
         var resultDistances = new HashMap<T, Double>();
-        // Heap
         var minHeap = new PriorityQueue<Vertex<T>>(Comparator.comparingDouble(Vertex::getDistance));
         minHeap.addAll(vertexMap.values());
         while (!minHeap.isEmpty()) {

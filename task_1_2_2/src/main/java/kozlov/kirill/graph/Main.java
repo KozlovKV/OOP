@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * Main class
+ * Main class.
  */
 public class Main {
     /**
@@ -46,7 +46,5 @@ public class Main {
         graph.removeEdge("B", "D");
         var result2 = graph.constructShortestDistances("B");
         System.out.println(result2);
-//        System.out.println(graph.getEdgesFromVertex(graph.getVertex("A")));
-//        System.out.println(graph.getEdgesToVertex(graph.getVertex("A")));
     }
 }

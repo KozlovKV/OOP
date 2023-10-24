@@ -85,7 +85,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    boolean removeEdge(T a, T b) {
+    public boolean removeEdge(T a, T b) {
         var vertexFrom = getVertex(a);
         var vertexTo = getVertex(b);
         if (vertexFrom == null || vertexTo == null) {
@@ -101,7 +101,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    Edge<T> getEdge(T a, T b) {
+    public Edge<T> getEdge(T a, T b) {
         var vertexFrom = getVertex(a);
         var vertexTo = getVertex(b);
         if (vertexFrom == null || vertexTo == null) {
@@ -118,7 +118,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
+    public List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
         var edgesList = new ArrayList<Edge<T>>();
         var edgesMap = incidentMatrix.get(vertex);
         for (var edge : edgesMap.keySet()) {
@@ -130,7 +130,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
+    public List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
         var edgesList = new ArrayList<Edge<T>>();
         var edgesMap = incidentMatrix.get(vertex);
         for (var edge : edgesMap.keySet()) {

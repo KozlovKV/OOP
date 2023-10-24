@@ -59,7 +59,7 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    boolean removeEdge(T a, T b) {
+    public boolean removeEdge(T a, T b) {
         var vertexFrom = getVertex(a);
         var vertexTo = getVertex(b);
         if (vertexFrom == null || vertexTo == null) {
@@ -73,14 +73,14 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    Edge<T> getEdge(T a, T b) {
+    public Edge<T> getEdge(T a, T b) {
         var vertexFrom = getVertex(a);
         var vertexTo = getVertex(b);
         return adjacencyMatrix.get(vertexFrom).getOrDefault(vertexTo, null);
     }
 
     @Override
-    List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
+    public List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
         var edgesList = new ArrayList<Edge<T>>();
         for (var vertexTo : adjacencyMatrix.get(vertex).keySet()) {
             var edge = adjacencyMatrix.get(vertex).get(vertexTo);
@@ -93,7 +93,7 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
+    public List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
         ArrayList<Edge<T>> edges = new ArrayList<>();
         for (var verticesToMaps : adjacencyMatrix.values()) {
             var edge = verticesToMaps.get(vertex);

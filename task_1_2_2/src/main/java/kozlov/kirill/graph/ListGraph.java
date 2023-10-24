@@ -85,12 +85,12 @@ public class ListGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
+    public List<Edge<T>> getEdgesFromVertex(Vertex<T> vertex) {
         return adjacencyLists.get(vertex);
     }
 
     @Override
-    List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
+    public List<Edge<T>> getEdgesToVertex(Vertex<T> vertex) {
         ArrayList<Edge<T>> edges = new ArrayList<>();
         for (var edgesLists : adjacencyLists.values()) {
             for (var edge : edgesLists) {

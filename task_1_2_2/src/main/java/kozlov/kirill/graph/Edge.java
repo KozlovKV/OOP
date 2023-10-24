@@ -17,6 +17,13 @@ public class Edge<T> {
         this.to = to;
     }
 
+    /**
+     * Weighted edge constructor.
+     *
+     * @param from value of start vertex
+     * @param to value of end vertex
+     * @param weight double value
+     */
     public Edge(T from, T to, double weight) {
         this.from = from;
         this.to = to;
@@ -53,6 +60,7 @@ public class Edge<T> {
         return Objects.hash(from, to);
     }
 
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {
         return String.format("%s - %f -> %s", from.toString(), weight, to.toString());

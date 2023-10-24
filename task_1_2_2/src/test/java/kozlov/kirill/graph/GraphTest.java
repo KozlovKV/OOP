@@ -3,7 +3,6 @@ package kozlov.kirill.graph;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +26,7 @@ public class GraphTest {
         return predicted;
     }
 
-    static class testArgumentsProvider implements ArgumentsProvider {
+    static class StringGraphsArgumentsProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
@@ -39,7 +38,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testGraph(AbstractGraph<String> graph) {
         Main.readDataForGraphFromFile(graph, "./input.txt");
         var result = graph.constructShortestDistances("C");
@@ -47,7 +46,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testNegative(AbstractGraph<String> graph) {
         graph.changeDirectionType(true);
         graph.addEdge("A", "B", 4);
@@ -62,7 +61,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testNegativeCycle(AbstractGraph<String> graph) {
         graph.addEdge("A", "B", 4);
         graph.addEdge("A", "C", 5);
@@ -72,7 +71,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testNonReachableVertex(AbstractGraph<String> graph) {
         graph.addEdge("A", "B", 4);
         graph.addEdge("A", "C", 5);
@@ -88,7 +87,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testNonReachableVertexWithNegative(AbstractGraph<String> graph) {
         graph.changeDirectionType(true);
         graph.addEdge("A", "B", 4);
@@ -105,7 +104,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testDifferentStartPoints(AbstractGraph<String> graph) {
         graph.addEdge("A", "B", 4);
         graph.addEdge("A", "C", 5);
@@ -127,7 +126,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testDifferentStartPointsWithNegative(AbstractGraph<String> graph) {
         graph.changeDirectionType(true);
         graph.addEdge("A", "B", 4);
@@ -150,7 +149,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testVertexDeletion(AbstractGraph<String> graph) {
         graph.addEdge("C", "A", 1);
         graph.addEdge("C", "B", 1);
@@ -179,7 +178,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testEdgeDeletionUndirected(AbstractGraph<String> graph) {
         graph.addEdge("A", "B", 1);
         graph.addEdge("B", "C", 1);
@@ -207,7 +206,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testEdgeDeletionDirected(AbstractGraph<String> graph) {
         graph.changeDirectionType(true);
         graph.addEdge("A", "B", 1);
@@ -241,7 +240,7 @@ public class GraphTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(testArgumentsProvider.class)
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testEdgeWeightChanging(AbstractGraph<String> graph) {
         graph.addEdge("A", "B", 1);
         graph.addEdge("B", "C", 1);

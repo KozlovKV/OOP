@@ -45,6 +45,7 @@ public class Vertex<T> {
         return Objects.hash(value);
     }
 
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {
         return String.format("Vertex %s", value.toString());
