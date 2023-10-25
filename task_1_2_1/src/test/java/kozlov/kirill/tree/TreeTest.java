@@ -298,7 +298,7 @@ public class TreeTest {
         root.addChild(5);
         subtree.addChild(4);
         subtree.addChild(5);
-        Assertions.assertEquals(root, subtree);
+        Assertions.assertNotEquals(root, subtree);
     }
 
     @Test
