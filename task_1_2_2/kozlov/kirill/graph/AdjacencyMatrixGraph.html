@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -164,7 +164,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected java.util.Map&lt;T,&#8203;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#vertexMap">vertexMap</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#registeredVerticesMap">registeredVerticesMap</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -298,13 +298,20 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDirected()">isDirected</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Directed flag getter.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relaxEdge(kozlov.kirill.graph.Edge)">relaxEdge</a></span>&#8203;(<a href="Edge.html" title="class in kozlov.kirill.graph">Edge</a>&lt;T&gt;&nbsp;edge)</code></th>
 <td class="colLast">
 <div class="block">Edge relaxation.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEdge(T,T)">removeEdge</a></span>&#8203;(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;a,
           <a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;b)</code></th>
@@ -312,14 +319,21 @@ extends java.lang.Object</pre>
 <div class="block">Edge removing.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code><a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeVertex(T)">removeVertex</a></span>&#8203;(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;value)</code></th>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeIncidentEdges(kozlov.kirill.graph.Vertex)">removeIncidentEdges</a></span>&#8203;(<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;vertex)</code></th>
+<td class="colLast">
+<div class="block">Incident edges removing for specified vertex.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code><a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeVertex(T)">removeVertex</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
 <div class="block">Vertex removing.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -348,13 +362,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="vertexMap">
+<a id="registeredVerticesMap">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>vertexMap</h4>
-<pre>protected&nbsp;java.util.Map&lt;T,&#8203;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;&gt; vertexMap</pre>
+<h4>registeredVerticesMap</h4>
+<pre>protected&nbsp;java.util.Map&lt;T,&#8203;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;&gt; registeredVerticesMap</pre>
 </li>
 </ul>
 <a id="directed">
@@ -423,26 +437,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="removeVertex(java.lang.Object)">
-<!--   -->
-</a><a id="removeVertex(T)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>removeVertex</h4>
-<pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;removeVertex&#8203;(<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&nbsp;value)</pre>
-<div class="block">Vertex removing.
- Removes vertex and all incident edges if vertex exists.
- Edges deletion MUST BE SPECIFIED in child-classes!</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>value</code> - value of vertex</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>deleted vertex or null if it doesn't exist</dd>
-</dl>
-</li>
-</ul>
 <a id="addEdge(java.lang.Object,java.lang.Object,double)">
 <!--   -->
 </a><a id="addEdge(T,T,double)">
@@ -486,6 +480,20 @@ extends java.lang.Object</pre>
 <dd><code>b</code> - second vertex value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>`true` if all deletions were successful</dd>
+</dl>
+</li>
+</ul>
+<a id="removeIncidentEdges(kozlov.kirill.graph.Vertex)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeIncidentEdges</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;removeIncidentEdges&#8203;(<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;<a href="AdjacencyMatrixGraph.html" title="type parameter in AdjacencyMatrixGraph">T</a>&gt;&nbsp;vertex)</pre>
+<div class="block">Incident edges removing for specified vertex.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>vertex</code> - vertex for which we want to delete incident edges</dd>
 </dl>
 </li>
 </ul>
@@ -560,12 +568,29 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>changeDirectionType</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;changeDirectionType&#8203;(boolean&nbsp;newOrientation)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;changeDirectionType&#8203;(boolean&nbsp;newOrientation)
+                         throws java.lang.UnsupportedOperationException</pre>
 <div class="block">Directed flag setter.
  We can change direction type for graph without edges.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>newOrientation</code> - new value for `directed` field</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.UnsupportedOperationException</code></dd>
+</dl>
+</li>
+</ul>
+<a id="isDirected()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDirected</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isDirected()</pre>
+<div class="block">Directed flag getter.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>value of `directed` field</dd>
 </dl>
 </li>
 </ul>
@@ -584,6 +609,25 @@ extends java.lang.Object</pre>
 <dd><code>value</code> - value of vertex</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>`Vertex` object if it exists otherwise `null`</dd>
+</dl>
+</li>
+</ul>
+<a id="removeVertex(java.lang.Object)">
+<!--   -->
+</a><a id="removeVertex(T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeVertex</h4>
+<pre class="methodSignature">public&nbsp;<a href="Vertex.html" title="class in kozlov.kirill.graph">Vertex</a>&lt;T&gt;&nbsp;removeVertex&#8203;(T&nbsp;value)</pre>
+<div class="block">Vertex removing.
+ Removes vertex and all incident edges if vertex exists.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>value</code> - value of vertex</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>deleted vertex or null if it doesn't exist</dd>
 </dl>
 </li>
 </ul>
