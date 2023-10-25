@@ -13,7 +13,16 @@ import java.util.Set;
  * @param <T> type of graph's vertices.
  */
 public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
-    Map<Vertex<T>, Map<Edge<T>, Integer>> incidentMatrix = new HashMap<>();
+    /**
+     * Enumeration describing incident-status between vertex and edge.
+     */
+    private enum IncidentDirection {
+        FROM, ///< Vertex is on the first position in edge
+        NONE, ///< There is no relation
+        TO ///< Vertex is on the second position in edge
+    }
+
+    Map<Vertex<T>, Map<Edge<T>, IncidentDirection>> incidentMatrix = new HashMap<>();
 
     public IncidentMatrixGraph() {
         super(false);
@@ -29,40 +38,23 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
         if (incidentMatrix.containsKey(vertex)) {
             return vertex;
         }
-        var newVertexMap = new HashMap<Edge<T>, Integer>();
+        var newVertexMap = new HashMap<Edge<T>, IncidentDirection>();
         for (var edge : getEdgeSet()) {
-            newVertexMap.put(edge, 0);
+            newVertexMap.put(edge, IncidentDirection.NONE);
         }
         incidentMatrix.putIfAbsent(vertex, newVertexMap);
         return vertex;
     }
 
-    @Override
-    public Vertex<T> removeVertex(T value) {
-        var vertex = super.removeVertex(value);
-        if (vertex == null) {
-            return null;
-        }
-        var edgesForDeletion = getEdgesFromVertex(vertex);
-        edgesForDeletion.addAll(getEdgesToVertex(vertex));
-        for (var edgesMaps : incidentMatrix.values()) {
-            for (var edge : edgesForDeletion) {
-                edgesMaps.remove(edge);
-            }
-        }
-        incidentMatrix.remove(vertex);
-        return vertex;
-    }
-
-    private int chooseValueForMatrixCell(
+    private IncidentDirection chooseValueForMatrixCell(
             Vertex<T> currentVertex, Vertex<T> fromVertex, Vertex<T> toVertex) {
         if (currentVertex.equals(fromVertex)) {
-            return -1;
+            return IncidentDirection.FROM;
         }
         if (currentVertex.equals(toVertex)) {
-            return 1;
+            return IncidentDirection.TO;
         }
-        return 0;
+        return IncidentDirection.NONE;
     }
 
     @Override
@@ -102,6 +94,18 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
+    public void removeIncidentEdges(Vertex<T> vertex) {
+        var edgesForDeletion = getEdgesFromVertex(vertex);
+        edgesForDeletion.addAll(getEdgesToVertex(vertex));
+        for (var edgesMaps : incidentMatrix.values()) {
+            for (var edge : edgesForDeletion) {
+                edgesMaps.remove(edge);
+            }
+        }
+        incidentMatrix.remove(vertex);
+    }
+
+    @Override
     public Edge<T> getEdge(T a, T b) {
         var vertexFrom = getVertex(a);
         var vertexTo = getVertex(b);
@@ -111,7 +115,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
         var fromEdgesMap = incidentMatrix.get(vertexFrom);
         var tmpEdge = new Edge<>(a, b);
         for (var edge : fromEdgesMap.keySet()) {
-            if (edge.equals(tmpEdge) && fromEdgesMap.get(edge) == -1) {
+            if (edge.equals(tmpEdge) && fromEdgesMap.get(edge) == IncidentDirection.FROM) {
                 return edge;
             }
         }
@@ -123,7 +127,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
         var edgesList = new ArrayList<Edge<T>>();
         var edgesMap = incidentMatrix.get(vertex);
         for (var edge : edgesMap.keySet()) {
-            if (edgesMap.get(edge) == -1) {
+            if (edgesMap.get(edge) == IncidentDirection.FROM) {
                 edgesList.add(edge);
             }
         }
@@ -135,7 +139,7 @@ public class IncidentMatrixGraph<T> extends AbstractGraph<T> {
         var edgesList = new ArrayList<Edge<T>>();
         var edgesMap = incidentMatrix.get(vertex);
         for (var edge : edgesMap.keySet()) {
-            if (edgesMap.get(edge) == 1) {
+            if (edgesMap.get(edge) == IncidentDirection.TO) {
                 edgesList.add(edge);
             }
         }

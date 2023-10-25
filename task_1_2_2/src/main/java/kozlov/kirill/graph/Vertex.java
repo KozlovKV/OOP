@@ -15,7 +15,7 @@ public class Vertex<T> {
         this.value = value;
     }
 
-    public void resetDistance() {
+    void resetDistance() {
         distance = Double.MAX_VALUE;
     }
 
@@ -23,7 +23,7 @@ public class Vertex<T> {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    void setDistance(double distance) {
         this.distance = distance;
     }
 

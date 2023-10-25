@@ -266,4 +266,16 @@ public class GraphTest {
         var result2 = graph.constructShortestDistances("B");
         Assertions.assertEquals(predicted2, result2);
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(StringGraphsArgumentsProvider.class)
+    void testDirectionTypeException(AbstractGraph<String> graph) {
+        graph.addVertex("A");
+        graph.changeDirectionType(true);
+        Assertions.assertTrue(graph.isDirected());
+        graph.addEdge("A", "B", 5);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            graph.changeDirectionType(false);
+        });
+    }
 }

@@ -14,7 +14,7 @@ import java.util.Set;
  * @param <T> type of graph's vertices
  */
 abstract class AbstractGraph<T> {
-    protected Map<T, Vertex<T>> vertexMap = new HashMap<>();
+    protected Map<T, Vertex<T>> registeredVerticesMap = new HashMap<>();
     protected boolean directed = false;
 
     /**
@@ -32,10 +32,22 @@ abstract class AbstractGraph<T> {
      *
      * @param newOrientation new value for `directed` field
      */
-    public void changeDirectionType(boolean newOrientation) {
+    public void changeDirectionType(boolean newOrientation) throws UnsupportedOperationException {
         if (getEdgeSet().isEmpty()) {
             directed = newOrientation;
         }
+        if (directed != newOrientation) {
+            throw new UnsupportedOperationException("You cannot change direction type only in graph without edges");
+        }
+    }
+
+    /**
+     * Directed flag getter.
+     *
+     * @return value of `directed` field
+     */
+    public boolean isDirected() {
+        return directed;
     }
 
     /**
@@ -45,7 +57,7 @@ abstract class AbstractGraph<T> {
      * @return `Vertex` object if it exists otherwise `null`
      */
     public Vertex<T> getVertex(T value) {
-        return vertexMap.getOrDefault(value, null);
+        return registeredVerticesMap.getOrDefault(value, null);
     }
 
     /**
@@ -56,28 +68,28 @@ abstract class AbstractGraph<T> {
      * @return created or got vertex
      */
     public Vertex<T> addVertex(T value) {
-        if (vertexMap.containsKey(value)) {
-            return vertexMap.get(value);
+        if (registeredVerticesMap.containsKey(value)) {
+            return registeredVerticesMap.get(value);
         }
         var newVertex = new Vertex<>(value);
-        vertexMap.putIfAbsent(value, newVertex);
+        registeredVerticesMap.putIfAbsent(value, newVertex);
         return newVertex;
     }
 
     /**
      * Vertex removing.
      * Removes vertex and all incident edges if vertex exists.
-     * Edges deletion MUST BE SPECIFIED in child-classes!
      *
      * @param value value of vertex
      * @return deleted vertex or null if it doesn't exist
      */
     public Vertex<T> removeVertex(T value) {
-        if (!vertexMap.containsKey(value)) {
+        if (!registeredVerticesMap.containsKey(value)) {
             return null;
         }
-        var vertex = vertexMap.get(value);
-        vertexMap.remove(value);
+        var vertex = registeredVerticesMap.get(value);
+        removeIncidentEdges(vertex);
+        registeredVerticesMap.remove(value);
         return vertex;
     }
 
@@ -103,6 +115,13 @@ abstract class AbstractGraph<T> {
      * @return `true` if all deletions were successful
      */
     public abstract boolean removeEdge(T a, T b);
+
+    /**
+     * Incident edges removing for specified vertex.
+     *
+     * @param vertex vertex for which we want to delete incident edges
+     */
+    public abstract void removeIncidentEdges(Vertex<T> vertex);
 
     /**
      * Edge getter.
@@ -137,7 +156,7 @@ abstract class AbstractGraph<T> {
      */
     public Set<Edge<T>> getEdgeSet() {
         var edgesSet = new HashSet<Edge<T>>();
-        for (var vertex : vertexMap.values()) {
+        for (var vertex : registeredVerticesMap.values()) {
             edgesSet.addAll(getEdgesFromVertex(vertex));
             edgesSet.addAll(getEdgesToVertex(vertex));
         }
@@ -163,7 +182,7 @@ abstract class AbstractGraph<T> {
      */
     public Map<T, Double> constructShortestDistances(T start) {
         // Initialization
-        vertexMap.values().forEach(Vertex::resetDistance);
+        registeredVerticesMap.values().forEach(Vertex::resetDistance);
         var startVertex = getVertex(start);
         if (startVertex == null) {
             return null;
@@ -200,7 +219,7 @@ abstract class AbstractGraph<T> {
     protected Map<T, Double> dijkstra() {
         var resultDistances = new HashMap<T, Double>();
         var minHeap = new PriorityQueue<Vertex<T>>(Comparator.comparingDouble(Vertex::getDistance));
-        minHeap.addAll(vertexMap.values());
+        minHeap.addAll(registeredVerticesMap.values());
         while (!minHeap.isEmpty()) {
             var currentVertex = minHeap.poll();
             resultDistances.put(currentVertex.getValue(), currentVertex.getDistance());
@@ -223,14 +242,14 @@ abstract class AbstractGraph<T> {
     protected Map<T, Double> bellmanFord() {
         var resultDistances = new HashMap<T, Double>();
         var edges = getEdgeSet();
-        for (int i = 0; i < vertexMap.size(); ++i) {
+        for (int i = 0; i < registeredVerticesMap.size(); ++i) {
             for (var edge : edges) {
-                if (relaxEdge(edge) && i == vertexMap.size() - 1) {
+                if (relaxEdge(edge) && i == registeredVerticesMap.size() - 1) {
                     return null;
                 }
             }
         }
-        for (var vertex : vertexMap.values()) {
+        for (var vertex : registeredVerticesMap.values()) {
             resultDistances.put(vertex.getValue(), vertex.getDistance());
         }
         return resultDistances;

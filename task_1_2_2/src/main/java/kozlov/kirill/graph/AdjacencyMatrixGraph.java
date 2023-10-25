@@ -33,16 +33,6 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    public Vertex<T> removeVertex(T value) {
-        var vertex = super.removeVertex(value);
-        adjacencyMatrix.remove(vertex);
-        for (var row : adjacencyMatrix.values()) {
-            row.remove(vertex);
-        }
-        return vertex;
-    }
-
-    @Override
     public boolean addEdge(T a, T b, double weight) {
         var vertexFrom = addVertex(a);
         var vertexTo = addVertex(b);
@@ -70,6 +60,14 @@ public class AdjacencyMatrixGraph<T> extends AbstractGraph<T> {
             flag = flag && adjacencyMatrix.get(vertexTo).put(vertexFrom, null) != null;
         }
         return flag;
+    }
+
+    @Override
+    public void removeIncidentEdges(Vertex<T> vertex) {
+        adjacencyMatrix.remove(vertex);
+        for (var row : adjacencyMatrix.values()) {
+            row.remove(vertex);
+        }
     }
 
     @Override

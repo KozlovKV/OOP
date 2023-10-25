@@ -29,17 +29,6 @@ public class ListGraph<T> extends AbstractGraph<T> {
     }
 
     @Override
-    public Vertex<T> removeVertex(T value) {
-        var vertex = super.removeVertex(value);
-        for (var edge : getEdgesToVertex(vertex)) {
-            var fromVertex = getVertex(edge.getFrom());
-            adjacencyLists.get(fromVertex).remove(edge);
-        }
-        adjacencyLists.remove(vertex);
-        return vertex;
-    }
-
-    @Override
     public boolean addEdge(T a, T b, double weight) {
         var vertexFrom = addVertex(a);
         var vertexTo = addVertex(b);
@@ -67,6 +56,15 @@ public class ListGraph<T> extends AbstractGraph<T> {
             return adjacencyLists.get(vertexTo).remove(new Edge<>(b, a));
         }
         return res;
+    }
+
+    @Override
+    public void removeIncidentEdges(Vertex<T> vertex) {
+        for (var edge : getEdgesToVertex(vertex)) {
+            var fromVertex = getVertex(edge.getFrom());
+            adjacencyLists.get(fromVertex).remove(edge);
+        }
+        adjacencyLists.remove(vertex);
     }
 
     @Override
