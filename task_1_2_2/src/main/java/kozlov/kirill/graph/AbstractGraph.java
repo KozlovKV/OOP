@@ -37,7 +37,9 @@ abstract class AbstractGraph<T> {
             directed = newOrientation;
         }
         if (directed != newOrientation) {
-            throw new UnsupportedOperationException("You cannot change direction type only in graph without edges");
+            throw new UnsupportedOperationException(
+                "You cannot change direction type only in graph without edges"
+            );
         }
     }
 
