@@ -1,5 +1,8 @@
 package kozlov.kirill.finders;
 
+/**
+ * StringFinder child class with simple finding method.
+ */
 public class SimpleStringFinder extends StringFinder {
     private String previousFragmentPostfix = "";
 
@@ -33,7 +36,7 @@ public class SimpleStringFinder extends StringFinder {
                 }
             }
             previousFragmentPostfix = buffer.substring(buffer.length() - searchTarget.length() + 1, buffer.length());
-            filePositions = buffer.length() - previousFragmentPostfix.length();
+            filePositions += buffer.length() - previousFragmentPostfix.length();
         }
     }
 }
