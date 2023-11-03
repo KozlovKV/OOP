@@ -122,7 +122,7 @@ public abstract class StringFinder {
     /**
      * Program entry point.
      *
-     * @param args cmds' args
+     * @param args args from shell
      */
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
