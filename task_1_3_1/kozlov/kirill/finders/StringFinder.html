@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":9,"i2":10,"i3":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -136,7 +136,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public abstract class <span class="typeNameLabel">StringFinder</span>
 extends java.lang.Object</pre>
-<div class="block">Abstract string finder class</div>
+<div class="block">Abstract string finder class.</div>
 </li>
 </ul>
 </div>
@@ -164,7 +164,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CAPACITY">CAPACITY</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#capacity">capacity</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -230,7 +230,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -244,13 +244,20 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#main(java.lang.String%5B%5D)">main</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
+<td class="colLast">
+<div class="block">Program entry point.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openFile(java.lang.String)">openFile</a></span>&#8203;(java.lang.String&nbsp;filename)</code></th>
 <td class="colLast">
 <div class="block">Opener file for reading.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSearchTarget(java.lang.String)">setSearchTarget</a></span>&#8203;(java.lang.String&nbsp;searchTarget)</code></th>
 <td class="colLast">
@@ -281,16 +288,16 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="CAPACITY">
+<a id="capacity">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>CAPACITY</h4>
-<pre>protected final&nbsp;int CAPACITY</pre>
+<h4>capacity</h4>
+<pre>protected final&nbsp;int capacity</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#kozlov.kirill.finders.StringFinder.CAPACITY">Constant Field Values</a></dd>
+<dd><a href="../../../constant-values.html#kozlov.kirill.finders.StringFinder.capacity">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -428,7 +435,7 @@ extends java.lang.Object</pre>
 <a id="getTargetsFoundPositions()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getTargetsFoundPositions</h4>
 <pre class="methodSignature">public&nbsp;java.util.LinkedList&lt;java.lang.Long&gt;&nbsp;getTargetsFoundPositions()</pre>
@@ -437,6 +444,20 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>LinkedList with start indexes of insertions of searchTarget
  which got after the last call of find()</dd>
+</dl>
+</li>
+</ul>
+<a id="main(java.lang.String[])">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>main</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;main&#8203;(java.lang.String[]&nbsp;args)</pre>
+<div class="block">Program entry point.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>args</code> - cmds' args</dd>
 </dl>
 </li>
 </ul>
