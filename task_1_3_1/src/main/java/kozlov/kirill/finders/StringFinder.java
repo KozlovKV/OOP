@@ -52,7 +52,7 @@ public abstract class StringFinder {
         } catch (IOException e) {
             return -1;
         }
-        if (!buffer.isEmpty()) {
+        if (buffer.length() > 0) {
             buffer.delete(0, buffer.length());
         }
         buffer.append(charBuffer, 0, readCharsCount);
