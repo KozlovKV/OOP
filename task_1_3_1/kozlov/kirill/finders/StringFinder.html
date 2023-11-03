@@ -136,6 +136,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public abstract class <span class="typeNameLabel">StringFinder</span>
 extends java.lang.Object</pre>
+<div class="block">Abstract string finder class</div>
 </li>
 </ul>
 </div>
@@ -200,16 +201,22 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">StringFinder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Basic constructor.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">StringFinder</a></span>&#8203;(java.lang.String&nbsp;filename)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructor with specified file.</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String)">StringFinder</a></span>&#8203;(java.lang.String&nbsp;target,
             java.lang.String&nbsp;filename)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructor with specified file and search target.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -232,17 +239,23 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.util.LinkedList&lt;java.lang.Long&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTargetsFoundPositions()">getTargetsFoundPositions</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">targetsFoundPositions getter.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openFile(java.lang.String)">openFile</a></span>&#8203;(java.lang.String&nbsp;filename)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Opener file for reading.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSearchTarget(java.lang.String)">setSearchTarget</a></span>&#8203;(java.lang.String&nbsp;searchTarget)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Search string setter.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -334,6 +347,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>StringFinder</h4>
 <pre>public&nbsp;StringFinder()</pre>
+<div class="block">Basic constructor.
+ Before using object call setSearchTarget() and openFile()</div>
 </li>
 </ul>
 <a id="&lt;init&gt;(java.lang.String)">
@@ -343,6 +358,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>StringFinder</h4>
 <pre>public&nbsp;StringFinder&#8203;(java.lang.String&nbsp;filename)</pre>
+<div class="block">Constructor with specified file.
+ Before using object call setSearchTarget()</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>filename</code> - path to file for finding</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(java.lang.String,java.lang.String)">
@@ -353,6 +374,12 @@ extends java.lang.Object</pre>
 <h4>StringFinder</h4>
 <pre>public&nbsp;StringFinder&#8203;(java.lang.String&nbsp;target,
                     java.lang.String&nbsp;filename)</pre>
+<div class="block">Constructor with specified file and search target.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>target</code> - string for searching</dd>
+<dd><code>filename</code> - path to file for finding</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -371,7 +398,15 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setSearchTarget</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSearchTarget&#8203;(java.lang.String&nbsp;searchTarget)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSearchTarget&#8203;(java.lang.String&nbsp;searchTarget)
+                     throws java.lang.UnsupportedOperationException</pre>
+<div class="block">Search string setter.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>searchTarget</code> - string for searching</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.UnsupportedOperationException</code> - throws exception weather search target is empty</dd>
+</dl>
 </li>
 </ul>
 <a id="openFile(java.lang.String)">
@@ -381,6 +416,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>openFile</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;openFile&#8203;(java.lang.String&nbsp;filename)</pre>
+<div class="block">Opener file for reading.
+ Opens file by specified path and save BufferedReader with encoding
+ UTF-8 for it</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>filename</code> - path to file for finding</dd>
+</dl>
 </li>
 </ul>
 <a id="getTargetsFoundPositions()">
@@ -390,6 +432,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getTargetsFoundPositions</h4>
 <pre class="methodSignature">public&nbsp;java.util.LinkedList&lt;java.lang.Long&gt;&nbsp;getTargetsFoundPositions()</pre>
+<div class="block">targetsFoundPositions getter.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>LinkedList with start indexes of insertions of searchTarget
+ which got after the last call of find()</dd>
+</dl>
 </li>
 </ul>
 </li>

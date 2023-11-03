@@ -27,6 +27,12 @@
     catch(err) {
     }
 //-->
+var data = {"i0":32,"i1":2,"i2":2,"i3":2};
+var tabs = {65535:["t0","All Classes"],2:["t2","Class Summary"],32:["t6","Annotation Types Summary"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 var pathtoroot = "./";
 var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
@@ -98,22 +104,34 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <table class="typeSummary">
-<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Classes</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Class Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Annotation Types Summary</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><a href="kozlov/kirill/finders/Main.html" title="class in kozlov.kirill.finders">Main</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="kozlov/kirill/finders/ExcludeFromJacocoGeneratedReport.html" title="annotation in kozlov.kirill.finders">ExcludeFromJacocoGeneratedReport</a></td>
+<th class="colLast" scope="row">
+<div class="block">Excluding From Jacoco Test Report interface.</div>
+</th>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><a href="kozlov/kirill/finders/SimpleStringFinder.html" title="class in kozlov.kirill.finders">SimpleStringFinder</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="kozlov/kirill/finders/Main.html" title="class in kozlov.kirill.finders">Main</a></td>
+<th class="colLast" scope="row">
+<div class="block">Main class entry point.</div>
+</th>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><a href="kozlov/kirill/finders/SimpleStringFinder.html" title="class in kozlov.kirill.finders">SimpleStringFinder</a></td>
+<th class="colLast" scope="row">
+<div class="block">StringFinder child class with simple finding method.</div>
+</th>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><a href="kozlov/kirill/finders/StringFinder.html" title="class in kozlov.kirill.finders">StringFinder</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Abstract string finder class</div>
+</th>
 </tr>
 </table>
 </li>

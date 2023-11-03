@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"kozlov.kirill.finders","l":"Main"},{"p":"kozlov.kirill.finders","l":"SimpleStringFinder"},{"p":"kozlov.kirill.finders","l":"StringFinder"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"kozlov.kirill.finders","l":"ExcludeFromJacocoGeneratedReport"},{"p":"kozlov.kirill.finders","l":"Main"},{"p":"kozlov.kirill.finders","l":"SimpleStringFinder"},{"p":"kozlov.kirill.finders","l":"StringFinder"}]
