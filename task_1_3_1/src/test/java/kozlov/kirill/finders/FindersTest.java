@@ -23,7 +23,7 @@ public class FindersTest {
     @ParameterizedTest
     @ArgumentsSource(StringGraphsArgumentsProvider.class)
     void testGraph(StringFinder finder) {
-        finder.setSearchTarget("απΰ");
+        finder.setSearchTarget("Π±Ρ€Π°");
         finder.openFile("input.txt");
         finder.find();
         LinkedList<Long> predictedList = new LinkedList<>();
