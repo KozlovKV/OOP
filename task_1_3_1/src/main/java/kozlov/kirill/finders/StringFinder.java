@@ -37,10 +37,10 @@ public abstract class StringFinder {
     /**
      * Constructor with specified file and search target.
      *
-     * @param target string for searching
      * @param filename path to file for finding
+     * @param target string for searching
      */
-    public StringFinder(String target, String filename) {
+    public StringFinder(String filename, String target) {
         setSearchTarget(target);
         openFile(filename);
     }
@@ -126,7 +126,7 @@ public abstract class StringFinder {
      */
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
-        StringFinder finder = new SimpleStringFinder("aa", "./data/16GB.txt");
+        StringFinder finder = new SimpleStringFinder("./data/16GB.txt", "aa");
         finder.find();
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 1048575);

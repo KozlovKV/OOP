@@ -14,8 +14,8 @@ public class SimpleStringFinder extends StringFinder {
         super(filename);
     }
 
-    public SimpleStringFinder(String target, String filename) {
-        super(target, filename);
+    public SimpleStringFinder(String filename, String target) {
+        super(filename, target);
     }
 
     @Override
@@ -35,7 +35,9 @@ public class SimpleStringFinder extends StringFinder {
                     bufferIndex = buffer.indexOf(searchTarget, bufferIndex + 1);
                 }
             }
-            previousFragmentPostfix = buffer.substring(buffer.length() - searchTarget.length() + 1, buffer.length());
+            previousFragmentPostfix = buffer.substring(
+                buffer.length() - searchTarget.length() + 1, buffer.length()
+            );
             filePositions += buffer.length() - previousFragmentPostfix.length();
         }
     }
