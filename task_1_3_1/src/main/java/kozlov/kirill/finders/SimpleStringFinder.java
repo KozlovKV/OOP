@@ -30,9 +30,9 @@ public class SimpleStringFinder extends StringFinder {
             }
             bufferIndex = buffer.indexOf(searchTarget);
             while (bufferIndex != -1) {
-                targetsFoundPositions.add(filePositions + (long)bufferIndex);
+                targetsFoundPositions.add(filePositions + (long) bufferIndex);
                 if (bufferIndex + 1 < buffer.length()) {
-                    bufferIndex = buffer.indexOf(searchTarget, bufferIndex+1);
+                    bufferIndex = buffer.indexOf(searchTarget, bufferIndex + 1);
                 }
             }
             previousFragmentPostfix = buffer.substring(buffer.length() - searchTarget.length() + 1, buffer.length());

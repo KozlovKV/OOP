@@ -30,8 +30,8 @@ public class FindersTest {
         finder.openFile("./data/russian.txt");
         finder.find();
         LinkedList<Long> predictedList = new LinkedList<>();
-        predictedList.add((long)1);
-        predictedList.add((long)8);
+        predictedList.add((long) 1);
+        predictedList.add((long) 8);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
     }
 
@@ -42,7 +42,7 @@ public class FindersTest {
         finder.openFile("./data/german.txt");
         finder.find();
         LinkedList<Long> predictedList = new LinkedList<>();
-        predictedList.add((long)22);
+        predictedList.add((long) 22);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
     }
 
@@ -53,7 +53,7 @@ public class FindersTest {
         finder.openFile("./data/chinese.txt");
         finder.find();
         LinkedList<Long> predictedList = new LinkedList<>();
-        predictedList.add((long)25);
+        predictedList.add((long) 25);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
     }
 
@@ -75,7 +75,7 @@ public class FindersTest {
         finder.openFile("./data/multilines.txt");
         finder.find();
         LinkedList<Long> predictedList = new LinkedList<>();
-        predictedList.add((long)50);
+        predictedList.add((long) 50);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
     }
 
@@ -96,7 +96,7 @@ public class FindersTest {
         finder.openFile("./data/russian.txt");
         finder.find();
         LinkedList<Long> predictedList = new LinkedList<>();
-        predictedList.add((long)0);
+        predictedList.add((long) 0);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
     }
 
@@ -107,7 +107,7 @@ public class FindersTest {
         finder.openFile("./data/2MB.txt");
         finder.find();
         LinkedList<Long> predictedList = new LinkedList<>();
-        predictedList.add((long)1048575);
+        predictedList.add((long) 1048575);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
     }
 
@@ -123,8 +123,8 @@ public class FindersTest {
 //        finder.openFile("./data/16GB.txt");
 //        finder.find();
 //        LinkedList<Long> predictedList = new LinkedList<>();
-//        predictedList.add((long)1048575);
-//        predictedList.add((long)16 * 1024 * 1024 * 1024 - 1048577);
+//        predictedList.add((long) 1048575);
+//        predictedList.add((long) 16 * 1024 * 1024 * 1024 - 1048577);
 //        Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
 //    }
 }

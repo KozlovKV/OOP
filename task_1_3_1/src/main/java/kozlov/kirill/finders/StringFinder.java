@@ -1,16 +1,18 @@
 package kozlov.kirill.finders;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 
 /**
- * Abstract string finder class
+ * Abstract string finder class.
  */
 public abstract class StringFinder {
-    protected final int CAPACITY = 1048576; // 1 MB
+    protected final int capacity = 1048576; // 1 MB
     protected StringBuffer buffer = new StringBuffer();
     protected BufferedReader reader = null;
     protected String searchTarget = "";
@@ -70,7 +72,7 @@ public abstract class StringFinder {
             InputStreamReader inputStreamReader = new InputStreamReader(
                     fileInputStream, StandardCharsets.UTF_8
             );
-            this.reader = new BufferedReader(inputStreamReader, CAPACITY);
+            this.reader = new BufferedReader(inputStreamReader, capacity);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +85,7 @@ public abstract class StringFinder {
      * @return read chars count or -1 when nothing was read
      */
     int readFragment() {
-        char[] charBuffer = new char[CAPACITY];
+        char[] charBuffer = new char[capacity];
         int readCharsCount = 0;
         try {
             readCharsCount = reader.read(charBuffer);
@@ -115,5 +117,23 @@ public abstract class StringFinder {
      */
     public LinkedList<Long> getTargetsFoundPositions() {
         return targetsFoundPositions;
+    }
+
+    /**
+     * Program entry point.
+     *
+     * @param args cmds' args
+     */
+    @ExcludeFromJacocoGeneratedReport
+    public static void main(String[] args) {
+        StringFinder finder = new SimpleStringFinder("aa", "./data/16GB.txt");
+        finder.find();
+        LinkedList<Long> predictedList = new LinkedList<>();
+        predictedList.add((long) 1048575);
+        predictedList.add((long) 16 * 1024 * 1024 * 1024 - 1048577);
+        System.out.println("Expected:");
+        System.out.println(predictedList);
+        System.out.println("Got:");
+        System.out.println(finder.getTargetsFoundPositions());
     }
 }
