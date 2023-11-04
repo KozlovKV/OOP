@@ -27,6 +27,12 @@
     catch(err) {
     }
 //-->
+var data = {"i0":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 var pathtoroot = "../../../";
 var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
@@ -90,7 +96,7 @@ loadScripts(document, 'script');</script>
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a id="skip.navbar.top">
@@ -172,15 +178,6 @@ extends <a href="StringFinder.html" title="class in kozlov.kirill.finders">Strin
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">SimpleStringFinder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">SimpleStringFinder</a></span>&#8203;(java.lang.String&nbsp;filename)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String)">SimpleStringFinder</a></span>&#8203;(java.lang.String&nbsp;filename,
-                  java.lang.String&nbsp;target)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 </table>
 </li>
 </ul>
@@ -192,12 +189,25 @@ extends <a href="StringFinder.html" title="class in kozlov.kirill.finders">Strin
 <!--   -->
 </a>
 <h3>Method Summary</h3>
+<table class="memberSummary">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findingCycle()">findingCycle</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.kozlov.kirill.finders.StringFinder">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;kozlov.kirill.finders.<a href="StringFinder.html" title="class in kozlov.kirill.finders">StringFinder</a></h3>
-<code><a href="StringFinder.html#getTargetsFoundPositions()">getTargetsFoundPositions</a>, <a href="StringFinder.html#main(java.lang.String%5B%5D)">main</a>, <a href="StringFinder.html#openFile(java.lang.String)">openFile</a>, <a href="StringFinder.html#setSearchTarget(java.lang.String)">setSearchTarget</a></code></li>
+<code><a href="StringFinder.html#find(java.lang.String,java.lang.String)">find</a>, <a href="StringFinder.html#getTargetsFoundPositions()">getTargetsFoundPositions</a>, <a href="StringFinder.html#main(java.lang.String%5B%5D)">main</a>, <a href="StringFinder.html#readFragment()">readFragment</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -225,29 +235,33 @@ extends <a href="StringFinder.html" title="class in kozlov.kirill.finders">Strin
 <a id="&lt;init&gt;()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>SimpleStringFinder</h4>
 <pre>public&nbsp;SimpleStringFinder()</pre>
 </li>
 </ul>
-<a id="&lt;init&gt;(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>SimpleStringFinder</h4>
-<pre>public&nbsp;SimpleStringFinder&#8203;(java.lang.String&nbsp;filename)</pre>
 </li>
 </ul>
-<a id="&lt;init&gt;(java.lang.String,java.lang.String)">
+</section>
+<!-- ============ METHOD DETAIL ========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="method.detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a id="findingCycle()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>SimpleStringFinder</h4>
-<pre>public&nbsp;SimpleStringFinder&#8203;(java.lang.String&nbsp;filename,
-                          java.lang.String&nbsp;target)</pre>
+<h4>findingCycle</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;findingCycle()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="StringFinder.html#findingCycle()">findingCycle</a></code>&nbsp;in class&nbsp;<code><a href="StringFinder.html" title="class in kozlov.kirill.finders">StringFinder</a></code></dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -309,7 +323,7 @@ extends <a href="StringFinder.html" title="class in kozlov.kirill.finders">Strin
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a id="skip.navbar.bottom">
