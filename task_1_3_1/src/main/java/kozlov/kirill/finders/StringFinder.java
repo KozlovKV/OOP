@@ -1,8 +1,8 @@
 package kozlov.kirill.finders;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -46,12 +46,14 @@ public abstract class StringFinder {
      */
     private void openFile(String filename) {
         try {
-            FileInputStream fileInputStream = new FileInputStream(filename);
+
+            InputStream fileInputStream =
+                    getClass().getClassLoader().getResourceAsStream(filename);
             InputStreamReader inputStreamReader = new InputStreamReader(
                     fileInputStream, StandardCharsets.UTF_8
             );
             this.reader = new BufferedReader(inputStreamReader, capacity);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

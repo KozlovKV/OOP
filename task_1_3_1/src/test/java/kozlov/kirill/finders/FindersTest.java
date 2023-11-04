@@ -26,7 +26,7 @@ public class FindersTest {
     @ParameterizedTest
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
     void russianTest(StringFinder finder) {
-        finder.find("./data/russian.txt", "бра");
+        finder.find("russian.txt", "бра");
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 1);
         predictedList.add((long) 8);
@@ -36,7 +36,7 @@ public class FindersTest {
     @ParameterizedTest
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
     void germanTest(StringFinder finder) {
-        finder.find("./data/german.txt", "ü");
+        finder.find("german.txt", "ü");
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 22);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
@@ -45,7 +45,7 @@ public class FindersTest {
     @ParameterizedTest
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
     void chineseTest(StringFinder finder) {
-        finder.find("./data/chinese.txt", "飘");
+        finder.find("chinese.txt", "飘");
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 25);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
@@ -55,7 +55,7 @@ public class FindersTest {
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
     void emptyTargetTest(StringFinder finder) {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            finder.find("./data/russian.txt", "");
+            finder.find("russian.txt", "");
             Assertions.assertTrue(finder.getTargetsFoundPositions().isEmpty());
         });
     }
@@ -63,7 +63,7 @@ public class FindersTest {
     @ParameterizedTest
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
     void multiLinesTest(StringFinder finder) {
-        finder.find("./data/multilines.txt", "test");
+        finder.find("multilines.txt", "test");
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 50);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
@@ -72,7 +72,7 @@ public class FindersTest {
     @ParameterizedTest
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
     void notFoundTest(StringFinder finder) {
-        finder.find("./data/russian.txt", "hello");
+        finder.find("russian.txt", "hello");
         LinkedList<Long> predictedList = new LinkedList<>();
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
     }
@@ -80,7 +80,7 @@ public class FindersTest {
     @ParameterizedTest
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
     void fullFileTargetTest(StringFinder finder) {
-        finder.find("./data/russian.txt", "абракадабра");
+        finder.find("russian.txt", "абракадабра");
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 0);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
@@ -89,7 +89,7 @@ public class FindersTest {
     @ParameterizedTest
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
     void twoMbTest(StringFinder finder) {
-        finder.find("./data/2MB.txt", "aa");
+        finder.find("2MB.txt", "aa");
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 1048575);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
@@ -103,7 +103,7 @@ public class FindersTest {
 //        @ParameterizedTest
 //        @ArgumentsSource(MainStringFinderArgumentsProvider.class)
 //        void insaneLargeTest(StringFinder finder) {
-//            finder.find("./data/16GB.txt", "aa");
+//            finder.find("16GB.txt", "aa");
 //            LinkedList<Long> predictedList = new LinkedList<>();
 //            predictedList.add((long) 1048575);
 //            predictedList.add((long) 16 * 1024 * 1024 * 1024 - 1048577);
