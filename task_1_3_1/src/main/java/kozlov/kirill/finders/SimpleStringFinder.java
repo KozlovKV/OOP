@@ -10,16 +10,8 @@ public class SimpleStringFinder extends StringFinder {
         super();
     }
 
-    public SimpleStringFinder(String filename) {
-        super(filename);
-    }
-
-    public SimpleStringFinder(String filename, String target) {
-        super(filename, target);
-    }
-
     @Override
-    void find() {
+    public void findingCycle() {
         long filePositions = 0;
         int bufferIndex;
         targetsFoundPositions.clear();

@@ -20,30 +20,8 @@ public abstract class StringFinder {
 
     /**
      * Basic constructor.
-     * Before using object call setSearchTarget() and openFile()
      */
     public StringFinder() {}
-
-    /**
-     * Constructor with specified file.
-     * Before using object call setSearchTarget()
-     *
-     * @param filename path to file for finding
-     */
-    public StringFinder(String filename) {
-        openFile(filename);
-    }
-
-    /**
-     * Constructor with specified file and search target.
-     *
-     * @param filename path to file for finding
-     * @param target string for searching
-     */
-    public StringFinder(String filename, String target) {
-        setSearchTarget(target);
-        openFile(filename);
-    }
 
     /**
      * Search string setter.
@@ -51,7 +29,7 @@ public abstract class StringFinder {
      * @param searchTarget string for searching
      * @throws UnsupportedOperationException throws exception weather search target is empty
      */
-    public void setSearchTarget(String searchTarget) throws UnsupportedOperationException {
+    private void setSearchTarget(String searchTarget) throws UnsupportedOperationException {
         if (searchTarget.isEmpty()) {
             throw new UnsupportedOperationException("Empty string isn't allowed");
         }
@@ -66,7 +44,7 @@ public abstract class StringFinder {
      *
      * @param filename path to file for finding
      */
-    public void openFile(String filename) {
+    private void openFile(String filename) {
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
             InputStreamReader inputStreamReader = new InputStreamReader(
@@ -79,12 +57,24 @@ public abstract class StringFinder {
     }
 
     /**
+     * File reader closer.
+     */
+    private void closeFile() {
+        try {
+            reader.close();
+            reader = null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Fragment reader.
      * Read chars from reader up to CAPACITY field's value
      *
      * @return read chars count or -1 when nothing was read
      */
-    int readFragment() {
+    protected int readFragment() {
         char[] charBuffer = new char[capacity];
         int readCharsCount = 0;
         try {
@@ -107,7 +97,14 @@ public abstract class StringFinder {
      * As a result we suppose to get all start indexes of insertions of searchTarget
      * if file by reader
      */
-    abstract void find();
+    public void find(String filename, String target) {
+        setSearchTarget(target);
+        openFile(filename);
+        findingCycle();
+        closeFile();
+    }
+
+    abstract protected void findingCycle();
 
     /**
      * targetsFoundPositions getter.
@@ -126,8 +123,8 @@ public abstract class StringFinder {
      */
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
-        StringFinder finder = new SimpleStringFinder("./data/16GB.txt", "aa");
-        finder.find();
+        StringFinder finder = new SimpleStringFinder();
+        finder.find("./data/16GB.txt", "aa");
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 1048575);
         predictedList.add((long) 16 * 1024 * 1024 * 1024 - 1048577);
