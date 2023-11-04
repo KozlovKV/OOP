@@ -100,13 +100,13 @@ public class FindersTest {
 
       @param finder string finder super abstract class
      */
-//        @ParameterizedTest
-//        @ArgumentsSource(MainStringFinderArgumentsProvider.class)
-//        void insaneLargeTest(StringFinder finder) {
-//            finder.find("16GB.txt", "aa");
-//            LinkedList<Long> predictedList = new LinkedList<>();
-//            predictedList.add((long) 1048575);
-//            predictedList.add((long) 16 * 1024 * 1024 * 1024 - 1048577);
-//            Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
-//        }
+    //        @ParameterizedTest
+    //        @ArgumentsSource(MainStringFinderArgumentsProvider.class)
+    //        void insaneLargeTest(StringFinder finder) {
+    //            finder.find("16GB.txt", "aa");
+    //            LinkedList<Long> predictedList = new LinkedList<>();
+    //            predictedList.add((long) 1048575);
+    //            predictedList.add((long) 16 * 1024 * 1024 * 1024 - 1048577);
+    //            Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
+    //        }
 }

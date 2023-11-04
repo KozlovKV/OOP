@@ -106,7 +106,7 @@ public abstract class StringFinder {
         closeFile();
     }
 
-    abstract protected void findingCycle();
+    protected abstract void findingCycle();
 
     /**
      * targetsFoundPositions getter.
