@@ -1,6 +1,7 @@
 package kozlov.kirill.finders;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,18 +40,37 @@ public abstract class StringFinder {
 
     /**
      * Opener file for reading.
-     * Opens file by specified path and save BufferedReader with encoding
-     * UTF-8 for it
+     * Opens file from specified path in resources.
+     * After that saves BufferedReader with encoding UTF-8 for it
+     *
+     * @param filename path to file for finding
+     */
+    private void openFileFromResources(String filename) {
+        try {
+            InputStream resourceInputStream =
+                    getClass().getClassLoader().getResourceAsStream(filename);
+            InputStreamReader inputStreamReader = new InputStreamReader(
+                    resourceInputStream, StandardCharsets.UTF_8
+            );
+            this.reader = new BufferedReader(inputStreamReader, capacity);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * Opener file for reading.
+     * Opens file from specified path.
+     * After that saves BufferedReader with encoding UTF-8 for it
      *
      * @param filename path to file for finding
      */
     private void openFile(String filename) {
         try {
-
-            InputStream fileInputStream =
-                    getClass().getClassLoader().getResourceAsStream(filename);
+            FileInputStream fileInputStream = new FileInputStream(filename);
             InputStreamReader inputStreamReader = new InputStreamReader(
-                    fileInputStream, StandardCharsets.UTF_8
+                fileInputStream, StandardCharsets.UTF_8
             );
             this.reader = new BufferedReader(inputStreamReader, capacity);
         } catch (Exception e) {
@@ -99,9 +119,13 @@ public abstract class StringFinder {
      * As a result we suppose to get all start indexes of insertions of searchTarget
      * if file by reader
      */
-    public void find(String filename, String target) {
+    public void find(String filename, String target, boolean isResource) {
         setSearchTarget(target);
-        openFile(filename);
+        if (isResource) {
+            openFileFromResources(filename);
+        } else {
+            openFile(filename);
+        }
         findingCycle();
         closeFile();
     }
@@ -126,7 +150,8 @@ public abstract class StringFinder {
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         StringFinder finder = new SimpleStringFinder();
-        finder.find("./data/16GB.txt", "aa");
+        // WE ASSUME THAT FILE ALREADY EXIST
+        finder.find("16GB.txt", "aa", false);
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 1048575);
         predictedList.add((long) 16 * 1024 * 1024 * 1024 - 1048577);

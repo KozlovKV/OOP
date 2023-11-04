@@ -11,7 +11,7 @@ public class SimpleStringFinder extends StringFinder {
     }
 
     @Override
-    public void findingCycle() {
+    protected void findingCycle() {
         long filePositions = 0;
         int bufferIndex;
         targetsFoundPositions.clear();
