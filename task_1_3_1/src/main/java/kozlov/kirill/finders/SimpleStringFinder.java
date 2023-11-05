@@ -4,7 +4,6 @@ package kozlov.kirill.finders;
  * StringFinder child class with simple finding method.
  */
 public class SimpleStringFinder extends StringFinder {
-    private String previousFragmentPostfix = "";
 
     public SimpleStringFinder() {
         super();
@@ -13,8 +12,8 @@ public class SimpleStringFinder extends StringFinder {
     @Override
     protected void findingCycle() {
         long filePositions = 0;
+        String previousFragmentPostfix = "";
         int bufferIndex;
-        targetsFoundPositions.clear();
         while (readFragment() != -1) {
             buffer.insert(0, previousFragmentPostfix);
             if (buffer.length() < searchTarget.length()) {

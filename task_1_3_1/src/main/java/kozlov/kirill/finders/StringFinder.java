@@ -45,7 +45,7 @@ public abstract class StringFinder {
      *
      * @param filename path to file for finding
      */
-    private void openFileFromResources(String filename) {
+    private boolean openFileFromResources(String filename) {
         try {
             InputStream resourceInputStream =
                     getClass().getClassLoader().getResourceAsStream(filename);
@@ -53,8 +53,10 @@ public abstract class StringFinder {
                     resourceInputStream, StandardCharsets.UTF_8
             );
             this.reader = new BufferedReader(inputStreamReader, capacity);
+            return true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.err.println("File from resources wasn't opened\n" + e);
+            return false;
         }
     }
 
@@ -65,16 +67,19 @@ public abstract class StringFinder {
      * After that saves BufferedReader with encoding UTF-8 for it
      *
      * @param filename path to file for finding
+     * @return true weather file was opened successfully
      */
-    private void openFile(String filename) {
+    private boolean openFile(String filename) {
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
             InputStreamReader inputStreamReader = new InputStreamReader(
                 fileInputStream, StandardCharsets.UTF_8
             );
             this.reader = new BufferedReader(inputStreamReader, capacity);
+            return true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.err.println("File wasn't opened\n" + e);
+            return false;
         }
     }
 
@@ -117,14 +122,20 @@ public abstract class StringFinder {
     /**
      * Main finding function.
      * As a result we suppose to get all start indexes of insertions of searchTarget
-     * if file by reader
+     * in file by reader.
+     * If file wasn't opened result's list targetsFoundPositions will be empty.
      */
     public void find(String filename, String target, boolean isResource) {
         setSearchTarget(target);
+        targetsFoundPositions.clear();
+        boolean isOpened;
         if (isResource) {
-            openFileFromResources(filename);
+            isOpened = openFileFromResources(filename);
         } else {
-            openFile(filename);
+            isOpened = openFile(filename);
+        }
+        if (!isOpened) {
+            return;
         }
         findingCycle();
         closeFile();

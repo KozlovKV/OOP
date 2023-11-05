@@ -75,10 +75,17 @@ public class FindersTest {
 
     @ParameterizedTest
     @ArgumentsSource(MainStringFinderArgumentsProvider.class)
-    void notFoundTest(StringFinder finder) {
+    void targetNotFoundTest(StringFinder finder) {
         finder.find("russian.txt", "hello", true);
         LinkedList<Long> predictedList = new LinkedList<>();
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(MainStringFinderArgumentsProvider.class)
+    void fileNotFoundTest(StringFinder finder) {
+        finder.find("not_exist.txt", "hello", true);
+        Assertions.assertTrue(finder.getTargetsFoundPositions().isEmpty());
     }
 
     @ParameterizedTest
@@ -87,6 +94,20 @@ public class FindersTest {
         finder.find("russian.txt", "абракадабра", true);
         LinkedList<Long> predictedList = new LinkedList<>();
         predictedList.add((long) 0);
+        Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(MainStringFinderArgumentsProvider.class)
+    void twoTargetsTest(StringFinder finder) {
+        finder.find("russian.txt", "абракадабра", true);
+        LinkedList<Long> predictedList = new LinkedList<>();
+        predictedList.add((long) 0);
+        Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
+        finder.find("russian.txt", "б", true);
+        predictedList.clear();
+        predictedList.add((long) 1);
+        predictedList.add((long) 8);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
     }
 
