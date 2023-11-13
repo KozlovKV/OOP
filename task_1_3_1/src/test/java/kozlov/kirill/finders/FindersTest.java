@@ -166,6 +166,6 @@ public class FindersTest {
         predictedList.add((long) 1048575);
         predictedList.add((long) 16 * 1024 * 1024 * 1024 - 1048577);
         Assertions.assertEquals(predictedList, finder.getTargetsFoundPositions());
-        delete16gbTestFile();
+//        delete16gbTestFile();
     }
 }
