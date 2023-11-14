@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"kozlov.kirill.creditbook","l":"Student.CreditBook"},{"p":"kozlov.kirill.creditbook","l":"ExcludeFromJacocoGeneratedReport"},{"p":"kozlov.kirill.creditbook","l":"Mark"},{"p":"kozlov.kirill.creditbook","l":"Student"},{"p":"kozlov.kirill.creditbook","l":"Subject"}]
