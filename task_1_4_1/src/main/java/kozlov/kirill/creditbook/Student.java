@@ -150,14 +150,14 @@ public class Student {
             if (marks.isEmpty()) {
                 return 0;
             }
-            return ((double)marks.stream().mapToInt(Mark::getValue).sum()) / marks.size();
+            return ((double) marks.stream().mapToInt(Mark::getValue).sum()) / marks.size();
         }
 
         /**
          * Predicate for obtaining increased scholarship.
          *
          * @return true weather student has only 5 marks in previous semester
-         * (so it's always false for the first semester)
+         *     (so it's always false for the first semester)
          */
         public boolean canObtainIncreasedScholarship() {
             int semesterNumber = student.getSemesterNumber();
@@ -185,8 +185,8 @@ public class Student {
          * Predicate for obtaining red diploma.
          *
          * @return true weather student can obtain red diploma so:<ol>
-         * <li>Last marks >= 4
-         * <li>Average value of last marks >= 4.75
+         * <li>Last marks greater or equal to 4
+         * <li>Average value of last marks greater or equal to 4.75
          * <li>Diploma has mark 5
          * </ol>
          */

@@ -13,6 +13,13 @@ public final class Mark {
     private final Subject subject;
 
 
+    /**
+     * Mark class constructor.
+     *
+     * @param value value of mark bounded between HIGHEST_VALUE and HIGHEST_VALUE
+     * @param semester semester number
+     * @param subject subject enum value
+     */
     public Mark(int value, int semester, Subject subject) {
         if (value > HIGHEST_VALUE) {
             value = HIGHEST_VALUE;

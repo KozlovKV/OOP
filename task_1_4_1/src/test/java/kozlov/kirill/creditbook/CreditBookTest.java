@@ -3,6 +3,9 @@ package kozlov.kirill.creditbook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Credit book test class.
+ */
 public class CreditBookTest {
     @Test
     void testNamesake() {
