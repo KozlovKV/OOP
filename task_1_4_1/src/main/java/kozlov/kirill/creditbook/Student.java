@@ -60,7 +60,7 @@ public class Student {
      *
      * @param o other object for comparing
      * @return true weather Students instances has the same name, surname
-     * and credit books (their ids)
+     *     and credit books (their ids)
      */
     @Override
     public boolean equals(Object o) {
@@ -185,10 +185,10 @@ public class Student {
          * Predicate for obtaining red diploma.
          *
          * @return true weather student can obtain red diploma so:<ol>
-         * <li>Last marks greater or equal to 4
-         * <li>Average value of last marks greater or equal to 4.75
-         * <li>Diploma has mark 5
-         * </ol>
+         *     <li>Last marks greater or equal to 4
+         *     <li>Average value of last marks greater or equal to 4.75
+         *     <li>Diploma has mark 5
+         *     </ol>
          */
         public boolean canObtainRedDiploma() {
             var lastMarks = getLastSubjectMarks();
@@ -239,8 +239,8 @@ public class Student {
         @ExcludeFromJacocoGeneratedReport
         @Override
         public String toString() {
-            return "Credit book " + id +
-                    "; student: " + student.toString();
+            return "Credit book " + id
+                    + "; student: " + student.toString();
         }
     }
 
