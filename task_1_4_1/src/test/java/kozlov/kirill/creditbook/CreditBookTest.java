@@ -1,4 +1,4 @@
-package kozlov.kirill.creditBook;
+package kozlov.kirill.creditbook;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

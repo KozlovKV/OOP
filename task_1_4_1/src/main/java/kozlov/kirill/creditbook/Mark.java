@@ -1,24 +1,27 @@
-package kozlov.kirill.creditBook;
+package kozlov.kirill.creditbook;
 
 import java.util.Objects;
 
 /**
- * Mark record-class.
- *
- * @param value mark value between LOWEST_VALUE and HIGHEST_VALUE constants
- * @param semester semester of mark
- * @param subject study subject from Subject enum
+ * Mark class.
  */
-public record Mark(int value, int semester, Subject subject) {
+public final class Mark {
     public static final int LOWEST_VALUE = 2;
     public static final int HIGHEST_VALUE = 5;
+    private final int value;
+    private final int semester;
+    private final Subject subject;
 
-    public Mark{
+
+    public Mark(int value, int semester, Subject subject) {
         if (value > HIGHEST_VALUE) {
             value = HIGHEST_VALUE;
         } else {
             value = Math.max(value, LOWEST_VALUE);
         }
+        this.value = value;
+        this.semester = semester;
+        this.subject = subject;
     }
 
     @ExcludeFromJacocoGeneratedReport
@@ -38,8 +41,12 @@ public record Mark(int value, int semester, Subject subject) {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Mark mark = (Mark) o;
         return semester == mark.semester
                 && subject.equals(mark.subject);
@@ -49,4 +56,17 @@ public record Mark(int value, int semester, Subject subject) {
     public int hashCode() {
         return Objects.hash(semester, subject);
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
 }

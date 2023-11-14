@@ -1,4 +1,4 @@
-package kozlov.kirill.creditBook;
+package kozlov.kirill.creditbook;
 
 /**
  * Learning subject class.
@@ -17,7 +17,7 @@ public enum Subject {
 
     private final String subjectName;
 
-    private Subject(String subj) {
+    Subject(String subj) {
         subjectName = subj;
     }
 

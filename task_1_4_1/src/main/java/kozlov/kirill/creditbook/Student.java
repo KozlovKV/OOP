@@ -1,4 +1,4 @@
-package kozlov.kirill.creditBook;
+package kozlov.kirill.creditbook;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,12 +59,17 @@ public class Student {
      * CreditBooks override comparator.
      *
      * @param o other object for comparing
-     * @return true weather Students instances has the same name, surname and credit books (their ids)
+     * @return true weather Students instances has the same name, surname
+     * and credit books (their ids)
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Student student = (Student) o;
         return Objects.equals(name, student.name)
                 && Objects.equals(surname, student.surname)
@@ -142,9 +147,10 @@ public class Student {
          * @return average value for all marks.
          */
         public double averageMark() {
-            if (marks.isEmpty())
+            if (marks.isEmpty()) {
                 return 0;
-            return ((double)marks.stream().mapToInt(Mark::value).sum()) / marks.size();
+            }
+            return ((double)marks.stream().mapToInt(Mark::getValue).sum()) / marks.size();
         }
 
         /**
@@ -155,20 +161,21 @@ public class Student {
          */
         public boolean canObtainIncreasedScholarship() {
             int semesterNumber = student.getSemesterNumber();
-            if (semesterNumber == Student.SEMESTER_NUMBER_BASE)
+            if (semesterNumber == Student.SEMESTER_NUMBER_BASE) {
                 return false;
+            }
             return marks.stream().filter(
-                    mark -> mark.semester() == semesterNumber - 1
-            ).allMatch(mark -> mark.value() == Mark.HIGHEST_VALUE);
+                    mark -> mark.getSemester() == semesterNumber - 1
+            ).allMatch(mark -> mark.getValue() == Mark.HIGHEST_VALUE);
         }
 
         private Set<Mark> getLastSubjectMarks() {
             HashMap<Subject, Mark> lastMarks = new HashMap<>();
             for (var mark : marks) {
-                Mark prevMark = lastMarks.putIfAbsent(mark.subject(), mark);
-                if (prevMark != null && prevMark.semester() < mark.semester()
-                        && mark.subject().equals(prevMark.subject())) {
-                    lastMarks.replace(mark.subject(), prevMark, mark);
+                Mark prevMark = lastMarks.putIfAbsent(mark.getSubject(), mark);
+                if (prevMark != null && prevMark.getSemester() < mark.getSemester()
+                        && mark.getSubject().equals(prevMark.getSubject())) {
+                    lastMarks.replace(mark.getSubject(), prevMark, mark);
                 }
             }
             return new HashSet<>(lastMarks.values());
@@ -191,16 +198,16 @@ public class Student {
             boolean containsDiploma = false;
             double avg = 0;
             for (var mark : lastMarks) {
-                if (mark.value() <= 3) {
+                if (mark.getValue() <= 3) {
                     return false;
                 }
-                if (mark.subject().equals(Subject.DIPLOMA)) {
-                    if (mark.value() < Mark.HIGHEST_VALUE) {
+                if (mark.getSubject().equals(Subject.DIPLOMA)) {
+                    if (mark.getValue() < Mark.HIGHEST_VALUE) {
                         return false;
                     }
                     containsDiploma = true;
                 }
-                avg += mark.value();
+                avg += mark.getValue();
             }
             avg /= lastMarks.size();
             return containsDiploma && avg >= MIN_AVG_FOR_RED_DIPLOMA;
@@ -214,8 +221,12 @@ public class Student {
          */
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             CreditBook that = (CreditBook) o;
             return id == that.id;
         }

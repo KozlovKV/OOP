@@ -1,4 +1,4 @@
-package kozlov.kirill.creditBook;
+package kozlov.kirill.creditbook;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
