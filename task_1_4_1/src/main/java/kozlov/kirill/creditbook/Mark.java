@@ -31,6 +31,17 @@ public final class Mark {
         this.subject = subject;
     }
 
+    /**
+     * Predicate for checking more later mark for the same subject.
+     *
+     * @param otherMark other Mark
+     * @return true weather this mark was got later than otherMark
+     */
+    public boolean isGotLaterThan(Mark otherMark) {
+        return otherMark.getSemester() < getSemester()
+                && otherMark.getSubject().equals(getSubject());
+    }
+
     @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {

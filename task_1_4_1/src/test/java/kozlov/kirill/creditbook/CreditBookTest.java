@@ -75,7 +75,7 @@ public class CreditBookTest {
     @Test
     void testRedDiplomaObtaining() {
         var s1 = new Student("Ivanov", "Ivan");
-        Assertions.assertFalse(s1.getCreditBook().canObtainRedDiploma());
+        Assertions.assertTrue(s1.getCreditBook().canObtainRedDiploma());
         s1.getCreditBook().addMark(3, Subject.FIZRA);
         s1.getCreditBook().addMark(5, Subject.IMPERATIVE);
         s1.getCreditBook().addMark(5, Subject.DECLARATIVE);
@@ -83,19 +83,19 @@ public class CreditBookTest {
         s1.getCreditBook().addMark(5, Subject.DIFF);
         s1.getCreditBook().addMark(5, Subject.OOP);
         s1.getCreditBook().addMark(5, Subject.PAK);
-        s1.getCreditBook().addMark(5, Subject.OS);
+        s1.getCreditBook().addMark(4, Subject.OS);
         s1.getCreditBook().addMark(5, Subject.AI);
-        s1.finishSemester();
-        s1.getCreditBook().addMark(5, Subject.DIPLOMA);
-        Assertions.assertFalse(s1.getCreditBook().canObtainRedDiploma());
         s1.getCreditBook().addMark(4, Subject.FIZRA);
         Assertions.assertTrue(s1.getCreditBook().canObtainRedDiploma());
+        s1.finishSemester();
+        s1.getCreditBook().addMark(4, Subject.MODELS);
+        Assertions.assertFalse(s1.getCreditBook().canObtainRedDiploma());
     }
 
     @Test
     void testRedDiplomaObtainingWithSpecificDiplomaSituations() {
         var s1 = new Student("Ivanov", "Ivan");
-        Assertions.assertFalse(s1.getCreditBook().canObtainRedDiploma());
+        Assertions.assertTrue(s1.getCreditBook().canObtainRedDiploma());
         s1.getCreditBook().addMark(5, Subject.IMPERATIVE);
         s1.getCreditBook().addMark(5, Subject.DECLARATIVE);
         s1.finishSemester();
@@ -105,7 +105,7 @@ public class CreditBookTest {
         s1.getCreditBook().addMark(5, Subject.OS);
         s1.getCreditBook().addMark(5, Subject.AI);
         s1.finishSemester();
-        Assertions.assertFalse(s1.getCreditBook().canObtainRedDiploma());
+        Assertions.assertTrue(s1.getCreditBook().canObtainRedDiploma());
         s1.getCreditBook().addMark(4, Subject.DIPLOMA);
         Assertions.assertFalse(s1.getCreditBook().canObtainRedDiploma());
         s1.finishSemester();

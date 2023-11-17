@@ -173,8 +173,7 @@ public class Student {
             HashMap<Subject, Mark> lastMarks = new HashMap<>();
             for (var mark : marks) {
                 Mark prevMark = lastMarks.putIfAbsent(mark.getSubject(), mark);
-                if (prevMark != null && prevMark.getSemester() < mark.getSemester()
-                        && mark.getSubject().equals(prevMark.getSubject())) {
+                if (prevMark != null && mark.isGotLaterThan(prevMark)) {
                     lastMarks.replace(mark.getSubject(), prevMark, mark);
                 }
             }
@@ -182,35 +181,30 @@ public class Student {
         }
 
         /**
-         * Predicate for obtaining red diploma.
+         * Predicate which show availability of red diploma.
          *
-         * @return true weather student can obtain red diploma so:<ol>
+         * @return true weather student have a chance to obtain red diploma so:<ol>
          *     <li>Last marks greater or equal to 4
-         *     <li>Average value of last marks greater or equal to 4.75
-         *     <li>Diploma has mark 5
+         *     <li>Average potential value of last marks greater than or equal to 4.75
+         *     <li>Diploma has mark 5 (if it was got)
          *     </ol>
          */
         public boolean canObtainRedDiploma() {
             var lastMarks = getLastSubjectMarks();
-            if (lastMarks.isEmpty()) {
-                return false;
-            }
-            boolean containsDiploma = false;
             double avg = 0;
             for (var mark : lastMarks) {
                 if (mark.getValue() <= 3) {
                     return false;
                 }
-                if (mark.getSubject().equals(Subject.DIPLOMA)) {
-                    if (mark.getValue() < Mark.HIGHEST_VALUE) {
-                        return false;
-                    }
-                    containsDiploma = true;
+                if (mark.getSubject().equals(Subject.DIPLOMA)
+                        && mark.getValue() < Mark.HIGHEST_VALUE) {
+                    return false;
                 }
                 avg += mark.getValue();
             }
-            avg /= lastMarks.size();
-            return containsDiploma && avg >= MIN_AVG_FOR_RED_DIPLOMA;
+            avg += (Subject.values().length - lastMarks.size()) * 5;
+            avg /= Subject.values().length;
+            return avg >= MIN_AVG_FOR_RED_DIPLOMA;
         }
 
         /**
@@ -253,20 +247,29 @@ public class Student {
     public static void main(String[] args) {
         Student biba = new Student("Biba", "Test");
         biba.getCreditBook().addMark(13, Subject.DIFF);
-        biba.getCreditBook().addMark(3, Subject.DIPLOMA);
-        System.out.println(biba.getCreditBook());
+        biba.getCreditBook().addMark(5, Subject.FIZRA);
+        biba.getCreditBook().addMark(13, Subject.AI);
+        biba.getCreditBook().addMark(5, Subject.OOP);
+        biba.getCreditBook().addMark(13, Subject.PAK);
+        biba.getCreditBook().addMark(4, Subject.IMPERATIVE);
+        biba.getCreditBook().addMark(13, Subject.DECLARATIVE);
+        biba.getCreditBook().addMark(5, Subject.MODELS);
+        biba.getCreditBook().addMark(5, Subject.OS);
+        biba.getCreditBook().addMark(5, Subject.DIPLOMA);
         System.out.println(biba.getCreditBook().averageMark());
         System.out.println(biba.getCreditBook().canObtainIncreasedScholarship());
+        System.out.println(biba.getCreditBook().canObtainRedDiploma());
         biba.finishSemester();
         biba.getCreditBook().addMark(5, Subject.DIPLOMA);
         biba.getCreditBook().addMark(3, Subject.DIFF);
-        System.out.println(biba.getCreditBook());
         System.out.println(biba.getCreditBook().averageMark());
         System.out.println(biba.getCreditBook().canObtainIncreasedScholarship());
+        System.out.println(biba.getCreditBook().canObtainRedDiploma());
         biba.finishSemester();
         biba.getCreditBook().addMark(5, Subject.DIFF);
         biba.getCreditBook().addMark(3, Subject.DIFF);
         biba.getCreditBook().addMark(3, Subject.DIFF);
+        System.out.println(biba.getCreditBook().averageMark());
         System.out.println(biba.getCreditBook().canObtainIncreasedScholarship());
         System.out.println(biba.getCreditBook().canObtainRedDiploma());
     }
