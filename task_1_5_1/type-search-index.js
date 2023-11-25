@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"kozlov.kirill.calculator","l":"Calculator"},{"p":"kozlov.kirill.calculator","l":"Operand"},{"p":"kozlov.kirill.calculator","l":"Operand.OperandEnum"}]
