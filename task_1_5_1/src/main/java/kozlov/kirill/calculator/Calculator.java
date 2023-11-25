@@ -2,15 +2,15 @@ package kozlov.kirill.calculator;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class Calculator {
     Double calculate(String expression) {
-        LinkedList<String> tokens = new LinkedList<String>(
+        LinkedList<String> tokens = new LinkedList<>(
                 Arrays.stream(expression.split(" "))
                         .filter(token -> !token.isEmpty())
-                        .toList()
-        ) {
-        };
+                        .collect(Collectors.toList())
+        );
         // TODO: отлавливать ноль токенов
         Operand rootOperand = Operand.getOperandsTree(tokens);
         System.out.println(tokens.size()); // TODO: отлавливать ситуацию, когда не все токены были распознаны
