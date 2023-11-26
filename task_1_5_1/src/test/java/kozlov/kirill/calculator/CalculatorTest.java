@@ -196,14 +196,14 @@ public class CalculatorTest {
     void checkPowNegativePower() {
         Calculator calculator = new Calculator();
         Double res = calculator.calculateWithErrorPrinting("pow 2 -5");
-        Assertions.assertEquals((double) 1/32, res);
+        Assertions.assertEquals((double) 1 / 32, res);
     }
 
     @Test
     void checkPowNegativeBoth() {
         Calculator calculator = new Calculator();
         Double res = calculator.calculateWithErrorPrinting("pow -2 -5");
-        Assertions.assertEquals((double) -1/32, res);
+        Assertions.assertEquals((double) -1 / 32, res);
     }
 
     @Test

@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 /**
  * Operand class.
  * This is common class for any operand
+ *
  * <p>Number is assumed as zero-argument operand with defined value field
+ *
  * <p>For non-zero-argument operand class stores its children operands
  */
 public class Operand {
@@ -170,7 +172,9 @@ public class Operand {
 
     /**
      * Operands tree recursive evaluation.
+     *
      * <p>For number operand returns its value
+     *
      * <p>For other operands:
      * <ol>
      *     <li>Evaluate their arguments using children operands evaluate method
@@ -209,8 +213,9 @@ public class Operand {
     @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {
-        if (operandEnum == OperandEnum.NUM)
+        if (operandEnum == OperandEnum.NUM) {
             return value.toString();
+        }
         StringBuilder sb = new StringBuilder(operandEnum.toString());
         if (value != null) {
             sb.append("(").append(value).append(")");
