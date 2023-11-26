@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":2,"i1":2,"i2":4};
-var tabs = {65535:["t0","All Classes"],2:["t2","Class Summary"],4:["t3","Enum Summary"]};
+var data = {"i0":2,"i1":8,"i2":8,"i3":32,"i4":2,"i5":4,"i6":8,"i7":1};
+var tabs = {65535:["t0","All Classes"],1:["t1","Interface Summary"],2:["t2","Class Summary"],4:["t3","Enum Summary"],8:["t4","Exception Summary"],32:["t6","Annotation Types Summary"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -104,22 +104,58 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <table class="typeSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Classes</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Class Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Enum Summary</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Classes</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Interface Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Class Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Enum Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Exception Summary</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Annotation Types Summary</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><a href="kozlov/kirill/calculator/Calculator.html" title="class in kozlov.kirill.calculator">Calculator</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Main calculator class.</div>
+</th>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><a href="kozlov/kirill/calculator/Operand.html" title="class in kozlov.kirill.calculator">Operand</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="kozlov/kirill/calculator/CalculatorException.html" title="class in kozlov.kirill.calculator">CalculatorException</a></td>
+<th class="colLast" scope="row">
+<div class="block">Calculator exception base class.</div>
+</th>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><a href="kozlov/kirill/calculator/EvaluationException.html" title="class in kozlov.kirill.calculator">EvaluationException</a></td>
+<th class="colLast" scope="row">
+<div class="block">Exception class for any error in evaluation (now caused only by validators).</div>
+</th>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><a href="kozlov/kirill/calculator/ExcludeFromJacocoGeneratedReport.html" title="annotation in kozlov.kirill.calculator">ExcludeFromJacocoGeneratedReport</a></td>
+<th class="colLast" scope="row">
+<div class="block">Excluding From Jacoco Test Report interface.</div>
+</th>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><a href="kozlov/kirill/calculator/Operand.html" title="class in kozlov.kirill.calculator">Operand</a></td>
+<th class="colLast" scope="row">
+<div class="block">Operand class.</div>
+</th>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><a href="kozlov/kirill/calculator/Operand.OperandEnum.html" title="enum in kozlov.kirill.calculator">Operand.OperandEnum</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Enum class for operands.</div>
+</th>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><a href="kozlov/kirill/calculator/TokensException.html" title="class in kozlov.kirill.calculator">TokensException</a></td>
+<th class="colLast" scope="row">
+<div class="block">Exception class for eny error in input tokens.</div>
+</th>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><a href="kozlov/kirill/calculator/Validator.html" title="interface in kozlov.kirill.calculator">Validator</a></td>
+<th class="colLast" scope="row">
+<div class="block">Validator lambda-interface for checking function's arguments.</div>
+</th>
 </tr>
 </table>
 </li>
