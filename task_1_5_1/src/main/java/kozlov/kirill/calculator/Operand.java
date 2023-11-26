@@ -36,7 +36,8 @@ public class Operand {
             doubles -> Math.log(doubles[1]) / Math.log(doubles[0]),
             doubles ->
                 doubles[0] <= 0 || doubles[1] <= 0
-                        ? "Logarithm arguments must be positive. Got " + doubles[0] + ", " + doubles[1]
+                        ? "Logarithm arguments must be positive. Got "
+                            + doubles[0] + ", " + doubles[1]
                         : null
             ),
         POW("pow", 2, doubles -> Math.pow(doubles[0], doubles[1])),
