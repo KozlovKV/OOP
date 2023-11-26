@@ -4,13 +4,14 @@ package kozlov.kirill.calculator;
  * Calculator exception base class.
  */
 public class CalculatorException extends Exception {
-    protected String prefix = "Exception in calculator: ";
+    private static final String DEFAULT_MESSAGE = "Calculator exception";
+    private String prefix = "Exception in calculator: ";
 
     /**
      * Base constructor.
      */
     public CalculatorException() {
-        super("Calculator exception");
+        super(DEFAULT_MESSAGE);
     }
 
     /**

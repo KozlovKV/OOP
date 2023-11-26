@@ -24,7 +24,7 @@ public class Operand {
      * Enum class for operands.
      * Implements comfortable interface for configuring any function using lambdas
      */
-    public enum OperandEnum {
+    private enum OperandEnum {
         NUM("", 0),
 
         PLUS("+", 2, doubles -> doubles[0] + doubles[1]),

@@ -4,13 +4,14 @@ package kozlov.kirill.calculator;
  * Exception class for eny error in input tokens.
  */
 public class TokensException extends CalculatorException {
-    private static final String prefix = "Exception in input string: ";
+    private static final String DEFAULT_MESSAGE = "Exception in input expression";
+    private static final String PREFIX = "Exception in input string: ";
 
     /**
      * Base constructor.
      */
     public TokensException() {
-        super("Exception in input expression", "");
+        super(DEFAULT_MESSAGE, "");
     }
 
     /**
@@ -19,6 +20,6 @@ public class TokensException extends CalculatorException {
      * @param message error message
      */
     public TokensException(String message) {
-        super(message, prefix);
+        super(message, PREFIX);
     }
 }
