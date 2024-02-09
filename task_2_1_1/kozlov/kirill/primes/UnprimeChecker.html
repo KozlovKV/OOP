@@ -136,6 +136,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public abstract class <span class="typeNameLabel">UnprimeChecker</span>
 extends java.lang.Object</pre>
+<div class="block">Unprime numbers checker class's abstract class</div>
 </li>
 </ul>
 </div>
@@ -180,17 +181,23 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>abstract boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAnyUnprime()">isAnyUnprime</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Abstract method for checker's implementation.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNumUnprime(java.lang.Integer)">isNumUnprime</a></span>&#8203;(java.lang.Integer&nbsp;num)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Predicate for unprime number.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="UnprimeChecker.html" title="class in kozlov.kirill.primes">UnprimeChecker</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNumbers(java.util.ArrayList)">setNumbers</a></span>&#8203;(java.util.ArrayList&lt;java.lang.Integer&gt;&nbsp;numbers)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Numbers' list setter</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -242,6 +249,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setNumbers</h4>
 <pre class="methodSignature">public&nbsp;<a href="UnprimeChecker.html" title="class in kozlov.kirill.primes">UnprimeChecker</a>&nbsp;setNumbers&#8203;(java.util.ArrayList&lt;java.lang.Integer&gt;&nbsp;numbers)</pre>
+<div class="block">Numbers' list setter</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>numbers</code> - numbers list</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>link to class's instance for convenient chain usage</dd>
+</dl>
 </li>
 </ul>
 <a id="isNumUnprime(java.lang.Integer)">
@@ -251,6 +265,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>isNumUnprime</h4>
 <pre class="methodSignature">protected&nbsp;boolean&nbsp;isNumUnprime&#8203;(java.lang.Integer&nbsp;num)</pre>
+<div class="block">Predicate for unprime number.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>num</code> - number for checking</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true weather num isn't prime</dd>
+</dl>
 </li>
 </ul>
 <a id="isAnyUnprime()">
@@ -260,6 +281,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>isAnyUnprime</h4>
 <pre class="methodSignature">public abstract&nbsp;boolean&nbsp;isAnyUnprime()</pre>
+<div class="block">Abstract method for checker's implementation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true weather numbers' list has at least one unprime number</dd>
+</dl>
 </li>
 </ul>
 </li>
