@@ -26,7 +26,7 @@ public class UnprimeCheckersTest {
         }
     }
 
-    static private ArrayList<Integer> getArrayListFromArray(int [] arr, int n) {
+    private static ArrayList<Integer> getArrayListFromArray(int [] arr, int n) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             list.add(arr[i]);
@@ -49,7 +49,7 @@ public class UnprimeCheckersTest {
     void exampleTest2(UnprimeChecker checker) {
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
-                        6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
+                          6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
         );
         checker.setNumbers(list);
         Assertions.assertFalse(checker.isAnyUnprime());
