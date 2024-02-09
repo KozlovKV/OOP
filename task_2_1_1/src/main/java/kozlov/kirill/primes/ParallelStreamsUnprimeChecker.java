@@ -1,8 +1,8 @@
 package kozlov.kirill.primes;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Unprime checker's implementation with parallel Stream API.
+ */
 public class ParallelStreamsUnprimeChecker extends UnprimeChecker {
     @Override
     public boolean isAnyUnprime() {

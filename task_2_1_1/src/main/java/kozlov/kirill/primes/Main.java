@@ -1,31 +1,25 @@
 package kozlov.kirill.primes;
 
-import java.lang.reflect.Array;
-import java.text.Collator;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+/**
+ * Main class.
+ */
 public class Main {
+    /**
+     * Entry point function.
+     *
+     * @param args cmds' args
+     */
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();
-//        for (int i = 0; i < 1000000; i++) {
-//            list.add(100000007);
-//        }
-        list.add(2);
-        list.add(3);
-//        list.add(4);
-        list.add(5);
-        list.add(7);
-        System.out.println(new ThreadUnprimeChecker(4).setNumbers(list).isAnyUnprime());
-        System.out.println(new ThreadUnprimeChecker(8).setNumbers(list).isAnyUnprime());
+        for (int i = 0; i < 1000000; i++) {
+            list.add(100000007);
+        }
+        list.add(8);
+        System.out.println(new SimpleUnprimeChecker().setNumbers(list).isAnyUnprime());
+        System.out.println(new ParallelStreamsUnprimeChecker().setNumbers(list).isAnyUnprime());
         System.out.println(new ThreadUnprimeChecker(12).setNumbers(list).isAnyUnprime());
 //        for (int i = 1; i <= 64; ++i) {
 //            startTime = LocalDateTime.now();
