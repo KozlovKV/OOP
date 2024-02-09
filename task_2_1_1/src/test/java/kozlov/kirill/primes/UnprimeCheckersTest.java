@@ -1,13 +1,13 @@
 package kozlov.kirill.primes;
 
+import java.util.ArrayList;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import java.util.ArrayList;
-import java.util.stream.Stream;
 
 /**
  * Tests' class for unprime checkers.
@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class UnprimeCheckersTest {
     static class CheckersProvider implements ArgumentsProvider {
         @Override
-        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
             return Stream.of(
                 Arguments.of(new SimpleUnprimeChecker()),
                 Arguments.of(new ParallelStreamsUnprimeChecker()),
@@ -26,10 +26,11 @@ public class UnprimeCheckersTest {
         }
     }
 
-    static public ArrayList<Integer> getArrayListFromArray(int [] arr, int n) {
+    static private ArrayList<Integer> getArrayListFromArray(int [] arr, int n) {
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             list.add(arr[i]);
+        }
         return list;
     }
 
@@ -48,7 +49,7 @@ public class UnprimeCheckersTest {
     void exampleTest2(UnprimeChecker checker) {
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
-                6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
+                        6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
         );
         checker.setNumbers(list);
         Assertions.assertFalse(checker.isAnyUnprime());
