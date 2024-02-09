@@ -21,14 +21,14 @@ public class Main {
         System.out.println(new SimpleUnprimeChecker().setNumbers(list).isAnyUnprime());
         System.out.println(new ParallelStreamsUnprimeChecker().setNumbers(list).isAnyUnprime());
         System.out.println(new ThreadUnprimeChecker(12).setNumbers(list).isAnyUnprime());
-//        for (int i = 1; i <= 64; ++i) {
-//            startTime = LocalDateTime.now();
-//            new ThreadUnprimeChecker(i).isAnyUnprime();
-//            System.out.println(i);
-//            System.out.println(
-//                    startTime.until(LocalDateTime.now(), ChronoUnit.MILLIS)
-//            );
-//        }
+        //        for (int i = 1; i <= 64; ++i) {
+        //            startTime = LocalDateTime.now();
+        //            new ThreadUnprimeChecker(i).isAnyUnprime();
+        //            System.out.println(i);
+        //            System.out.println(
+        //                    startTime.until(LocalDateTime.now(), ChronoUnit.MILLIS)
+        //            );
+        //        }
     }
 }
 

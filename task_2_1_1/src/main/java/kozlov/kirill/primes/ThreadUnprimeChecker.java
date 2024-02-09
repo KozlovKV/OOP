@@ -31,15 +31,17 @@ public class ThreadUnprimeChecker extends UnprimeChecker {
                                                 int threadNumbersStartIndex,
                                                 int numbersSize, int threadNumberListSize) {
         return () -> {
-            if (unprimeFound.get() || threadNumbersStartIndex >= numbersSize)
+            if (unprimeFound.get() || threadNumbersStartIndex >= numbersSize) {
                 return;
+            }
             int threadNumbersEndIndex =
                     Math.min(threadNumbersStartIndex + threadNumberListSize, numbersSize);
             boolean result = numbers.subList(
                     threadNumbersStartIndex, threadNumbersEndIndex
             ).stream().anyMatch(this::isNumUnprime);
-            if (result)
+            if (result) {
                 unprimeFound.set(true);
+            }
         };
     }
 

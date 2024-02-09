@@ -6,10 +6,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+/**
+ * Tests' class for unprime checkers.
+ */
 public class UnprimeCheckersTest {
     static class CheckersProvider implements ArgumentsProvider {
         @Override
