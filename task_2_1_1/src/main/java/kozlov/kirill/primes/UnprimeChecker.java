@@ -67,9 +67,9 @@ public abstract class UnprimeChecker {
         }
         LocalDateTime startTime;
         UnprimeChecker[] checkers = new UnprimeChecker[]{
-                new SimpleUnprimeChecker(),
-                new ParallelStreamsUnprimeChecker(),
-                new ThreadUnprimeChecker(12)
+            new SimpleUnprimeChecker(),
+            new ParallelStreamsUnprimeChecker(),
+            new ThreadUnprimeChecker(12)
         };
         try {
             OutputStream out = new FileOutputStream("types.csv");
