@@ -13,6 +13,8 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
  * Tests' class for unprime checkers.
  */
 public class UnprimeCheckersTest {
+    static public final int BILLION_PRIME = 1000000007;
+
     static class CheckersProvider implements ArgumentsProvider {
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
@@ -106,7 +108,7 @@ public class UnprimeCheckersTest {
     void largePrimesTest(UnprimeChecker checker) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
-            list.add(100000007);
+            list.add(BILLION_PRIME);
         }
         checker.setNumbers(list);
         Assertions.assertFalse(checker.isAnyUnprime());
@@ -129,7 +131,7 @@ public class UnprimeCheckersTest {
         ArrayList<Integer> list = new ArrayList<>();
         list.add(8);
         for (int i = 0; i < 1000000; i++) {
-            list.add(100000007);
+            list.add(BILLION_PRIME);
         }
         checker.setNumbers(list);
         Assertions.assertTrue(checker.isAnyUnprime());
@@ -140,7 +142,7 @@ public class UnprimeCheckersTest {
     void largeWithOneUnprimeAtEndTest(UnprimeChecker checker) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
-            list.add(100000007);
+            list.add(BILLION_PRIME);
         }
         list.add(8);
         checker.setNumbers(list);

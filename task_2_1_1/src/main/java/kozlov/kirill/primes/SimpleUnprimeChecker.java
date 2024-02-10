@@ -6,6 +6,6 @@ package kozlov.kirill.primes;
 public class SimpleUnprimeChecker extends UnprimeChecker {
     @Override
     public boolean isAnyUnprime() {
-        return numbers.stream().anyMatch(this::isNumUnprime);
+        return numbers.stream().anyMatch(UnprimeChecker::isNumUnprime);
     }
 }

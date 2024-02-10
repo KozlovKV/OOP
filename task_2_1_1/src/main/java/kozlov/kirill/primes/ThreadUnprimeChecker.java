@@ -38,7 +38,7 @@ public class ThreadUnprimeChecker extends UnprimeChecker {
                     Math.min(threadNumbersStartIndex + threadNumberListSize, numbersSize);
             boolean result = numbers.subList(
                     threadNumbersStartIndex, threadNumbersEndIndex
-            ).stream().anyMatch(this::isNumUnprime);
+            ).stream().anyMatch(UnprimeChecker::isNumUnprime);
             if (result) {
                 unprimeFound.set(true);
             }

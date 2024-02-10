@@ -6,6 +6,6 @@ package kozlov.kirill.primes;
 public class ParallelStreamsUnprimeChecker extends UnprimeChecker {
     @Override
     public boolean isAnyUnprime() {
-        return numbers.parallelStream().anyMatch(this::isNumUnprime);
+        return numbers.parallelStream().anyMatch(UnprimeChecker::isNumUnprime);
     }
 }

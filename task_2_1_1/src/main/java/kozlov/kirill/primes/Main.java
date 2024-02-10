@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * Main class.
  */
 public class Main {
+    static public final int BILLION_PRIME = 1000000007;
+
     /**
      * Entry point function.
      *
@@ -14,10 +16,14 @@ public class Main {
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 1000000; i++) {
-            list.add(100000007);
-        }
-        list.add(8);
+//        for (int i = 0; i < 1000000; i++) {
+//            list.add(BILLION_PRIME);
+//        }
+        list.add(0);
+        list.add(3);
+        list.add(5);
+        list.add(7);
+//        list.add(-8);
         System.out.println(new SimpleUnprimeChecker().setNumbers(list).isAnyUnprime());
         System.out.println(new ParallelStreamsUnprimeChecker().setNumbers(list).isAnyUnprime());
         System.out.println(new ThreadUnprimeChecker(12).setNumbers(list).isAnyUnprime());
