@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":10,"i2":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":6,"i1":9,"i2":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -172,7 +172,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -186,8 +186,8 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNumUnprime(java.lang.Integer)">isNumUnprime</a></span>&#8203;(java.lang.Integer&nbsp;num)</code></th>
+<td class="colFirst"><code>protected static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNumUnprime(java.lang.Integer)">isNumUnprime</a></span>&#8203;(java.lang.Integer&nbsp;number)</code></th>
 <td class="colLast">
 <div class="block">Predicate for unprime number.</div>
 </td>
@@ -264,11 +264,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isNumUnprime</h4>
-<pre class="methodSignature">protected&nbsp;boolean&nbsp;isNumUnprime&#8203;(java.lang.Integer&nbsp;num)</pre>
+<pre class="methodSignature">protected static&nbsp;boolean&nbsp;isNumUnprime&#8203;(java.lang.Integer&nbsp;number)</pre>
 <div class="block">Predicate for unprime number.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>num</code> - number for checking</dd>
+<dd><code>number</code> - number for checking</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true weather num isn't prime</dd>
 </dl>
