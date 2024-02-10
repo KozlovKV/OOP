@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
  * Tests' class for unprime checkers.
  */
 public class UnprimeCheckersTest {
-    static public final int BILLION_PRIME = 1000000007;
+    public static final int BILLION_PRIME = 1000000007;
 
     static class CheckersProvider implements ArgumentsProvider {
         @Override

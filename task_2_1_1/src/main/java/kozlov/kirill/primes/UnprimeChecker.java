@@ -25,7 +25,7 @@ public abstract class UnprimeChecker {
      * @param number number for checking
      * @return true weather num isn't prime
      */
-    static protected boolean isNumUnprime(Integer number) {
+    protected static boolean isNumUnprime(Integer number) {
         int num = Math.abs(number);
         for (int i = 2; i * i <= num; ++i) {
             if (num % i == 0) {
