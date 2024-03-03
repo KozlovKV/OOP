@@ -1,9 +1,13 @@
-package kozlov.kirill.sockets;
+package kozlov.kirill;
+
+import kozlov.kirill.sockets.Client;
+import kozlov.kirill.sockets.Gateway;
 
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
 public class Main {
+    @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; ++i) {
@@ -24,6 +28,5 @@ public class Main {
             System.err.println("Result waiting was interrupted");
         }
 
-        gatewayThread.interrupt();
     }
 }

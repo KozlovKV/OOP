@@ -1,15 +1,19 @@
 package kozlov.kirill.sockets;
 
-import com.fasterxml.jackson.core.FormatSchema;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
+import kozlov.kirill.primes.UnprimeChecker;
+import kozlov.kirill.sockets.data.TaskData;
+import kozlov.kirill.sockets.data.TaskResult;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Manager for processing client's tasks.
+ * <br>
+ * Implemented for thread-usage.
+ */
 public class Manager implements Runnable {
     final private Socket socket;
 
@@ -17,25 +21,42 @@ public class Manager implements Runnable {
         this.socket = socket;
     }
 
+    /**
+     * Main processing of client's requests.
+     * <br>
+     * Whereas socket is opened reads requests for it and send results of calculation
+     */
     public void run() {
-        try {
-            InputStream in = socket.getInputStream();
-            OutputStream out = socket.getOutputStream();
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            ObjectMapper mapper = new ObjectMapper();
-            var parser = mapper.createParser(bufferedReader);
-            TaskData taskData = null;
-            var it = parser.readValuesAs(TaskData.class);
-            while (it.hasNext()) {
-                taskData = it.next();
-                System.out.println(processTask(taskData).result());
+        while (true) {
+            TaskData taskData = receiveTaskData();
+            if (socket.isClosed()) {
+                break;
             }
+            if (taskData == null) {
+                System.err.println("Incorrect data");
+                continue;
+            }
+            TaskResult taskResult = processTask(taskData);
+            sendTaskResult(taskResult);
+        }
+        System.out.println("Connection closed");
+    }
+
+    private TaskData receiveTaskData() {
+        try {
+            return BasicTCPSocketOperations.receiveJSONObject(
+                    socket, TaskData.class
+            );
         } catch (UnrecognizedPropertyException e) {
             System.err.println("Parsing error: " + e.getMessage());
-        } catch (IOException ignored) {
-            System.err.println("IO server error");
-        }
+        } catch (IOException ignored) {}
+        return null;
+    }
+
+    private void sendTaskResult(TaskResult taskResult) {
+        try {
+            BasicTCPSocketOperations.sendJSONObject(socket, taskResult);
+        } catch (IOException ignored) {}
     }
 
     private TaskResult processTask(TaskData taskData) {

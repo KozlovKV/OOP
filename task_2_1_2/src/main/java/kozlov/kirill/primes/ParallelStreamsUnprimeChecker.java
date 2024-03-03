@@ -1,4 +1,4 @@
-package kozlov.kirill.sockets;
+package kozlov.kirill.primes;
 
 /**
  * Unprime checker's implementation with parallel Stream API.

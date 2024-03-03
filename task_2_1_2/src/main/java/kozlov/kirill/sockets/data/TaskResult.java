@@ -1,3 +1,3 @@
-package kozlov.kirill.sockets;
+package kozlov.kirill.sockets.data;
 
 public record TaskResult(Boolean result) {}

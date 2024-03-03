@@ -1,4 +1,4 @@
-package kozlov.kirill.sockets;
+package kozlov.kirill.sockets.data;
 
 import java.util.ArrayList;
 

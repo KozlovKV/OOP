@@ -1,18 +1,13 @@
 package kozlov.kirill.sockets;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import kozlov.kirill.sockets.data.TaskData;
+import kozlov.kirill.sockets.data.TaskResult;
 
 import java.io.*;
 import java.net.*;
-import java.nio.MappedByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 
 public class Client implements Callable<Boolean> {
     public static final int CLIENT_PORT = 8000;
@@ -51,29 +46,14 @@ public class Client implements Callable<Boolean> {
     }
 
     private void sendTaskData() {
-        ObjectMapper mapper = new ObjectMapper();
-        String stringData = "";
         try {
-            stringData = mapper.writeValueAsString(taskData);
-        } catch (JsonProcessingException e) {
-            System.err.println("Couldn't convert task data to JSON");
-        }
-        try {
-            OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream());
-            writer.write(stringData);
-            writer.flush();
+            BasicTCPSocketOperations.sendJSONObject(socket, taskData);
         } catch (IOException ignored) {}
     }
 
     private Boolean receiveTaskResult() {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            var parser = mapper.createParser(
-                    new BufferedReader(new InputStreamReader(
-                            socket.getInputStream(), StandardCharsets.UTF_8
-                    ))
-            );
-            TaskResult taskResult = parser.readValueAs(TaskResult.class);
+            TaskResult taskResult = BasicTCPSocketOperations.receiveJSONObject(socket, TaskResult.class);
             return taskResult.result();
         } catch (UnrecognizedPropertyException e) {
             System.err.println("Result parsing error: " + e.getMessage());
