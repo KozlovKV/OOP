@@ -11,7 +11,7 @@ import java.util.Arrays;
  * Listens to server socket and creates connection for clients
  */
 public class Gateway implements Runnable {
-    public static final int GATEWAY_PORT = 8001;
+    public static final int GATEWAY_PORT = 8001; // TODO: реализовать пул шлюзов
     private final int SERVER_SOCKET_BACKLOG = 5;
     private ServerSocket serverSocket = null;
 
