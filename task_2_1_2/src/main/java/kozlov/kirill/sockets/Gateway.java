@@ -14,26 +14,6 @@ public class Gateway implements Runnable {
         try {
             serverSocket = new ServerSocket(GATEWAY_PORT, SERVER_SOCKET_BACKLOG);
         } catch (IOException ignored) {}
-//        new Thread(() -> {
-//            ByteBuffer byteBuffer = ByteBuffer.allocate(4);
-//            byteBuffer.putInt(serverSocket.getLocalPort());
-//            byte[] bytesPort = byteBuffer.array();
-//            System.out.println(serverSocket.getLocalPort());
-//            System.out.println(bytesPort);
-//            byte[] data = new byte[1024];
-//            DatagramPacket packet = new DatagramPacket(data, data.length);
-//            try (
-//                DatagramSocket signalSocket = new DatagramSocket(GATEWAY_PORT)
-//            ) {
-//                while (true) {
-//                    signalSocket.receive(packet);
-//                    System.out.println("GATEWAY got request from " + packet.getAddress() + ":" + packet.getPort());
-//                    DatagramPacket responsePacket = new DatagramPacket(bytesPort, bytesPort.length, packet.getAddress(), packet.getPort());
-//                    signalSocket.send(responsePacket);
-//                }
-//            } catch (IOException ignored) {}
-//        }).start();
-
     }
 
     public void run() {
@@ -42,6 +22,8 @@ public class Gateway implements Runnable {
                 Socket connectionSocket = serverSocket.accept();
                 new Thread(new Manager(connectionSocket)).start();
             }
-        } catch (IOException ignored) {}
+        } catch (IOException e) {
+            System.out.println("Server closed");
+        }
     }
 }
