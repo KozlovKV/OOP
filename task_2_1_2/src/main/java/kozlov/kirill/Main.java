@@ -16,18 +16,8 @@ public class Main {
 
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
-
-        try {
-            Thread.sleep(10000);
-
-        } catch (Exception ignored) {}
-        Thread gatewayThread = new Thread(new Gateway());
+        Thread gatewayThread = new Thread(new Gateway(2), "Gateway");
         gatewayThread.start();
-
-        try {
-            Thread.sleep(10000);
-
-        } catch (Exception ignored) {}
 
         ArrayList<Callable<Boolean>> tasks = new ArrayList<>();
         for (int i = 0; i < THREADS_TEST_CNT; ++i) {
@@ -50,5 +40,6 @@ public class Main {
             System.err.println("Result waiting was interrupted");
         }
 
+        pool.shutdown();
     }
 }

@@ -33,7 +33,7 @@ public class Manager implements Runnable {
                 System.err.println("Incorrect data");
                 continue;
             }
-            new Thread(new Worker(socket, taskData.numbers())).start();
+            new Thread(new Worker(socket, taskData.numbers()), "Worker").start();
         }
         System.out.println("Connection closed");
     }
