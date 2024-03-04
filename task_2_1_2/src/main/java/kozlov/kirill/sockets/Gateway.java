@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 public class Gateway implements Runnable {
     public static final int GATEWAY_PORT = 8001; // TODO: реализовать пул шлюзов
-    private final int SERVER_SOCKET_BACKLOG = 5;
+    private final int SERVER_SOCKET_BACKLOG = 100;
     private ServerSocket serverSocket = null;
 
     public Gateway() {

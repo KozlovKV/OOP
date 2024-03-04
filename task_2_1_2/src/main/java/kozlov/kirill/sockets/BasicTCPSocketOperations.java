@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import kozlov.kirill.sockets.data.ErrorMessage;
+import kozlov.kirill.sockets.data.NetworkSendable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 
 public class BasicTCPSocketOperations {
     public static void sendJSONObject(
-        Socket socket, Object object
+        Socket socket, NetworkSendable object
     ) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         String stringData = mapper.writeValueAsString(object);
@@ -28,7 +29,7 @@ public class BasicTCPSocketOperations {
         writer.flush();
     }
 
-    public static <T> T receiveJSONObject(
+    public static <T extends NetworkSendable> T receiveJSONObject(
         Socket socket, Class<T> type
     ) throws IOException {
         try {
@@ -40,10 +41,10 @@ public class BasicTCPSocketOperations {
             );
             return parser.readValueAs(type);
         } catch (IOException e) {
-//            StringBuilder stringBuilder = new StringBuilder("Incorrect type of request\n");
+            StringBuilder stringBuilder = new StringBuilder("Incorrect type of request\n");
 //            stringBuilder.append() TODO: Тут хочу придумать, как отправлять пользователю также и жеалемый формат
-//            ErrorMessage errorMessage = new ErrorMessage(stringBuilder.toString());
-            sendJSONObject(socket, "Incorrect type");
+            ErrorMessage errorMessage = new ErrorMessage(stringBuilder.toString());
+            sendJSONObject(socket, errorMessage);
         }
         return null;
     }

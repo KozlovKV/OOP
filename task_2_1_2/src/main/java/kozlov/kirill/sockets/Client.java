@@ -41,6 +41,7 @@ public class Client implements Callable<Boolean> {
             socket = new Socket("localhost", Gateway.GATEWAY_PORT);
             return true;
         } catch (IOException ignored) {
+            System.err.println("Couldn't acquire connection");
             return false;
         }
     }

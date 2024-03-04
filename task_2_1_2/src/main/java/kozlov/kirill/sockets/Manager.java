@@ -1,12 +1,9 @@
 package kozlov.kirill.sockets;
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
-import kozlov.kirill.primes.UnprimeChecker;
 import kozlov.kirill.sockets.data.TaskData;
-import kozlov.kirill.sockets.data.TaskResult;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -36,8 +33,7 @@ public class Manager implements Runnable {
                 System.err.println("Incorrect data");
                 continue;
             }
-            TaskResult taskResult = processTask(taskData);
-            sendTaskResult(taskResult);
+            new Thread(new Worker(socket, taskData.numbers())).start();
         }
         System.out.println("Connection closed");
     }
@@ -51,17 +47,5 @@ public class Manager implements Runnable {
             System.err.println("Parsing error: " + e.getMessage());
         } catch (IOException ignored) {}
         return null;
-    }
-
-    private void sendTaskResult(TaskResult taskResult) {
-        try {
-            BasicTCPSocketOperations.sendJSONObject(socket, taskResult);
-        } catch (IOException ignored) {}
-    }
-
-    private TaskResult processTask(TaskData taskData) {
-        UnprimeChecker checker = new ParallelStreamsUnprimeChecker();
-        checker.setNumbers(taskData.numbers());
-        return new TaskResult(checker.isAnyUnprime());
     }
 }
