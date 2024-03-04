@@ -1,9 +1,8 @@
 package kozlov.kirill.sockets;
 
 import java.io.IOException;
-import java.net.*;
-import java.nio.ByteBuffer;
-import java.util.Arrays;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  * Server's gateway.
@@ -35,5 +34,8 @@ public class Gateway implements Runnable {
         } catch (IOException e) {
             System.out.println("Server closed");
         }
+        try {
+            serverSocket.close();
+        } catch (Exception ignored) {}
     }
 }

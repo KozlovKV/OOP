@@ -1,9 +1,7 @@
 package kozlov.kirill.sockets;
 
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
-import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 
 import java.io.IOException;

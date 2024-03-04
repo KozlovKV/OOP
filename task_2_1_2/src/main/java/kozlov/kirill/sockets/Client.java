@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
