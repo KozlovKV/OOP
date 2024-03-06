@@ -12,12 +12,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Main {
+    static final private int GATEWAYS_CNT = 10;
     static final private int THREADS_TEST_CNT = 1;
 
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
-        Thread gatewayThread = new Thread(new Gateway(2), "Gateway");
-        gatewayThread.start();
+        ArrayList<Thread> gateways = new ArrayList<>();
+        for (int i = 0; i < GATEWAYS_CNT; ++i) {
+            Thread gatewayThread = new Thread(new Gateway(
+                    Gateway.FIRST_SERVER_PORT + i, 1), "Gateway " + i);
+            gatewayThread.start();
+            gateways.add(gatewayThread);
+        }
 
         ArrayList<Callable<Boolean>> tasks = new ArrayList<>();
         for (int i = 0; i < THREADS_TEST_CNT; ++i) {

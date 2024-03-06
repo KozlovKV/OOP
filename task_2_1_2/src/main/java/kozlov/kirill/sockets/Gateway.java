@@ -10,22 +10,30 @@ import java.net.Socket;
  * Listens to server socket and creates connection for clients
  */
 public class Gateway implements Runnable {
-    public static final int GATEWAY_PORT = 8001; // TODO: реализовать пул шлюзов
+    public static final int BROADCAST_PORT = 8000;
+    public static final int FIRST_SERVER_PORT = 8001;
     private static final int SERVER_SOCKET_BACKLOG = 100;
     private int connectionsToDie = -1;
     private ServerSocket serverSocket = null;
 
-    public Gateway() {
-        try {
-            serverSocket = new ServerSocket(GATEWAY_PORT, SERVER_SOCKET_BACKLOG);
-        } catch (IOException ignored) {}
+    public Gateway(int port) {
+        createServerSocket(port);
     }
 
-    public Gateway(int connectionsToDie) {
+    public Gateway(int port, int connectionsToDie) {
         this.connectionsToDie = connectionsToDie;
+        createServerSocket(port);
+        new Thread(new UDPReceiver(port), "UDP receiver for gateway on port " + port).start();
+    }
+
+    private void createServerSocket(int port) {
         try {
-            serverSocket = new ServerSocket(GATEWAY_PORT, SERVER_SOCKET_BACKLOG);
-        } catch (IOException ignored) {}
+            serverSocket = new ServerSocket(port, SERVER_SOCKET_BACKLOG);
+        } catch (IOException e) {
+            System.err.println("Failed to create gateway on thread " +
+                    Thread.currentThread().getName());
+            throw new RuntimeException(e);
+        }
     }
 
     /**
