@@ -24,4 +24,10 @@ abstract public class BasicMapperOperations {
         var parser = mapper.createParser(reader);
         return parser.readValueAs(type);
     }
+
+    public static <T extends NetworkSendable> T parse(
+            String inputString, Class<T> type
+    ) throws IOException {
+        return new ObjectMapper().readValue(inputString, type);
+    }
 }

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.multicast.MulticastUtils;
 
 import java.io.IOException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Manager for processing client's tasks.
@@ -15,10 +15,12 @@ import java.nio.charset.StandardCharsets;
  * Implemented for thread-usage.
  */
 public class Manager implements Runnable {
+    final private int multicastServerPort;
     final private Socket clientManagerSocket;
 
-    public Manager(Socket clientManagerSocket) {
+    public Manager(Socket clientManagerSocket, int multicastServerPort) {
         this.clientManagerSocket = clientManagerSocket;
+        this.multicastServerPort = multicastServerPort;
     }
 
     /**
@@ -59,9 +61,11 @@ public class Manager implements Runnable {
         return null;
     }
 
-    public Runnable getRunnableManagerWorkerCommunicationFunction(TaskData taskData) {
+    private Runnable getRunnableManagerWorkerCommunicationFunction(TaskData taskData) {
         return () -> {
-            Socket workerSocket = getWorkerSocket(clientManagerSocket.getPort());
+            Socket workerSocket = MulticastUtils.getClientSocketByMulticastResponse(
+                    clientManagerSocket.getPort(), multicastServerPort
+            );
             if (workerSocket == null) {
                 try {
                     BasicTCPSocketOperations.sendJSONObject(
@@ -81,35 +85,5 @@ public class Manager implements Runnable {
                 System.err.println("Error in communication with worker");
             }
         };
-    }
-
-    static private final int BROADCAST_RECEIVING_TIMEOUT = 1000;
-    static private final int BROADCAST_RECEIVING_ATTEMPTS = 5;
-    private Socket getWorkerSocket(int broadcastPort) {
-        try (DatagramSocket socket = new DatagramSocket(broadcastPort)) {
-            socket.setBroadcast(true);
-            byte[] data = (broadcastPort + "\n").getBytes(StandardCharsets.UTF_8);
-            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName("255.255.255.255"), Gateway.FIRST_SERVER_PORT);
-            socket.setSoTimeout(BROADCAST_RECEIVING_TIMEOUT);
-            for (int i = 0;; ++i) {
-                try {
-                    socket.send(packet);
-                    socket.receive(packet);
-                    break;
-                } catch (SocketTimeoutException e) {
-                    System.err.println("There are no available workers.");
-                    if (i >= BROADCAST_RECEIVING_ATTEMPTS) {
-                        System.err.println("Attempts number exceeded.");
-                        return null;
-                    }
-                    System.err.println("Next try.");
-                }
-            }
-            System.out.println("Packet got from " + packet.getSocketAddress());
-            return new Socket(packet.getAddress(), packet.getPort());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

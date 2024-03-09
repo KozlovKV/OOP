@@ -4,6 +4,7 @@ import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.multicast.DatagramUtils;
 import kozlov.kirill.sockets.multicast.MulticastHandler;
 import kozlov.kirill.sockets.multicast.MulticastManager;
 
@@ -38,7 +39,7 @@ public class Worker implements Runnable {
                 return;
             }
             try {
-                String inputStr = new String(packet.getData(), packet.getOffset(), packet.getLength());
+                String inputStr = DatagramUtils.extractFromPacket(packet);
                 int ackPort = -1;
                 try {
                     ackPort = Integer.parseInt(inputStr, 0, inputStr.length()-1, 10);
@@ -47,8 +48,9 @@ public class Worker implements Runnable {
                     return;
                 }
                 DatagramSocket socket = new DatagramSocket(workerPort);
-                byte[] buf = (workerPort + "\n").getBytes(StandardCharsets.UTF_8);
-                DatagramPacket responsePacket = new DatagramPacket(buf, buf.length, packet.getAddress(), ackPort);
+                DatagramPacket responsePacket = DatagramUtils.createPacket(
+                    workerPort + "\n", packet.getAddress(), ackPort
+                );
                 socket.send(responsePacket);
                 socket.close();
             } catch (IOException e) {

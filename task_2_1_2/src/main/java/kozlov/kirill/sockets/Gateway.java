@@ -1,12 +1,9 @@
 package kozlov.kirill.sockets;
 
 import kozlov.kirill.sockets.multicast.MulticastManager;
-import kozlov.kirill.sockets.multicast.MulticastUtilsFactory;
 
 import java.io.IOException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,10 +17,12 @@ public class Gateway implements Runnable {
     public static final int FIRST_SERVER_PORT = 8000;
     private static final int SERVER_SOCKET_BACKLOG = 100;
     private int connectionsToDie = -1;
+    private int port;
     private ServerSocket serverSocket = null;
     private ExecutorService workersThreadPool;
 
     public Gateway(int port, int connectionsToDie, int workersCount) {
+        this.port = port;
         this.connectionsToDie = connectionsToDie;
         createServerSocket(port);
         MulticastManager multicastManager = new MulticastManager("230.0.0.0", port);
@@ -57,8 +56,8 @@ public class Gateway implements Runnable {
             do {
                 Socket connectionSocket = serverSocket.accept();
                 System.out.println("Connection to gateway from " + connectionSocket.getRemoteSocketAddress());
-                new Thread(new Manager(
-                        connectionSocket),
+                new Thread(
+                        new Manager(connectionSocket, port),
                         "Manager for " + connectionSocket.getRemoteSocketAddress()
                 ).start(); // TODO: перейти на виртуальные потоки
                 establishedConnections++;

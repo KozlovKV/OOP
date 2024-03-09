@@ -28,7 +28,7 @@ public class MulticastManager {
             MulticastSocket socket = new MulticastSocket(port);
             socket.joinGroup(groupAddress, groupInterface);
             Thread handlerThread = new Thread(
-                    MulticastUtilsFactory.getRunnableHandlerWrapper(socket, handler)
+                    MulticastUtils.getRunnableHandlerWrapper(socket, handler)
             );
             handlerThread.start();
             return socket;
