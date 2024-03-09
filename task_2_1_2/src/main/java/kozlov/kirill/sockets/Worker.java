@@ -70,7 +70,7 @@ public class Worker implements Runnable {
                 System.out.println("Connection to worker from " + connectionSocket.getRemoteSocketAddress());
                 resolveTask(connectionSocket);
                 connectionSocket.close();
-                Thread.sleep(7000);
+                Thread.sleep(7000); // TODO: Не забыть убрать в результате
                 isFree.set(true);
             }
         } catch (IOException | InterruptedException broke) {}
