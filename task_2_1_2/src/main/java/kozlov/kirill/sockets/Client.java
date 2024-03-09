@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 public class Client implements Callable<Boolean> {
-    public static final int CLIENT_PORT = 8000;
-    private final int MS_FOR_UDO_RESPONSE = 1000;
     private Socket socket = null;
     private TaskData taskData = null;
 
@@ -38,7 +36,7 @@ public class Client implements Callable<Boolean> {
 
     private boolean getManagerSocket() {
         try {
-            socket = new Socket("localhost", 8001);
+            socket = new Socket("localhost", Gateway.FIRST_SERVER_PORT);
             return true;
         } catch (IOException ignored) {
             System.err.println("Couldn't acquire connection");

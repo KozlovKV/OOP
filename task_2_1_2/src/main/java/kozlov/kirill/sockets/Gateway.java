@@ -1,8 +1,14 @@
 package kozlov.kirill.sockets;
 
+import kozlov.kirill.sockets.multicast.MulticastManager;
+import kozlov.kirill.sockets.multicast.MulticastUtilsFactory;
+
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Server's gateway.
@@ -11,19 +17,23 @@ import java.net.Socket;
  */
 public class Gateway implements Runnable {
     public static final int BROADCAST_PORT = 8000;
-    public static final int FIRST_SERVER_PORT = 8001;
+    public static final int FIRST_SERVER_PORT = 8000;
     private static final int SERVER_SOCKET_BACKLOG = 100;
     private int connectionsToDie = -1;
     private ServerSocket serverSocket = null;
+    private ExecutorService workersThreadPool;
 
-    public Gateway(int port) {
-        createServerSocket(port);
-    }
-
-    public Gateway(int port, int connectionsToDie) {
+    public Gateway(int port, int connectionsToDie, int workersCount) {
         this.connectionsToDie = connectionsToDie;
         createServerSocket(port);
-        new Thread(new UDPReceiver(port), "UDP receiver for gateway on port " + port).start();
+        MulticastManager multicastManager = new MulticastManager("230.0.0.0", port);
+        workersThreadPool = Executors.newFixedThreadPool(workersCount);
+        for (int i = 0; i < workersCount; ++i) {
+            Worker worker = new Worker(
+                    port + i + 1, multicastManager
+            );
+            workersThreadPool.submit(worker);
+        }
     }
 
     private void createServerSocket(int port) {
@@ -46,15 +56,17 @@ public class Gateway implements Runnable {
         try {
             do {
                 Socket connectionSocket = serverSocket.accept();
+                System.out.println("Connection to gateway from " + connectionSocket.getRemoteSocketAddress());
                 new Thread(new Manager(
                         connectionSocket),
                         "Manager for " + connectionSocket.getRemoteSocketAddress()
-                ).start();
+                ).start(); // TODO: перейти на виртуальные потоки
                 establishedConnections++;
             } while (connectionsToDie == -1 || establishedConnections < connectionsToDie);
         } catch (IOException ignored) {}
         try {
             serverSocket.close();
+            workersThreadPool.shutdown();
         } catch (Exception ignored) {}
         System.out.println("Server closed");
     }
