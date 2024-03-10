@@ -98,11 +98,8 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#BROADCAST_PORT" class="member-name-link">BROADCAST_PORT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#FIRST_SERVER_PORT" class="member-name-link">FIRST_SERVER_PORT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#FIRST_SERVER_PORT" class="member-name-link">FIRST_SERVER_PORT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -114,9 +111,10 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,int)" class="member-name-link">Gateway</a><wbr>(int&nbsp;port,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,int,int)" class="member-name-link">Gateway</a><wbr>(int&nbsp;port,
  int&nbsp;connectionsToDie,
- int&nbsp;workersCount)</code></div>
+ int&nbsp;workersCount,
+ int&nbsp;workersPerOneTask)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -155,20 +153,6 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="BROADCAST_PORT">
-<h3>BROADCAST_PORT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">BROADCAST_PORT</span></div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../../constant-values.html#kozlov.kirill.sockets.Gateway.BROADCAST_PORT">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="FIRST_SERVER_PORT">
 <h3>FIRST_SERVER_PORT</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">FIRST_SERVER_PORT</span></div>
@@ -191,11 +175,12 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int,int,int)">
+<section class="detail" id="&lt;init&gt;(int,int,int,int)">
 <h3>Gateway</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Gateway</span><wbr><span class="parameters">(int&nbsp;port,
  int&nbsp;connectionsToDie,
- int&nbsp;workersCount)</span></div>
+ int&nbsp;workersCount,
+ int&nbsp;workersPerOneTask)</span></div>
 </section>
 </li>
 </ul>
