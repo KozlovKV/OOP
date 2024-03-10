@@ -69,7 +69,7 @@ abstract public class MulticastUtils {
                     System.err.println("Next try.");
                 }
             }
-            System.out.println("Packet got from " + packet.getSocketAddress());
+            System.out.println("Got response from multicast node " + packet.getSocketAddress());
             return new Socket(packet.getAddress(), packet.getPort());
         } catch (IOException e) {
             e.printStackTrace();

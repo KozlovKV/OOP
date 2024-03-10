@@ -8,6 +8,8 @@ import kozlov.kirill.sockets.multicast.MulticastUtils;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Manager for processing client's tasks.
@@ -17,10 +19,12 @@ import java.net.*;
 public class Manager implements Runnable {
     final private int multicastServerPort;
     final private Socket clientManagerSocket;
+    final private int workersPerTask;
 
-    public Manager(Socket clientManagerSocket, int multicastServerPort) {
+    public Manager(Socket clientManagerSocket, int multicastServerPort, int workersPerTask) {
         this.clientManagerSocket = clientManagerSocket;
         this.multicastServerPort = multicastServerPort;
+        this.workersPerTask = workersPerTask;
     }
 
     /**
@@ -40,9 +44,7 @@ public class Manager implements Runnable {
                     continue;
                 }
                 // TODO: добавить очередь ожидающих запросов
-                new Thread(
-                        getRunnableManagerWorkerCommunicationFunction(taskData)
-                ).start(); // TODO: перейти на виртуальные потоки
+                new Thread(new MasterWorker(taskData)).start(); // TODO: перейти на виртуальные потоки
             }
         } catch (IllegalArgumentException e) {
             System.err.println("Connection closed with exception");
@@ -61,29 +63,85 @@ public class Manager implements Runnable {
         return null;
     }
 
-    private Runnable getRunnableManagerWorkerCommunicationFunction(TaskData taskData) {
-        return () -> {
-            Socket workerSocket = MulticastUtils.getClientSocketByMulticastResponse(
-                    clientManagerSocket.getPort(), multicastServerPort
-            );
-            if (workerSocket == null) {
-                try {
-                    BasicTCPSocketOperations.sendJSONObject(
-                            clientManagerSocket, new ErrorMessage("Server couldn't find calculation node")
-                    );
-                } catch (IOException ignored) {}
-                return;
+    private class MasterWorker implements Runnable {
+        final private TaskData taskData;
+
+        public MasterWorker(TaskData taskData) {
+            this.taskData = taskData;
+        }
+
+        private ArrayList<TaskData> splitTaskData(TaskData taskData) {
+            final int numbersSize = taskData.numbers().size();
+            final int subtaskNumbersSize = numbersSize / workersPerTask + 1;
+            ArrayList<TaskData> tasks = new ArrayList<>();
+            for (int i = 0; i < workersPerTask; ++i) {
+                final int threadNumbersStartIndex = i * subtaskNumbersSize;
+                final int threadNumbersEndIndex =
+                        Math.min(threadNumbersStartIndex + subtaskNumbersSize, numbersSize);
+                ArrayList<Integer> sublist = new ArrayList<>();
+                for (int j = threadNumbersStartIndex; j < threadNumbersEndIndex; ++j)
+                    sublist.add(taskData.numbers().get(j));
+                tasks.add(new TaskData(sublist));
             }
-            System.out.println("Chosen worker " + workerSocket.getRemoteSocketAddress());
+            return tasks;
+        }
+
+        private ArrayList<Socket> getWorkersSockets(ArrayList<TaskData> tasks) {
+            ArrayList<Socket> workerSockets = new ArrayList<>();
+            for (var task : tasks) {
+                if (task.numbers().isEmpty())
+                    continue;
+                Socket workerSocket = MulticastUtils.getClientSocketByMulticastResponse(
+                        clientManagerSocket.getPort(), multicastServerPort
+                );
+                if (workerSocket == null) {
+                    try {
+                        BasicTCPSocketOperations.sendJSONObject(
+                                clientManagerSocket, new ErrorMessage("Server couldn't find calculation node")
+                        );
+                    } catch (IOException ignored) {
+                    }
+                    return null;
+                }
+                System.out.println("Chosen worker " + workerSocket.getRemoteSocketAddress());
+                try {
+                    BasicTCPSocketOperations.sendJSONObject(workerSocket, task);
+                } catch (IOException e) {
+                    System.err.println("Error in communication with worker");
+
+                }
+                workerSockets.add(workerSocket);
+            }
+            return workerSockets;
+        }
+
+        public void run() {
+            ArrayList<Socket> workerSockets = getWorkersSockets(splitTaskData(taskData));
+            if (workerSockets == null)
+                return;
+            for (var workerSocket : workerSockets) {
+                try {
+                    TaskResult taskResult =
+                        BasicTCPSocketOperations.receiveJSONObject(
+                            workerSocket, TaskResult.class
+                        );
+                    if (taskResult.result()) {
+                        BasicTCPSocketOperations.sendJSONObject(
+                                clientManagerSocket, taskResult
+                        );
+                        return;
+                    }
+                } catch (IOException e) {
+                    System.err.println("Error in communication with worker");
+                }
+            }
             try {
-                BasicTCPSocketOperations.sendJSONObject(workerSocket, taskData);
                 BasicTCPSocketOperations.sendJSONObject(
-                        clientManagerSocket,
-                        BasicTCPSocketOperations.receiveJSONObject(workerSocket, TaskResult.class)
+                        clientManagerSocket, new TaskResult(false)
                 );
             } catch (IOException e) {
                 System.err.println("Error in communication with worker");
             }
-        };
+        }
     }
 }

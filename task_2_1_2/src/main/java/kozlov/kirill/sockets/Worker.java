@@ -10,12 +10,14 @@ import kozlov.kirill.sockets.multicast.MulticastManager;
 
 import java.io.IOException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Worker implements Runnable {
+    static final private int WORKER_SOCKET_TIMEOUT = 1000;
+
     final private Integer workerPort;
     private AtomicBoolean isFree = new AtomicBoolean(true);
+    private boolean shouldBeClosed = false;
 
     private ServerSocket serverSocket = null;
     private MulticastSocket multicastSocket = null;
@@ -24,6 +26,7 @@ public class Worker implements Runnable {
         this.workerPort = workerPort;
         try {
             serverSocket = new ServerSocket(workerPort);
+            serverSocket.setSoTimeout(WORKER_SOCKET_TIMEOUT);
         } catch (IOException e) {
             System.err.println("Failed to create server worker on port " + workerPort);
         }
@@ -32,10 +35,9 @@ public class Worker implements Runnable {
         );
     }
 
-    public MulticastHandler getWorkerMulticastHandler() {
+    private MulticastHandler getWorkerMulticastHandler() {
         return (DatagramPacket packet) -> {
             if (!isFree.get()) {
-                System.err.println("Worker on " + workerPort + " is unavailable for new task");
                 return;
             }
             try {
@@ -66,16 +68,20 @@ public class Worker implements Runnable {
      */
     public void run() {
         try {
-            while (true) {
-                Socket connectionSocket = serverSocket.accept();
+            while (!shouldBeClosed) {
+                Socket connectionSocket = null;
+                try {
+                    connectionSocket = serverSocket.accept();
+                } catch (SocketTimeoutException e) {
+                    continue;
+                }
                 isFree.set(false);
                 System.out.println("Connection to worker from " + connectionSocket.getRemoteSocketAddress());
                 resolveTask(connectionSocket);
                 connectionSocket.close();
-                Thread.sleep(7000); // TODO: Не забыть убрать в результате
                 isFree.set(true);
             }
-        } catch (IOException | InterruptedException broke) {}
+        } catch (IOException broke) {}
         try {
             serverSocket.close();
             multicastSocket.close();
@@ -83,7 +89,11 @@ public class Worker implements Runnable {
         System.out.println("Worker killed");
     }
 
-    void resolveTask(Socket socket) {
+    public void setCloseFlag() {
+        shouldBeClosed = true;
+    }
+
+    private void resolveTask(Socket socket) {
         TaskData taskData = null;
         try {
             taskData = BasicTCPSocketOperations.receiveJSONObject(
