@@ -12,42 +12,49 @@ import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 public class Main {
-    static final private int THREADS_TEST_CNT = 3;
+    static final private int THREADS_TEST_CNT = 0;
 
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         new Thread(new Gateway(
-            Gateway.FIRST_SERVER_PORT, 4, 10, 5
+            Gateway.FIRST_SERVER_PORT, 4, 4, 5
         ), "Gateway").start();
 
-        ArrayList<Callable<Boolean>> tasks = new ArrayList<>();
-        for (int i = 0; i < THREADS_TEST_CNT; ++i) {
-            ArrayList<Integer> list = new ArrayList<>();
-            for (int j = 0; j < 1000000; ++j) {
-                list.add(i);
-            }
-            tasks.add(new Client(list));
+        final int BILLION_PRIME = 1000000007;
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 1000000; i++) {
+            list.add(BILLION_PRIME);
         }
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        new Thread(task).start();
 
-        ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
-        try {
-            List<Future<Boolean>> results = pool.invokeAll(tasks);
-            for (int i = 0; i < THREADS_TEST_CNT; ++i) {
-                System.out.println(i + ": " + results.get(i).get());
-            }
-        } catch (ExecutionException e) {
-            System.err.println("Failed to execute task");
-        } catch (InterruptedException e) {
-            System.err.println("Result waiting was interrupted");
-        }
-
-        pool.shutdown();
+//        if (THREADS_TEST_CNT == 0)
+//            return;
+//
+//        ArrayList<Callable<Boolean>> tasks = new ArrayList<>();
+//        for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+//            ArrayList<Integer> list = new ArrayList<>();
+//            for (int j = 0; j < 1000000; ++j) {
+//                list.add(i);
+//            }
+//            tasks.add(new Client(list));
+//        }
+//
+//        ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
+//        try {
+//            List<Future<Boolean>> results = pool.invokeAll(tasks);
+//            for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+//                System.out.println(i + ": " + results.get(i).get());
+//            }
+//        } catch (ExecutionException e) {
+//            System.err.println("Failed to execute task");
+//        } catch (InterruptedException e) {
+//            System.err.println("Result waiting was interrupted");
+//        }
+//
+//        pool.shutdown();
     }
 }

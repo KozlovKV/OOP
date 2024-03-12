@@ -70,6 +70,35 @@ public class Manager implements Runnable {
             this.taskData = taskData;
         }
 
+        public void run() {
+            ArrayList<Socket> workerSockets = getWorkersSockets(splitTaskData(taskData));
+            if (workerSockets == null)
+                return;
+            for (var workerSocket : workerSockets) {
+                try {
+                    TaskResult taskResult =
+                            BasicTCPSocketOperations.receiveJSONObject(
+                                    workerSocket, TaskResult.class
+                            );
+                    if (taskResult.result()) {
+                        BasicTCPSocketOperations.sendJSONObject(
+                                clientManagerSocket, taskResult
+                        );
+                        return;
+                    }
+                } catch (IOException e) {
+                    System.err.println("Error in communication with worker");
+                }
+            }
+            try {
+                BasicTCPSocketOperations.sendJSONObject(
+                        clientManagerSocket, new TaskResult(false)
+                );
+            } catch (IOException e) {
+                System.err.println("Error in communication with worker");
+            }
+        }
+
         private ArrayList<TaskData> splitTaskData(TaskData taskData) {
             final int numbersSize = taskData.numbers().size();
             final int subtaskNumbersSize = numbersSize / workersPerTask + 1;
@@ -84,6 +113,10 @@ public class Manager implements Runnable {
                 tasks.add(new TaskData(sublist));
             }
             return tasks;
+        }
+
+        private Socket getNewWorkerSocket(TaskData taskData) {
+            return null;
         }
 
         private ArrayList<Socket> getWorkersSockets(ArrayList<TaskData> tasks) {
@@ -113,35 +146,6 @@ public class Manager implements Runnable {
                 workerSockets.add(workerSocket);
             }
             return workerSockets;
-        }
-
-        public void run() {
-            ArrayList<Socket> workerSockets = getWorkersSockets(splitTaskData(taskData));
-            if (workerSockets == null)
-                return;
-            for (var workerSocket : workerSockets) {
-                try {
-                    TaskResult taskResult =
-                        BasicTCPSocketOperations.receiveJSONObject(
-                            workerSocket, TaskResult.class
-                        );
-                    if (taskResult.result()) {
-                        BasicTCPSocketOperations.sendJSONObject(
-                                clientManagerSocket, taskResult
-                        );
-                        return;
-                    }
-                } catch (IOException e) {
-                    System.err.println("Error in communication with worker");
-                }
-            }
-            try {
-                BasicTCPSocketOperations.sendJSONObject(
-                        clientManagerSocket, new TaskResult(false)
-                );
-            } catch (IOException e) {
-                System.err.println("Error in communication with worker");
-            }
         }
     }
 }
