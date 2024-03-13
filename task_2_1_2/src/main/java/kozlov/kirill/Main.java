@@ -20,16 +20,21 @@ public class Main {
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         new Thread(new Gateway(
-            Gateway.FIRST_SERVER_PORT, 4, 4, 5
+            Gateway.FIRST_SERVER_PORT, 2, 4, 5
         ), "Gateway").start();
 
         final int BILLION_PRIME = 1000000007;
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000; i++) {
             list.add(BILLION_PRIME);
         }
+        list.add(6);
         FutureTask<Boolean> task = new FutureTask<>(new Client(list));
         new Thread(task).start();
+
+        try {
+            System.out.println(task.get());
+        } catch (InterruptedException | ExecutionException e) {}
 
 //        if (THREADS_TEST_CNT == 0)
 //            return;

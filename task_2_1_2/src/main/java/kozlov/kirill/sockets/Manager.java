@@ -74,6 +74,7 @@ public class Manager implements Runnable {
             ArrayList<Socket> workerSockets = getWorkersSockets(splitTaskData(taskData));
             if (workerSockets == null)
                 return;
+            // TODO: Продумать работу алгоритма при возврате ошибки одним из вычислительных узлов (либо обосновать, что ошибка невозможна)
             for (var workerSocket : workerSockets) {
                 try {
                     TaskResult taskResult =

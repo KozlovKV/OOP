@@ -21,7 +21,6 @@ public class Gateway implements Runnable {
     private final int port;
     private final int workersPerOneTask;
     private ServerSocket serverSocket = null;
-    private final ExecutorService workersThreadPool;
     private final ArrayList<Worker> workers;
 
     public Gateway(int port, int connectionsToDie, int workersCount, int workersPerOneTask) {
@@ -31,15 +30,7 @@ public class Gateway implements Runnable {
 
         createServerSocket(port);
         MulticastManager multicastManager = new MulticastManager("230.0.0.0", port);
-        workers = new ArrayList<>();
-        workersThreadPool = Executors.newFixedThreadPool(workersCount);
-        for (int i = 0; i < workersCount; ++i) {
-            Worker worker = new Worker(
-                    port + i + 1, multicastManager
-            );
-            workers.add(worker);
-            workersThreadPool.submit(worker);
-        }
+        workers = Worker.getLaunchedWorkers(port + 1, workersCount, multicastManager);
     }
 
     private void createServerSocket(int port) {
@@ -88,7 +79,6 @@ public class Gateway implements Runnable {
         } catch (IOException ignored) {}
         try {
             serverSocket.close();
-            workersThreadPool.shutdown();
         } catch (Exception ignored) {}
         System.out.println("Server closed");
         for (Worker worker : workers) {

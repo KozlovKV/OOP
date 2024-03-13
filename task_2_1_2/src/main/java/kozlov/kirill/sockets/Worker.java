@@ -9,7 +9,15 @@ import kozlov.kirill.sockets.multicast.MulticastHandler;
 import kozlov.kirill.sockets.multicast.MulticastManager;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.MulticastSocket;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Worker implements Runnable {
@@ -17,6 +25,7 @@ public class Worker implements Runnable {
 
     final private Integer workerPort;
     private AtomicBoolean isFree = new AtomicBoolean(true);
+    private boolean createdSuccessfully = false;
     private boolean shouldBeClosed = false;
 
     private ServerSocket serverSocket = null;
@@ -28,11 +37,17 @@ public class Worker implements Runnable {
             serverSocket = new ServerSocket(workerPort);
             serverSocket.setSoTimeout(WORKER_SOCKET_TIMEOUT);
         } catch (IOException e) {
-            System.err.println("Failed to create server worker on port " + workerPort);
+            System.err.println("Failed to create worker on port " + workerPort);
+            return;
         }
         multicastSocket = multicastManager.registerMulticastHandler(
                 getWorkerMulticastHandler()
         );
+        createdSuccessfully = true;
+    }
+
+    public boolean isCreatedSuccessfully() {
+        return createdSuccessfully;
     }
 
     private MulticastHandler getWorkerMulticastHandler() {
@@ -105,5 +120,24 @@ public class Worker implements Runnable {
         try {
             BasicTCPSocketOperations.sendJSONObject(socket, taskResult);
         } catch (IOException ignored) {}
+    }
+
+    public static ArrayList<Worker> getLaunchedWorkers(
+            int startPort, int workersCount, MulticastManager multicastManager
+    ) {
+        ArrayList<Worker> newWorkers = new ArrayList<>();
+        ExecutorService workersThreadPool = Executors.newFixedThreadPool(workersCount);
+        int currentPort = startPort;
+        while (newWorkers.size() < workersCount) {
+            Worker worker = new Worker(currentPort, multicastManager);
+            currentPort++;
+            if (!worker.createdSuccessfully)
+                continue; // TODO: проработать случай безуспешных попыток создания воркеров на уже заданной области
+            newWorkers.add(worker);
+            workersThreadPool.submit(worker);
+
+        }
+        workersThreadPool.shutdown();
+        return newWorkers;
     }
 }
