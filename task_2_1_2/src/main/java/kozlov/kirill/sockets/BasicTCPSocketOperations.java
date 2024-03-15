@@ -24,9 +24,7 @@ abstract public class BasicTCPSocketOperations {
             InputStream inputStream = socket.getInputStream();
             return BasicMapperOperations.parse(inputStream, type);
         } catch (IOException e) {
-            StringBuilder stringBuilder = new StringBuilder("Incorrect type of request\n");
-//            stringBuilder.append() TODO: Тут хочу придумать, как отправлять пользователю также и жеалемый формат
-            ErrorMessage errorMessage = new ErrorMessage(stringBuilder.toString());
+            ErrorMessage errorMessage = new ErrorMessage("Incorrect type of request\n");
             sendJSONObject(socket, errorMessage);
         }
         return null;

@@ -20,7 +20,7 @@ public class Main {
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         new Thread(new Gateway(
-            Gateway.FIRST_SERVER_PORT, 2, 4, 5
+            Gateway.FIRST_SERVER_PORT, 2, 2, 1
         ), "Gateway").start();
 
         final int BILLION_PRIME = 1000000007;

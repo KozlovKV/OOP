@@ -92,8 +92,16 @@ public class Worker implements Runnable {
                 }
                 isFree.set(false);
                 System.out.println("Connection to worker from " + connectionSocket.getRemoteSocketAddress());
+//                if (serverSocket.getLocalPort() == 8001) {
+//                    try {
+//                        Thread.sleep(1000);
+//                        connectionSocket.close();
+//                    } catch (InterruptedException e) {}
+//                }
                 resolveTask(connectionSocket);
-                connectionSocket.close();
+//                if (serverSocket.getLocalPort() != 8001)
+//                    connectionSocket.close();
+
                 isFree.set(true);
             }
         } catch (IOException broke) {}
@@ -122,20 +130,21 @@ public class Worker implements Runnable {
         } catch (IOException ignored) {}
     }
 
-    public static ArrayList<Worker> getLaunchedWorkers(
+    static final int MAX_PORT = 65535;
+    public static ArrayList<Worker> launchAndGetWorkers(
             int startPort, int workersCount, MulticastManager multicastManager
     ) {
         ArrayList<Worker> newWorkers = new ArrayList<>();
         ExecutorService workersThreadPool = Executors.newFixedThreadPool(workersCount);
         int currentPort = startPort;
-        while (newWorkers.size() < workersCount) {
+        while (currentPort <+ MAX_PORT && newWorkers.size() < workersCount) {
             Worker worker = new Worker(currentPort, multicastManager);
             currentPort++;
-            if (!worker.createdSuccessfully)
-                continue; // TODO: проработать случай безуспешных попыток создания воркеров на уже заданной области
+            if (!worker.isCreatedSuccessfully())
+                continue;
             newWorkers.add(worker);
             workersThreadPool.submit(worker);
-
+            System.out.println("Worker on port " + (currentPort - 1) + " successfully created and launched");
         }
         workersThreadPool.shutdown();
         return newWorkers;

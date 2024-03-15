@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
 import kozlov.kirill.sockets.multicast.MulticastUtils;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -71,32 +74,57 @@ public class Manager implements Runnable {
         }
 
         public void run() {
-            ArrayList<Socket> workerSockets = getWorkersSockets(splitTaskData(taskData));
-            if (workerSockets == null)
-                return;
-            // TODO: Продумать работу алгоритма при возврате ошибки одним из вычислительных узлов (либо обосновать, что ошибка невозможна)
-            for (var workerSocket : workerSockets) {
+            ArrayDeque<WorkerActiveTask> activeWorkers = new ArrayDeque<>();
+            var tasks = splitTaskData(taskData);
+            try {
+                activeWorkers = getActiveWorkers(tasks);
+            } catch (WorkerNotFoundException e) {
                 try {
-                    TaskResult taskResult =
+                    BasicTCPSocketOperations.sendJSONObject(
+                            clientManagerSocket, new ErrorMessage("Server couldn't find calculation node")
+                    );
+                } catch (IOException ignored) {}
+                System.err.println("Couldn't find calculation node");
+                return;
+            }
+            TaskResult taskResult = new TaskResult(false);
+            while (!activeWorkers.isEmpty()) {
+                WorkerActiveTask activeTask = activeWorkers.poll();
+                TaskResult workerResult = null;
+                try {
+                    workerResult =
                             BasicTCPSocketOperations.receiveJSONObject(
-                                    workerSocket, TaskResult.class
+                                    activeTask.workerSocket(), TaskResult.class
                             );
-                    if (taskResult.result()) {
-                        BasicTCPSocketOperations.sendJSONObject(
-                                clientManagerSocket, taskResult
-                        );
-                        return;
+                    if (workerResult.result()) {
+                        taskResult = workerResult;
+                        break;
                     }
                 } catch (IOException e) {
-                    System.err.println("Error in communication with worker");
+                    try {
+                        System.out.println("Error in active node. Trying to find new node for subtask...");
+                        getNewWorkerSocket(activeTask.taskData())
+                                .ifPresent(activeWorkers::add);
+                    } catch (WorkerNotFoundException notFoundException) {
+                        try {
+                            BasicTCPSocketOperations.sendJSONObject(
+                                    clientManagerSocket, new ErrorMessage("Server got error while calculated and cannot restart process")
+                            );
+                        } catch (IOException ignored) {}
+                        System.out.println("Couldn't find new calculation node");
+                        return;
+                    }
                 }
             }
             try {
                 BasicTCPSocketOperations.sendJSONObject(
-                        clientManagerSocket, new TaskResult(false)
+                        clientManagerSocket, taskResult
                 );
             } catch (IOException e) {
-                System.err.println("Error in communication with worker");
+                System.err.println(
+                    "Error to send result to client " +
+                    clientManagerSocket.getRemoteSocketAddress()
+                );
             }
         }
 
@@ -116,37 +144,35 @@ public class Manager implements Runnable {
             return tasks;
         }
 
-        private Socket getNewWorkerSocket(TaskData taskData) {
-            return null;
+        private Optional<WorkerActiveTask> getNewWorkerSocket(
+            TaskData task
+        ) throws WorkerNotFoundException {
+            if (task.numbers().isEmpty())
+                return Optional.empty();
+            Socket workerSocket = MulticastUtils.getClientSocketByMulticastResponse(
+                    clientManagerSocket.getPort(), multicastServerPort
+            );
+            if (workerSocket == null) {
+                throw new WorkerNotFoundException();
+            }
+            System.out.println("Chosen worker " + workerSocket.getRemoteSocketAddress());
+            try {
+                BasicTCPSocketOperations.sendJSONObject(workerSocket, task);
+            } catch (IOException e) {
+                System.err.println("Error in communication with worker");
+
+            }
+            return Optional.of(new WorkerActiveTask(task, workerSocket));
         }
 
-        private ArrayList<Socket> getWorkersSockets(ArrayList<TaskData> tasks) {
-            ArrayList<Socket> workerSockets = new ArrayList<>();
+        private ArrayDeque<WorkerActiveTask> getActiveWorkers(
+            ArrayList<TaskData> tasks
+        ) throws WorkerNotFoundException {
+            ArrayDeque<WorkerActiveTask> workers = new ArrayDeque<>();
             for (var task : tasks) {
-                if (task.numbers().isEmpty())
-                    continue;
-                Socket workerSocket = MulticastUtils.getClientSocketByMulticastResponse(
-                        clientManagerSocket.getPort(), multicastServerPort
-                );
-                if (workerSocket == null) {
-                    try {
-                        BasicTCPSocketOperations.sendJSONObject(
-                                clientManagerSocket, new ErrorMessage("Server couldn't find calculation node")
-                        );
-                    } catch (IOException ignored) {
-                    }
-                    return null;
-                }
-                System.out.println("Chosen worker " + workerSocket.getRemoteSocketAddress());
-                try {
-                    BasicTCPSocketOperations.sendJSONObject(workerSocket, task);
-                } catch (IOException e) {
-                    System.err.println("Error in communication with worker");
-
-                }
-                workerSockets.add(workerSocket);
+                getNewWorkerSocket(task).ifPresent(workers::add);
             }
-            return workerSockets;
+            return workers;
         }
     }
 }

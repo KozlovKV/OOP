@@ -5,8 +5,6 @@ import kozlov.kirill.sockets.multicast.MulticastManager;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Server's gateway.
@@ -30,7 +28,7 @@ public class Gateway implements Runnable {
 
         createServerSocket(port);
         MulticastManager multicastManager = new MulticastManager("230.0.0.0", port);
-        workers = Worker.getLaunchedWorkers(port + 1, workersCount, multicastManager);
+        workers = Worker.launchAndGetWorkers(port + 1, workersCount, multicastManager);
     }
 
     private void createServerSocket(int port) {
