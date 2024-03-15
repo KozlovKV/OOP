@@ -46,7 +46,6 @@ public class Manager implements Runnable {
                     System.err.println("Incorrect data");
                     continue;
                 }
-                // TODO: добавить очередь ожидающих запросов
                 new Thread(new MasterWorker(taskData)).start(); // TODO: перейти на виртуальные потоки
             }
         } catch (IllegalArgumentException e) {

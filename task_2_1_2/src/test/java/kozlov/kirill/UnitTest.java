@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class UnitTest {
     public static final int BILLION_PRIME = 1000000007;
 
-    private static ArrayList<Integer> getArrayListFromArray(int [] arr, int n) {
+    static ArrayList<Integer> getArrayListFromArray(int [] arr, int n) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             list.add(arr[i]);

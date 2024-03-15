@@ -28,12 +28,16 @@ public class Main {
         for (int i = 0; i < 1000; i++) {
             list.add(BILLION_PRIME);
         }
-        list.add(6);
         FutureTask<Boolean> task = new FutureTask<>(new Client(list));
         new Thread(task).start();
+        ArrayList<Integer> list2 = new ArrayList<>(list);
+        list2.add(6);
+        FutureTask<Boolean> task2 = new FutureTask<>(new Client(list2));
+        new Thread(task2).start();
 
         try {
             System.out.println(task.get());
+            System.out.println(task2.get());
         } catch (InterruptedException | ExecutionException e) {}
 
 //        if (THREADS_TEST_CNT == 0)

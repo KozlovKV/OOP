@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Worker implements Runnable {
-    static final private int WORKER_SOCKET_TIMEOUT = 1000;
+    static final public int WORKER_SOCKET_TIMEOUT = 1000;
 
     final private Integer workerPort;
     private AtomicBoolean isFree = new AtomicBoolean(true);
@@ -92,16 +92,7 @@ public class Worker implements Runnable {
                 }
                 isFree.set(false);
                 System.out.println("Connection to worker from " + connectionSocket.getRemoteSocketAddress());
-//                if (serverSocket.getLocalPort() == 8001) {
-//                    try {
-//                        Thread.sleep(1000);
-//                        connectionSocket.close();
-//                    } catch (InterruptedException e) {}
-//                }
                 resolveTask(connectionSocket);
-//                if (serverSocket.getLocalPort() != 8001)
-//                    connectionSocket.close();
-
                 isFree.set(true);
             }
         } catch (IOException broke) {}
