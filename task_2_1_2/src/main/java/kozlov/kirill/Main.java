@@ -14,12 +14,12 @@ public class Main {
 
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
-//        WorkersFactory.launchAndGetWorkers(
-//            TEST_SERVER_PORT + 1, 2,
-//            "230.0.0.0", TEST_SERVER_PORT
-//        );
+        WorkersFactory.launchAndGetWorkers(
+            TEST_SERVER_PORT + 1, 100,
+            "230.0.0.0", TEST_SERVER_PORT
+        );
         new Thread(new Gateway(
-            TEST_SERVER_PORT, TEST_SERVER_PORT, 2, 1
+            TEST_SERVER_PORT, TEST_SERVER_PORT, 3, 10
         ), "Gateway").start();
 
         final int BILLION_PRIME = 1000000007;

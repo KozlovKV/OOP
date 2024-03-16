@@ -3,6 +3,7 @@ package kozlov.kirill.sockets.server;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * Server's gateway.
@@ -57,10 +58,12 @@ public class Gateway implements Runnable {
                     continue;
                 }
                 System.out.println("Connection to gateway from " + connectionSocket.getRemoteSocketAddress());
-                Thread managerThread = new Thread(
-                        new ClientManager(connectionSocket, multicastPort, workersPerOneTask),
-                        "Manager for " + connectionSocket.getRemoteSocketAddress()
-                ); // TODO: перейти на виртуальные потоки
+                ThreadFactory factory = Thread.ofVirtual().factory();
+                Thread managerThread = factory.newThread(new ClientManager(connectionSocket, multicastPort, workersPerOneTask));
+//                Thread managerThread = new Thread(
+//                        new ClientManager(connectionSocket, multicastPort, workersPerOneTask),
+//                        "Manager for " + connectionSocket.getRemoteSocketAddress()
+//                ); // TODO: перейти на виртуальные потоки
                 managerThread.start();
                 managerThreads.add(managerThread);
                 establishedConnections++;
