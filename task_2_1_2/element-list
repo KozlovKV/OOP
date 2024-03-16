@@ -4,3 +4,5 @@ kozlov.kirill.sockets
 kozlov.kirill.sockets.data
 kozlov.kirill.sockets.exceptions
 kozlov.kirill.sockets.multicast
+kozlov.kirill.sockets.server
+kozlov.kirill.sockets.worker
