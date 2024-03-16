@@ -4,9 +4,7 @@ import kozlov.kirill.sockets.data.BasicMapperOperations;
 import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.NetworkSendable;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
@@ -26,9 +24,20 @@ final public class BasicTCPSocketOperations {
             InputStream inputStream = socket.getInputStream();
             return BasicMapperOperations.parse(inputStream, type);
         } catch (IOException e) {
-            ErrorMessage errorMessage = new ErrorMessage("Incorrect type of request\n");
-            sendJSONObject(socket, errorMessage);
+            // TODO: обрабатывать только ошибки с получением результата, ошибки парсинга должны обрабатываться отдельно
+//            ErrorMessage errorMessage = new ErrorMessage("Incorrect type of request\n");
+//            sendJSONObject(socket, errorMessage);
         }
         return null;
+    }
+
+    public static String receiveString(
+            Socket socket
+    ) throws IOException {
+        InputStream inputStream = socket.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                inputStream, StandardCharsets.UTF_8
+        ));
+        return reader.readLine();
     }
 }

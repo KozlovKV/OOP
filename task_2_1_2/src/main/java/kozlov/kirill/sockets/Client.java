@@ -1,15 +1,14 @@
 package kozlov.kirill.sockets;
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import kozlov.kirill.sockets.data.TaskData;
-import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.data.*;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
-public class Client implements Callable<Boolean> {
+public class Client implements Callable<NetworkSendable> {
     private Socket socket = null;
     private TaskData taskData = null;
     private final int serverPort;
@@ -19,12 +18,12 @@ public class Client implements Callable<Boolean> {
         this.serverPort = serverPort;
     }
 
-    public Boolean call() {
+    public NetworkSendable call() {
         if (!getManagerSocket()) {
             return null;
         }
         sendTaskData();
-        Boolean result = receiveTaskResult();
+        NetworkSendable result = receiveTaskResult();
         System.out.println("Result got");
         try {
             socket.close();
@@ -50,12 +49,18 @@ public class Client implements Callable<Boolean> {
         } catch (IOException ignored) {}
     }
 
-    private Boolean receiveTaskResult() {
+    private NetworkSendable receiveTaskResult() {
+        String response = "";
         try {
-            TaskResult taskResult = BasicTCPSocketOperations.receiveJSONObject(socket, TaskResult.class);
-            return taskResult.result();
+            response = BasicTCPSocketOperations.receiveString(socket);
+            TaskResult taskResult = BasicMapperOperations.parse(response, TaskResult.class);
+            return taskResult;
         } catch (UnrecognizedPropertyException e) {
-            System.err.println("Result parsing error: " + e.getMessage());
+            System.err.println("Failed to parse correct result. Parsing error message...");
+            try {
+                ErrorMessage errorMessage = BasicMapperOperations.parse(response, ErrorMessage.class);
+                return errorMessage;
+            } catch (IOException ignored) {}
         } catch (IOException ignored) {}
         return null;
     }

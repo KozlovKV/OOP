@@ -1,6 +1,7 @@
 package kozlov.kirill;
 
 import kozlov.kirill.sockets.Client;
+import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.server.Gateway;
 import kozlov.kirill.sockets.worker.WorkersFactory;
 
@@ -13,10 +14,10 @@ public class Main {
 
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
-        WorkersFactory.launchAndGetWorkers(
-            TEST_SERVER_PORT + 1, 2,
-            "230.0.0.0", TEST_SERVER_PORT
-        );
+//        WorkersFactory.launchAndGetWorkers(
+//            TEST_SERVER_PORT + 1, 2,
+//            "230.0.0.0", TEST_SERVER_PORT
+//        );
         new Thread(new Gateway(
             TEST_SERVER_PORT, TEST_SERVER_PORT, 2, 1
         ), "Gateway").start();
@@ -26,11 +27,11 @@ public class Main {
         for (int i = 0; i < 1000; i++) {
             list.add(BILLION_PRIME);
         }
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_SERVER_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_SERVER_PORT));
         new Thread(task).start();
         ArrayList<Integer> list2 = new ArrayList<>(list);
         list2.add(6);
-        FutureTask<Boolean> task2 = new FutureTask<>(new Client(list2, TEST_SERVER_PORT));
+        FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(list2, TEST_SERVER_PORT));
         new Thread(task2).start();
 
         try {

@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import kozlov.kirill.sockets.Client;
+import kozlov.kirill.sockets.data.NetworkSendable;
+import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.server.Gateway;
 import kozlov.kirill.sockets.worker.WorkersFactory;
 import org.junit.jupiter.api.Assertions;
@@ -37,10 +39,10 @@ public class UnitTest {
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{6, 8, 7, 13, 5, 9, 4}, 7
         );
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertTrue(task.get());
+            Assertions.assertTrue(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -53,10 +55,10 @@ public class UnitTest {
                 new int[]{20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
                         6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
         );
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertFalse(task.get());
+            Assertions.assertFalse(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -68,10 +70,10 @@ public class UnitTest {
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{2, 3, 5, 7}, 4
         );
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertFalse(task.get());
+            Assertions.assertFalse(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -83,10 +85,10 @@ public class UnitTest {
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{2, 3, 4, 5, 7}, 5
         );
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertTrue(task.get());
+            Assertions.assertTrue(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -96,10 +98,10 @@ public class UnitTest {
     void emptyListTest() {
 
         ArrayList<Integer> list = new ArrayList<>();
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertFalse(task.get());
+            Assertions.assertFalse(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -110,10 +112,10 @@ public class UnitTest {
 
         ArrayList<Integer> list = new ArrayList<>();
         list.add(5);
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertFalse(task.get());
+            Assertions.assertFalse(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -124,10 +126,10 @@ public class UnitTest {
 
         ArrayList<Integer> list = new ArrayList<>();
         list.add(8);
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertTrue(task.get());
+            Assertions.assertTrue(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -140,10 +142,10 @@ public class UnitTest {
         for (int i = 0; i < 1000000; i++) {
             list.add(BILLION_PRIME);
         }
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertFalse(task.get());
+            Assertions.assertFalse(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -156,10 +158,10 @@ public class UnitTest {
         for (int i = 0; i < 1000000; i++) {
             list.add(100000006);
         }
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertTrue(task.get());
+            Assertions.assertTrue(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -173,10 +175,10 @@ public class UnitTest {
         for (int i = 0; i < 1000000; i++) {
             list.add(BILLION_PRIME);
         }
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertTrue(task.get());
+            Assertions.assertTrue(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -190,10 +192,10 @@ public class UnitTest {
             list.add(BILLION_PRIME);
         }
         list.add(8);
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
-            Assertions.assertTrue(task.get());
+            Assertions.assertTrue(((TaskResult)task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
