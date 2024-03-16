@@ -1,4 +1,4 @@
-package kozlov.kirill.sockets;
+package kozlov.kirill.sockets.server;
 
 import kozlov.kirill.sockets.data.TaskData;
 

@@ -1,7 +1,8 @@
-package kozlov.kirill.sockets;
+package kozlov.kirill.sockets.worker;
 
 import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
+import kozlov.kirill.sockets.BasicTCPSocketOperations;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.multicast.DatagramUtils;

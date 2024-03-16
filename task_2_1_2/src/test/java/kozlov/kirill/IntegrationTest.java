@@ -1,8 +1,8 @@
 package kozlov.kirill;
 
 import kozlov.kirill.sockets.Client;
-import kozlov.kirill.sockets.Gateway;
-import kozlov.kirill.sockets.Worker;
+import kozlov.kirill.sockets.server.Gateway;
+import kozlov.kirill.sockets.worker.Worker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

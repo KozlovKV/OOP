@@ -3,6 +3,7 @@ package kozlov.kirill.sockets;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.server.Gateway;
 
 import java.io.IOException;
 import java.net.Socket;

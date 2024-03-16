@@ -1,5 +1,6 @@
-package kozlov.kirill.sockets;
+package kozlov.kirill.sockets.server;
 
+import kozlov.kirill.sockets.worker.Worker;
 import kozlov.kirill.sockets.multicast.MulticastManager;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class Gateway implements Runnable {
                 }
                 System.out.println("Connection to gateway from " + connectionSocket.getRemoteSocketAddress());
                 Thread managerThread = new Thread(
-                        new Manager(connectionSocket, port, workersPerOneTask),
+                        new ClientManager(connectionSocket, port, workersPerOneTask),
                         "Manager for " + connectionSocket.getRemoteSocketAddress()
                 ); // TODO: перейти на виртуальные потоки
                 managerThread.start();

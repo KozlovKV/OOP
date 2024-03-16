@@ -1,17 +1,9 @@
 package kozlov.kirill;
 
 import kozlov.kirill.sockets.Client;
-import kozlov.kirill.sockets.Gateway;
-import kozlov.kirill.sockets.multicast.MulticastManager;
+import kozlov.kirill.sockets.server.Gateway;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketTimeoutException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.*;
 
 public class Main {

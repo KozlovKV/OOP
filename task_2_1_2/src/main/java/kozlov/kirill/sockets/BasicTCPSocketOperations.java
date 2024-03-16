@@ -8,7 +8,7 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-abstract public class BasicTCPSocketOperations {
+final public class BasicTCPSocketOperations {
     public static void sendJSONObject(
         Socket socket, NetworkSendable object
     ) throws IOException {

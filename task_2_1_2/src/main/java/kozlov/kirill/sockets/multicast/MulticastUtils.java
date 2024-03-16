@@ -1,10 +1,7 @@
 package kozlov.kirill.sockets.multicast;
 
-import kozlov.kirill.sockets.Gateway;
-
 import java.io.IOException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 
 abstract public class MulticastUtils {
     static private int BUF_SZ = 1024;

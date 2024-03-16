@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import kozlov.kirill.sockets.Client;
-import kozlov.kirill.sockets.Gateway;
+import kozlov.kirill.sockets.server.Gateway;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -195,5 +195,13 @@ public class UnitTest {
             Assertions.fail();
         }
     }
+
+    // TODO: перенести тесты выше в интеграционные
+
+    // TODO: проверка парсера
+
+    // TODO: проверка splitTaskData
+
+    // TODO: проверка считателя
 }
 
