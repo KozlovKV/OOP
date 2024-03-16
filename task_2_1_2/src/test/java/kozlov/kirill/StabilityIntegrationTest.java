@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class IntegrationTest {
+public class StabilityIntegrationTest {
 
     @Test
     void manyRequestsForCommonWorkers() {

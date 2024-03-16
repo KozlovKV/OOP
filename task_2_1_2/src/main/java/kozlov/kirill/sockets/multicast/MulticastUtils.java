@@ -27,27 +27,6 @@ abstract public class MulticastUtils {
         };
     }
 
-    static public MulticastHandler getStringDataResponse(int port, String responseStr) {
-        return (DatagramPacket packet) -> {
-            try {
-                String inputStr = new String(packet.getData(), packet.getOffset(), packet.getLength());
-                int ackPort = -1;
-                try {
-                    ackPort = Integer.parseInt(inputStr, 0, inputStr.length()-1, 10);
-                } catch (NumberFormatException e) {
-                    System.err.println("Incorrect request port");
-                    return;
-                }
-                DatagramSocket socket = new DatagramSocket(port);
-                DatagramPacket responsePacket = DatagramUtils.createPacket(responseStr, packet.getAddress(), ackPort);
-                socket.send(responsePacket);
-                socket.close();
-            } catch (IOException e) {
-                System.err.println("Error...");
-            }
-        };
-    }
-
     static private final int BROADCAST_RECEIVING_TIMEOUT = 1000;
     static private final int BROADCAST_RECEIVING_ATTEMPTS = 5;
     static public Socket getClientSocketByMulticastResponse(int hostPort, int broadcastPort) {

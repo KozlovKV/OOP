@@ -5,7 +5,7 @@ import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 
 final public class DatagramUtils {
-    static public String extractFromPacket(DatagramPacket packet) {
+    static public String extractContentFromPacket(DatagramPacket packet) {
         return new String(packet.getData(), packet.getOffset(), packet.getLength());
     }
 

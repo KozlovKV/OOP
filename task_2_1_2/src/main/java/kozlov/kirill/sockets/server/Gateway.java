@@ -45,6 +45,8 @@ public class Gateway implements Runnable {
      */
     public void run() {
         int establishedConnections = 0;
+        ThreadFactory virtualThreadsFactory =
+                Thread.ofVirtual().name("Client manager ", 1).factory();
         ArrayList<Thread> managerThreads = new ArrayList<>();
         try {
             do {
@@ -58,12 +60,9 @@ public class Gateway implements Runnable {
                     continue;
                 }
                 System.out.println("Connection to gateway from " + connectionSocket.getRemoteSocketAddress());
-                ThreadFactory factory = Thread.ofVirtual().factory();
-                Thread managerThread = factory.newThread(new ClientManager(connectionSocket, multicastPort, workersPerOneTask));
-//                Thread managerThread = new Thread(
-//                        new ClientManager(connectionSocket, multicastPort, workersPerOneTask),
-//                        "Manager for " + connectionSocket.getRemoteSocketAddress()
-//                ); // TODO: перейти на виртуальные потоки
+                Thread managerThread = virtualThreadsFactory.newThread(
+                    new ClientManager(connectionSocket, multicastPort, workersPerOneTask)
+                );
                 managerThread.start();
                 managerThreads.add(managerThread);
                 establishedConnections++;

@@ -54,7 +54,7 @@ public class Worker implements Runnable {
                 return;
             }
             try {
-                String inputStr = DatagramUtils.extractFromPacket(packet);
+                String inputStr = DatagramUtils.extractContentFromPacket(packet);
                 int ackPort = -1;
                 try {
                     ackPort = Integer.parseInt(inputStr, 0, inputStr.length()-1, 10);

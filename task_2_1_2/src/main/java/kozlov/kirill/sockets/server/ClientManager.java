@@ -11,6 +11,7 @@ import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Optional;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * Manager for processing client's tasks.
@@ -34,6 +35,8 @@ public class ClientManager implements Runnable {
      * Whereas socket is opened reads requests for it and send results of calculation
      */
     public void run() {
+        ThreadFactory virtualThreadsFactory =
+            Thread.ofVirtual().name("Task manager ", 1).factory();
         try {
             while (true) {
                 TaskData taskData = receiveTaskData(clientManagerSocket);
@@ -44,7 +47,9 @@ public class ClientManager implements Runnable {
                     System.err.println("Incorrect data");
                     continue;
                 }
-                new Thread(getTaskManagerHandler(taskData)).start(); // TODO: перейти на виртуальные потоки
+                virtualThreadsFactory.newThread(
+                    getTaskManagerHandler(taskData)
+                ).start();
             }
         } catch (IllegalArgumentException e) {
             System.err.println("Connection closed with exception");

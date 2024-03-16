@@ -5,15 +5,18 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
+import java.util.concurrent.ThreadFactory;
 
 public class MulticastManager {
     static private int currentFreeInterfaceIndex = 0;
     int port;
     private InetSocketAddress groupAddress = null;
     private NetworkInterface groupInterface = null;
+    private ThreadFactory handlersFactory;
 
     public MulticastManager(String ip, int port) {
         this.port = port;
+        handlersFactory = Thread.ofVirtual().name("Workers handler").factory();
         try {
             groupInterface = NetworkInterface.getByIndex(
                 currentFreeInterfaceIndex++
@@ -26,12 +29,14 @@ public class MulticastManager {
         }
     }
 
-    public MulticastSocket registerMulticastHandler(MulticastHandler handler) {
+    public MulticastSocket registerMulticastHandler(
+        MulticastHandler handler
+    ) {
         try {
             MulticastSocket socket = new MulticastSocket(port);
             socket.joinGroup(groupAddress, groupInterface);
-            Thread handlerThread = new Thread(
-                    MulticastUtils.getRunnableHandlerWrapper(socket, handler)
+            Thread handlerThread = handlersFactory.newThread(
+                MulticastUtils.getRunnableHandlerWrapper(socket, handler)
             );
             handlerThread.start();
             return socket;
