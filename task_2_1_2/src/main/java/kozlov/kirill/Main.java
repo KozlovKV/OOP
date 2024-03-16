@@ -3,7 +3,7 @@ package kozlov.kirill;
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.server.Gateway;
-import kozlov.kirill.sockets.worker.WorkersFactory;
+import kozlov.kirill.sockets.worker.WorkersPool;
 
 import java.util.ArrayList;
 import java.util.concurrent.*;
@@ -14,13 +14,13 @@ public class Main {
 
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
-        WorkersFactory.launchAndGetWorkers(
-            TEST_SERVER_PORT + 1, 100,
-            "230.0.0.0", TEST_SERVER_PORT
-        );
         new Thread(new Gateway(
-            TEST_SERVER_PORT, TEST_SERVER_PORT, 3, 10
+                TEST_SERVER_PORT, TEST_SERVER_PORT, 2, 10
         ), "Gateway").start();
+        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_SERVER_PORT);
+        System.out.println(workersPool.launchWorkers(
+            TEST_SERVER_PORT + 1, 100
+        ));
 
         final int BILLION_PRIME = 1000000007;
         ArrayList<Integer> list = new ArrayList<>();
@@ -39,30 +39,6 @@ public class Main {
             System.out.println(task2.get());
         } catch (InterruptedException | ExecutionException e) {}
 
-//        if (THREADS_TEST_CNT == 0)
-//            return;
-//
-//        ArrayList<Callable<Boolean>> tasks = new ArrayList<>();
-//        for (int i = 0; i < THREADS_TEST_CNT; ++i) {
-//            ArrayList<Integer> list = new ArrayList<>();
-//            for (int j = 0; j < 1000000; ++j) {
-//                list.add(i);
-//            }
-//            tasks.add(new Client(list));
-//        }
-//
-//        ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
-//        try {
-//            List<Future<Boolean>> results = pool.invokeAll(tasks);
-//            for (int i = 0; i < THREADS_TEST_CNT; ++i) {
-//                System.out.println(i + ": " + results.get(i).get());
-//            }
-//        } catch (ExecutionException e) {
-//            System.err.println("Failed to execute task");
-//        } catch (InterruptedException e) {
-//            System.err.println("Result waiting was interrupted");
-//        }
-//
-//        pool.shutdown();
+        workersPool.shutdown();
     }
 }

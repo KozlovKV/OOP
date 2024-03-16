@@ -8,8 +8,10 @@ import java.net.MulticastSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-abstract public class MulticastUtils {
+final public class MulticastUtils {
     static private int BUF_SZ = 1024;
+
+    private MulticastUtils() {}
 
     static public Runnable getRunnableHandlerWrapper(MulticastSocket socket, MulticastHandler handler) {
         return () -> {

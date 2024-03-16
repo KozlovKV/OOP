@@ -34,13 +34,13 @@ public class Worker implements Runnable {
         try {
             serverSocket = new ServerSocket(workerPort);
             serverSocket.setSoTimeout(WORKER_SOCKET_TIMEOUT);
+            multicastSocket = multicastManager.registerMulticastHandler(
+                    getWorkerMulticastHandler()
+            );
         } catch (IOException e) {
             System.err.println("Failed to create worker on port " + workerPort);
             return;
         }
-        multicastSocket = multicastManager.registerMulticastHandler(
-                getWorkerMulticastHandler()
-        );
         createdSuccessfully = true;
     }
 

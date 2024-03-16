@@ -31,18 +31,13 @@ public class MulticastManager {
 
     public MulticastSocket registerMulticastHandler(
         MulticastHandler handler
-    ) {
-        try {
-            MulticastSocket socket = new MulticastSocket(port);
-            socket.joinGroup(groupAddress, groupInterface);
-            Thread handlerThread = handlersFactory.newThread(
-                MulticastUtils.getRunnableHandlerWrapper(socket, handler)
-            );
-            handlerThread.start();
-            return socket;
-        } catch (IOException e) {
-            System.err.println("Error to register handler");
-        }
-        return null;
+    ) throws IOException {
+        MulticastSocket socket = new MulticastSocket(port);
+        socket.joinGroup(groupAddress, groupInterface);
+        Thread handlerThread = handlersFactory.newThread(
+            MulticastUtils.getRunnableHandlerWrapper(socket, handler)
+        );
+        handlerThread.start();
+        return socket;
     }
 }

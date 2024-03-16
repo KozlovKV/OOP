@@ -24,7 +24,6 @@ public class Client implements Callable<NetworkSendable> {
         }
         sendTaskData();
         NetworkSendable result = receiveTaskResult();
-        System.out.println("Result got");
         try {
             socket.close();
         } catch (IOException e) {

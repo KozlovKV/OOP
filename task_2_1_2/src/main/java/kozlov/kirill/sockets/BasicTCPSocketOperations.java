@@ -1,7 +1,6 @@
 package kozlov.kirill.sockets;
 
 import kozlov.kirill.sockets.data.BasicMapperOperations;
-import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.NetworkSendable;
 
 import java.io.*;
@@ -9,6 +8,8 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 final public class BasicTCPSocketOperations {
+    private BasicTCPSocketOperations() {}
+
     public static void sendJSONObject(
         Socket socket, NetworkSendable object
     ) throws IOException {

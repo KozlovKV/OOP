@@ -1,16 +1,9 @@
 package kozlov.kirill;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
-import kozlov.kirill.sockets.Client;
-import kozlov.kirill.sockets.data.NetworkSendable;
-import kozlov.kirill.sockets.data.TaskResult;
-import kozlov.kirill.sockets.server.Gateway;
-import kozlov.kirill.sockets.worker.WorkersFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 final public class BasicMapperOperations {
+    private BasicMapperOperations() {}
+
     public static String serialize(NetworkSendable object) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
