@@ -1,7 +1,10 @@
 package kozlov.kirill.sockets.multicast;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
+import java.net.NetworkInterface;
 
 public class MulticastManager {
     static private int currentFreeInterfaceIndex = 0;

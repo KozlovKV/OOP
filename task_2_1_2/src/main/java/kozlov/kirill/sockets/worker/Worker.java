@@ -16,9 +16,6 @@ import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Worker implements Runnable {
@@ -120,25 +117,5 @@ public class Worker implements Runnable {
         try {
             BasicTCPSocketOperations.sendJSONObject(socket, taskResult);
         } catch (IOException ignored) {}
-    }
-
-    static final int MAX_PORT = 65535;
-    public static ArrayList<Worker> launchAndGetWorkers(
-            int startPort, int workersCount, MulticastManager multicastManager
-    ) {
-        ArrayList<Worker> newWorkers = new ArrayList<>();
-        ExecutorService workersThreadPool = Executors.newFixedThreadPool(workersCount);
-        int currentPort = startPort;
-        while (currentPort <+ MAX_PORT && newWorkers.size() < workersCount) {
-            Worker worker = new Worker(currentPort, multicastManager);
-            currentPort++;
-            if (!worker.isCreatedSuccessfully())
-                continue;
-            newWorkers.add(worker);
-            workersThreadPool.submit(worker);
-            System.out.println("Worker on port " + (currentPort - 1) + " successfully created and launched");
-        }
-        workersThreadPool.shutdown();
-        return newWorkers;
     }
 }

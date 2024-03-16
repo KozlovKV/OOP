@@ -7,12 +7,9 @@ import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
 import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
-import kozlov.kirill.sockets.multicast.MulticastUtils;
 
 import java.io.IOException;
-import java.net.*;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.net.Socket;
 import java.util.Optional;
 
 /**

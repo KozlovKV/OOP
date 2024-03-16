@@ -1,7 +1,12 @@
 package kozlov.kirill.sockets.multicast;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 abstract public class MulticastUtils {
     static private int BUF_SZ = 1024;

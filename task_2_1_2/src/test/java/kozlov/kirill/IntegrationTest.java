@@ -3,6 +3,7 @@ package kozlov.kirill;
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.server.Gateway;
 import kozlov.kirill.sockets.worker.Worker;
+import kozlov.kirill.sockets.worker.WorkersFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,9 @@ public class IntegrationTest {
     @Test
     void manyRequestsForCommonWorkers() {
         final int THREADS_TEST_CNT = 10;
-        Gateway gateway = new Gateway(8000, THREADS_TEST_CNT, 10, 10);
+        final int TEST_PORT = 8000;
+        WorkersFactory.launchAndGetWorkers(TEST_PORT + 1, 10, "230.0.0.0", TEST_PORT);
+        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 10, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
 
@@ -24,7 +27,7 @@ public class IntegrationTest {
             for (int j = 0; j < 1000000; ++j) {
                 list.add(i);
             }
-            tasks.add(new Client(list));
+            tasks.add(new Client(list, TEST_PORT));
         }
 
         ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);

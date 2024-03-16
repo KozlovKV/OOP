@@ -6,6 +6,7 @@ import java.util.concurrent.FutureTask;
 
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.server.Gateway;
+import kozlov.kirill.sockets.worker.WorkersFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
  */
 public class UnitTest {
     public static final int BILLION_PRIME = 1000000007;
+    public static final int TEST_PORT = 8000;
 
     static ArrayList<Integer> getArrayListFromArray(int [] arr, int n) {
         ArrayList<Integer> list = new ArrayList<>();
@@ -24,17 +26,18 @@ public class UnitTest {
     }
 
     static {
-        Gateway defaultGateway = new Gateway(8000, -1, 100, 10);
+        Gateway defaultGateway = new Gateway(TEST_PORT, TEST_PORT, -1, 10);
         new Thread(defaultGateway).start();
+        WorkersFactory.launchAndGetWorkers(TEST_PORT + 1, 100, "230.0.0.0", TEST_PORT);
     }
 
     @Test
     void exampleTest1() {
-        
+
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{6, 8, 7, 13, 5, 9, 4}, 7
         );
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertTrue(task.get());
@@ -45,12 +48,12 @@ public class UnitTest {
 
     @Test
     void exampleTest2() {
-        
+
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
                         6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
         );
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertFalse(task.get());
@@ -61,11 +64,11 @@ public class UnitTest {
 
     @Test
     void simplePrimesTest() {
-        
+
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{2, 3, 5, 7}, 4
         );
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertFalse(task.get());
@@ -76,11 +79,11 @@ public class UnitTest {
 
     @Test
     void simpleUnprimeTest() {
-        
+
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{2, 3, 4, 5, 7}, 5
         );
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertTrue(task.get());
@@ -91,9 +94,9 @@ public class UnitTest {
 
     @Test
     void emptyListTest() {
-        
+
         ArrayList<Integer> list = new ArrayList<>();
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertFalse(task.get());
@@ -104,10 +107,10 @@ public class UnitTest {
 
     @Test
     void onePrimeTest() {
-        
+
         ArrayList<Integer> list = new ArrayList<>();
         list.add(5);
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertFalse(task.get());
@@ -118,10 +121,10 @@ public class UnitTest {
 
     @Test
     void oneUnprimeTest() {
-        
+
         ArrayList<Integer> list = new ArrayList<>();
         list.add(8);
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertTrue(task.get());
@@ -132,12 +135,12 @@ public class UnitTest {
 
     @Test
     void largePrimesTest() {
-        
+
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
             list.add(BILLION_PRIME);
         }
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertFalse(task.get());
@@ -148,12 +151,12 @@ public class UnitTest {
 
     @Test
     void largeUnprimesTest() {
-        
+
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
             list.add(100000006);
         }
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertTrue(task.get());
@@ -164,13 +167,13 @@ public class UnitTest {
 
     @Test
     void largeWithOneUnprimeAtStartTest() {
-        
+
         ArrayList<Integer> list = new ArrayList<>();
         list.add(8);
         for (int i = 0; i < 1000000; i++) {
             list.add(BILLION_PRIME);
         }
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertTrue(task.get());
@@ -181,13 +184,13 @@ public class UnitTest {
 
     @Test
     void largeWithOneUnprimeAtEndTest() {
-        
+
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
             list.add(BILLION_PRIME);
         }
         list.add(8);
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
         try {
             Assertions.assertTrue(task.get());

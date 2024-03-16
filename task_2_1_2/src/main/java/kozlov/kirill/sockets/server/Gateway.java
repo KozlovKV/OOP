@@ -1,8 +1,5 @@
 package kozlov.kirill.sockets.server;
 
-import kozlov.kirill.sockets.worker.Worker;
-import kozlov.kirill.sockets.multicast.MulticastManager;
-
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -13,23 +10,20 @@ import java.util.ArrayList;
  * Listens to server socket and creates connection for clients
  */
 public class Gateway implements Runnable {
-    public static final int FIRST_SERVER_PORT = 8000;
     private static final int SERVER_SOCKET_BACKLOG = 100;
     private static final int GATEWAY_TIMEOUT = 1000;
     private int connectionsToDie = -1;
     private final int port;
+    private final int multicastPort;
     private final int workersPerOneTask;
     private ServerSocket serverSocket = null;
-    private final ArrayList<Worker> workers;
 
-    public Gateway(int port, int connectionsToDie, int workersCount, int workersPerOneTask) {
+    public Gateway(int port, int multicastPort, int connectionsToDie, int workersPerOneTask) {
         this.port = port;
+        this.multicastPort = multicastPort;
         this.connectionsToDie = connectionsToDie;
         this.workersPerOneTask = workersPerOneTask;
-
         createServerSocket(port);
-        MulticastManager multicastManager = new MulticastManager("230.0.0.0", port);
-        workers = Worker.launchAndGetWorkers(port + 1, workersCount, multicastManager);
     }
 
     private void createServerSocket(int port) {
@@ -64,7 +58,7 @@ public class Gateway implements Runnable {
                 }
                 System.out.println("Connection to gateway from " + connectionSocket.getRemoteSocketAddress());
                 Thread managerThread = new Thread(
-                        new ClientManager(connectionSocket, port, workersPerOneTask),
+                        new ClientManager(connectionSocket, multicastPort, workersPerOneTask),
                         "Manager for " + connectionSocket.getRemoteSocketAddress()
                 ); // TODO: перейти на виртуальные потоки
                 managerThread.start();
@@ -80,8 +74,5 @@ public class Gateway implements Runnable {
             serverSocket.close();
         } catch (Exception ignored) {}
         System.out.println("Server closed");
-        for (Worker worker : workers) {
-            worker.setCloseFlag();
-        }
     }
 }

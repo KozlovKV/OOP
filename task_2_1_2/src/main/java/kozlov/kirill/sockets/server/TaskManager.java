@@ -1,7 +1,6 @@
 package kozlov.kirill.sockets.server;
 
 import kozlov.kirill.sockets.BasicTCPSocketOperations;
-import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;

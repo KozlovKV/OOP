@@ -2,17 +2,23 @@ package kozlov.kirill;
 
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.server.Gateway;
+import kozlov.kirill.sockets.worker.WorkersFactory;
 
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
 public class Main {
+    public static final int TEST_SERVER_PORT = 8000;
     static final private int THREADS_TEST_CNT = 0;
 
     @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
+        WorkersFactory.launchAndGetWorkers(
+            TEST_SERVER_PORT + 1, 2,
+            "230.0.0.0", TEST_SERVER_PORT
+        );
         new Thread(new Gateway(
-            Gateway.FIRST_SERVER_PORT, 2, 2, 1
+            TEST_SERVER_PORT, TEST_SERVER_PORT, 2, 1
         ), "Gateway").start();
 
         final int BILLION_PRIME = 1000000007;
@@ -20,11 +26,11 @@ public class Main {
         for (int i = 0; i < 1000; i++) {
             list.add(BILLION_PRIME);
         }
-        FutureTask<Boolean> task = new FutureTask<>(new Client(list));
+        FutureTask<Boolean> task = new FutureTask<>(new Client(list, TEST_SERVER_PORT));
         new Thread(task).start();
         ArrayList<Integer> list2 = new ArrayList<>(list);
         list2.add(6);
-        FutureTask<Boolean> task2 = new FutureTask<>(new Client(list2));
+        FutureTask<Boolean> task2 = new FutureTask<>(new Client(list2, TEST_SERVER_PORT));
         new Thread(task2).start();
 
         try {

@@ -3,7 +3,6 @@ package kozlov.kirill.sockets;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
-import kozlov.kirill.sockets.server.Gateway;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -13,11 +12,11 @@ import java.util.concurrent.Callable;
 public class Client implements Callable<Boolean> {
     private Socket socket = null;
     private TaskData taskData = null;
+    private final int serverPort;
 
-    public Client() {}
-
-    public Client(ArrayList<Integer> list) {
+    public Client(ArrayList<Integer> list, int serverPort) {
         this.taskData = new TaskData(list);
+        this.serverPort = serverPort;
     }
 
     public Boolean call() {
@@ -37,7 +36,7 @@ public class Client implements Callable<Boolean> {
 
     private boolean getManagerSocket() {
         try {
-            socket = new Socket("localhost", Gateway.FIRST_SERVER_PORT);
+            socket = new Socket("localhost", serverPort);
             return true;
         } catch (IOException ignored) {
             System.err.println("Couldn't acquire connection");
