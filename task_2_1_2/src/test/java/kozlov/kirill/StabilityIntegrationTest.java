@@ -15,11 +15,10 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class StabilityIntegrationTest {
-
     @Test
     void manyRequestsForCommonWorkers() {
         final int THREADS_TEST_CNT = 10;
-        final int TEST_PORT = 8000;
+        final int TEST_PORT = 7000;
         WorkersFactory.launchAndGetWorkers(TEST_PORT + 1, 10, "230.0.0.0", TEST_PORT);
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 10, 10);
         var gatewayThread = new Thread(gateway);
@@ -52,8 +51,8 @@ public class StabilityIntegrationTest {
     }
 
     @Test
-    void workersNotFound() {final int THREADS_TEST_CNT = 10;
-        final int TEST_PORT = 7000;
+    void workersNotFound() {
+        final int TEST_PORT = 6000;
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 10, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
