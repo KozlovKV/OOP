@@ -1,7 +1,6 @@
 package kozlov.kirill.sockets.server;
 
-import kozlov.kirill.sockets.data.TaskData;
-
 import java.net.Socket;
+import kozlov.kirill.sockets.data.TaskData;
 
 public record WorkerActiveTask(TaskData taskData, Socket workerSocket) {}

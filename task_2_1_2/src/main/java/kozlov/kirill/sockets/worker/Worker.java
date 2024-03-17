@@ -1,14 +1,5 @@
 package kozlov.kirill.sockets.worker;
 
-import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
-import kozlov.kirill.primes.UnprimeChecker;
-import kozlov.kirill.sockets.BasicTCPSocketOperations;
-import kozlov.kirill.sockets.data.TaskData;
-import kozlov.kirill.sockets.data.TaskResult;
-import kozlov.kirill.sockets.multicast.DatagramUtils;
-import kozlov.kirill.sockets.multicast.MulticastHandler;
-import kozlov.kirill.sockets.multicast.MulticastManager;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -17,6 +8,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
+import kozlov.kirill.primes.UnprimeChecker;
+import kozlov.kirill.sockets.BasicTCPSocketOperations;
+import kozlov.kirill.sockets.data.TaskData;
+import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.multicast.DatagramUtils;
+import kozlov.kirill.sockets.multicast.MulticastHandler;
+import kozlov.kirill.sockets.multicast.MulticastManager;
 
 public class Worker implements Runnable {
     static final public int WORKER_SOCKET_TIMEOUT = 1000;

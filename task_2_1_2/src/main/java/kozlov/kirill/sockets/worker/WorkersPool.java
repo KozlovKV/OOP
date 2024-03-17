@@ -1,9 +1,8 @@
 package kozlov.kirill.sockets.worker;
 
-import kozlov.kirill.sockets.multicast.MulticastManager;
-
 import java.util.ArrayList;
 import java.util.concurrent.ThreadFactory;
+import kozlov.kirill.sockets.multicast.MulticastManager;
 
 public final class WorkersPool {
     static final int MAX_PORT = 65535;

@@ -1,5 +1,13 @@
 package kozlov.kirill;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.NetworkSendable;
@@ -10,9 +18,6 @@ import kozlov.kirill.sockets.worker.WorkersPool;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.*;
 
 public class StabilityIntegrationTest {
     @Test

@@ -1,9 +1,10 @@
 package kozlov.kirill;
 
 import java.util.ArrayList;
-
 import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
+import kozlov.kirill.sockets.data.TaskData;
+import kozlov.kirill.sockets.data.utils.TaskDataUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -58,12 +59,46 @@ public class UnitTest {
         Assertions.assertTrue(unprimeChecker.isAnyUnprime());
     }
 
-    // TODO: перенести тесты выше в интеграционные
+    @Test
+    void splitDataZeroRest() {
+        TaskData originTaskData = new TaskData(getArrayListFromArray(
+                new int[]{6, 8, 7, 13, 5, 9, 4, 8}, 8
+        ));
+        ArrayList<TaskData> expectedTasks = new ArrayList<>();
+        expectedTasks.add(new TaskData(getArrayListFromArray(
+                new int[]{6, 8, 7, 13}, 4
+        )));
+        expectedTasks.add(new TaskData(getArrayListFromArray(
+                new int[]{5, 9, 4, 8}, 4
+        )));
+        Assertions.assertEquals(
+            expectedTasks, TaskDataUtils.splitTaskData(originTaskData, 2)
+        );
+    }
+
+    @Test
+    void splitDataNonZeroRest() {
+        TaskData originTaskData = new TaskData(getArrayListFromArray(
+                new int[]{6, 8, 7, 13, 5, 9, 4}, 7
+        ));
+        ArrayList<TaskData> expectedTasks = new ArrayList<>();
+        expectedTasks.add(new TaskData(getArrayListFromArray(
+                new int[]{6, 8}, 2
+        )));
+        expectedTasks.add(new TaskData(getArrayListFromArray(
+                new int[]{7, 13}, 2
+        )));
+        expectedTasks.add(new TaskData(getArrayListFromArray(
+                new int[]{5, 9}, 2
+        )));
+        expectedTasks.add(new TaskData(getArrayListFromArray(
+                new int[]{4}, 1
+        )));
+        Assertions.assertEquals(
+                expectedTasks, TaskDataUtils.splitTaskData(originTaskData, 4)
+        );
+    }
 
     // TODO: проверка парсера
-
-    // TODO: проверка splitTaskData
-
-    // TODO: проверка считателя
 }
 

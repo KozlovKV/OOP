@@ -1,18 +1,19 @@
 package kozlov.kirill;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.server.Gateway;
 import kozlov.kirill.sockets.worker.WorkersPool;
 
-import java.util.ArrayList;
-import java.util.concurrent.*;
 
+@ExcludeClassFromJacocoGeneratedReport
 public class Main {
     public static final int TEST_SERVER_PORT = 8000;
     static final private int THREADS_TEST_CNT = 0;
 
-    @ExcludeFromJacocoGeneratedReport
     public static void main(String[] args) {
         new Thread(new Gateway(
                 TEST_SERVER_PORT, TEST_SERVER_PORT, 2, 10

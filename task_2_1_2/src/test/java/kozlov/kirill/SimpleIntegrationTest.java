@@ -1,15 +1,18 @@
 package kozlov.kirill;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.server.Gateway;
+import kozlov.kirill.sockets.worker.Worker;
 import kozlov.kirill.sockets.worker.WorkersPool;
-import org.junit.jupiter.api.*;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class SimpleIntegrationTest {
     public static final int TEST_PORT = 8000;
@@ -28,7 +31,7 @@ public class SimpleIntegrationTest {
     static void killWorkers() {
         pool.shutdown();
         try {
-            Thread.sleep(20000);
+            Thread.sleep(Worker.WORKER_SOCKET_TIMEOUT*2);
         } catch (InterruptedException ignored) {}
     }
 

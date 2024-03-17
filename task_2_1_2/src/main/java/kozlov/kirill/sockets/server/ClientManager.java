@@ -1,17 +1,16 @@
 package kozlov.kirill.sockets.server;
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Optional;
+import java.util.concurrent.ThreadFactory;
 import kozlov.kirill.sockets.BasicTCPSocketOperations;
 import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
 import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
-
-import java.io.IOException;
-import java.net.Socket;
-import java.util.Optional;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * Manager for processing client's tasks.

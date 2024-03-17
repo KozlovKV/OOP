@@ -1,18 +1,18 @@
 package kozlov.kirill.sockets.server;
 
-import kozlov.kirill.sockets.BasicTCPSocketOperations;
-import kozlov.kirill.sockets.data.TaskData;
-import kozlov.kirill.sockets.data.TaskResult;
-import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
-import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
-import kozlov.kirill.sockets.multicast.MulticastUtils;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.Callable;
+import kozlov.kirill.sockets.BasicTCPSocketOperations;
+import kozlov.kirill.sockets.data.TaskData;
+import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.data.utils.TaskDataUtils;
+import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
+import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
+import kozlov.kirill.sockets.multicast.MulticastUtils;
 
 public class TaskManager implements Callable<Optional<TaskResult>> {
     final private TaskData taskData;
@@ -33,7 +33,7 @@ public class TaskManager implements Callable<Optional<TaskResult>> {
     public Optional<TaskResult> call()
     throws WorkerNotFoundException, InternalWorkerErrorException {
         System.out.println("Start task manager on " + managerPort);
-        var tasks = taskData.splitTaskData(workersPerTask);
+        var tasks = TaskDataUtils.splitTaskData(taskData, workersPerTask);
         ArrayDeque<WorkerActiveTask> activeWorkers = getActiveWorkers(tasks);
         TaskResult taskResult = new TaskResult(false);
         while (!activeWorkers.isEmpty()) {
