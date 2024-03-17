@@ -2,6 +2,7 @@ kozlov.kirill
 kozlov.kirill.primes
 kozlov.kirill.sockets
 kozlov.kirill.sockets.data
+kozlov.kirill.sockets.data.utils
 kozlov.kirill.sockets.exceptions
 kozlov.kirill.sockets.multicast
 kozlov.kirill.sockets.server
