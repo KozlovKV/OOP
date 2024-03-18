@@ -91,6 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">TaskDataUtils</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Static class with utils for working with TaskData's instances.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -108,7 +109,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;<a href="../TaskData.html" title="class in kozlov.kirill.sockets.data">TaskData</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#splitTaskData(kozlov.kirill.sockets.data.TaskData,int)" class="member-name-link">splitTaskData</a><wbr>(<a href="../TaskData.html" title="class in kozlov.kirill.sockets.data">TaskData</a>&nbsp;taskData,
  int&nbsp;count)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">TaskData splitter.</div>
+</div>
 </div>
 </div>
 </div>
@@ -131,6 +134,23 @@ loadScripts(document, 'script');</script>
 <h3>splitTaskData</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../TaskData.html" title="class in kozlov.kirill.sockets.data">TaskData</a>&gt;</span>&nbsp;<span class="element-name">splitTaskData</span><wbr><span class="parameters">(<a href="../TaskData.html" title="class in kozlov.kirill.sockets.data">TaskData</a>&nbsp;taskData,
  int&nbsp;count)</span></div>
+<div class="block">TaskData splitter.
+ <br>
+ Splits list from input TaskData.
+ <br>
+ When list size is divided by count without rest function returns exactly
+ `count` TaskDatas with `input size / count` numbers in each one.
+ <br>
+ When list size is divided by count has some rest function places
+ `input size / count + 1` in each one Taskdata excluding
+ last one - it can be smaller (or even empty)</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>taskData</code> - input task data which will be splitted</dd>
+<dd><code>count</code> - desired count of elements in result list</dd>
+<dt>Returns:</dt>
+<dd>list of TaskData instances with length from count - 1 to count</dd>
+</dl>
 </section>
 </li>
 </ul>

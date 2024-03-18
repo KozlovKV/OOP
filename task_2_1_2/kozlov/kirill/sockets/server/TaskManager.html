@@ -88,14 +88,9 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">kozlov.kirill.sockets.server.TaskManager</div>
 </div>
 <section class="class-description" id="class-description">
-<dl class="notes">
-<dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Callable.html" title="class or interface in java.util.concurrent" class="external-link">Callable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../data/TaskResult.html" title="class in kozlov.kirill.sockets.data">TaskResult</a>&gt;&gt;</code></dd>
-</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">TaskManager</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Callable.html" title="class or interface in java.util.concurrent" class="external-link">Callable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../data/TaskResult.html" title="class in kozlov.kirill.sockets.data">TaskResult</a>&gt;&gt;</span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -127,7 +122,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="../data/TaskResult.html" title="class in kozlov.kirill.sockets.data">TaskResult</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#call()" class="member-name-link">call</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processTask()" class="member-name-link">processTask</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -164,14 +159,12 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="call()">
-<h3>call</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../data/TaskResult.html" title="class in kozlov.kirill.sockets.data">TaskResult</a>&gt;</span>&nbsp;<span class="element-name">call</span>()
-                          throws <span class="exceptions"><a href="../exceptions/WorkerNotFoundException.html" title="class in kozlov.kirill.sockets.exceptions">WorkerNotFoundException</a>,
+<section class="detail" id="processTask()">
+<h3>processTask</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../data/TaskResult.html" title="class in kozlov.kirill.sockets.data">TaskResult</a>&gt;</span>&nbsp;<span class="element-name">processTask</span>()
+                                 throws <span class="exceptions"><a href="../exceptions/WorkerNotFoundException.html" title="class in kozlov.kirill.sockets.exceptions">WorkerNotFoundException</a>,
 <a href="../exceptions/InternalWorkerErrorException.html" title="class in kozlov.kirill.sockets.exceptions">InternalWorkerErrorException</a></span></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Callable.html#call()" title="class or interface in java.util.concurrent" class="external-link">call</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Callable.html" title="class or interface in java.util.concurrent" class="external-link">Callable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../data/TaskResult.html" title="class in kozlov.kirill.sockets.data">TaskResult</a>&gt;&gt;</code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="../exceptions/WorkerNotFoundException.html" title="class in kozlov.kirill.sockets.exceptions">WorkerNotFoundException</a></code></dd>
 <dd><code><a href="../exceptions/InternalWorkerErrorException.html" title="class in kozlov.kirill.sockets.exceptions">InternalWorkerErrorException</a></code></dd>
