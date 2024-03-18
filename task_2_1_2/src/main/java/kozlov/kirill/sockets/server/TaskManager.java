@@ -14,7 +14,7 @@ import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
 import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
 import kozlov.kirill.sockets.multicast.MulticastUtils;
 
-public class TaskManager implements Callable<Optional<TaskResult>> {
+public class TaskManager {
     final private TaskData taskData;
     final private int workersPerTask;
     final private int managerPort;
@@ -30,8 +30,8 @@ public class TaskManager implements Callable<Optional<TaskResult>> {
         this.managerPort = managerPort;
     }
 
-    public Optional<TaskResult> call()
-    throws WorkerNotFoundException, InternalWorkerErrorException {
+    public Optional<TaskResult> processTask(
+    ) throws WorkerNotFoundException, InternalWorkerErrorException {
         System.out.println("Start task manager on " + managerPort);
         var tasks = TaskDataUtils.splitTaskData(taskData, workersPerTask);
         ArrayDeque<WorkerActiveTask> activeWorkers = getActiveWorkers(tasks);

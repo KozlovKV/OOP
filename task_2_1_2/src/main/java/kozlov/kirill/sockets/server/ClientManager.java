@@ -73,7 +73,7 @@ public class ClientManager implements Runnable {
                 Optional<TaskResult> optionalTaskResult = new TaskManager(
                         taskData, workersPerTask,
                         multicastServerPort, clientManagerSocket.getPort()
-                ).call();
+                ).processTask();
                 optionalTaskResult.ifPresent(taskResult -> {
                     try {
                         BasicTCPSocketOperations.sendJSONObject(

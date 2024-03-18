@@ -35,14 +35,14 @@ public final class WorkersPool {
             int startPort, int workersCount
     ) {
         int currentPort = startPort;
-        int workersCreated;
-        for (workersCreated = 0; workersCreated < workersCount; ++workersCreated) {
+        int workersLaunched;
+        for (workersLaunched = 0; workersLaunched < workersCount; ++workersLaunched) {
             currentPort = launchWorker(currentPort);
             if (currentPort == -1) {
                 break;
             }
         }
-        return workersCreated;
+        return workersLaunched;
     }
 
     public void shutdown() {

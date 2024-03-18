@@ -3,6 +3,8 @@ package kozlov.kirill;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.data.TaskResult;
@@ -18,13 +20,16 @@ public class SimpleIntegrationTest {
     public static final int TEST_PORT = 8000;
 
     private static final int TESTS_CNT = 7;
+    private static final int WORKERS_PER_ONE_TASK = 10;
+    private static final int WORKERS_CNT = 100;
     private static WorkersPool pool = new WorkersPool("230.0.0.0", TEST_PORT);;
 
     @BeforeAll
     static void startServerAndWorkers() {
-        Gateway defaultGateway = new Gateway(TEST_PORT, TEST_PORT, TESTS_CNT, 10);
+        Gateway defaultGateway = new Gateway(TEST_PORT, TEST_PORT, TESTS_CNT, WORKERS_PER_ONE_TASK);
         new Thread(defaultGateway).start();
-        pool.launchWorkers(TEST_PORT + 1, 100);
+        int workersLaunched = pool.launchWorkers(TEST_PORT + 1, WORKERS_CNT);
+        Assertions.assertTrue(workersLaunched >= WORKERS_PER_ONE_TASK);
     }
 
     @AfterAll

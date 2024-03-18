@@ -3,9 +3,29 @@ package kozlov.kirill.sockets.data.utils;
 import java.util.ArrayList;
 import kozlov.kirill.sockets.data.TaskData;
 
+/**
+ * Static class with utils for working with TaskData's instances.
+ */
 final public class TaskDataUtils {
     private TaskDataUtils() {}
 
+    /**
+     * TaskData splitter.
+     * <br>
+     * Splits list from input TaskData.
+     * <br>
+     * When list size is divided by count without rest function returns exactly
+     * `count` TaskDatas with `input size / count` numbers in each one.
+     * <br>
+     * When list size is divided by count has some rest function places
+     * `input size / count + 1` in each one Taskdata excluding
+     * last one - it can be smaller (or even empty)
+     *
+     *
+     * @param taskData input task data which will be splitted
+     * @param count desired count of elements in result list
+     * @return list of TaskData instances with length from count - 1 to count
+     */
     public static ArrayList<TaskData> splitTaskData(TaskData taskData, int count) {
         if (count <= 0)
             return new ArrayList<>();
