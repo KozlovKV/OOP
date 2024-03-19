@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 
 
 public class StabilityIntegrationTest {
-    final int TEST_PORT = 8001;
 
     @Test
     void manyRequestsForCommonWorkers() {
+        final int TEST_PORT = 8001;
         final int THREADS_TEST_CNT = 10;
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
         workersPool.launchWorkers(TEST_PORT + 1, 10);
@@ -60,6 +60,7 @@ public class StabilityIntegrationTest {
 
     @Test
     void workersNotFound() {
+        final int TEST_PORT = 8002;
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
@@ -83,6 +84,7 @@ public class StabilityIntegrationTest {
 
     @Test
     void testWorkerFatalInterruption() {
+        final int TEST_PORT = 8003;
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
         workersPool.launchWorkers(TEST_PORT + 1, 10);
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
@@ -111,6 +113,7 @@ public class StabilityIntegrationTest {
 
     @Test
     void testWorkerFatalInterruptionAndNewFound() {
+        final int TEST_PORT = 8004;
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
         workersPool.launchWorkers(TEST_PORT + 1, 10);
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
@@ -144,6 +147,7 @@ public class StabilityIntegrationTest {
 
     @Test
     void testClientInterruption() {
+        final int TEST_PORT = 8005;
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
         workersPool.launchWorkers(TEST_PORT + 1, 10);
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 2, 10);
@@ -177,6 +181,7 @@ public class StabilityIntegrationTest {
 
     @Test
     void testWorkersPoolNearToPortsUpperBound() {
+        final int TEST_PORT = 8006;
         final int THREADS_TEST_CNT = 5;
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
         Assertions.assertEquals(
@@ -217,6 +222,7 @@ public class StabilityIntegrationTest {
 
     @Test
     void test2WorkersPoolsOnSamePorts() {
+        final int TEST_PORT = 8007;
         final int THREADS_TEST_CNT = 5;
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
         Assertions.assertEquals(
