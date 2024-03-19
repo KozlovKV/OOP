@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.data.TaskResult;
@@ -22,12 +21,15 @@ public class SimpleIntegrationTest {
     private static final int TESTS_CNT = 7;
     private static final int WORKERS_PER_ONE_TASK = 10;
     private static final int WORKERS_CNT = 100;
-    private static WorkersPool pool = new WorkersPool("230.0.0.0", TEST_PORT);;
+    private static WorkersPool pool = new WorkersPool("230.0.0.0", TEST_PORT);
+
+    private static Thread gatewayThread;
 
     @BeforeAll
     static void startServerAndWorkers() {
         Gateway defaultGateway = new Gateway(TEST_PORT, TEST_PORT, TESTS_CNT, WORKERS_PER_ONE_TASK);
-        new Thread(defaultGateway).start();
+        gatewayThread = new Thread(defaultGateway);
+        gatewayThread.start();
         int workersLaunched = pool.launchWorkers(TEST_PORT + 1, WORKERS_CNT);
         Assertions.assertTrue(workersLaunched >= WORKERS_PER_ONE_TASK);
     }
@@ -35,14 +37,22 @@ public class SimpleIntegrationTest {
     @AfterAll
     static void killWorkers() {
         pool.shutdown();
+        clearingPause();
+        Assertions.assertFalse(gatewayThread.isAlive());
+    }
+
+    static void clearingPause() {
         try {
-            Thread.sleep(Worker.WORKER_SOCKET_TIMEOUT*2);
-        } catch (InterruptedException ignored) {}
+            Thread.sleep((
+                Worker.WORKER_SOCKET_TIMEOUT + Gateway.GATEWAY_TIMEOUT
+            ) * 2);
+        } catch (InterruptedException e) {
+            Assertions.fail("Failed to wait for correct closing");
+        }
     }
 
     @Test
     void emptyListTest() {
-
         ArrayList<Integer> list = new ArrayList<>();
         FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
         new Thread(task).start();
@@ -55,7 +65,6 @@ public class SimpleIntegrationTest {
 
     @Test
     void onePrimeTest() {
-
         ArrayList<Integer> list = new ArrayList<>();
         list.add(5);
         FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
@@ -69,7 +78,6 @@ public class SimpleIntegrationTest {
 
     @Test
     void oneUnprimeTest() {
-
         ArrayList<Integer> list = new ArrayList<>();
         list.add(8);
         FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
@@ -83,7 +91,6 @@ public class SimpleIntegrationTest {
 
     @Test
     void largePrimesTest() {
-
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
             list.add(UnitTest.BILLION_PRIME);
@@ -99,7 +106,6 @@ public class SimpleIntegrationTest {
 
     @Test
     void largeUnprimesTest() {
-
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
             list.add(100000006);
@@ -115,7 +121,6 @@ public class SimpleIntegrationTest {
 
     @Test
     void largeWithOneUnprimeAtStartTest() {
-
         ArrayList<Integer> list = new ArrayList<>();
         list.add(8);
         for (int i = 0; i < 1000000; i++) {
@@ -132,7 +137,6 @@ public class SimpleIntegrationTest {
 
     @Test
     void largeWithOneUnprimeAtEndTest() {
-
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
             list.add(UnitTest.BILLION_PRIME);

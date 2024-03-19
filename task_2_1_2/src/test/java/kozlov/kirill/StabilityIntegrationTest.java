@@ -26,7 +26,7 @@ public class StabilityIntegrationTest {
         final int TEST_PORT = 8000;
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
         workersPool.launchWorkers(TEST_PORT + 1, 10);
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 10, 10);
+        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, THREADS_TEST_CNT, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
 
@@ -50,7 +50,7 @@ public class StabilityIntegrationTest {
             Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
             pool.shutdown();
             workersPool.shutdown();
-            Thread.sleep(Worker.WORKER_SOCKET_TIMEOUT*2);
+            SimpleIntegrationTest.clearingPause();
             Assertions.assertFalse(gatewayThread.isAlive());
         } catch (ExecutionException | InterruptedException e) {
             Assertions.fail();
@@ -74,17 +74,91 @@ public class StabilityIntegrationTest {
         try {
             ErrorMessage expected = new ErrorMessage("Server couldn't find calculation node");
             Assertions.assertEquals(expected, task.get());
-
-            Thread.sleep(Worker.WORKER_SOCKET_TIMEOUT*2);
+            SimpleIntegrationTest.clearingPause();
             Assertions.assertFalse(gatewayThread.isAlive());
         } catch (InterruptedException | ExecutionException e) {}
     }
 
-    // TODO: Падение воркера в процессе
-
     // TODO: Откллючение клиента во время вычисления
 
-    // TODO: тест на количество воркеров при недоступном диапазоне
+    @Test
+    void testWorkersPoolNearToPortsUpperBound() {
+        final int THREADS_TEST_CNT = 5;
+        final int TEST_PORT = 8000;
+        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        Assertions.assertEquals(
+                10, workersPool.launchWorkers(37758, 100)
+        );
+        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, THREADS_TEST_CNT, 10);
+        var gatewayThread = new Thread(gateway);
+        gatewayThread.start();
 
-    // TODO: тест на проход воркеров сквозь закрытые адреса
+        ArrayList<Callable<NetworkSendable>> tasks = new ArrayList<>();
+        for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int j = 0; j < 1000000; ++j) {
+                list.add(i);
+            }
+            tasks.add(new Client(list, TEST_PORT));
+        }
+
+        ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
+        try {
+            List<Future<NetworkSendable>> results = pool.invokeAll(tasks);
+            int expectedUnprimesCnt = 1, gotUnprimesCnt = 0;
+            for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+                if (((TaskResult)results.get(i).get()).result())
+                    gotUnprimesCnt++;
+            }
+            Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
+            pool.shutdown();
+            workersPool.shutdown();
+            SimpleIntegrationTest.clearingPause();
+            Assertions.assertFalse(gatewayThread.isAlive());
+        } catch (ExecutionException | InterruptedException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    void test2WorkersPoolsOnSamePorts() {
+        final int THREADS_TEST_CNT = 5;
+        final int TEST_PORT = 8000;
+        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        Assertions.assertEquals(
+                100, workersPool.launchWorkers(TEST_PORT + 1, 100)
+        );
+        Assertions.assertEquals(
+                100, workersPool.launchWorkers(TEST_PORT + 1, 100)
+        );
+        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, THREADS_TEST_CNT, 40);
+        var gatewayThread = new Thread(gateway);
+        gatewayThread.start();
+
+        ArrayList<Callable<NetworkSendable>> tasks = new ArrayList<>();
+        for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int j = 0; j < 1000000; ++j) {
+                list.add(i);
+            }
+            tasks.add(new Client(list, TEST_PORT));
+        }
+
+        ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
+        try {
+            List<Future<NetworkSendable>> results = pool.invokeAll(tasks);
+            int expectedUnprimesCnt = 1, gotUnprimesCnt = 0;
+            for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+                if (((TaskResult)results.get(i).get()).result())
+                    gotUnprimesCnt++;
+            }
+            Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
+            pool.shutdown();
+            workersPool.shutdown();
+            SimpleIntegrationTest.clearingPause();
+            Assertions.assertFalse(gatewayThread.isAlive());
+        } catch (ExecutionException | InterruptedException e) {
+            Assertions.fail();
+        }
+    }
 }

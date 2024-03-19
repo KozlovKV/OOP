@@ -13,8 +13,8 @@ import java.util.concurrent.ThreadFactory;
  * Listens to server socket and creates connection for clients
  */
 public class Gateway implements Runnable {
+    public static final int GATEWAY_TIMEOUT = 1000;
     private static final int SERVER_SOCKET_BACKLOG = 100;
-    private static final int GATEWAY_TIMEOUT = 1000;
     private int connectionsToDie = -1;
     private final int port;
     private final int multicastPort;

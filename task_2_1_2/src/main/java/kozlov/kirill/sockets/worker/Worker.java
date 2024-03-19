@@ -25,14 +25,14 @@ public class Worker implements Runnable {
     private boolean createdSuccessfully = false;
     private boolean shouldBeClosed = false;
 
-    private ServerSocket serverSocket = null;
+    private ServerSocket workerServerSocket = null;
     private MulticastSocket multicastSocket = null;
 
     public Worker(Integer workerPort, MulticastManager multicastManager) {
         this.workerPort = workerPort;
         try {
-            serverSocket = new ServerSocket(workerPort);
-            serverSocket.setSoTimeout(WORKER_SOCKET_TIMEOUT);
+            workerServerSocket = new ServerSocket(workerPort);
+            workerServerSocket.setSoTimeout(WORKER_SOCKET_TIMEOUT);
             multicastSocket = multicastManager.registerMulticastHandler(
                     getWorkerMulticastHandler()
             );
@@ -81,9 +81,12 @@ public class Worker implements Runnable {
     public void run() {
         try {
             while (!shouldBeClosed) {
+                if (Thread.currentThread().isInterrupted()) {
+                    break;
+                }
                 Socket connectionSocket = null;
                 try {
-                    connectionSocket = serverSocket.accept();
+                    connectionSocket = workerServerSocket.accept();
                 } catch (SocketTimeoutException e) {
                     continue;
                 }
@@ -94,7 +97,7 @@ public class Worker implements Runnable {
             }
         } catch (IOException broke) {}
         try {
-            serverSocket.close();
+            workerServerSocket.close();
             multicastSocket.close();
         } catch (Exception ignored) {}
         System.out.println("Worker killed");
