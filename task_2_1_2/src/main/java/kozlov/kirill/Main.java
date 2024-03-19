@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
         new Thread(new Gateway(
-                TEST_SERVER_PORT, TEST_SERVER_PORT, 2, 10
+                TEST_SERVER_PORT, TEST_SERVER_PORT, 3, 1
         ), "Gateway").start();
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_SERVER_PORT);
         System.out.println(workersPool.launchWorkers(
@@ -29,7 +29,8 @@ public class Main {
             list.add(BILLION_PRIME);
         }
         FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_SERVER_PORT));
-        new Thread(task).start();
+        var th = new Thread(task);
+        th.start();
         ArrayList<Integer> list2 = new ArrayList<>(list);
         list2.add(6);
         FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(list2, TEST_SERVER_PORT));
@@ -39,7 +40,5 @@ public class Main {
             System.out.println(task.get());
             System.out.println(task2.get());
         } catch (InterruptedException | ExecutionException e) {}
-
-        workersPool.shutdown();
     }
 }

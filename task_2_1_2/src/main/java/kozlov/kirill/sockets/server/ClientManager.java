@@ -9,6 +9,7 @@ import kozlov.kirill.sockets.BasicTCPSocketOperations;
 import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.data.utils.ErrorMessages;
 import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
 import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
 
@@ -89,14 +90,14 @@ public class ClientManager implements Runnable {
             } catch (WorkerNotFoundException notFoundException) {
                 try {
                     BasicTCPSocketOperations.sendJSONObject(
-                            clientManagerSocket, new ErrorMessage("Server couldn't find calculation node")
+                            clientManagerSocket, ErrorMessages.workerNotFoundMessage
                     );
                 } catch (IOException ignored) {}
                 System.err.println("Couldn't find calculation node");
             } catch (InternalWorkerErrorException workerErrorException) {
                 try {
                     BasicTCPSocketOperations.sendJSONObject(
-                            clientManagerSocket, new ErrorMessage("Server got error while calculated and cannot restart process")
+                            clientManagerSocket, ErrorMessages.workerInternalErrorMessage
                     );
                 } catch (IOException ignored) {}
                 System.out.println("Couldn't find new calculation node");

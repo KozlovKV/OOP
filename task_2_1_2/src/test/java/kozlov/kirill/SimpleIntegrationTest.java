@@ -19,7 +19,7 @@ public class SimpleIntegrationTest {
     public static final int TEST_PORT = 8000;
 
     private static final int TESTS_CNT = 7;
-    private static final int WORKERS_PER_ONE_TASK = 10;
+    private static final int WORKERS_PER_ONE_TASK = 100;
     private static final int WORKERS_CNT = 100;
     private static WorkersPool pool = new WorkersPool("230.0.0.0", TEST_PORT);
 

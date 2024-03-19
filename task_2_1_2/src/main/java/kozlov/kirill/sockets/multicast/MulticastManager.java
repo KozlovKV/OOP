@@ -8,7 +8,6 @@ import java.net.NetworkInterface;
 import java.util.concurrent.ThreadFactory;
 
 public class MulticastManager {
-    static private int currentFreeInterfaceIndex = 0;
     int port;
     private InetSocketAddress groupAddress = null;
     private NetworkInterface groupInterface = null;
@@ -18,9 +17,7 @@ public class MulticastManager {
         this.port = port;
         handlersFactory = Thread.ofVirtual().name("Workers handler").factory();
         try {
-            groupInterface = NetworkInterface.getByIndex(
-                currentFreeInterfaceIndex++
-            );
+            groupInterface = NetworkInterface.getByIndex(0);
             groupAddress = new InetSocketAddress(
                 InetAddress.getByName(ip), port
             );

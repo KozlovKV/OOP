@@ -26,7 +26,10 @@ public class Client implements Callable<NetworkSendable> {
             return null;
         }
         sendTaskData();
-        NetworkSendable result = receiveTaskResult();
+        NetworkSendable result = null;
+        if (!Thread.currentThread().isInterrupted()) {
+            result = receiveTaskResult();
+        }
         try {
             socket.close();
         } catch (IOException e) {

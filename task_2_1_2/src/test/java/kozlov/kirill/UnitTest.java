@@ -1,7 +1,7 @@
 package kozlov.kirill;
 
 import java.util.ArrayList;
-import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
+import kozlov.kirill.primes.SimpleUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.utils.TaskDataUtils;
@@ -27,8 +27,10 @@ public class UnitTest {
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{6, 8, 7, 13, 5, 9, 4}, 7
         );
-        UnprimeChecker unprimeChecker = new ParallelStreamsUnprimeChecker().setNumbers(list);
-        Assertions.assertTrue(unprimeChecker.isAnyUnprime());
+        UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
+        try {
+            Assertions.assertTrue(unprimeChecker.isAnyUnprime());
+        } catch (InterruptedException ignored) {}
     }
 
     @Test
@@ -37,8 +39,10 @@ public class UnitTest {
                 new int[]{20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
                         6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
         );
-        UnprimeChecker unprimeChecker = new ParallelStreamsUnprimeChecker().setNumbers(list);
-        Assertions.assertFalse(unprimeChecker.isAnyUnprime());
+        UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
+        try {
+            Assertions.assertFalse(unprimeChecker.isAnyUnprime());
+        } catch (InterruptedException ignored) {}
     }
 
     @Test
@@ -46,8 +50,10 @@ public class UnitTest {
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{2, 3, 5, 7}, 4
         );
-        UnprimeChecker unprimeChecker = new ParallelStreamsUnprimeChecker().setNumbers(list);
-        Assertions.assertFalse(unprimeChecker.isAnyUnprime());
+        UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
+        try {
+            Assertions.assertFalse(unprimeChecker.isAnyUnprime());
+        } catch (InterruptedException ignored) {}
     }
 
     @Test
@@ -55,8 +61,10 @@ public class UnitTest {
         ArrayList<Integer> list = getArrayListFromArray(
                 new int[]{2, 3, 4, 5, 7}, 5
         );
-        UnprimeChecker unprimeChecker = new ParallelStreamsUnprimeChecker().setNumbers(list);
-        Assertions.assertTrue(unprimeChecker.isAnyUnprime());
+        UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
+        try {
+            Assertions.assertTrue(unprimeChecker.isAnyUnprime());
+        } catch (InterruptedException ignored) {}
     }
 
     @Test

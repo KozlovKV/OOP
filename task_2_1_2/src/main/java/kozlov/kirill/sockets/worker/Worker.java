@@ -8,7 +8,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
-import kozlov.kirill.primes.ParallelStreamsUnprimeChecker;
+
+import kozlov.kirill.primes.SimpleUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
 import kozlov.kirill.sockets.BasicTCPSocketOperations;
 import kozlov.kirill.sockets.data.TaskData;
@@ -79,12 +80,9 @@ public class Worker implements Runnable {
      * Whereas socket is opened reads requests for it and send results of calculation
      */
     public void run() {
+        Socket connectionSocket = null;
         try {
             while (!shouldBeClosed) {
-                if (Thread.currentThread().isInterrupted()) {
-                    break;
-                }
-                Socket connectionSocket = null;
                 try {
                     connectionSocket = workerServerSocket.accept();
                 } catch (SocketTimeoutException e) {
@@ -95,10 +93,16 @@ public class Worker implements Runnable {
                 resolveTask(connectionSocket);
                 isFree.set(true);
             }
-        } catch (IOException broke) {}
+        } catch (IOException ignored) {
+        } catch (InterruptedException e) {
+            System.err.println("Worker was interrupted while counting task");
+        }
         try {
             workerServerSocket.close();
             multicastSocket.close();
+            if (connectionSocket != null && !connectionSocket.isClosed()) {
+                connectionSocket.close();
+            }
         } catch (Exception ignored) {}
         System.out.println("Worker killed");
     }
@@ -107,14 +111,14 @@ public class Worker implements Runnable {
         shouldBeClosed = true;
     }
 
-    private void resolveTask(Socket socket) {
+    private void resolveTask(Socket socket) throws InterruptedException {
         TaskData taskData = null;
         try {
             taskData = BasicTCPSocketOperations.receiveJSONObject(
                     socket, TaskData.class
             );
         } catch (IOException ignored) {} // Manager has already checked validness
-        UnprimeChecker checker = new ParallelStreamsUnprimeChecker().setNumbers(taskData.numbers());
+        UnprimeChecker checker = new SimpleUnprimeChecker().setNumbers(taskData.numbers());
         TaskResult taskResult = new TaskResult(checker.isAnyUnprime());
         try {
             BasicTCPSocketOperations.sendJSONObject(socket, taskResult);

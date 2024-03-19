@@ -40,5 +40,5 @@ public abstract class UnprimeChecker {
      *
      * @return true weather numbers' list has at least one unprime number
      */
-    public abstract boolean isAnyUnprime();
+    public abstract boolean isAnyUnprime() throws InterruptedException;
 }

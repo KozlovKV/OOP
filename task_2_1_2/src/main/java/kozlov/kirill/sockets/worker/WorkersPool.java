@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadFactory;
 import kozlov.kirill.sockets.multicast.MulticastManager;
 
 public final class WorkersPool {
-    static final int MAX_STATIC_PORT = 37767;
+    public static final int MAX_STATIC_PORT = 32767;
 
     final private MulticastManager multicastManager;
     final private ThreadFactory workersThreadsFactory = Thread.ofVirtual().factory();
