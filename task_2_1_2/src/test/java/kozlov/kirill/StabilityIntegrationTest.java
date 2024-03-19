@@ -99,7 +99,7 @@ public class StabilityIntegrationTest {
         new Thread(task).start();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             workersPool.shutdownNow();
             ErrorMessage expected = ErrorMessages.workerInternalErrorMessage;
             Assertions.assertEquals(expected, task.get());
