@@ -15,8 +15,8 @@ import kozlov.kirill.sockets.exceptions.ParsingException;
 /**
  * Static class with operation with TCP sockets.
  */
-public final class BasicTCPSocketOperations {
-    private BasicTCPSocketOperations() {}
+public final class BasicTcpSocketOperations {
+    private BasicTcpSocketOperations() {}
 
     /**
      * Sends object serialized to JSON through specified socket.

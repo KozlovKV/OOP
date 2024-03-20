@@ -67,14 +67,14 @@ public class Client implements Callable<NetworkSendable> {
 
     private void sendTaskData() {
         try {
-            BasicTCPSocketOperations.sendJSONObject(socket, taskData);
+            BasicTcpSocketOperations.sendJSONObject(socket, taskData);
         } catch (IOException ignored) {}
     }
 
     private NetworkSendable receiveTaskResult() {
         String response = "";
         try {
-            response = BasicTCPSocketOperations.receiveString(socket);
+            response = BasicTcpSocketOperations.receiveString(socket);
             TaskResult taskResult = BasicMapperOperations.parse(response, TaskResult.class);
             return taskResult;
         } catch (ParsingException e) {

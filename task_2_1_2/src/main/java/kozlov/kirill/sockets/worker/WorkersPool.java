@@ -21,11 +21,11 @@ public final class WorkersPool {
      * <br>
      * Creates MulticastManager for creation workers available in local network
      *
-     * @param multicastIP address for multicast group
+     * @param multicastHostname address for multicast group
      * @param multicastPort port for multicast group
      */
-    public WorkersPool(String multicastIP, int multicastPort) {
-        multicastManager = new MulticastManager(multicastIP, multicastPort);
+    public WorkersPool(String multicastHostname, int multicastPort) {
+        multicastManager = new MulticastManager(multicastHostname, multicastPort);
     }
 
     /**
@@ -40,8 +40,9 @@ public final class WorkersPool {
      * @return next port after acquired by this worker or -1 if worker wasn't created
      */
     public int launchWorker(int startPort) {
-        if (startPort > MAX_STATIC_PORT)
+        if (startPort > MAX_STATIC_PORT) {
             return -1;
+        }
         int currentPort = startPort;
         Worker worker = null;
         do {
@@ -54,8 +55,9 @@ public final class WorkersPool {
                 currentPort++;
             }
         } while (worker == null && currentPort <= MAX_STATIC_PORT);
-        if (worker == null)
+        if (worker == null) {
             return -1;
+        }
         activeWorkers.add(worker);
         Thread workerThread = workersThreadsFactory.newThread(worker);
         workersThreads.add(workerThread);

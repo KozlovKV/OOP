@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import kozlov.kirill.primes.SimpleUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
-import kozlov.kirill.sockets.BasicTCPSocketOperations;
+import kozlov.kirill.sockets.BasicTcpSocketOperations;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.exceptions.EndOfStreamException;
@@ -128,7 +128,9 @@ public class Worker implements Runnable {
             if (connectionSocket != null && !connectionSocket.isClosed()) {
                 connectionSocket.close();
             }
-        } catch (Exception ignored) {}
+        } catch (IOException e) {
+            System.err.println("Error while closing workers' sockets");
+        }
         System.out.println("Worker killed");
     }
 
@@ -149,29 +151,29 @@ public class Worker implements Runnable {
     private void resolveTask(Socket socket) throws InterruptedException {
         TaskData taskData = new TaskData(new ArrayList<>());
         try {
-            taskData = BasicTCPSocketOperations.receiveJSONObject(
+            taskData = BasicTcpSocketOperations.receiveJSONObject(
                     socket, TaskData.class
             );
         } catch (IOException | EndOfStreamException socketException) {
             System.err.println(
-                "Error to get data in worker on port " + workerPort +
-                " from " + socket.getRemoteSocketAddress()
+                "Error to get data in worker on port " + workerPort
+                + " from " + socket.getRemoteSocketAddress()
             );
             return;
         } catch (ParsingException parsingException) {
             System.err.println(
-                "Error to parse data in worker on port " + workerPort +
-                " from " + socket.getRemoteSocketAddress()
+                "Error to parse data in worker on port " + workerPort
+                + " from " + socket.getRemoteSocketAddress()
             );
         }
         UnprimeChecker checker = new SimpleUnprimeChecker().setNumbers(taskData.numbers());
         TaskResult taskResult = new TaskResult(checker.isAnyUnprime());
         try {
-            BasicTCPSocketOperations.sendJSONObject(socket, taskResult);
+            BasicTcpSocketOperations.sendJSONObject(socket, taskResult);
         } catch (IOException socketException) {
             System.err.println(
-                "Error to send calculation result from worker on port " + workerPort +
-                " to " + socket.getRemoteSocketAddress()
+                "Error to send calculation result from worker on port " + workerPort
+                + " to " + socket.getRemoteSocketAddress()
             );
         }
     }

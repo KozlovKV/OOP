@@ -6,7 +6,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import kozlov.kirill.sockets.BasicTCPSocketOperations;
+import kozlov.kirill.sockets.BasicTcpSocketOperations;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.data.utils.TaskDataUtils;
@@ -67,7 +67,7 @@ public class TaskManager {
             TaskResult workerResult = null;
             try {
                 workerResult =
-                    BasicTCPSocketOperations.receiveJSONObject(
+                    BasicTcpSocketOperations.receiveJSONObject(
                         activeTask.workerSocket(), TaskResult.class
                     );
                 if (workerResult.result()) {
@@ -111,7 +111,7 @@ public class TaskManager {
         }
         System.out.println("Chosen worker " + workerSocket.getRemoteSocketAddress());
         try {
-            BasicTCPSocketOperations.sendJSONObject(workerSocket, task);
+            BasicTcpSocketOperations.sendJSONObject(workerSocket, task);
         } catch (IOException e) {
             System.err.println("Error in communication with worker");
 

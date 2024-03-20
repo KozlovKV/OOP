@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Optional;
 import java.util.concurrent.ThreadFactory;
-import kozlov.kirill.sockets.BasicTCPSocketOperations;
+import kozlov.kirill.sockets.BasicTcpSocketOperations;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.data.utils.ErrorMessages;
@@ -77,13 +77,13 @@ public class ClientManager implements Runnable {
     private Optional<TaskData> receiveTaskData()
     throws EndOfStreamException {
         try {
-            return Optional.of(BasicTCPSocketOperations.receiveJSONObject(
+            return Optional.of(BasicTcpSocketOperations.receiveJSONObject(
                     clientManagerSocket, TaskData.class
             ));
         } catch (ParsingException parsingException) {
             System.err.println("Parsing error: " + parsingException.getMessage());
             try {
-                BasicTCPSocketOperations.sendJSONObject(
+                BasicTcpSocketOperations.sendJSONObject(
                         clientManagerSocket, ErrorMessages.taskDataParsingError
                 );
             } catch (IOException e) {
@@ -112,7 +112,7 @@ public class ClientManager implements Runnable {
                 ).processTask();
                 optionalTaskResult.ifPresent(taskResult -> {
                     try {
-                        BasicTCPSocketOperations.sendJSONObject(
+                        BasicTcpSocketOperations.sendJSONObject(
                                 clientManagerSocket, taskResult
                         );
                     } catch (IOException e) {
@@ -124,14 +124,14 @@ public class ClientManager implements Runnable {
                 });
             } catch (WorkerNotFoundException notFoundException) {
                 try {
-                    BasicTCPSocketOperations.sendJSONObject(
+                    BasicTcpSocketOperations.sendJSONObject(
                             clientManagerSocket, ErrorMessages.workerNotFoundMessage
                     );
                 } catch (IOException ignored) {}
                 System.err.println("Couldn't find calculation node");
             } catch (InternalWorkerErrorException workerErrorException) {
                 try {
-                    BasicTCPSocketOperations.sendJSONObject(
+                    BasicTcpSocketOperations.sendJSONObject(
                             clientManagerSocket, ErrorMessages.workerInternalErrorMessage
                     );
                 } catch (IOException ignored) {}
