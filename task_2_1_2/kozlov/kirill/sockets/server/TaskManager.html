@@ -91,6 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">TaskManager</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Class for communication manager with workers.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -106,7 +107,9 @@ loadScripts(document, 'script');</script>
  int&nbsp;workersPerTask,
  int&nbsp;multicastServerPort,
  int&nbsp;managerPort)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">TaskManager constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -123,7 +126,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="../data/TaskResult.html" title="class in kozlov.kirill.sockets.data">TaskResult</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processTask()" class="member-name-link">processTask</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Task processor.</div>
+</div>
 </div>
 </div>
 </div>
@@ -148,6 +153,14 @@ loadScripts(document, 'script');</script>
  int&nbsp;workersPerTask,
  int&nbsp;multicastServerPort,
  int&nbsp;managerPort)</span></div>
+<div class="block">TaskManager constructor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>taskData</code> - data for processing</dd>
+<dd><code>workersPerTask</code> - count of workers need to process task</dd>
+<dd><code>multicastServerPort</code> - port for founding workers</dd>
+<dd><code>managerPort</code> - client's socket port from ClientManager</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -164,10 +177,16 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../data/TaskResult.html" title="class in kozlov.kirill.sockets.data">TaskResult</a>&gt;</span>&nbsp;<span class="element-name">processTask</span>()
                                  throws <span class="exceptions"><a href="../exceptions/WorkerNotFoundException.html" title="class in kozlov.kirill.sockets.exceptions">WorkerNotFoundException</a>,
 <a href="../exceptions/InternalWorkerErrorException.html" title="class in kozlov.kirill.sockets.exceptions">InternalWorkerErrorException</a></span></div>
+<div class="block">Task processor.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>result of concurrent calculation in found workers. There are no ways to
+     get Optional.empty() because any error will produce exceptions described below</dd>
 <dt>Throws:</dt>
-<dd><code><a href="../exceptions/WorkerNotFoundException.html" title="class in kozlov.kirill.sockets.exceptions">WorkerNotFoundException</a></code></dd>
-<dd><code><a href="../exceptions/InternalWorkerErrorException.html" title="class in kozlov.kirill.sockets.exceptions">InternalWorkerErrorException</a></code></dd>
+<dd><code><a href="../exceptions/WorkerNotFoundException.html" title="class in kozlov.kirill.sockets.exceptions">WorkerNotFoundException</a></code> - thrown in case when there are not enough free
+     workers for calculation</dd>
+<dd><code><a href="../exceptions/InternalWorkerErrorException.html" title="class in kozlov.kirill.sockets.exceptions">InternalWorkerErrorException</a></code> - thrown in case when some error occurred in worker and
+     after that there are not enough free workers for calculation</dd>
 </dl>
 </section>
 </li>

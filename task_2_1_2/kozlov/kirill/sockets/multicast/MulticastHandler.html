@@ -87,6 +87,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">MulticastHandler</span></div>
+<div class="block">Interface for handlers of multicast requests.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -103,7 +104,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#handle(java.net.DatagramPacket)" class="member-name-link">handle</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/DatagramPacket.html" title="class or interface in java.net" class="external-link">DatagramPacket</a>&nbsp;datagramPacket)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Multicast response handler.</div>
+</div>
 </div>
 </div>
 </div>
@@ -122,6 +125,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="handle(java.net.DatagramPacket)">
 <h3>handle</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">handle</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/DatagramPacket.html" title="class or interface in java.net" class="external-link">DatagramPacket</a>&nbsp;datagramPacket)</span></div>
+<div class="block">Multicast response handler.
+ <br>
+ This method is responsible for handling UDP packets from multicast groups</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>datagramPacket</code> - packet from request</dd>
+</dl>
 </section>
 </li>
 </ul>

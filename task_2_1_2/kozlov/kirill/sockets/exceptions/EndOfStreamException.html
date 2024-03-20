@@ -99,6 +99,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">EndOfStreamException</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
+<div class="block">Exception for comfortable indicating about EOF in socket stream using parser.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -119,9 +120,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">EndOfStreamException</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Unused default constructor.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.Throwable)" class="member-name-link">EndOfStreamException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Cause taking constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -150,12 +155,19 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>EndOfStreamException</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">EndOfStreamException</span>()</div>
+<div class="block">Unused default constructor.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.Throwable)">
 <h3>EndOfStreamException</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">EndOfStreamException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</span></div>
+<div class="block">Cause taking constructor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>cause</code> - cause of an exception. Practically it's MismatchedInputException
+     produced by JsonParser</dd>
+</dl>
 </section>
 </li>
 </ul>

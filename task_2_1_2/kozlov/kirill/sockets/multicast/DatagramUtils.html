@@ -91,6 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">DatagramUtils</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Static class with datagram sockets utils.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -107,15 +108,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/DatagramPacket.html" title="class or interface in java.net" class="external-link">DatagramPacket</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createPacket(java.lang.String)" class="member-name-link">createPacket</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Simple datagram packet creator.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/DatagramPacket.html" title="class or interface in java.net" class="external-link">DatagramPacket</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createPacket(java.lang.String,java.net.InetAddress,int)" class="member-name-link">createPacket</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/InetAddress.html" title="class or interface in java.net" class="external-link">InetAddress</a>&nbsp;addr,
  int&nbsp;port)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Sendable datagram packet creator.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#extractContentFromPacket(java.net.DatagramPacket)" class="member-name-link">extractContentFromPacket</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/DatagramPacket.html" title="class or interface in java.net" class="external-link">DatagramPacket</a>&nbsp;packet)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Data extractor.</div>
+</div>
 </div>
 </div>
 </div>
@@ -137,12 +144,26 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="extractContentFromPacket(java.net.DatagramPacket)">
 <h3>extractContentFromPacket</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">extractContentFromPacket</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/DatagramPacket.html" title="class or interface in java.net" class="external-link">DatagramPacket</a>&nbsp;packet)</span></div>
+<div class="block">Data extractor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>packet</code> - datagram packet</dd>
+<dt>Returns:</dt>
+<dd>extracted string</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="createPacket(java.lang.String)">
 <h3>createPacket</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/DatagramPacket.html" title="class or interface in java.net" class="external-link">DatagramPacket</a></span>&nbsp;<span class="element-name">createPacket</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</span></div>
+<div class="block">Simple datagram packet creator.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>str</code> - data for packet</dd>
+<dt>Returns:</dt>
+<dd>datagram packet with specified data</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -151,6 +172,15 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/DatagramPacket.html" title="class or interface in java.net" class="external-link">DatagramPacket</a></span>&nbsp;<span class="element-name">createPacket</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/InetAddress.html" title="class or interface in java.net" class="external-link">InetAddress</a>&nbsp;addr,
  int&nbsp;port)</span></div>
+<div class="block">Sendable datagram packet creator.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>str</code> - data for packet</dd>
+<dd><code>addr</code> - source address</dd>
+<dd><code>port</code> - source port</dd>
+<dt>Returns:</dt>
+<dd>datagram packet ready for sending through datagram socket</dd>
+</dl>
 </section>
 </li>
 </ul>

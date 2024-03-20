@@ -161,9 +161,9 @@ loadScripts(document, 'script');</script>
 <h3>receiveJSONObject</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="data/NetworkSendable.html" title="interface in kozlov.kirill.sockets.data">NetworkSendable</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">receiveJSONObject</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span>
-                                                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a>,
-<a href="exceptions/ParsingException.html" title="class in kozlov.kirill.sockets.exceptions">ParsingException</a>,
-<a href="exceptions/EndOfStreamException.html" title="class in kozlov.kirill.sockets.exceptions">EndOfStreamException</a></span></div>
+                                                       throws <span class="exceptions"><a href="exceptions/EndOfStreamException.html" title="class in kozlov.kirill.sockets.exceptions">EndOfStreamException</a>,
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a>,
+<a href="exceptions/ParsingException.html" title="class in kozlov.kirill.sockets.exceptions">ParsingException</a></span></div>
 <div class="block">Receives object from socket using parsing by type.</div>
 <dl class="notes">
 <dt>Type Parameters:</dt>
@@ -174,9 +174,9 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>parsed object or null if socket stream was closed</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - any exception from socket.</dd>
-<dd><code><a href="exceptions/ParsingException.html" title="class in kozlov.kirill.sockets.exceptions">ParsingException</a></code> - any exception from parsing process.</dd>
-<dd><code><a href="exceptions/EndOfStreamException.html" title="class in kozlov.kirill.sockets.exceptions">EndOfStreamException</a></code></dd>
+<dd><code><a href="exceptions/EndOfStreamException.html" title="class in kozlov.kirill.sockets.exceptions">EndOfStreamException</a></code> - socket stream was closed</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - any exception from socket</dd>
+<dd><code><a href="exceptions/ParsingException.html" title="class in kozlov.kirill.sockets.exceptions">ParsingException</a></code> - any exception from parsing process</dd>
 </dl>
 </section>
 </li>

@@ -91,6 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">MulticastManager</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Manager for creation multicast groups with linked handlers.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -104,7 +105,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,int)" class="member-name-link">MulticastManager</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ip,
  int&nbsp;port)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">MulticastManager constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -121,7 +124,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/MulticastSocket.html" title="class or interface in java.net" class="external-link">MulticastSocket</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerMulticastHandler(kozlov.kirill.sockets.multicast.MulticastHandler)" class="member-name-link">registerMulticastHandler</a><wbr>(<a href="MulticastHandler.html" title="interface in kozlov.kirill.sockets.multicast">MulticastHandler</a>&nbsp;handler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Multicast handler registrator.</div>
+</div>
 </div>
 </div>
 </div>
@@ -144,6 +149,15 @@ loadScripts(document, 'script');</script>
 <h3>MulticastManager</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MulticastManager</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ip,
  int&nbsp;port)</span></div>
+<div class="block">MulticastManager constructor.
+ <br>
+ Creates multicast group with the first network interface and virtual threads factory
+ for linking handlers to multicast address</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ip</code> - hostname of multicast group which will be used by manager</dd>
+<dd><code>port</code> - port of multicast group which will be used by manager</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -159,9 +173,17 @@ loadScripts(document, 'script');</script>
 <h3>registerMulticastHandler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/MulticastSocket.html" title="class or interface in java.net" class="external-link">MulticastSocket</a></span>&nbsp;<span class="element-name">registerMulticastHandler</span><wbr><span class="parameters">(<a href="MulticastHandler.html" title="interface in kozlov.kirill.sockets.multicast">MulticastHandler</a>&nbsp;handler)</span>
                                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Multicast handler registrator.
+ <br>
+ Creates multicast socket, joins it to manager's multicast group and wraps handler
+ in while-live loop in virtual thread</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>handler</code> - handler for processing packet received through multicast socket</dd>
+<dt>Returns:</dt>
+<dd>created multicast socket</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - any exception during registration process</dd>
 </dl>
 </section>
 </li>

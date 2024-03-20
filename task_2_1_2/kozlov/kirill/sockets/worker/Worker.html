@@ -96,6 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Worker</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></span></div>
+<div class="block">Calculation node.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -124,7 +125,9 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Integer,kozlov.kirill.sockets.multicast.MulticastManager)" class="member-name-link">Worker</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;workerPort,
  <a href="../multicast/MulticastManager.html" title="class in kozlov.kirill.sockets.multicast">MulticastManager</a>&nbsp;multicastManager)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Worker constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -139,17 +142,16 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCreatedSuccessfully()" class="member-name-link">isCreatedSuccessfully</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Main processing of client's requests.</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCloseFlag()" class="member-name-link">setCloseFlag</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Thread runnable function with infinite loop for calculations.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCloseFlag()" class="member-name-link">setCloseFlag</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">shouldBeClosed flag switcher on.</div>
+</div>
 </div>
 </div>
 </div>
@@ -193,7 +195,20 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <section class="detail" id="&lt;init&gt;(java.lang.Integer,kozlov.kirill.sockets.multicast.MulticastManager)">
 <h3>Worker</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Worker</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;workerPort,
- <a href="../multicast/MulticastManager.html" title="class in kozlov.kirill.sockets.multicast">MulticastManager</a>&nbsp;multicastManager)</span></div>
+ <a href="../multicast/MulticastManager.html" title="class in kozlov.kirill.sockets.multicast">MulticastManager</a>&nbsp;multicastManager)</span>
+       throws <span class="exceptions"><a href="../exceptions/WorkerCreationException.html" title="class in kozlov.kirill.sockets.exceptions">WorkerCreationException</a></span></div>
+<div class="block">Worker constructor.
+ <br>
+ Creates worker and register multicast handler to make it available
+ using broadcast request
+ <br></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>workerPort</code> - port for worker TCP server socket</dd>
+<dd><code>multicastManager</code> - manager for registering multicast handler</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exceptions/WorkerCreationException.html" title="class in kozlov.kirill.sockets.exceptions">WorkerCreationException</a></code> - thrown in case of any error during worker creation</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -205,18 +220,15 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="isCreatedSuccessfully()">
-<h3>isCreatedSuccessfully</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCreatedSuccessfully</span>()</div>
-</section>
-</li>
-<li>
 <section class="detail" id="run()">
 <h3>run</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run</span>()</div>
-<div class="block">Main processing of client's requests.
+<div class="block">Thread runnable function with infinite loop for calculations.
  <br>
- Whereas socket is opened reads requests for it and send results of calculation</div>
+ Accepts connection, blocks for broadcast requests and tries to resolve
+ task from created connection
+ <br>
+ Cycle can be break by interruption or shouldBeClosed flag set to true</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html#run()" title="class or interface in java.lang" class="external-link">run</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></code></dd>
@@ -227,6 +239,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <section class="detail" id="setCloseFlag()">
 <h3>setCloseFlag</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCloseFlag</span>()</div>
+<div class="block">shouldBeClosed flag switcher on.</div>
 </section>
 </li>
 </ul>

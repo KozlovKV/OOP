@@ -91,6 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">MulticastUtils</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Static class with utils for multicast sockets.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -108,11 +109,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getClientSocketByMulticastResponse(int,int)" class="member-name-link">getClientSocketByMulticastResponse</a><wbr>(int&nbsp;hostPort,
  int&nbsp;broadcastPort)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRunnableHandlerWrapper(java.net.MulticastSocket,kozlov.kirill.sockets.multicast.MulticastHandler)" class="member-name-link">getRunnableHandlerWrapper</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/MulticastSocket.html" title="class or interface in java.net" class="external-link">MulticastSocket</a>&nbsp;socket,
- <a href="MulticastHandler.html" title="interface in kozlov.kirill.sockets.multicast">MulticastHandler</a>&nbsp;handler)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Method for acquiring connection using like-ARP broadcast requesting.</div>
+</div>
 </div>
 </div>
 </div>
@@ -131,17 +130,21 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getRunnableHandlerWrapper(java.net.MulticastSocket,kozlov.kirill.sockets.multicast.MulticastHandler)">
-<h3>getRunnableHandlerWrapper</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></span>&nbsp;<span class="element-name">getRunnableHandlerWrapper</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/MulticastSocket.html" title="class or interface in java.net" class="external-link">MulticastSocket</a>&nbsp;socket,
- <a href="MulticastHandler.html" title="interface in kozlov.kirill.sockets.multicast">MulticastHandler</a>&nbsp;handler)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="getClientSocketByMulticastResponse(int,int)">
 <h3>getClientSocketByMulticastResponse</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a></span>&nbsp;<span class="element-name">getClientSocketByMulticastResponse</span><wbr><span class="parameters">(int&nbsp;hostPort,
  int&nbsp;broadcastPort)</span></div>
+<div class="block">Method for acquiring connection using like-ARP broadcast requesting.
+ <br>
+ Send broadcast request to specified port and tries to establish TCP socket connection
+ to address from response packet</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>hostPort</code> - port for creation of broadcast socket</dd>
+<dd><code>broadcastPort</code> - port for broadcast request</dd>
+<dt>Returns:</dt>
+<dd>created TCP socket or null if there are any trouble with creation</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -91,6 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">WorkersPool</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Workers' poll class.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -119,7 +120,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,int)" class="member-name-link">WorkersPool</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;multicastIP,
  int&nbsp;multicastPort)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">WorkersPool constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -136,17 +139,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#launchWorker(int)" class="member-name-link">launchWorker</a><wbr>(int&nbsp;startPort)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Worker's creator.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#launchWorkers(int,int)" class="member-name-link">launchWorkers</a><wbr>(int&nbsp;startPort,
  int&nbsp;workersCount)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Workers' launcher.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shutdown()" class="member-name-link">shutdown</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Soft workers pool shutdown.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shutdownNow()" class="member-name-link">shutdownNow</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Hard workers pool shutdown.</div>
+</div>
 </div>
 </div>
 </div>
@@ -191,6 +202,14 @@ loadScripts(document, 'script');</script>
 <h3>WorkersPool</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WorkersPool</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;multicastIP,
  int&nbsp;multicastPort)</span></div>
+<div class="block">WorkersPool constructor.
+ <br>
+ Creates MulticastManager for creation workers available in local network</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>multicastIP</code> - address for multicast group</dd>
+<dd><code>multicastPort</code> - port for multicast group</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -205,6 +224,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="launchWorker(int)">
 <h3>launchWorker</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">launchWorker</span><wbr><span class="parameters">(int&nbsp;startPort)</span></div>
+<div class="block">Worker's creator.
+ <br>
+ Trie to create and create worker on port up to MAX_STATIC_PORT,
+ launches successfully created workers in virtual threads and adds
+ them to lists of workers and threads</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>startPort</code> - the first port for creation tries</dd>
+<dt>Returns:</dt>
+<dd>next port after acquired by this worker or -1 if worker wasn't created</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -212,18 +242,32 @@ loadScripts(document, 'script');</script>
 <h3>launchWorkers</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">launchWorkers</span><wbr><span class="parameters">(int&nbsp;startPort,
  int&nbsp;workersCount)</span></div>
+<div class="block">Workers' launcher.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>startPort</code> - the first desired port for workers</dd>
+<dd><code>workersCount</code> - desired count of workers</dd>
+<dt>Returns:</dt>
+<dd>count of successfully created and launched workers</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="shutdown()">
 <h3>shutdown</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">shutdown</span>()</div>
+<div class="block">Soft workers pool shutdown.
+ <br>
+ Shutdown is performed by setting on close flag in workers' instances</div>
 </section>
 </li>
 <li>
 <section class="detail" id="shutdownNow()">
 <h3>shutdownNow</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">shutdownNow</span>()</div>
+<div class="block">Hard workers pool shutdown.
+ <br>
+ Shutdown is performed by sending interruption to workers' threads</div>
 </section>
 </li>
 </ul>

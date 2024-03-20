@@ -96,9 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Gateway</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></span></div>
-<div class="block">Server's gateway.
- <br>
- Listens to server socket and creates connection for clients</div>
+<div class="block">Server's gateway.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -129,7 +127,9 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
  int&nbsp;multicastPort,
  int&nbsp;connectionsToDie,
  int&nbsp;workersPerOneTask)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Gateway constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -146,10 +146,14 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getServerHostName()" class="member-name-link">getServerHostName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Server hostname getter.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getServerPort()" class="member-name-link">getServerPort</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Server port getter.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -201,6 +205,15 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
  int&nbsp;multicastPort,
  int&nbsp;connectionsToDie,
  int&nbsp;workersPerOneTask)</span></div>
+<div class="block">Gateway constructor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>port</code> - gateway port</dd>
+<dd><code>multicastPort</code> - port for multicast communications (can be the same as gateway port)</dd>
+<dd><code>connectionsToDie</code> - count of clients' connection which gateway
+     will process before closing</dd>
+<dd><code>workersPerOneTask</code> - count of workers needed for processing one task</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -215,12 +228,22 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <section class="detail" id="getServerHostName()">
 <h3>getServerHostName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getServerHostName</span>()</div>
+<div class="block">Server hostname getter.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>gateway's server socket hostname</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getServerPort()">
 <h3>getServerPort</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getServerPort</span>()</div>
+<div class="block">Server port getter.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>gateway's server socket port</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -229,7 +252,11 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run</span>()</div>
 <div class="block">Main server's infinite-loop.
  <br>
- Accepts connection from clients and creates Managers for working with client's data in other thread</div>
+ Accepts connection from clients and creates Managers for
+ working with client's data in other thread
+ <br>
+ Infinite-loop breaks only when there are no working threads with ClientManagers
+ and gateway has provided connectionsToDie connection which isn't -1</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html#run()" title="class or interface in java.lang" class="external-link">run</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></code></dd>
