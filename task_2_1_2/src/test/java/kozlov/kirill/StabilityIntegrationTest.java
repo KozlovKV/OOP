@@ -86,8 +86,8 @@ public class StabilityIntegrationTest {
     void testWorkerFatalInterruption() {
         final int TEST_PORT = 8000;
         boolean internalWorkerErrorHandled = false;
-        for (int i = 0; i < 10; ++i) {
-            final int msForSleeping = i * 500;
+        for (int i = 0; i < 40; ++i) {
+            final int msForSleeping = i * 250;
             final int newStartPort = TEST_PORT + i;
             Gateway gateway = new Gateway(newStartPort, newStartPort, 1, 10);
             var gatewayThread = new Thread(gateway);
