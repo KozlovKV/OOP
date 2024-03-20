@@ -17,9 +17,9 @@ import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
  * Manager for communication wih client.
  */
 public class ClientManager implements Runnable {
-    final private int multicastServerPort;
-    final private Socket clientManagerSocket;
-    final private int workersPerTask;
+    private final int multicastServerPort;
+    private final Socket clientManagerSocket;
+    private final int workersPerTask;
 
     /**
      * ClientManager constructor.
