@@ -2,21 +2,20 @@ package kozlov.kirill.sockets.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-import kozlov.kirill.sockets.exceptions.EndOfStreamException;
-import kozlov.kirill.sockets.exceptions.ParsingException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import kozlov.kirill.sockets.exceptions.EndOfStreamException;
+import kozlov.kirill.sockets.exceptions.ParsingException;
 
 /**
  * Static class with function for serialization/parsing of data structures.
  * <br>
  * Functions will work ONLY with types implementing implementing NetworkSendable
  */
-final public class BasicMapperOperations {
+public final class BasicMapperOperations {
     private BasicMapperOperations() {}
 
     /**
@@ -39,6 +38,7 @@ final public class BasicMapperOperations {
      * @param <T> type of returned object implementing NetworkSendable interface
      * @return parsed object or null if input stream was closed
      * @throws ParsingException throws up any exception which can be produced during parsing process
+     * @throws EndOfStreamException specific exception for closed stream situation
      */
     public static <T extends NetworkSendable> T parse(
             InputStream inputStream, Class<T> type

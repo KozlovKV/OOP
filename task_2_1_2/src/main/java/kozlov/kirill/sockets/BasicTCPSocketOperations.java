@@ -15,7 +15,7 @@ import kozlov.kirill.sockets.exceptions.ParsingException;
 /**
  * Static class with operation with TCP sockets.
  */
-final public class BasicTCPSocketOperations {
+public final class BasicTCPSocketOperations {
     private BasicTCPSocketOperations() {}
 
     /**
@@ -40,12 +40,13 @@ final public class BasicTCPSocketOperations {
      * @param type type for parsing implementing NetworkSendable interface
      * @param <T> return type
      * @return parsed object or null if socket stream was closed
-     * @throws IOException any exception from socket.
-     * @throws ParsingException any exception from parsing process.
+     * @throws EndOfStreamException socket stream was closed
+     * @throws IOException any exception from socket
+     * @throws ParsingException any exception from parsing process
      */
     public static <T extends NetworkSendable> T receiveJSONObject(
         Socket socket, Class<T> type
-    ) throws IOException, ParsingException, EndOfStreamException {
+    ) throws EndOfStreamException, IOException, ParsingException {
         InputStream inputStream = socket.getInputStream();
         return BasicMapperOperations.parse(inputStream, type);
     }

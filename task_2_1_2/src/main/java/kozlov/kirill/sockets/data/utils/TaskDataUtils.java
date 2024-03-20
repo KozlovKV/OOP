@@ -6,7 +6,7 @@ import kozlov.kirill.sockets.data.TaskData;
 /**
  * Static class with utils for working with TaskData's instances.
  */
-final public class TaskDataUtils {
+public final class TaskDataUtils {
     private TaskDataUtils() {}
 
     /**

@@ -1,6 +1,5 @@
 package kozlov.kirill.sockets;
 
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -12,6 +11,9 @@ import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.exceptions.ParsingException;
 
+/**
+ * Client class.
+ */
 public class Client implements Callable<NetworkSendable> {
     private Socket socket = null;
     private TaskData taskData = null;

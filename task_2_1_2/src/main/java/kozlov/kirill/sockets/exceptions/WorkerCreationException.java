@@ -3,24 +3,23 @@ package kozlov.kirill.sockets.exceptions;
 import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
 
 /**
- * Exception for any parsing error.
+ * Exception for case of error in worker's creation
  */
-public class ParsingException extends Exception {
+public class WorkerCreationException extends Exception {
     /**
      * Unused default constructor.
      */
     @ExcludeConstructorFromJacocoGeneratedReport
-    public ParsingException() {
+    public WorkerCreationException() {
         super();
     }
 
     /**
      * Cause taking constructor.
      *
-     * @param cause cause of an exception. Practically it's MismatchedInputException
-     *     produced by JsonParser
+     * @param cause cause of an exception
      */
-    public ParsingException(Throwable cause) {
+    public WorkerCreationException(Throwable cause) {
         super(cause);
     }
 }

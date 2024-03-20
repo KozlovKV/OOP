@@ -7,8 +7,8 @@ import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import kozlov.kirill.primes.SimpleUnprimeChecker;
 import kozlov.kirill.primes.UnprimeChecker;
 import kozlov.kirill.sockets.BasicTCPSocketOperations;
@@ -16,22 +16,38 @@ import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.exceptions.EndOfStreamException;
 import kozlov.kirill.sockets.exceptions.ParsingException;
+import kozlov.kirill.sockets.exceptions.WorkerCreationException;
 import kozlov.kirill.sockets.multicast.DatagramUtils;
 import kozlov.kirill.sockets.multicast.MulticastHandler;
 import kozlov.kirill.sockets.multicast.MulticastManager;
 
+/**
+ * Calculation node.
+ */
 public class Worker implements Runnable {
-    static final public int WORKER_SOCKET_TIMEOUT = 1000;
+    public static final int WORKER_SOCKET_TIMEOUT = 1000;
 
-    final private Integer workerPort;
-    private AtomicBoolean isFree = new AtomicBoolean(true);
-    private boolean createdSuccessfully = false;
+    private final Integer workerPort;
+    private final AtomicBoolean isFree = new AtomicBoolean(true);
     private boolean shouldBeClosed = false;
 
     private ServerSocket workerServerSocket = null;
     private MulticastSocket multicastSocket = null;
 
-    public Worker(Integer workerPort, MulticastManager multicastManager) {
+    /**
+     * Worker constructor.
+     * <br>
+     * Creates worker and register multicast handler to make it available
+     * using broadcast request
+     * <br>
+     *
+     * @param workerPort port for worker TCP server socket
+     * @param multicastManager manager for registering multicast handler
+     *
+     * @throws WorkerCreationException thrown in case of any error during worker creation
+     */
+    public Worker(Integer workerPort, MulticastManager multicastManager)
+    throws WorkerCreationException {
         this.workerPort = workerPort;
         try {
             workerServerSocket = new ServerSocket(workerPort);
@@ -40,16 +56,16 @@ public class Worker implements Runnable {
                     getWorkerMulticastHandler()
             );
         } catch (IOException e) {
-            System.err.println("Failed to create worker on port " + workerPort);
-            return;
+            throw new WorkerCreationException(e);
         }
-        createdSuccessfully = true;
     }
 
-    public boolean isCreatedSuccessfully() {
-        return createdSuccessfully;
-    }
-
+    /**
+     * Multicast handler creator.
+     *
+     * @return created MulticastHandler lambda function for
+     *     sending response to specified in packet port
+     */
     private MulticastHandler getWorkerMulticastHandler() {
         return (DatagramPacket packet) -> {
             if (!isFree.get()) {
@@ -71,15 +87,18 @@ public class Worker implements Runnable {
                 socket.send(responsePacket);
                 socket.close();
             } catch (IOException e) {
-                System.err.println("Error...");
+                System.err.println("Failed to handle response for multicast request");
             }
         };
     }
 
     /**
-     * Main processing of client's requests.
+     * Thread runnable function with infinite loop for calculations.
      * <br>
-     * Whereas socket is opened reads requests for it and send results of calculation
+     * Accepts connection, blocks for broadcast requests and tries to resolve
+     * task from created connection
+     * <br>
+     * Cycle can be break by interruption or shouldBeClosed flag set to true
      */
     public void run() {
         Socket connectionSocket = null;
@@ -95,8 +114,7 @@ public class Worker implements Runnable {
                 resolveTask(connectionSocket);
                 isFree.set(true);
             }
-        } catch (IOException ignored) {
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             System.err.println("Worker was interrupted while counting task");
         }
         try {
@@ -109,24 +127,47 @@ public class Worker implements Runnable {
         System.out.println("Worker killed");
     }
 
+    /**
+     * shouldBeClosed flag switcher on.
+     */
     public void setCloseFlag() {
         shouldBeClosed = true;
     }
 
+    /**
+     * Task resolver.
+     *
+     * @param socket socket for getting data and sending result
+     *
+     * @throws InterruptedException thrown in case when calculation counting was interrupted
+     */
     private void resolveTask(Socket socket) throws InterruptedException {
-        TaskData taskData = null;
+        TaskData taskData = new TaskData(new ArrayList<>());
         try {
             taskData = BasicTCPSocketOperations.receiveJSONObject(
                     socket, TaskData.class
             );
-        } catch (IOException ignored) {
+        } catch (IOException | EndOfStreamException socketException) {
+            System.err.println(
+                "Error to get data in worker on port " + workerPort +
+                " from " + socket.getRemoteSocketAddress()
+            );
+            return;
         } catch (ParsingException parsingException) {
-            // TODO: рассмотреть это место как возможность убивать воркер в тестах
-        } catch (EndOfStreamException eofException) {}
+            System.err.println(
+                "Error to parse data in worker on port " + workerPort +
+                " from " + socket.getRemoteSocketAddress()
+            );
+        }
         UnprimeChecker checker = new SimpleUnprimeChecker().setNumbers(taskData.numbers());
         TaskResult taskResult = new TaskResult(checker.isAnyUnprime());
         try {
             BasicTCPSocketOperations.sendJSONObject(socket, taskResult);
-        } catch (IOException ignored) {}
+        } catch (IOException socketException) {
+            System.err.println(
+                "Error to send calculation result from worker on port " + workerPort +
+                " to " + socket.getRemoteSocketAddress()
+            );
+        }
     }
 }

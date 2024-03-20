@@ -3,7 +3,6 @@ package kozlov.kirill;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.data.TaskResult;

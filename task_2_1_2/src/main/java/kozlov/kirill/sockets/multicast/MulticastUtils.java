@@ -4,33 +4,29 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.MulticastSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-final public class MulticastUtils {
-    static private int BUF_SZ = 1024;
-
+/**
+ * Static class with utils for multicast sockets.
+ */
+public final class MulticastUtils {
     private MulticastUtils() {}
-
-    static public Runnable getRunnableHandlerWrapper(MulticastSocket socket, MulticastHandler handler) {
-        return () -> {
-            while (true) {
-                byte[] buf = new byte[BUF_SZ];
-                DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length);
-                try {
-                    socket.receive(datagramPacket);
-                    handler.handle(datagramPacket);
-                } catch (IOException e) {
-                    break;
-                }
-            }
-            System.out.println("Handler interrupted");
-        };
-    }
 
     static private final int BROADCAST_RECEIVING_TIMEOUT = 1000;
     static private final int BROADCAST_RECEIVING_ATTEMPTS = 5;
+
+    /**
+     * Method for acquiring connection using like-ARP broadcast requesting.
+     * <br>
+     * Send broadcast request to specified port and tries to establish TCP socket connection
+     * to address from response packet
+     *
+     * @param hostPort port for creation of broadcast socket
+     * @param broadcastPort port for broadcast request
+     *
+     * @return created TCP socket or null if there are any trouble with creation
+     */
     static public Socket getClientSocketByMulticastResponse(int hostPort, int broadcastPort) {
         try (DatagramSocket socket = new DatagramSocket(hostPort)) {
             socket.setBroadcast(true);

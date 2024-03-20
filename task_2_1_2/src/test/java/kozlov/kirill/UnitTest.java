@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests' class for unprime checkers.
+ * Unit tests.
  */
 public class UnitTest {
     public static final int BILLION_PRIME = 1000000007;

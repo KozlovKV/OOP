@@ -5,7 +5,7 @@ import kozlov.kirill.sockets.data.ErrorMessage;
 /**
  * Static class with pre-defined error messages.
  */
-final public class ErrorMessages {
+public final class ErrorMessages {
     private ErrorMessages() {}
 
     public static ErrorMessage workerNotFoundMessage = new ErrorMessage("Server couldn't find calculation node");

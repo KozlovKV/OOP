@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
  * Excluding From Jacoco Test Report interface.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface ExcludeMethodFromJacocoGeneratedReport {
+@Target(ElementType.CONSTRUCTOR)
+public @interface ExcludeConstructorFromJacocoGeneratedReport {
 }

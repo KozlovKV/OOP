@@ -9,8 +9,6 @@ import java.util.concurrent.ThreadFactory;
 
 /**
  * Server's gateway.
- * <br>
- * Listens to server socket and creates connection for clients
  */
 public class Gateway implements Runnable {
     public static final int GATEWAY_TIMEOUT = 1000;
@@ -21,6 +19,15 @@ public class Gateway implements Runnable {
     private final int workersPerOneTask;
     private ServerSocket serverSocket = null;
 
+    /**
+     * Gateway constructor.
+     *
+     * @param port gateway port
+     * @param multicastPort port for multicast communications (can be the same as gateway port)
+     * @param connectionsToDie count of clients' connection which gateway
+     *     will process before closing
+     * @param workersPerOneTask count of workers needed for processing one task
+     */
     public Gateway(int port, int multicastPort, int connectionsToDie, int workersPerOneTask) {
         this.port = port;
         this.multicastPort = multicastPort;
@@ -40,10 +47,20 @@ public class Gateway implements Runnable {
         }
     }
 
+    /**
+     * Server hostname getter.
+     *
+     * @return gateway's server socket hostname
+     */
     public String getServerHostName() {
         return serverSocket.getInetAddress().getHostName();
     }
 
+    /**
+     * Server port getter.
+     *
+     * @return gateway's server socket port
+     */
     public int getServerPort() {
         return port;
     }
@@ -51,7 +68,11 @@ public class Gateway implements Runnable {
     /**
      * Main server's infinite-loop.
      * <br>
-     * Accepts connection from clients and creates Managers for working with client's data in other thread
+     * Accepts connection from clients and creates Managers for
+     * working with client's data in other thread
+     * <br>
+     * Infinite-loop breaks only when there are no working threads with ClientManagers
+     * and gateway has provided connectionsToDie connection which isn't -1
      */
     public void run() {
         int establishedConnections = 0;
