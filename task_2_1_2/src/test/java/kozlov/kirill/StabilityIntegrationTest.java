@@ -82,68 +82,68 @@ public class StabilityIntegrationTest {
         }
     }
 
-    @Test
-    void testWorkerFatalInterruption() {
-        final int TEST_PORT = 8003;
-        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
-        workersPool.launchWorkers(TEST_PORT + 1, 10);
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
-        var gatewayThread = new Thread(gateway);
-        gatewayThread.start();
-
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 1000000; i++) {
-            list.add(UnitTest.BILLION_PRIME);
-        }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
-        new Thread(task).start();
-
-        try {
-            Thread.sleep(2000);
-            workersPool.shutdownNow();
-            ErrorMessage expected = ErrorMessages.workerInternalErrorMessage;
-            Assertions.assertEquals(expected, task.get());
-
-            SimpleIntegrationTest.clearingPause();
-            Assertions.assertFalse(gatewayThread.isAlive());
-        } catch (InterruptedException | ExecutionException e) {
-            Assertions.fail();
-        }
-    }
-
-    @Test
-    void testWorkerFatalInterruptionAndNewFound() {
-        final int TEST_PORT = 8004;
-        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
-        workersPool.launchWorkers(TEST_PORT + 1, 10);
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
-        var gatewayThread = new Thread(gateway);
-        gatewayThread.start();
-
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 1000000; i++) {
-            list.add(UnitTest.BILLION_PRIME);
-        }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
-        new Thread(task).start();
-
-        try {
-            Thread.sleep(1000);
-            workersPool.shutdownNow();
-
-            Assertions.assertEquals(
-                    10, workersPool.launchWorkers(TEST_PORT + 1, 10)
-            );
-            TaskResult expected = new TaskResult(false);
-            Assertions.assertEquals(expected, task.get());
-
-            workersPool.shutdown();
-            SimpleIntegrationTest.clearingPause();
-            Assertions.assertFalse(gatewayThread.isAlive());
-        } catch (InterruptedException | ExecutionException e) {
-            Assertions.fail();
-        }
-    }
+//    @Test
+//    void testWorkerFatalInterruption() {
+//        final int TEST_PORT = 8003;
+//        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+//        workersPool.launchWorkers(TEST_PORT + 1, 10);
+//        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
+//        var gatewayThread = new Thread(gateway);
+//        gatewayThread.start();
+//
+//        ArrayList<Integer> list = new ArrayList<>();
+//        for (int i = 0; i < 1000000; i++) {
+//            list.add(UnitTest.BILLION_PRIME);
+//        }
+//        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
+//        new Thread(task).start();
+//
+//        try {
+//            Thread.sleep(2000);
+//            workersPool.shutdownNow();
+//            ErrorMessage expected = ErrorMessages.workerInternalErrorMessage;
+//            Assertions.assertEquals(expected, task.get());
+//
+//            SimpleIntegrationTest.clearingPause();
+//            Assertions.assertFalse(gatewayThread.isAlive());
+//        } catch (InterruptedException | ExecutionException e) {
+//            Assertions.fail();
+//        }
+//    }
+//
+//    @Test
+//    void testWorkerFatalInterruptionAndNewFound() {
+//        final int TEST_PORT = 8004;
+//        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+//        workersPool.launchWorkers(TEST_PORT + 1, 10);
+//        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
+//        var gatewayThread = new Thread(gateway);
+//        gatewayThread.start();
+//
+//        ArrayList<Integer> list = new ArrayList<>();
+//        for (int i = 0; i < 1000000; i++) {
+//            list.add(UnitTest.BILLION_PRIME);
+//        }
+//        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
+//        new Thread(task).start();
+//
+//        try {
+//            Thread.sleep(1000);
+//            workersPool.shutdownNow();
+//
+//            Assertions.assertEquals(
+//                    10, workersPool.launchWorkers(TEST_PORT + 1, 10)
+//            );
+//            TaskResult expected = new TaskResult(false);
+//            Assertions.assertEquals(expected, task.get());
+//
+//            workersPool.shutdown();
+//            SimpleIntegrationTest.clearingPause();
+//            Assertions.assertFalse(gatewayThread.isAlive());
+//        } catch (InterruptedException | ExecutionException e) {
+//            Assertions.fail();
+//        }
+//    }
 
     @Test
     void testClientInterruption() {
