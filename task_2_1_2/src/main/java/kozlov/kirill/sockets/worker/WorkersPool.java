@@ -49,7 +49,7 @@ public final class WorkersPool {
                 worker = new Worker(currentPort, multicastManager);
             } catch (WorkerCreationException e) {
                 System.err.println(
-                    "Failed to create worker on port " + currentPort + e.getMessage()
+                    "Failed to create worker on port " + currentPort + " " + e.getMessage()
                 );
                 currentPort++;
             }

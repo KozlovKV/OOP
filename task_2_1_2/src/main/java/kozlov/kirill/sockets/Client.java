@@ -20,12 +20,24 @@ public class Client implements Callable<NetworkSendable> {
     private final int serverPort;
     private final String hostname;
 
+    /**
+     * Client constructor.
+     *
+     * @param list integers for task
+     * @param hostname server address
+     * @param serverPort server port
+     */
     public Client(ArrayList<Integer> list, String hostname, int serverPort) {
         this.taskData = new TaskData(list);
         this.hostname = hostname;
         this.serverPort = serverPort;
     }
 
+    /**
+     * Client's callable method.
+     *
+     * @return result of servers working
+     */
     public NetworkSendable call() {
         if (!getManagerSocket()) {
             return null;

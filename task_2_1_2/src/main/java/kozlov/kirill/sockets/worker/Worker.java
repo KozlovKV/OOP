@@ -46,8 +46,9 @@ public class Worker implements Runnable {
      *
      * @throws WorkerCreationException thrown in case of any error during worker creation
      */
-    public Worker(Integer workerPort, MulticastManager multicastManager)
-    throws WorkerCreationException {
+    public Worker(
+        Integer workerPort, MulticastManager multicastManager
+    ) throws WorkerCreationException {
         this.workerPort = workerPort;
         try {
             workerServerSocket = new ServerSocket(workerPort);
@@ -75,7 +76,9 @@ public class Worker implements Runnable {
                 String inputStr = DatagramUtils.extractContentFromPacket(packet);
                 int ackPort = -1;
                 try {
-                    ackPort = Integer.parseInt(inputStr, 0, inputStr.length()-1, 10);
+                    ackPort = Integer.parseInt(
+                        inputStr, 0, inputStr.length() - 1, 10
+                    );
                 } catch (NumberFormatException e) {
                     System.err.println("Incorrect request port");
                     return;
@@ -110,7 +113,9 @@ public class Worker implements Runnable {
                     continue;
                 }
                 isFree.set(false);
-                System.out.println("Connection to worker from " + connectionSocket.getRemoteSocketAddress());
+                System.out.println(
+                    "Connection to worker from " + connectionSocket.getRemoteSocketAddress()
+                );
                 resolveTask(connectionSocket);
                 isFree.set(true);
             }

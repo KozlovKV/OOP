@@ -23,6 +23,7 @@ public final class BasicTCPSocketOperations {
      *
      * @param socket socket for sending
      * @param object object implementing NetworkSendable interface
+     *
      * @throws IOException throws up any exception from socket or serialization
      */
     public static void sendJSONObject(
@@ -39,7 +40,9 @@ public final class BasicTCPSocketOperations {
      * @param socket socket for receiving
      * @param type type for parsing implementing NetworkSendable interface
      * @param <T> return type
+     *
      * @return parsed object or null if socket stream was closed
+     *
      * @throws EndOfStreamException socket stream was closed
      * @throws IOException any exception from socket
      * @throws ParsingException any exception from parsing process
@@ -55,7 +58,9 @@ public final class BasicTCPSocketOperations {
      * Reads string from socket.
      *
      * @param socket input socket
+     *
      * @return string with data from socket or null if socket's stream is closed
+     *
      * @throws IOException any exception during reading task
      */
     public static String receiveString(

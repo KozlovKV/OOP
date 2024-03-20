@@ -180,7 +180,6 @@ public class StabilityIntegrationTest {
 
 //    @Test
 //    void testWorkerFatalInterruptionAndNewFound() {
-//
 //        final int TEST_PORT = 8000;
 //        final int attemptsCnt = 100;
 //        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, attemptsCnt, 10);
@@ -188,9 +187,8 @@ public class StabilityIntegrationTest {
 //        gatewayThread.start();
 //        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
 //        boolean realCheckNext = false;
-//        for (int i = 0; i < 100; ++i) {
+//        for (int i = 0; i < attemptsCnt; ++i) {
 //            final int msForSleeping = i * 250;
-//            final int newStartPort = TEST_PORT + i;
 //            workersPool.launchWorkers(TEST_PORT + 1, 10);
 //
 //            ArrayList<Integer> list = new ArrayList<>();
@@ -198,7 +196,7 @@ public class StabilityIntegrationTest {
 //                list.add(UnitTest.BILLION_PRIME);
 //            }
 //            FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
-//                list, gateway.getServerHostName(), newStartPort
+//                list, gateway.getServerHostName(), TEST_PORT
 //            ));
 //            new Thread(task).start();
 //
@@ -212,6 +210,9 @@ public class StabilityIntegrationTest {
 //                NetworkSendable possibleTaskResult = task.get();
 //                if (possibleTaskResult.equals(ErrorMessages.workerInternalErrorMessage)) {
 //                    realCheckNext = true;
+//                    workersPool.shutdown();
+//                    SimpleIntegrationTest.clearingPause();
+//                    continue;
 //                }
 //                if (realCheckNext) {
 //                    TaskResult expected = new TaskResult(false);

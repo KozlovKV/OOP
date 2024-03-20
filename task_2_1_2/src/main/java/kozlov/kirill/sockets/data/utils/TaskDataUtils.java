@@ -24,11 +24,13 @@ public final class TaskDataUtils {
      *
      * @param taskData input task data which will be splitted
      * @param count desired count of elements in result list
+     *
      * @return list of TaskData instances with length from count - 1 to count
      */
     public static ArrayList<TaskData> splitTaskData(TaskData taskData, int count) {
-        if (count <= 0)
+        if (count <= 0) {
             return new ArrayList<>();
+        }
         final int numbersSize = taskData.numbers().size();
         int subtaskNumbersSize = numbersSize / count;
         if (numbersSize % count != 0) {
@@ -43,8 +45,9 @@ public final class TaskDataUtils {
                 break;
             }
             ArrayList<Integer> sublist = new ArrayList<>();
-            for (int j = threadNumbersStartIndex; j < threadNumbersEndIndex; ++j)
+            for (int j = threadNumbersStartIndex; j < threadNumbersEndIndex; ++j) {
                 sublist.add(taskData.numbers().get(j));
+            }
             tasks.add(new TaskData(sublist));
         }
         return tasks;

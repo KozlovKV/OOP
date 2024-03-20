@@ -22,7 +22,9 @@ public final class BasicMapperOperations {
      * Serializer.
      *
      * @param object NetworkSendable implementation object
+     *
      * @return String result of serialization
+     *
      * @throws IOException any exception while tries to serialize object
      */
     public static String serialize(NetworkSendable object) throws IOException {
@@ -36,7 +38,9 @@ public final class BasicMapperOperations {
      * @param inputStream stream with input data. Input data can fill many lines
      * @param type object's class type for parsing
      * @param <T> type of returned object implementing NetworkSendable interface
+     *
      * @return parsed object or null if input stream was closed
+     *
      * @throws ParsingException throws up any exception which can be produced during parsing process
      * @throws EndOfStreamException specific exception for closed stream situation
      */
@@ -63,7 +67,9 @@ public final class BasicMapperOperations {
      * @param inputString string with full data
      * @param type object's class type for parsing
      * @param <T> type of returned object implementing NetworkSendable interface
+     *
      * @return parsed object
+     *
      * @throws ParsingException throws up any exception which can be produced during parsing process
      */
     public static <T extends NetworkSendable> T parse(

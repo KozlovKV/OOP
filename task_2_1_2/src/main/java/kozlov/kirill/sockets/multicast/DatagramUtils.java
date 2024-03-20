@@ -14,6 +14,7 @@ public final class DatagramUtils {
      * Data extractor.
      *
      * @param packet datagram packet
+     *
      * @return extracted string
      */
     static public String extractContentFromPacket(DatagramPacket packet) {
@@ -24,6 +25,7 @@ public final class DatagramUtils {
      * Simple datagram packet creator.
      *
      * @param str data for packet
+     *
      * @return datagram packet with specified data
      */
     static public DatagramPacket createPacket(String str) {
@@ -37,6 +39,7 @@ public final class DatagramUtils {
      * @param str data for packet
      * @param addr source address
      * @param port source port
+     *
      * @return datagram packet ready for sending through datagram socket
      */
     static public DatagramPacket createPacket(String str, InetAddress addr, int port) {

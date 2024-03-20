@@ -3,7 +3,7 @@ package kozlov.kirill.sockets.exceptions;
 import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
 
 /**
- * Exception for case of error in worker's creation
+ * Exception for case of error in worker's creation.
  */
 public class WorkerCreationException extends Exception {
     /**

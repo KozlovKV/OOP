@@ -53,6 +53,7 @@ public class Main {
             System.out.println(task.get());
             System.out.println(task2.get());
         } catch (InterruptedException | ExecutionException ignored) {
+            System.err.println("Interrupted");
         }
     }
 }
