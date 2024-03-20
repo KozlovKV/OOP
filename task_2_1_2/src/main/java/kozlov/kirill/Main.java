@@ -9,11 +9,19 @@ import kozlov.kirill.sockets.server.Gateway;
 import kozlov.kirill.sockets.worker.WorkersPool;
 
 
+/**
+ * Main entry point.
+ */
 @ExcludeClassFromJacocoGeneratedReport
 public class Main {
     public static final int TEST_SERVER_PORT = 8000;
-    static final private int THREADS_TEST_CNT = 0;
+    private static final int THREADS_TEST_CNT = 0;
 
+    /**
+     * Main entry point.
+     *
+     * @param args cmd's args
+     */
     public static void main(String[] args) {
         new Thread(new Gateway(
                 TEST_SERVER_PORT, TEST_SERVER_PORT, 3, 1
@@ -23,10 +31,10 @@ public class Main {
             TEST_SERVER_PORT + 1, 100
         ));
 
-        final int BILLION_PRIME = 1000000007;
+        final int billionPrime = 1000000007;
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
-            list.add(BILLION_PRIME);
+            list.add(billionPrime);
         }
         FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_SERVER_PORT));
         var th = new Thread(task);
@@ -39,6 +47,6 @@ public class Main {
         try {
             System.out.println(task.get());
             System.out.println(task2.get());
-        } catch (InterruptedException | ExecutionException e) {}
+        } catch (InterruptedException | ExecutionException ignored) {}
     }
 }
