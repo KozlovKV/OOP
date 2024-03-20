@@ -107,7 +107,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T extends <a href="data/NetworkSendable.html" title="interface in kozlov.kirill.sockets.data">NetworkSendable</a>&gt;<br>T</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#receiveJSONObject(java.net.Socket,java.lang.Class)" class="member-name-link">receiveJSONObject</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#receiveJsonObject(java.net.Socket,java.lang.Class)" class="member-name-link">receiveJsonObject</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Receives object from socket using parsing by type.</div>
@@ -118,7 +118,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Reads string from socket.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sendJSONObject(java.net.Socket,kozlov.kirill.sockets.data.NetworkSendable)" class="member-name-link">sendJSONObject</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sendJsonObject(java.net.Socket,kozlov.kirill.sockets.data.NetworkSendable)" class="member-name-link">sendJsonObject</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
  <a href="data/NetworkSendable.html" title="interface in kozlov.kirill.sockets.data">NetworkSendable</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Sends object serialized to JSON through specified socket.</div>
@@ -141,9 +141,9 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="sendJSONObject(java.net.Socket,kozlov.kirill.sockets.data.NetworkSendable)">
-<h3>sendJSONObject</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sendJSONObject</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
+<section class="detail" id="sendJsonObject(java.net.Socket,kozlov.kirill.sockets.data.NetworkSendable)">
+<h3>sendJsonObject</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sendJsonObject</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
  <a href="data/NetworkSendable.html" title="interface in kozlov.kirill.sockets.data">NetworkSendable</a>&nbsp;object)</span>
                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Sends object serialized to JSON through specified socket.</div>
@@ -157,9 +157,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="receiveJSONObject(java.net.Socket,java.lang.Class)">
-<h3>receiveJSONObject</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="data/NetworkSendable.html" title="interface in kozlov.kirill.sockets.data">NetworkSendable</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">receiveJSONObject</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
+<section class="detail" id="receiveJsonObject(java.net.Socket,java.lang.Class)">
+<h3>receiveJsonObject</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="data/NetworkSendable.html" title="interface in kozlov.kirill.sockets.data">NetworkSendable</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">receiveJsonObject</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/Socket.html" title="class or interface in java.net" class="external-link">Socket</a>&nbsp;socket,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span>
                                                        throws <span class="exceptions"><a href="exceptions/EndOfStreamException.html" title="class in kozlov.kirill.sockets.exceptions">EndOfStreamException</a>,
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a>,
