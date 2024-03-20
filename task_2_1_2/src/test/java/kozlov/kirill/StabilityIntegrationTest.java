@@ -82,35 +82,47 @@ public class StabilityIntegrationTest {
         }
     }
 
-//    @Test
-//    void testWorkerFatalInterruption() {
-//        final int TEST_PORT = 8000;
-//        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
-//        workersPool.launchWorkers(TEST_PORT + 1, 10);
-//        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
-//        var gatewayThread = new Thread(gateway);
-//        gatewayThread.start();
-//
-//        ArrayList<Integer> list = new ArrayList<>();
-//        for (int i = 0; i < 1000000; i++) {
-//            list.add(UnitTest.BILLION_PRIME);
-//        }
-//        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
-//        new Thread(task).start();
-//
-//        try {
-//            Thread.sleep(2000);
-//            workersPool.shutdownNow();
-//            ErrorMessage expected = ErrorMessages.workerInternalErrorMessage;
-//            Assertions.assertEquals(expected, task.get());
-//
-//            SimpleIntegrationTest.clearingPause();
-//            Assertions.assertFalse(gatewayThread.isAlive());
-//        } catch (InterruptedException | ExecutionException e) {
-//            Assertions.fail();
-//        }
-//    }
-//
+    @Test
+    void testWorkerFatalInterruption() {
+        final int TEST_PORT = 8000;
+        boolean internalWorkerErrorHandled = false;
+        for (int i = 0; i < 10; ++i) {
+            final int msForSleeping = i * 500;
+            final int newStartPort = TEST_PORT + i;
+            Gateway gateway = new Gateway(newStartPort, newStartPort, 1, 10);
+            var gatewayThread = new Thread(gateway);
+            gatewayThread.start();
+            WorkersPool workersPool = new WorkersPool("230.0.0.0", newStartPort);
+            workersPool.launchWorkers(newStartPort + 1, 10);
+
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int j = 0; j < 1000000; j++) {
+                list.add(UnitTest.BILLION_PRIME);
+            }
+            FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, newStartPort));
+            new Thread(task).start();
+
+            NetworkSendable possibleTaskResult = null;
+            try {
+                Thread.sleep(msForSleeping);
+                workersPool.shutdownNow();
+
+                possibleTaskResult = task.get();
+                if (possibleTaskResult.equals(ErrorMessages.workerInternalErrorMessage)) {
+                    internalWorkerErrorHandled = true;
+                    break;
+                }
+
+                workersPool.shutdown();
+                SimpleIntegrationTest.clearingPause();
+                Assertions.assertFalse(gatewayThread.isAlive());
+            } catch (InterruptedException | ExecutionException e) {
+                Assertions.fail();
+            }
+        }
+        Assertions.assertTrue(internalWorkerErrorHandled);
+    }
+
 //    @Test
 //    void testWorkerFatalInterruptionAndNewFound() {
 //        final int TEST_PORT = 8000;
