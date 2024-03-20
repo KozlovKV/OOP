@@ -151,7 +151,7 @@ public class Worker implements Runnable {
     private void resolveTask(Socket socket) throws InterruptedException {
         TaskData taskData = new TaskData(new ArrayList<>());
         try {
-            taskData = BasicTcpSocketOperations.receiveJSONObject(
+            taskData = BasicTcpSocketOperations.receiveJsonObject(
                     socket, TaskData.class
             );
         } catch (IOException | EndOfStreamException socketException) {
@@ -169,7 +169,7 @@ public class Worker implements Runnable {
         UnprimeChecker checker = new SimpleUnprimeChecker().setNumbers(taskData.numbers());
         TaskResult taskResult = new TaskResult(checker.isAnyUnprime());
         try {
-            BasicTcpSocketOperations.sendJSONObject(socket, taskResult);
+            BasicTcpSocketOperations.sendJsonObject(socket, taskResult);
         } catch (IOException socketException) {
             System.err.println(
                 "Error to send calculation result from worker on port " + workerPort

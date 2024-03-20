@@ -81,7 +81,7 @@ public class StabilityIntegrationTest {
             ErrorMessage expected = ErrorMessages.taskDataParsingError;
             Assertions.assertEquals(
                 expected,
-                BasicTcpSocketOperations.receiveJSONObject(rawConnection, ErrorMessage.class)
+                BasicTcpSocketOperations.receiveJsonObject(rawConnection, ErrorMessage.class)
             );
             rawConnection.close();
         } catch (IOException | ParsingException | EndOfStreamException e) {

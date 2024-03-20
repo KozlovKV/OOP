@@ -67,7 +67,7 @@ public class TaskManager {
             TaskResult workerResult = null;
             try {
                 workerResult =
-                    BasicTcpSocketOperations.receiveJSONObject(
+                    BasicTcpSocketOperations.receiveJsonObject(
                         activeTask.workerSocket(), TaskResult.class
                     );
                 if (workerResult.result()) {
@@ -111,7 +111,7 @@ public class TaskManager {
         }
         System.out.println("Chosen worker " + workerSocket.getRemoteSocketAddress());
         try {
-            BasicTcpSocketOperations.sendJSONObject(workerSocket, task);
+            BasicTcpSocketOperations.sendJsonObject(workerSocket, task);
         } catch (IOException e) {
             System.err.println("Error in communication with worker");
 

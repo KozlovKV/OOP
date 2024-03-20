@@ -77,13 +77,13 @@ public class ClientManager implements Runnable {
     private Optional<TaskData> receiveTaskData()
     throws EndOfStreamException {
         try {
-            return Optional.of(BasicTcpSocketOperations.receiveJSONObject(
+            return Optional.of(BasicTcpSocketOperations.receiveJsonObject(
                     clientManagerSocket, TaskData.class
             ));
         } catch (ParsingException parsingException) {
             System.err.println("Parsing error: " + parsingException.getMessage());
             try {
-                BasicTcpSocketOperations.sendJSONObject(
+                BasicTcpSocketOperations.sendJsonObject(
                         clientManagerSocket, ErrorMessages.taskDataParsingError
                 );
             } catch (IOException e) {
@@ -112,7 +112,7 @@ public class ClientManager implements Runnable {
                 ).processTask();
                 optionalTaskResult.ifPresent(taskResult -> {
                     try {
-                        BasicTcpSocketOperations.sendJSONObject(
+                        BasicTcpSocketOperations.sendJsonObject(
                                 clientManagerSocket, taskResult
                         );
                     } catch (IOException e) {
@@ -124,14 +124,14 @@ public class ClientManager implements Runnable {
                 });
             } catch (WorkerNotFoundException notFoundException) {
                 try {
-                    BasicTcpSocketOperations.sendJSONObject(
+                    BasicTcpSocketOperations.sendJsonObject(
                             clientManagerSocket, ErrorMessages.workerNotFoundMessage
                     );
                 } catch (IOException ignored) {}
                 System.err.println("Couldn't find calculation node");
             } catch (InternalWorkerErrorException workerErrorException) {
                 try {
-                    BasicTcpSocketOperations.sendJSONObject(
+                    BasicTcpSocketOperations.sendJsonObject(
                             clientManagerSocket, ErrorMessages.workerInternalErrorMessage
                     );
                 } catch (IOException ignored) {}

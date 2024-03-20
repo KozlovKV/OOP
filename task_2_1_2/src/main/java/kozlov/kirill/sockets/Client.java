@@ -67,7 +67,7 @@ public class Client implements Callable<NetworkSendable> {
 
     private void sendTaskData() {
         try {
-            BasicTcpSocketOperations.sendJSONObject(socket, taskData);
+            BasicTcpSocketOperations.sendJsonObject(socket, taskData);
         } catch (IOException ignored) {}
     }
 

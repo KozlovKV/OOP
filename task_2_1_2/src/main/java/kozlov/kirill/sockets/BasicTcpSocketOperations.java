@@ -26,7 +26,7 @@ public final class BasicTcpSocketOperations {
      *
      * @throws IOException throws up any exception from socket or serialization
      */
-    public static void sendJSONObject(
+    public static void sendJsonObject(
         Socket socket, NetworkSendable object
     ) throws IOException {
         OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream());
@@ -47,7 +47,7 @@ public final class BasicTcpSocketOperations {
      * @throws IOException any exception from socket
      * @throws ParsingException any exception from parsing process
      */
-    public static <T extends NetworkSendable> T receiveJSONObject(
+    public static <T extends NetworkSendable> T receiveJsonObject(
         Socket socket, Class<T> type
     ) throws EndOfStreamException, IOException, ParsingException {
         InputStream inputStream = socket.getInputStream();
