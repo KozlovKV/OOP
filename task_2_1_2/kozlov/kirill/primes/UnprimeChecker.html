@@ -90,7 +90,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="ParallelStreamsUnprimeChecker.html" title="class in kozlov.kirill.primes">ParallelStreamsUnprimeChecker</a></code></dd>
+<dd><code><a href="SimpleUnprimeChecker.html" title="class in kozlov.kirill.primes">SimpleUnprimeChecker</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">UnprimeChecker</span>
@@ -227,11 +227,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isAnyUnprime()">
 <h3>isAnyUnprime</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAnyUnprime</span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAnyUnprime</span>()
+                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
 <div class="block">Abstract method for checker's implementation.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true weather numbers' list has at least one unprime number</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
 </dl>
 </section>
 </li>
