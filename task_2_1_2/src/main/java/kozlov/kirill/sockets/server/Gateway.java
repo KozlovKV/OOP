@@ -40,6 +40,14 @@ public class Gateway implements Runnable {
         }
     }
 
+    public String getServerHostName() {
+        return serverSocket.getInetAddress().getHostName();
+    }
+
+    public int getServerPort() {
+        return port;
+    }
+
     /**
      * Main server's infinite-loop.
      * <br>

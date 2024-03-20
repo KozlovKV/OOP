@@ -15,9 +15,11 @@ public class Client implements Callable<NetworkSendable> {
     private Socket socket = null;
     private TaskData taskData = null;
     private final int serverPort;
+    private final String hostname;
 
-    public Client(ArrayList<Integer> list, int serverPort) {
+    public Client(ArrayList<Integer> list, String hostname, int serverPort) {
         this.taskData = new TaskData(list);
+        this.hostname = hostname;
         this.serverPort = serverPort;
     }
 
@@ -40,9 +42,9 @@ public class Client implements Callable<NetworkSendable> {
 
     private boolean getManagerSocket() {
         try {
-            socket = new Socket("localhost", serverPort);
+            socket = new Socket(hostname, serverPort);
             return true;
-        } catch (IOException ignored) {
+        } catch (IOException e) {
             System.err.println("Couldn't acquire connection");
             return false;
         }

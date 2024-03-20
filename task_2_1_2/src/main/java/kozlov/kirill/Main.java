@@ -23,9 +23,10 @@ public class Main {
      * @param args cmd's args
      */
     public static void main(String[] args) {
-        new Thread(new Gateway(
+        Gateway gateway = new Gateway(
                 TEST_SERVER_PORT, TEST_SERVER_PORT, 3, 1
-        ), "Gateway").start();
+        );
+        new Thread(gateway, "Gateway").start();
         WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_SERVER_PORT);
         System.out.println(workersPool.launchWorkers(
             TEST_SERVER_PORT + 1, 100
@@ -36,12 +37,12 @@ public class Main {
         for (int i = 0; i < 1000; i++) {
             list.add(billionPrime);
         }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_SERVER_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, gateway.getServerHostName(), gateway.getServerPort()));
         var th = new Thread(task);
         th.start();
         ArrayList<Integer> list2 = new ArrayList<>(list);
         list2.add(6);
-        FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(list2, TEST_SERVER_PORT));
+        FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(list2, gateway.getServerHostName(), gateway.getServerPort()));
         new Thread(task2).start();
 
         try {

@@ -37,7 +37,7 @@ public class StabilityIntegrationTest {
             for (int j = 0; j < 1000000; ++j) {
                 list.add(i);
             }
-            tasks.add(new Client(list, TEST_PORT));
+            tasks.add(new Client(list, gateway.getServerHostName(), TEST_PORT));
         }
 
         ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
@@ -69,7 +69,9 @@ public class StabilityIntegrationTest {
         for (int i = 0; i < 1000; i++) {
             list.add(UnitTest.BILLION_PRIME);
         }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
+            list, gateway.getServerHostName(), TEST_PORT
+        ));
         new Thread(task).start();
 
         try {
@@ -99,7 +101,9 @@ public class StabilityIntegrationTest {
             for (int j = 0; j < 1000000; j++) {
                 list.add(UnitTest.BILLION_PRIME);
             }
-            FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, newStartPort));
+            FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
+                list, gateway.getServerHostName(), newStartPort
+            ));
             new Thread(task).start();
 
             NetworkSendable possibleTaskResult = null;
@@ -125,36 +129,54 @@ public class StabilityIntegrationTest {
 
 //    @Test
 //    void testWorkerFatalInterruptionAndNewFound() {
+//
 //        final int TEST_PORT = 8000;
-//        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
-//        workersPool.launchWorkers(TEST_PORT + 1, 10);
-//        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
+//        final int attemptsCnt = 100;
+//        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, attemptsCnt, 10);
 //        var gatewayThread = new Thread(gateway);
 //        gatewayThread.start();
+//        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+//        boolean realCheckNext = false;
+//        for (int i = 0; i < 100; ++i) {
+//            final int msForSleeping = i * 250;
+//            final int newStartPort = TEST_PORT + i;
+//            workersPool.launchWorkers(TEST_PORT + 1, 10);
 //
-//        ArrayList<Integer> list = new ArrayList<>();
-//        for (int i = 0; i < 1000000; i++) {
-//            list.add(UnitTest.BILLION_PRIME);
+//            ArrayList<Integer> list = new ArrayList<>();
+//            for (int j = 0; j < 1000; j++) {
+//                list.add(UnitTest.BILLION_PRIME);
+//            }
+//            FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
+//                list, gateway.getServerHostName(), newStartPort
+//            ));
+//            new Thread(task).start();
+//
+//            try {
+//                Thread.sleep(msForSleeping);
+//                workersPool.shutdownNow();
+//
+//                Assertions.assertEquals(
+//                        10, workersPool.launchWorkers(TEST_PORT + 1, 10)
+//                );
+//                NetworkSendable possibleTaskResult = task.get();
+//                if (possibleTaskResult.equals(ErrorMessages.workerInternalErrorMessage)) {
+//                    realCheckNext = true;
+//                }
+//                if (realCheckNext) {
+//                    TaskResult expected = new TaskResult(false);
+//                    Assertions.assertEquals(expected, possibleTaskResult);
+//                    break;
+//                }
+//
+//                workersPool.shutdown();
+//                SimpleIntegrationTest.clearingPause();
+//            } catch (InterruptedException | ExecutionException e) {
+//                Assertions.fail();
+//            }
 //        }
-//        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
-//        new Thread(task).start();
-//
-//        try {
-//            Thread.sleep(1000);
-//            workersPool.shutdownNow();
-//
-//            Assertions.assertEquals(
-//                    10, workersPool.launchWorkers(TEST_PORT + 1, 10)
-//            );
-//            TaskResult expected = new TaskResult(false);
-//            Assertions.assertEquals(expected, task.get());
-//
-//            workersPool.shutdown();
-//            SimpleIntegrationTest.clearingPause();
-//            Assertions.assertFalse(gatewayThread.isAlive());
-//        } catch (InterruptedException | ExecutionException e) {
-//            Assertions.fail();
-//        }
+//        workersPool.shutdown();
+//        SimpleIntegrationTest.clearingPause();
+//        Assertions.assertFalse(gatewayThread.isAlive());
 //    }
 
     @Test
@@ -170,13 +192,17 @@ public class StabilityIntegrationTest {
         for (int i = 0; i < 1000; i++) {
             list.add(UnitTest.BILLION_PRIME);
         }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
+            list, gateway.getServerHostName(), TEST_PORT
+        ));
         var interruptedThread = new Thread(task);
         interruptedThread.interrupt();
         interruptedThread.start();
         ArrayList<Integer> listWithUnprime = new ArrayList<>(list);
         listWithUnprime.add(6);
-        FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(listWithUnprime, TEST_PORT));
+        FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(
+            listWithUnprime, gateway.getServerHostName(), TEST_PORT
+        ));
         new Thread(task2).start();
 
         try {
@@ -211,7 +237,7 @@ public class StabilityIntegrationTest {
             for (int j = 0; j < 1000000; ++j) {
                 list.add(i);
             }
-            tasks.add(new Client(list, TEST_PORT));
+            tasks.add(new Client(list, gateway.getServerHostName(), TEST_PORT));
         }
 
         ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
@@ -253,7 +279,7 @@ public class StabilityIntegrationTest {
             for (int j = 0; j < 1000000; ++j) {
                 list.add(i);
             }
-            tasks.add(new Client(list, TEST_PORT));
+            tasks.add(new Client(list, gateway.getServerHostName(), TEST_PORT));
         }
 
         ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
