@@ -74,17 +74,16 @@ public class ClientManager implements Runnable {
      * @throws EndOfStreamException throws up this exception
      *     for breaking while-live loop in run method
      */
-    private Optional<TaskData> receiveTaskData()
-    throws EndOfStreamException {
+    private Optional<TaskData> receiveTaskData() throws EndOfStreamException {
         try {
             return Optional.of(BasicTcpSocketOperations.receiveJsonObject(
-                    clientManagerSocket, TaskData.class
+                clientManagerSocket, TaskData.class
             ));
         } catch (ParsingException parsingException) {
             System.err.println("Parsing error: " + parsingException.getMessage());
             try {
                 BasicTcpSocketOperations.sendJsonObject(
-                        clientManagerSocket, ErrorMessages.taskDataParsingError
+                    clientManagerSocket, ErrorMessages.taskDataParsingError
                 );
             } catch (IOException e) {
                 System.err.println(
@@ -107,32 +106,32 @@ public class ClientManager implements Runnable {
         return () -> {
             try {
                 Optional<TaskResult> optionalTaskResult = new TaskManager(
-                        taskData, workersPerTask,
-                        multicastServerPort, clientManagerSocket.getPort()
+                    taskData, workersPerTask,
+                    multicastServerPort, clientManagerSocket.getPort()
                 ).processTask();
                 optionalTaskResult.ifPresent(taskResult -> {
                     try {
                         BasicTcpSocketOperations.sendJsonObject(
-                                clientManagerSocket, taskResult
+                            clientManagerSocket, taskResult
                         );
                     } catch (IOException e) {
                         System.err.println(
-                                "Error to send result to client " +
-                                        clientManagerSocket.getRemoteSocketAddress()
+                            "Error to send result to client "
+                            + clientManagerSocket.getRemoteSocketAddress()
                         );
                     }
                 });
             } catch (WorkerNotFoundException notFoundException) {
                 try {
                     BasicTcpSocketOperations.sendJsonObject(
-                            clientManagerSocket, ErrorMessages.workerNotFoundMessage
+                        clientManagerSocket, ErrorMessages.workerNotFoundMessage
                     );
                 } catch (IOException ignored) {}
                 System.err.println("Couldn't find calculation node");
             } catch (InternalWorkerErrorException workerErrorException) {
                 try {
                     BasicTcpSocketOperations.sendJsonObject(
-                            clientManagerSocket, ErrorMessages.workerInternalErrorMessage
+                        clientManagerSocket, ErrorMessages.workerInternalErrorMessage
                     );
                 } catch (IOException ignored) {}
                 System.out.println("Couldn't find new calculation node");
