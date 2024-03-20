@@ -1,5 +1,7 @@
 package kozlov.kirill;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -8,11 +10,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+
+import kozlov.kirill.sockets.BasicTCPSocketOperations;
 import kozlov.kirill.sockets.Client;
 import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.data.utils.ErrorMessages;
+import kozlov.kirill.sockets.exceptions.EndOfStreamException;
+import kozlov.kirill.sockets.exceptions.ParsingException;
 import kozlov.kirill.sockets.server.Gateway;
 import kozlov.kirill.sockets.worker.WorkersPool;
 import org.junit.jupiter.api.Assertions;
@@ -54,6 +60,53 @@ public class StabilityIntegrationTest {
             SimpleIntegrationTest.clearingPause();
             Assertions.assertFalse(gatewayThread.isAlive());
         } catch (ExecutionException | InterruptedException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    void testIncorrectData() {
+        final int TEST_PORT = 8000;
+        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 2, 10);
+        var gatewayThread = new Thread(gateway);
+        gatewayThread.start();
+        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        workersPool.launchWorkers(TEST_PORT + 1, 10);
+
+
+        try {
+            Socket rawConnection = new Socket(
+                gateway.getServerHostName(), gateway.getServerPort()
+            );
+            rawConnection.getOutputStream().write(0);
+            rawConnection.getOutputStream().flush();
+            ErrorMessage expected = ErrorMessages.taskDataParsingError;
+            Assertions.assertEquals(
+                expected,
+                BasicTCPSocketOperations.receiveJSONObject(rawConnection, ErrorMessage.class)
+            );
+            rawConnection.close();
+        } catch (IOException | ParsingException | EndOfStreamException e) {
+            Assertions.fail();
+        }
+
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            list.add(UnitTest.BILLION_PRIME);
+        }
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
+                list, gateway.getServerHostName(), TEST_PORT
+        ));
+        new Thread(task).start();
+
+        try {
+            TaskResult expected = new TaskResult(false);
+            Assertions.assertEquals(expected, task.get());
+
+            workersPool.shutdown();
+            SimpleIntegrationTest.clearingPause();
+            Assertions.assertFalse(gatewayThread.isAlive());
+        } catch (InterruptedException | ExecutionException e) {
             Assertions.fail();
         }
     }

@@ -37,17 +37,22 @@ public class Main {
         for (int i = 0; i < 1000; i++) {
             list.add(billionPrime);
         }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, gateway.getServerHostName(), gateway.getServerPort()));
+        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
+            list, gateway.getServerHostName(), gateway.getServerPort()
+        ));
         var th = new Thread(task);
         th.start();
         ArrayList<Integer> list2 = new ArrayList<>(list);
         list2.add(6);
-        FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(list2, gateway.getServerHostName(), gateway.getServerPort()));
+        FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(
+                list2, gateway.getServerHostName(), gateway.getServerPort()
+        ));
         new Thread(task2).start();
 
         try {
             System.out.println(task.get());
             System.out.println(task2.get());
-        } catch (InterruptedException | ExecutionException ignored) {}
+        } catch (InterruptedException | ExecutionException ignored) {
+        }
     }
 }

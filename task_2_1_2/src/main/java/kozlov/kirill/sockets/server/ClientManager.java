@@ -1,16 +1,16 @@
 package kozlov.kirill.sockets.server;
 
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Optional;
 import java.util.concurrent.ThreadFactory;
 import kozlov.kirill.sockets.BasicTCPSocketOperations;
-import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.data.utils.ErrorMessages;
+import kozlov.kirill.sockets.exceptions.EndOfStreamException;
 import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
+import kozlov.kirill.sockets.exceptions.ParsingException;
 import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
 
 /**
@@ -40,30 +40,35 @@ public class ClientManager implements Runnable {
         try {
             while (true) {
                 TaskData taskData = receiveTaskData(clientManagerSocket);
-                if (clientManagerSocket.isClosed()) {
-                    break;
-                }
-                if (taskData == null) {
-                    System.err.println("Incorrect data");
-                    continue;
-                }
                 virtualThreadsFactory.newThread(
                     getTaskManagerHandler(taskData)
                 ).start();
             }
         } catch (IllegalArgumentException e) {
             System.err.println("Connection closed with exception");
+        } catch (EndOfStreamException e) {
+            System.out.println("Connection closed");
         }
-        System.out.println("Connection closed");
     }
 
-    private TaskData receiveTaskData(Socket socket) {
+    private TaskData receiveTaskData(Socket socket)
+    throws EndOfStreamException {
         try {
             return BasicTCPSocketOperations.receiveJSONObject(
                     socket, TaskData.class
             );
-        } catch (UnrecognizedPropertyException e) {
-            System.err.println("Parsing error: " + e.getMessage());
+        } catch (ParsingException parsingException) {
+            System.err.println("Parsing error: " + parsingException.getMessage());
+            try {
+                BasicTCPSocketOperations.sendJSONObject(
+                        clientManagerSocket, ErrorMessages.taskDataParsingError
+                );
+            } catch (IOException e) {
+                System.err.println(
+                    "Error to send parsing error message to client " +
+                    clientManagerSocket.getRemoteSocketAddress()
+                );
+            }
         } catch (IOException ignored) {}
         return null;
     }

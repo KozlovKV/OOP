@@ -10,6 +10,7 @@ import kozlov.kirill.sockets.data.ErrorMessage;
 import kozlov.kirill.sockets.data.NetworkSendable;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
+import kozlov.kirill.sockets.exceptions.ParsingException;
 
 public class Client implements Callable<NetworkSendable> {
     private Socket socket = null;
@@ -62,12 +63,14 @@ public class Client implements Callable<NetworkSendable> {
             response = BasicTCPSocketOperations.receiveString(socket);
             TaskResult taskResult = BasicMapperOperations.parse(response, TaskResult.class);
             return taskResult;
-        } catch (UnrecognizedPropertyException e) {
+        } catch (ParsingException e) {
             System.err.println("Failed to parse correct result. Parsing error message...");
             try {
                 ErrorMessage errorMessage = BasicMapperOperations.parse(response, ErrorMessage.class);
                 return errorMessage;
-            } catch (IOException ignored) {}
+            } catch (ParsingException ignored) {
+                System.err.println("Failed to parse error message");
+            }
         } catch (IOException ignored) {}
         return null;
     }

@@ -5,12 +5,14 @@ import java.net.Socket;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.concurrent.Callable;
+
 import kozlov.kirill.sockets.BasicTCPSocketOperations;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
 import kozlov.kirill.sockets.data.utils.TaskDataUtils;
+import kozlov.kirill.sockets.exceptions.EndOfStreamException;
 import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
+import kozlov.kirill.sockets.exceptions.ParsingException;
 import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
 import kozlov.kirill.sockets.multicast.MulticastUtils;
 
@@ -48,9 +50,11 @@ public class TaskManager {
                     taskResult = workerResult;
                     break;
                 }
-            } catch (IOException e) {
+            } catch (IOException | ParsingException | EndOfStreamException e) {
                 try {
-                    System.err.println("Error in active node. Trying to find new node for subtask...");
+                    System.err.println(
+                        "Error in active node. Trying to find new node for subtask..."
+                    );
                     getNewWorkerSocket(activeTask.taskData())
                             .ifPresent(activeWorkers::add);
                 } catch (WorkerNotFoundException notFoundException) {

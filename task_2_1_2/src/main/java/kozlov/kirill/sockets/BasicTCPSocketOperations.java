@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import kozlov.kirill.sockets.data.BasicMapperOperations;
 import kozlov.kirill.sockets.data.NetworkSendable;
+import kozlov.kirill.sockets.exceptions.EndOfStreamException;
+import kozlov.kirill.sockets.exceptions.ParsingException;
 
 /**
  * Static class with operation with TCP sockets.
@@ -37,15 +39,15 @@ final public class BasicTCPSocketOperations {
      * @param socket socket for receiving
      * @param type type for parsing implementing NetworkSendable interface
      * @param <T> return type
-     * @return parsed object
-     * @throws IOException any exception during parsing process.
+     * @return parsed object or null if socket stream was closed
+     * @throws IOException any exception from socket.
+     * @throws ParsingException any exception from parsing process.
      */
     public static <T extends NetworkSendable> T receiveJSONObject(
         Socket socket, Class<T> type
-    ) throws IOException {
+    ) throws IOException, ParsingException, EndOfStreamException {
         InputStream inputStream = socket.getInputStream();
         return BasicMapperOperations.parse(inputStream, type);
-        // TODO: обрабатывать только ошибки с получением результата, ошибки парсинга должны обрабатываться отдельно
     }
 
     /**
