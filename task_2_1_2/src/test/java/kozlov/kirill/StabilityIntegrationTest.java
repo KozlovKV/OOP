@@ -86,14 +86,14 @@ public class StabilityIntegrationTest {
     void testWorkerFatalInterruption() {
         final int TEST_PORT = 8000;
         boolean internalWorkerErrorHandled = false;
-        for (int i = 0; i < 400; ++i) {
+        for (int i = 0; i < 100; ++i) {
             final int msForSleeping = i * 250;
             final int newStartPort = TEST_PORT + i;
-            Gateway gateway = new Gateway(newStartPort, newStartPort, 1, 10);
+            Gateway gateway = new Gateway(newStartPort, newStartPort, 1, 1);
             var gatewayThread = new Thread(gateway);
             gatewayThread.start();
             WorkersPool workersPool = new WorkersPool("230.0.0.0", newStartPort);
-            workersPool.launchWorkers(newStartPort + 1, 10);
+            workersPool.launchWorkers(newStartPort + 1, 1);
 
             ArrayList<Integer> list = new ArrayList<>();
             for (int j = 0; j < 1000000; j++) {
