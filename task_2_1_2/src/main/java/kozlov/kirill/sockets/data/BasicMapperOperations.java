@@ -1,6 +1,8 @@
 package kozlov.kirill.sockets.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,6 +57,7 @@ final public class BasicMapperOperations {
      * @param <T> type of returned object implementing NetworkSendable interface
      * @return parsed object
      * @throws IOException any exception which can be produced during parsing process which must be handled upper
+     * UnrecognizedPropertyException in particular
      */
     public static <T extends NetworkSendable> T parse(
             String inputString, Class<T> type

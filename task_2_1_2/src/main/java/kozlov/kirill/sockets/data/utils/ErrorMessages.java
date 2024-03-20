@@ -2,6 +2,9 @@ package kozlov.kirill.sockets.data.utils;
 
 import kozlov.kirill.sockets.data.ErrorMessage;
 
+/**
+ * Static class with pre-defined error messages.
+ */
 final public class ErrorMessages {
     private ErrorMessages() {}
 
