@@ -30,7 +30,9 @@ public class ClientManager implements Runnable {
      * @param multicastServerPort multicast sockets' port for communication with workers
      * @param workersPerTask count of workers needed for processing one task
      */
-    public ClientManager(Socket clientManagerSocket, int multicastServerPort, int workersPerTask) {
+    public ClientManager(
+        Socket clientManagerSocket, int multicastServerPort, int workersPerTask
+    ) {
         this.clientManagerSocket = clientManagerSocket;
         this.multicastServerPort = multicastServerPort;
         this.workersPerTask = workersPerTask;
@@ -87,11 +89,13 @@ public class ClientManager implements Runnable {
                 );
             } catch (IOException e) {
                 System.err.println(
-                    "Error to send parsing error message to client " +
-                    clientManagerSocket.getRemoteSocketAddress()
+                    "Error to send parsing error message to client "
+                    + clientManagerSocket.getRemoteSocketAddress()
                 );
             }
-        } catch (IOException ignored) {}
+        } catch (IOException e) {
+            System.err.println("Socket error while getting data from client");
+        }
         return Optional.empty();
     }
 
@@ -122,19 +126,23 @@ public class ClientManager implements Runnable {
                     }
                 });
             } catch (WorkerNotFoundException notFoundException) {
+                System.err.println("Couldn't find calculation node");
                 try {
                     BasicTcpSocketOperations.sendJsonObject(
                         clientManagerSocket, ErrorMessages.workerNotFoundMessage
                     );
-                } catch (IOException ignored) {}
-                System.err.println("Couldn't find calculation node");
+                } catch (IOException e) {
+                    System.err.println("Error to send error message to client");
+                }
             } catch (InternalWorkerErrorException workerErrorException) {
+                System.err.println("Couldn't find new calculation node");
                 try {
                     BasicTcpSocketOperations.sendJsonObject(
                         clientManagerSocket, ErrorMessages.workerInternalErrorMessage
                     );
-                } catch (IOException ignored) {}
-                System.out.println("Couldn't find new calculation node");
+                } catch (IOException e) {
+                    System.err.println("Error to send error message to client");
+                }
             }
         };
     }

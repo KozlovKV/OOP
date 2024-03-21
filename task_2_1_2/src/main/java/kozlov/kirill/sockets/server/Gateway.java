@@ -90,7 +90,9 @@ public class Gateway implements Runnable {
                 } catch (SocketTimeoutException e) {
                     continue;
                 }
-                System.out.println("Connection to gateway from " + connectionSocket.getRemoteSocketAddress());
+                System.out.println(
+                    "Connection to gateway from " + connectionSocket.getRemoteSocketAddress()
+                );
                 Thread managerThread = virtualThreadsFactory.newThread(
                     new ClientManager(connectionSocket, multicastPort, workersPerOneTask)
                 );
@@ -102,10 +104,14 @@ public class Gateway implements Runnable {
                 !managerThreads.isEmpty() ||
                 establishedConnections < connectionsToDie
             );
-        } catch (IOException ignored) {}
+        } catch (IOException e) {
+            System.err.println("Error to accept new connection");
+        }
         try {
             serverSocket.close();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            System.err.println("Server socket closed with exception");
+        }
         System.out.println("Server closed");
     }
 }

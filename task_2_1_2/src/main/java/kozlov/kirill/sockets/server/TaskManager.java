@@ -20,10 +20,10 @@ import kozlov.kirill.sockets.multicast.MulticastUtils;
  * Class for communication manager with workers.
  */
 public class TaskManager {
-    final private TaskData taskData;
-    final private int workersPerTask;
-    final private int managerPort;
-    final private int multicastServerPort;
+    private final TaskData taskData;
+    private final int workersPerTask;
+    private final int managerPort;
+    private final int multicastServerPort;
 
     /**
      * TaskManager constructor.
@@ -101,8 +101,9 @@ public class TaskManager {
     private Optional<WorkerActiveTask> getNewWorkerSocket(
             TaskData task
     ) throws WorkerNotFoundException {
-        if (task.numbers().isEmpty())
+        if (task.numbers().isEmpty()) {
             return Optional.empty();
+        }
         Socket workerSocket = MulticastUtils.getClientSocketByMulticastResponse(
                 managerPort, multicastServerPort
         );

@@ -42,17 +42,18 @@ public class Client implements Callable<NetworkSendable> {
         if (!getManagerSocket()) {
             return null;
         }
-        sendTaskData();
-        NetworkSendable result = null;
-        if (!Thread.currentThread().isInterrupted()) {
-            result = receiveTaskResult();
-        }
         try {
+            sendTaskData();
+            NetworkSendable result = null;
+            if (!Thread.currentThread().isInterrupted()) {
+                result = receiveTaskResult();
+            }
             socket.close();
+            return result;
         } catch (IOException e) {
-            System.err.println("Cannot close client socket");
+            System.err.println("Error in working with server");
         }
-        return result;
+        return null;
     }
 
     private boolean getManagerSocket() {
@@ -65,13 +66,11 @@ public class Client implements Callable<NetworkSendable> {
         }
     }
 
-    private void sendTaskData() {
-        try {
-            BasicTcpSocketOperations.sendJsonObject(socket, taskData);
-        } catch (IOException ignored) {}
+    private void sendTaskData() throws IOException {
+        BasicTcpSocketOperations.sendJsonObject(socket, taskData);
     }
 
-    private NetworkSendable receiveTaskResult() {
+    private NetworkSendable receiveTaskResult() throws IOException {
         String response = "";
         try {
             response = BasicTcpSocketOperations.receiveString(socket);
@@ -80,12 +79,11 @@ public class Client implements Callable<NetworkSendable> {
         } catch (ParsingException e) {
             System.err.println("Failed to parse correct result. Parsing error message...");
             try {
-                ErrorMessage errorMessage = BasicMapperOperations.parse(response, ErrorMessage.class);
-                return errorMessage;
+                return BasicMapperOperations.parse(response, ErrorMessage.class);
             } catch (ParsingException ignored) {
                 System.err.println("Failed to parse error message");
             }
-        } catch (IOException ignored) {}
+        }
         return null;
     }
 }

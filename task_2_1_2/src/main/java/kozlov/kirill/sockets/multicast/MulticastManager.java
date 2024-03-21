@@ -64,7 +64,10 @@ public class MulticastManager {
     }
 
     private static final int BUF_SZ = 1024;
-    private static Runnable getRunnableHandlerWrapper(MulticastSocket socket, MulticastHandler handler) {
+
+    private static Runnable getRunnableHandlerWrapper(
+        MulticastSocket socket, MulticastHandler handler
+    ) {
         return () -> {
             while (true) {
                 byte[] buf = new byte[BUF_SZ];

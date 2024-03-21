@@ -13,8 +13,8 @@ import java.net.SocketTimeoutException;
 public final class MulticastUtils {
     private MulticastUtils() {}
 
-    static private final int BROADCAST_RECEIVING_TIMEOUT = 1000;
-    static private final int BROADCAST_RECEIVING_ATTEMPTS = 5;
+    private static final int BROADCAST_RECEIVING_TIMEOUT = 1000;
+    private static final int BROADCAST_RECEIVING_ATTEMPTS = 5;
 
     /**
      * Method for acquiring connection using like-ARP broadcast requesting.
@@ -27,7 +27,7 @@ public final class MulticastUtils {
      *
      * @return created TCP socket or null if there are any trouble with creation
      */
-    static public Socket getClientSocketByMulticastResponse(int hostPort, int broadcastPort) {
+    public static Socket getClientSocketByMulticastResponse(int hostPort, int broadcastPort) {
         try (DatagramSocket socket = new DatagramSocket(hostPort)) {
             socket.setBroadcast(true);
             DatagramPacket packet = DatagramUtils.createPacket(
