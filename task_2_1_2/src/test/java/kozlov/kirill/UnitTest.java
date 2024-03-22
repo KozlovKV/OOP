@@ -30,7 +30,9 @@ public class UnitTest {
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
             Assertions.assertTrue(unprimeChecker.isAnyUnprime());
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException interrupted) {
+            Assertions.fail();
+        }
     }
 
     @Test
@@ -42,7 +44,9 @@ public class UnitTest {
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
             Assertions.assertFalse(unprimeChecker.isAnyUnprime());
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException interrupted) {
+            Assertions.fail();
+        }
     }
 
     @Test
@@ -53,7 +57,9 @@ public class UnitTest {
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
             Assertions.assertFalse(unprimeChecker.isAnyUnprime());
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException interrupted) {
+            Assertions.fail();
+        }
     }
 
     @Test
@@ -64,7 +70,9 @@ public class UnitTest {
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
             Assertions.assertTrue(unprimeChecker.isAnyUnprime());
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException interrupted) {
+            Assertions.fail();
+        }
     }
 
     @Test
