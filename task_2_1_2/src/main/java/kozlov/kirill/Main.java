@@ -1,5 +1,6 @@
 package kozlov.kirill;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -27,7 +28,13 @@ public class Main {
                 TEST_SERVER_PORT, TEST_SERVER_PORT, 3, 1
         );
         new Thread(gateway, "Gateway").start();
-        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_SERVER_PORT);
+        WorkersPool workersPool;
+        try {
+            workersPool = new WorkersPool("230.0.0.0", TEST_SERVER_PORT);
+        } catch (IOException e) {
+            System.err.println("Couldn't create workers' pool: " + e.getMessage());
+            return;
+        }
         System.out.println(workersPool.launchWorkers(
             TEST_SERVER_PORT + 1, 100
         ));

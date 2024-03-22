@@ -41,8 +41,10 @@ public class Gateway implements Runnable {
             serverSocket = new ServerSocket(port, SERVER_SOCKET_BACKLOG);
             serverSocket.setSoTimeout(GATEWAY_TIMEOUT);
         } catch (IOException e) {
-            System.err.println("Failed to create gateway on thread " +
-                    Thread.currentThread().getName());
+            System.err.println(
+                "Failed to create gateway on thread "
+                + Thread.currentThread().getName()
+            );
             throw new RuntimeException(e);
         }
     }
@@ -100,9 +102,9 @@ public class Gateway implements Runnable {
                 managerThreads.add(managerThread);
                 establishedConnections++;
             } while (
-                connectionsToDie == -1 ||
-                !managerThreads.isEmpty() ||
-                establishedConnections < connectionsToDie
+                connectionsToDie == -1
+                || !managerThreads.isEmpty()
+                || establishedConnections < connectionsToDie
             );
         } catch (IOException e) {
             System.err.println("Error to accept new connection");

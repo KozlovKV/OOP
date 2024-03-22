@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Optional;
-
 import kozlov.kirill.sockets.BasicTcpSocketOperations;
 import kozlov.kirill.sockets.data.TaskData;
 import kozlov.kirill.sockets.data.TaskResult;
@@ -15,6 +14,7 @@ import kozlov.kirill.sockets.exceptions.InternalWorkerErrorException;
 import kozlov.kirill.sockets.exceptions.ParsingException;
 import kozlov.kirill.sockets.exceptions.WorkerNotFoundException;
 import kozlov.kirill.sockets.multicast.MulticastUtils;
+
 
 /**
  * Class for communication manager with workers.

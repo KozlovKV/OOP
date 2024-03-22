@@ -1,7 +1,7 @@
 package kozlov.kirill.primes;
 
 /**
- * Unprime checker's implementation with Stream API.
+ * Simple unprime checker's implementation.
  */
 public class SimpleUnprimeChecker extends UnprimeChecker {
     @Override

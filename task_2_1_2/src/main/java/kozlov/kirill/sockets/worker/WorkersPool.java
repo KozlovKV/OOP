@@ -1,5 +1,6 @@
 package kozlov.kirill.sockets.worker;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadFactory;
 import kozlov.kirill.sockets.exceptions.WorkerCreationException;
@@ -24,7 +25,7 @@ public final class WorkersPool {
      * @param multicastHostname address for multicast group
      * @param multicastPort port for multicast group
      */
-    public WorkersPool(String multicastHostname, int multicastPort) {
+    public WorkersPool(String multicastHostname, int multicastPort) throws IOException {
         multicastManager = new MulticastManager(multicastHostname, multicastPort);
     }
 

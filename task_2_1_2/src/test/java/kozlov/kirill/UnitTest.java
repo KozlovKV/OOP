@@ -25,7 +25,7 @@ public class UnitTest {
     @Test
     void exampleTest1() {
         ArrayList<Integer> list = getArrayListFromArray(
-                new int[]{6, 8, 7, 13, 5, 9, 4}, 7
+            new int[]{6, 8, 7, 13, 5, 9, 4}, 7
         );
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
@@ -36,8 +36,8 @@ public class UnitTest {
     @Test
     void exampleTest2() {
         ArrayList<Integer> list = getArrayListFromArray(
-                new int[]{20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
-                        6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
+            new int[]{20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
+                    6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
         );
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
@@ -48,7 +48,7 @@ public class UnitTest {
     @Test
     void simplePrimesTest() {
         ArrayList<Integer> list = getArrayListFromArray(
-                new int[]{2, 3, 5, 7}, 4
+            new int[]{2, 3, 5, 7}, 4
         );
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
@@ -59,7 +59,7 @@ public class UnitTest {
     @Test
     void simpleUnprimeTest() {
         ArrayList<Integer> list = getArrayListFromArray(
-                new int[]{2, 3, 4, 5, 7}, 5
+            new int[]{2, 3, 4, 5, 7}, 5
         );
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
@@ -70,14 +70,14 @@ public class UnitTest {
     @Test
     void splitDataZeroRest() {
         TaskData originTaskData = new TaskData(getArrayListFromArray(
-                new int[]{6, 8, 7, 13, 5, 9, 4, 8}, 8
+            new int[]{6, 8, 7, 13, 5, 9, 4, 8}, 8
         ));
         ArrayList<TaskData> expectedTasks = new ArrayList<>();
         expectedTasks.add(new TaskData(getArrayListFromArray(
-                new int[]{6, 8, 7, 13}, 4
+            new int[]{6, 8, 7, 13}, 4
         )));
         expectedTasks.add(new TaskData(getArrayListFromArray(
-                new int[]{5, 9, 4, 8}, 4
+            new int[]{5, 9, 4, 8}, 4
         )));
         Assertions.assertEquals(
             expectedTasks, TaskDataUtils.splitTaskData(originTaskData, 2)
@@ -87,23 +87,23 @@ public class UnitTest {
     @Test
     void splitDataNonZeroRest() {
         TaskData originTaskData = new TaskData(getArrayListFromArray(
-                new int[]{6, 8, 7, 13, 5, 9, 4}, 7
+            new int[]{6, 8, 7, 13, 5, 9, 4}, 7
         ));
         ArrayList<TaskData> expectedTasks = new ArrayList<>();
         expectedTasks.add(new TaskData(getArrayListFromArray(
-                new int[]{6, 8}, 2
+            new int[]{6, 8}, 2
         )));
         expectedTasks.add(new TaskData(getArrayListFromArray(
-                new int[]{7, 13}, 2
+            new int[]{7, 13}, 2
         )));
         expectedTasks.add(new TaskData(getArrayListFromArray(
-                new int[]{5, 9}, 2
+            new int[]{5, 9}, 2
         )));
         expectedTasks.add(new TaskData(getArrayListFromArray(
-                new int[]{4}, 1
+            new int[]{4}, 1
         )));
         Assertions.assertEquals(
-                expectedTasks, TaskDataUtils.splitTaskData(originTaskData, 4)
+            expectedTasks, TaskDataUtils.splitTaskData(originTaskData, 4)
         );
     }
 

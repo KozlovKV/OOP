@@ -23,13 +23,22 @@ import kozlov.kirill.sockets.worker.WorkersPool;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Integration test for specific situations and heavy load.
+ */
 public class StabilityIntegrationTest {
-
     @Test
     void manyRequestsForCommonWorkers() {
         final int TEST_PORT = 8000;
         final int THREADS_TEST_CNT = 10;
-        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        WorkersPool workersPool;
+        try {
+            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        } catch (IOException e) {
+            System.err.println("Couldn't create workers' pool: " + e.getMessage());
+            Assertions.fail();
+            return;
+        }
         workersPool.launchWorkers(TEST_PORT + 1, 10);
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, THREADS_TEST_CNT, 10);
         var gatewayThread = new Thread(gateway);
@@ -68,7 +77,14 @@ public class StabilityIntegrationTest {
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 2, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
-        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        WorkersPool workersPool;
+        try {
+            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        } catch (IOException e) {
+            System.err.println("Couldn't create workers' pool: " + e.getMessage());
+            Assertions.fail();
+            return;
+        }
         workersPool.launchWorkers(TEST_PORT + 1, 10);
 
 
@@ -145,7 +161,14 @@ public class StabilityIntegrationTest {
             Gateway gateway = new Gateway(newStartPort, newStartPort, 1, 1);
             var gatewayThread = new Thread(gateway);
             gatewayThread.start();
-            WorkersPool workersPool = new WorkersPool("230.0.0.0", newStartPort);
+            WorkersPool workersPool;
+            try {
+                workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+            } catch (IOException e) {
+                System.err.println("Couldn't create workers' pool: " + e.getMessage());
+                Assertions.fail();
+                return;
+            }
             workersPool.launchWorkers(newStartPort + 1, 1);
 
             ArrayList<Integer> list = new ArrayList<>();
@@ -178,63 +201,17 @@ public class StabilityIntegrationTest {
         Assertions.assertTrue(internalWorkerErrorHandled);
     }
 
-//    @Test
-//    void testWorkerFatalInterruptionAndNewFound() {
-//        final int TEST_PORT = 8000;
-//        final int attemptsCnt = 100;
-//        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, attemptsCnt, 10);
-//        var gatewayThread = new Thread(gateway);
-//        gatewayThread.start();
-//        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
-//        boolean realCheckNext = false;
-//        for (int i = 0; i < attemptsCnt; ++i) {
-//            final int msForSleeping = i * 250;
-//            workersPool.launchWorkers(TEST_PORT + 1, 10);
-//
-//            ArrayList<Integer> list = new ArrayList<>();
-//            for (int j = 0; j < 1000; j++) {
-//                list.add(UnitTest.BILLION_PRIME);
-//            }
-//            FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
-//                list, gateway.getServerHostName(), TEST_PORT
-//            ));
-//            new Thread(task).start();
-//
-//            try {
-//                Thread.sleep(msForSleeping);
-//                workersPool.shutdownNow();
-//
-//                Assertions.assertEquals(
-//                        10, workersPool.launchWorkers(TEST_PORT + 1, 10)
-//                );
-//                NetworkSendable possibleTaskResult = task.get();
-//                if (possibleTaskResult.equals(ErrorMessages.workerInternalErrorMessage)) {
-//                    realCheckNext = true;
-//                    workersPool.shutdown();
-//                    SimpleIntegrationTest.clearingPause();
-//                    continue;
-//                }
-//                if (realCheckNext) {
-//                    TaskResult expected = new TaskResult(false);
-//                    Assertions.assertEquals(expected, possibleTaskResult);
-//                    break;
-//                }
-//
-//                workersPool.shutdown();
-//                SimpleIntegrationTest.clearingPause();
-//            } catch (InterruptedException | ExecutionException e) {
-//                Assertions.fail();
-//            }
-//        }
-//        workersPool.shutdown();
-//        SimpleIntegrationTest.clearingPause();
-//        Assertions.assertFalse(gatewayThread.isAlive());
-//    }
-
     @Test
     void testClientInterruption() {
         final int TEST_PORT = 8000;
-        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        WorkersPool workersPool;
+        try {
+            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        } catch (IOException e) {
+            System.err.println("Couldn't create workers' pool: " + e.getMessage());
+            Assertions.fail();
+            return;
+        }
         workersPool.launchWorkers(TEST_PORT + 1, 10);
         Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 2, 10);
         var gatewayThread = new Thread(gateway);
@@ -273,7 +250,14 @@ public class StabilityIntegrationTest {
     void testWorkersPoolNearToPortsUpperBound() {
         final int TEST_PORT = 8000;
         final int THREADS_TEST_CNT = 5;
-        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        WorkersPool workersPool;
+        try {
+            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        } catch (IOException e) {
+            System.err.println("Couldn't create workers' pool: " + e.getMessage());
+            Assertions.fail();
+            return;
+        }
         Assertions.assertEquals(
                 10, workersPool.launchWorkers(
                     WorkersPool.MAX_STATIC_PORT - 9, 100
@@ -314,7 +298,14 @@ public class StabilityIntegrationTest {
     void test2WorkersPoolsOnSamePorts() {
         final int TEST_PORT = 8000;
         final int THREADS_TEST_CNT = 5;
-        WorkersPool workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        WorkersPool workersPool;
+        try {
+            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+        } catch (IOException e) {
+            System.err.println("Couldn't create workers' pool: " + e.getMessage());
+            Assertions.fail();
+            return;
+        }
         Assertions.assertEquals(
                 100, workersPool.launchWorkers(TEST_PORT + 1, 100)
         );

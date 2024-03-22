@@ -1,5 +1,6 @@
 package kozlov.kirill;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -14,19 +15,29 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Simple integration tests.
+ */
 public class SimpleIntegrationTest {
     public static final int TEST_PORT = 8000;
 
     private static final int TESTS_CNT = 7;
     private static final int WORKERS_PER_ONE_TASK = 100;
     private static final int WORKERS_CNT = 100;
-    private static WorkersPool pool = new WorkersPool("230.0.0.0", TEST_PORT);
+    private static WorkersPool pool;
 
     private static Gateway defaultGateway;
     private static Thread gatewayThread;
 
     @BeforeAll
     static void startServerAndWorkers() {
+        try {
+            pool = new WorkersPool("230.0.0.0", TEST_PORT);
+        } catch (IOException e) {
+            System.err.println("Couldn't create workers' pool: " + e.getMessage());
+            Assertions.fail();
+            return;
+        }
         defaultGateway = new Gateway(TEST_PORT, TEST_PORT, TESTS_CNT, WORKERS_PER_ONE_TASK);
         gatewayThread = new Thread(defaultGateway);
         gatewayThread.start();
@@ -43,9 +54,9 @@ public class SimpleIntegrationTest {
 
     static void clearingPause() {
         try {
-            Thread.sleep((
-                Worker.WORKER_SOCKET_TIMEOUT + Gateway.GATEWAY_TIMEOUT
-            ) * 2);
+            Thread.sleep(
+                (Worker.WORKER_SOCKET_TIMEOUT + Gateway.GATEWAY_TIMEOUT) * 2
+            );
         } catch (InterruptedException e) {
             Assertions.fail("Failed to wait for correct closing");
         }
@@ -54,7 +65,9 @@ public class SimpleIntegrationTest {
     @Test
     void emptyListTest() {
         ArrayList<Integer> list = new ArrayList<>();
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, defaultGateway.getServerHostName(), TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(
+            new Client(list, defaultGateway.getServerHostName(), TEST_PORT)
+        );
         new Thread(task).start();
         try {
             Assertions.assertFalse(((TaskResult)task.get()).result());
@@ -67,7 +80,9 @@ public class SimpleIntegrationTest {
     void onePrimeTest() {
         ArrayList<Integer> list = new ArrayList<>();
         list.add(5);
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, defaultGateway.getServerHostName(), TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(
+            new Client(list, defaultGateway.getServerHostName(), TEST_PORT)
+        );
         new Thread(task).start();
         try {
             Assertions.assertFalse(((TaskResult)task.get()).result());
@@ -80,7 +95,9 @@ public class SimpleIntegrationTest {
     void oneUnprimeTest() {
         ArrayList<Integer> list = new ArrayList<>();
         list.add(8);
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, defaultGateway.getServerHostName(), TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(
+            new Client(list, defaultGateway.getServerHostName(), TEST_PORT)
+        );
         new Thread(task).start();
         try {
             Assertions.assertTrue(((TaskResult)task.get()).result());
@@ -95,7 +112,9 @@ public class SimpleIntegrationTest {
         for (int i = 0; i < 1000000; i++) {
             list.add(UnitTest.BILLION_PRIME);
         }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, defaultGateway.getServerHostName(), TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(
+            new Client(list, defaultGateway.getServerHostName(), TEST_PORT)
+        );
         new Thread(task).start();
         try {
             Assertions.assertFalse(((TaskResult)task.get()).result());
@@ -110,7 +129,9 @@ public class SimpleIntegrationTest {
         for (int i = 0; i < 1000000; i++) {
             list.add(100000006);
         }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, defaultGateway.getServerHostName(), TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(
+            new Client(list, defaultGateway.getServerHostName(), TEST_PORT)
+        );
         new Thread(task).start();
         try {
             Assertions.assertTrue(((TaskResult)task.get()).result());
@@ -126,7 +147,9 @@ public class SimpleIntegrationTest {
         for (int i = 0; i < 1000000; i++) {
             list.add(UnitTest.BILLION_PRIME);
         }
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, defaultGateway.getServerHostName(), TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(
+            new Client(list, defaultGateway.getServerHostName(), TEST_PORT)
+        );
         new Thread(task).start();
         try {
             Assertions.assertTrue(((TaskResult)task.get()).result());
@@ -142,7 +165,9 @@ public class SimpleIntegrationTest {
             list.add(UnitTest.BILLION_PRIME);
         }
         list.add(8);
-        FutureTask<NetworkSendable> task = new FutureTask<>(new Client(list, defaultGateway.getServerHostName(), TEST_PORT));
+        FutureTask<NetworkSendable> task = new FutureTask<>(
+            new Client(list, defaultGateway.getServerHostName(), TEST_PORT)
+        );
         new Thread(task).start();
         try {
             Assertions.assertTrue(((TaskResult)task.get()).result());

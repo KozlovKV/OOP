@@ -26,17 +26,13 @@ public class MulticastManager {
      * @param ip hostname of multicast group which will be used by manager
      * @param port port of multicast group which will be used by manager
      */
-    public MulticastManager(String ip, int port) {
+    public MulticastManager(String ip, int port) throws IOException {
         this.port = port;
         handlersFactory = Thread.ofVirtual().name("Workers handler").factory();
-        try {
-            groupInterface = NetworkInterface.getByIndex(0);
-            groupAddress = new InetSocketAddress(
-                InetAddress.getByName(ip), port
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        groupInterface = NetworkInterface.getByIndex(0);
+        groupAddress = new InetSocketAddress(
+            InetAddress.getByName(ip), port
+        );
     }
 
     /**
