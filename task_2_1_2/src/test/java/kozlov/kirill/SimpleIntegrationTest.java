@@ -70,7 +70,7 @@ public class SimpleIntegrationTest {
         );
         new Thread(task).start();
         try {
-            Assertions.assertFalse(((TaskResult)task.get()).result());
+            Assertions.assertFalse(((TaskResult) task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -85,7 +85,7 @@ public class SimpleIntegrationTest {
         );
         new Thread(task).start();
         try {
-            Assertions.assertFalse(((TaskResult)task.get()).result());
+            Assertions.assertFalse(((TaskResult) task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -100,7 +100,7 @@ public class SimpleIntegrationTest {
         );
         new Thread(task).start();
         try {
-            Assertions.assertTrue(((TaskResult)task.get()).result());
+            Assertions.assertTrue(((TaskResult) task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -117,7 +117,7 @@ public class SimpleIntegrationTest {
         );
         new Thread(task).start();
         try {
-            Assertions.assertFalse(((TaskResult)task.get()).result());
+            Assertions.assertFalse(((TaskResult) task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -134,7 +134,7 @@ public class SimpleIntegrationTest {
         );
         new Thread(task).start();
         try {
-            Assertions.assertTrue(((TaskResult)task.get()).result());
+            Assertions.assertTrue(((TaskResult) task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -152,7 +152,7 @@ public class SimpleIntegrationTest {
         );
         new Thread(task).start();
         try {
-            Assertions.assertTrue(((TaskResult)task.get()).result());
+            Assertions.assertTrue(((TaskResult) task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }
@@ -170,7 +170,7 @@ public class SimpleIntegrationTest {
         );
         new Thread(task).start();
         try {
-            Assertions.assertTrue(((TaskResult)task.get()).result());
+            Assertions.assertTrue(((TaskResult) task.get()).result());
         } catch (ExecutionException | InterruptedException error) {
             Assertions.fail();
         }

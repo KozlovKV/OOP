@@ -29,36 +29,37 @@ import org.junit.jupiter.api.Test;
 public class StabilityIntegrationTest {
     @Test
     void manyRequestsForCommonWorkers() {
-        final int TEST_PORT = 8000;
-        final int THREADS_TEST_CNT = 10;
+        final int testPort = 8000;
+        final int threadsTestCnt = 10;
         WorkersPool workersPool;
         try {
-            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+            workersPool = new WorkersPool("230.0.0.0", testPort);
         } catch (IOException e) {
             System.err.println("Couldn't create workers' pool: " + e.getMessage());
             Assertions.fail();
             return;
         }
-        workersPool.launchWorkers(TEST_PORT + 1, 10);
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, THREADS_TEST_CNT, 10);
+        workersPool.launchWorkers(testPort + 1, 10);
+        Gateway gateway = new Gateway(testPort, testPort, threadsTestCnt, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
 
         ArrayList<Callable<NetworkSendable>> tasks = new ArrayList<>();
-        for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+        for (int i = 0; i < threadsTestCnt; ++i) {
             ArrayList<Integer> list = new ArrayList<>();
             for (int j = 0; j < 1000000; ++j) {
                 list.add(i);
             }
-            tasks.add(new Client(list, gateway.getServerHostName(), TEST_PORT));
+            tasks.add(new Client(list, gateway.getServerHostName(), testPort));
         }
 
-        ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
+        ExecutorService pool = Executors.newFixedThreadPool(threadsTestCnt);
         try {
             List<Future<NetworkSendable>> results = pool.invokeAll(tasks);
-            int expectedUnprimesCnt = 4, gotUnprimesCnt = 0;
-            for (int i = 0; i < THREADS_TEST_CNT; ++i) {
-                if (((TaskResult)results.get(i).get()).result())
+            int expectedUnprimesCnt = 4;
+            int gotUnprimesCnt = 0;
+            for (int i = 0; i < threadsTestCnt; ++i) {
+                if (((TaskResult) results.get(i).get()).result())
                     gotUnprimesCnt++;
             }
             Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
@@ -73,19 +74,19 @@ public class StabilityIntegrationTest {
 
     @Test
     void testIncorrectData() {
-        final int TEST_PORT = 8000;
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 2, 10);
+        final int testPort = 8000;
+        Gateway gateway = new Gateway(testPort, testPort, 2, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
         WorkersPool workersPool;
         try {
-            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+            workersPool = new WorkersPool("230.0.0.0", testPort);
         } catch (IOException e) {
             System.err.println("Couldn't create workers' pool: " + e.getMessage());
             Assertions.fail();
             return;
         }
-        workersPool.launchWorkers(TEST_PORT + 1, 10);
+        workersPool.launchWorkers(testPort + 1, 10);
 
 
         try {
@@ -109,7 +110,7 @@ public class StabilityIntegrationTest {
             list.add(UnitTest.BILLION_PRIME);
         }
         FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
-                list, gateway.getServerHostName(), TEST_PORT
+                list, gateway.getServerHostName(), testPort
         ));
         new Thread(task).start();
 
@@ -127,8 +128,8 @@ public class StabilityIntegrationTest {
 
     @Test
     void workersNotFound() {
-        final int TEST_PORT = 8000;
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 1, 10);
+        final int testPort = 8000;
+        Gateway gateway = new Gateway(testPort, testPort, 1, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
 
@@ -137,7 +138,7 @@ public class StabilityIntegrationTest {
             list.add(UnitTest.BILLION_PRIME);
         }
         FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
-            list, gateway.getServerHostName(), TEST_PORT
+            list, gateway.getServerHostName(), testPort
         ));
         new Thread(task).start();
 
@@ -153,17 +154,17 @@ public class StabilityIntegrationTest {
 
     @Test
     void testWorkerFatalInterruption() {
-        final int TEST_PORT = 8000;
+        final int testPort = 8000;
         boolean internalWorkerErrorHandled = false;
         for (int i = 0; i < 100; ++i) {
             final int msForSleeping = i * 250;
-            final int newStartPort = TEST_PORT + i;
+            final int newStartPort = testPort + i;
             Gateway gateway = new Gateway(newStartPort, newStartPort, 1, 1);
             var gatewayThread = new Thread(gateway);
             gatewayThread.start();
             WorkersPool workersPool;
             try {
-                workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+                workersPool = new WorkersPool("230.0.0.0", testPort);
             } catch (IOException e) {
                 System.err.println("Couldn't create workers' pool: " + e.getMessage());
                 Assertions.fail();
@@ -203,17 +204,17 @@ public class StabilityIntegrationTest {
 
     @Test
     void testClientInterruption() {
-        final int TEST_PORT = 8000;
+        final int testPort = 8000;
         WorkersPool workersPool;
         try {
-            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+            workersPool = new WorkersPool("230.0.0.0", testPort);
         } catch (IOException e) {
             System.err.println("Couldn't create workers' pool: " + e.getMessage());
             Assertions.fail();
             return;
         }
-        workersPool.launchWorkers(TEST_PORT + 1, 10);
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, 2, 10);
+        workersPool.launchWorkers(testPort + 1, 10);
+        Gateway gateway = new Gateway(testPort, testPort, 2, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
 
@@ -222,7 +223,7 @@ public class StabilityIntegrationTest {
             list.add(UnitTest.BILLION_PRIME);
         }
         FutureTask<NetworkSendable> task = new FutureTask<>(new Client(
-            list, gateway.getServerHostName(), TEST_PORT
+            list, gateway.getServerHostName(), testPort
         ));
         var interruptedThread = new Thread(task);
         interruptedThread.interrupt();
@@ -230,7 +231,7 @@ public class StabilityIntegrationTest {
         ArrayList<Integer> listWithUnprime = new ArrayList<>(list);
         listWithUnprime.add(6);
         FutureTask<NetworkSendable> task2 = new FutureTask<>(new Client(
-            listWithUnprime, gateway.getServerHostName(), TEST_PORT
+            listWithUnprime, gateway.getServerHostName(), testPort
         ));
         new Thread(task2).start();
 
@@ -248,11 +249,11 @@ public class StabilityIntegrationTest {
 
     @Test
     void testWorkersPoolNearToPortsUpperBound() {
-        final int TEST_PORT = 8000;
-        final int THREADS_TEST_CNT = 5;
+        final int testPort = 8000;
+        final int threadsTestCnt = 5;
         WorkersPool workersPool;
         try {
-            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+            workersPool = new WorkersPool("230.0.0.0", testPort);
         } catch (IOException e) {
             System.err.println("Couldn't create workers' pool: " + e.getMessage());
             Assertions.fail();
@@ -263,25 +264,26 @@ public class StabilityIntegrationTest {
                     WorkersPool.MAX_STATIC_PORT - 9, 100
                 )
         );
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, THREADS_TEST_CNT, 10);
+        Gateway gateway = new Gateway(testPort, testPort, threadsTestCnt, 10);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
 
         ArrayList<Callable<NetworkSendable>> tasks = new ArrayList<>();
-        for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+        for (int i = 0; i < threadsTestCnt; ++i) {
             ArrayList<Integer> list = new ArrayList<>();
             for (int j = 0; j < 1000000; ++j) {
                 list.add(i);
             }
-            tasks.add(new Client(list, gateway.getServerHostName(), TEST_PORT));
+            tasks.add(new Client(list, gateway.getServerHostName(), testPort));
         }
 
-        ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
+        ExecutorService pool = Executors.newFixedThreadPool(threadsTestCnt);
         try {
             List<Future<NetworkSendable>> results = pool.invokeAll(tasks);
-            int expectedUnprimesCnt = 1, gotUnprimesCnt = 0;
-            for (int i = 0; i < THREADS_TEST_CNT; ++i) {
-                if (((TaskResult)results.get(i).get()).result())
+            int expectedUnprimesCnt = 1;
+            int gotUnprimesCnt = 0;
+            for (int i = 0; i < threadsTestCnt; ++i) {
+                if (((TaskResult) results.get(i).get()).result())
                     gotUnprimesCnt++;
             }
             Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
@@ -296,41 +298,42 @@ public class StabilityIntegrationTest {
 
     @Test
     void test2WorkersPoolsOnSamePorts() {
-        final int TEST_PORT = 8000;
-        final int THREADS_TEST_CNT = 5;
+        final int testPort = 8000;
+        final int threadsTestCnt = 5;
         WorkersPool workersPool;
         try {
-            workersPool = new WorkersPool("230.0.0.0", TEST_PORT);
+            workersPool = new WorkersPool("230.0.0.0", testPort);
         } catch (IOException e) {
             System.err.println("Couldn't create workers' pool: " + e.getMessage());
             Assertions.fail();
             return;
         }
         Assertions.assertEquals(
-                100, workersPool.launchWorkers(TEST_PORT + 1, 100)
+                100, workersPool.launchWorkers(testPort + 1, 100)
         );
         Assertions.assertEquals(
-                100, workersPool.launchWorkers(TEST_PORT + 1, 100)
+                100, workersPool.launchWorkers(testPort + 1, 100)
         );
-        Gateway gateway = new Gateway(TEST_PORT, TEST_PORT, THREADS_TEST_CNT, 40);
+        Gateway gateway = new Gateway(testPort, testPort, threadsTestCnt, 40);
         var gatewayThread = new Thread(gateway);
         gatewayThread.start();
 
         ArrayList<Callable<NetworkSendable>> tasks = new ArrayList<>();
-        for (int i = 0; i < THREADS_TEST_CNT; ++i) {
+        for (int i = 0; i < threadsTestCnt; ++i) {
             ArrayList<Integer> list = new ArrayList<>();
             for (int j = 0; j < 1000000; ++j) {
                 list.add(i);
             }
-            tasks.add(new Client(list, gateway.getServerHostName(), TEST_PORT));
+            tasks.add(new Client(list, gateway.getServerHostName(), testPort));
         }
 
-        ExecutorService pool = Executors.newFixedThreadPool(THREADS_TEST_CNT);
+        ExecutorService pool = Executors.newFixedThreadPool(threadsTestCnt);
         try {
             List<Future<NetworkSendable>> results = pool.invokeAll(tasks);
-            int expectedUnprimesCnt = 1, gotUnprimesCnt = 0;
-            for (int i = 0; i < THREADS_TEST_CNT; ++i) {
-                if (((TaskResult)results.get(i).get()).result())
+            int expectedUnprimesCnt = 1;
+            int gotUnprimesCnt = 0;
+            for (int i = 0; i < threadsTestCnt; ++i) {
+                if (((TaskResult) results.get(i).get()).result())
                     gotUnprimesCnt++;
             }
             Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
