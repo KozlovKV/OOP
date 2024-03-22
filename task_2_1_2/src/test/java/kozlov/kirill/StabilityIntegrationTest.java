@@ -59,8 +59,9 @@ public class StabilityIntegrationTest {
             int expectedUnprimesCnt = 4;
             int gotUnprimesCnt = 0;
             for (int i = 0; i < threadsTestCnt; ++i) {
-                if (((TaskResult) results.get(i).get()).result())
+                if (((TaskResult) results.get(i).get()).result()) {
                     gotUnprimesCnt++;
+                }
             }
             Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
             pool.shutdown();
@@ -283,8 +284,9 @@ public class StabilityIntegrationTest {
             int expectedUnprimesCnt = 1;
             int gotUnprimesCnt = 0;
             for (int i = 0; i < threadsTestCnt; ++i) {
-                if (((TaskResult) results.get(i).get()).result())
+                if (((TaskResult) results.get(i).get()).result()) {
                     gotUnprimesCnt++;
+                }
             }
             Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
             pool.shutdown();
@@ -333,8 +335,9 @@ public class StabilityIntegrationTest {
             int expectedUnprimesCnt = 1;
             int gotUnprimesCnt = 0;
             for (int i = 0; i < threadsTestCnt; ++i) {
-                if (((TaskResult) results.get(i).get()).result())
+                if (((TaskResult) results.get(i).get()).result()) {
                     gotUnprimesCnt++;
+                }
             }
             Assertions.assertEquals(expectedUnprimesCnt, gotUnprimesCnt);
             pool.shutdown();
