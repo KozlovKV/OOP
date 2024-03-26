@@ -148,7 +148,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(java.lang.String,int)">
 <h3>MulticastManager</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MulticastManager</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ip,
- int&nbsp;port)</span></div>
+ int&nbsp;port)</span>
+                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">MulticastManager constructor.
  <br>
  Creates multicast group with the first network interface and virtual threads factory
@@ -157,6 +158,8 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>ip</code> - hostname of multicast group which will be used by manager</dd>
 <dd><code>port</code> - port of multicast group which will be used by manager</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
 </section>
 </li>
