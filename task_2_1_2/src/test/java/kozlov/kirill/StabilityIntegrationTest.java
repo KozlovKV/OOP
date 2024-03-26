@@ -165,7 +165,7 @@ public class StabilityIntegrationTest {
             gatewayThread.start();
             WorkersPool workersPool;
             try {
-                workersPool = new WorkersPool("230.0.0.0", testPort);
+                workersPool = new WorkersPool("230.0.0.0", newStartPort);
             } catch (IOException e) {
                 System.err.println("Couldn't create workers' pool: " + e.getMessage());
                 Assertions.fail();
