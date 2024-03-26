@@ -38,8 +38,10 @@ public class UnitTest {
     @Test
     void exampleTest2() {
         ArrayList<Integer> list = getArrayListFromArray(
-            new int[]{20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
-                    6998009, 6998029, 6998039, 20165149, 6998051, 6998053}, 12
+            new int[]{
+                20319251, 6997901, 6997927, 6997937, 17858849, 6997967,
+                6998009, 6998029, 6998039, 20165149, 6998051, 6998053
+            }, 12
         );
         UnprimeChecker unprimeChecker = new SimpleUnprimeChecker().setNumbers(list);
         try {
@@ -114,7 +116,5 @@ public class UnitTest {
             expectedTasks, TaskDataUtils.splitTaskData(originTaskData, 4)
         );
     }
-
-    // TODO: проверка парсера
 }
 
