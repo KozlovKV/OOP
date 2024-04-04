@@ -1,27 +1,39 @@
 package kozlov.kirill.pizzeria;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
+import kozlov.kirill.ExcludeClassFromJacocoGeneratedReport;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+@ExcludeClassFromJacocoGeneratedReport
 public class Main {
     public static void main(String[] args) {
         OwnBlockingQueue<Integer> myQueue = new OwnBlockingQueue<>(10);
         System.out.println("My blocking queue:");
-        myQueue.add(0);
+        try {
+            myQueue.add(0);
+        } catch (InterruptedException ignored) {
+
+        }
         for (int i = 0; i < 100; ++i) {
             new Thread(() -> {
-                myQueue.poll().ifPresentOrElse(
-                    num -> {
-                        System.out.println(num);
+                try {
+                    var optionalInteger = myQueue.poll();
+                    if (optionalInteger.isPresent()) {
+                        int num = optionalInteger.get();
                         myQueue.add(num + 1);
-                    },
-                    () -> System.out.println("Empty")
-                );
+                        System.out.println(num);
+                    } else {
+                        System.out.println("Empty");
+                    }
+                } catch (InterruptedException ignored) {
+
+                }
             }).start();
         }
+        try {
+            Pizzeria p = new Pizzeria(5, "setup.json");
+        } catch (FileNotFoundException ignored) {}
+
     }
 }

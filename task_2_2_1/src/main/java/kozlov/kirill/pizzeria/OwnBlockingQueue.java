@@ -1,8 +1,6 @@
 package kozlov.kirill.pizzeria;
 
-import java.util.LinkedList;
-import java.util.Optional;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -18,7 +16,35 @@ public class OwnBlockingQueue<T> {
         this.maxSize = maxSize;
     }
 
-    Optional<T> poll() {
+    public OwnBlockingQueue(ArrayList<T> data) {
+        this.maxSize = data.size();
+        list.addAll(data); // Лучше добавить полноценное копирование
+    }
+
+    int maxSize() {
+        return maxSize;
+    }
+
+    public int size() {
+        int size;
+        queueLock.lock();
+        size = list.size();
+        queueLock.unlock();
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    public ArrayList<T> getListCopy() {
+        queueLock.lock();
+        ArrayList<T> copyList = new ArrayList<>(list);
+        queueLock.unlock();
+        return copyList;
+    }
+
+    Optional<T> poll() throws InterruptedException {
         T result = null;
         try {
             queueLock.lock();
@@ -26,8 +52,6 @@ public class OwnBlockingQueue<T> {
                 notEmpty.await();
             result = list.poll();
             notFull.signal();
-        } catch (InterruptedException e) {
-            System.err.println("Polling interrupted");
         } finally {
             queueLock.unlock();
         }
@@ -36,15 +60,13 @@ public class OwnBlockingQueue<T> {
         return Optional.of(result);
     }
 
-    void add(T element) {
+    void add(T element) throws InterruptedException {
         try {
             queueLock.lock();
             while (list.size() == maxSize)
                 notFull.await();
             list.add(element);
             notEmpty.signal();
-        } catch (InterruptedException e) {
-            System.err.println("Adding interrupted");
         } finally {
             queueLock.unlock();
         }
