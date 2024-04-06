@@ -1,4 +1,4 @@
-package kozlov.kirill.pizzeria.data.utils;
+package kozlov.kirill.jsonutil;
 
 import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
 

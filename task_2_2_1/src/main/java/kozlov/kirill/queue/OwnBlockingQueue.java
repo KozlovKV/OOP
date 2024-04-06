@@ -1,6 +1,8 @@
-package kozlov.kirill.pizzeria.queue;
+package kozlov.kirill.queue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Condition;

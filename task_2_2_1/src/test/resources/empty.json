@@ -1,0 +1,12 @@
+{
+  "bakers":[
+    {"name":"Kirill","speed":5},
+    {"name":"Artyom","speed":8}
+  ],
+  "couriers":[
+    {"name":"Igor","capacity":1},
+    {"name":"Anton","capacity":2}
+  ],
+  "warehouseCapacity":10,
+  "orders":[]
+}

@@ -1,11 +1,13 @@
-package kozlov.kirill.pizzeria.data.utils;
+package kozlov.kirill.jsonutil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import kozlov.kirill.pizzeria.data.Serializable;
 
 public final class JsonUtils {
     private JsonUtils() {}
