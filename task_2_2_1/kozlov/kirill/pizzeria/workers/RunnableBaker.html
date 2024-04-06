@@ -90,12 +90,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></code>, <code><a href="RunnableWorker.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableWorker</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></code>, <code><a href="RunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableEmployee</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RunnableBaker</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="RunnableWorker.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableWorker</a></span></div>
+implements <a href="RunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableEmployee</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -107,9 +107,9 @@ implements <a href="RunnableWorker.html" title="interface in kozlov.kirill.pizze
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(kozlov.kirill.pizzeria.data.Baker,kozlov.kirill.pizzeria.queue.OwnBlockingQueue,kozlov.kirill.pizzeria.queue.OwnBlockingQueue)" class="member-name-link">RunnableBaker</a><wbr>(<a href="../data/Baker.html" title="class in kozlov.kirill.pizzeria.data">Baker</a>&nbsp;bakerData,
- <a href="../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.pizzeria.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;newOrders,
- <a href="../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.pizzeria.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;warehouse)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(kozlov.kirill.pizzeria.data.Baker,kozlov.kirill.queue.OwnBlockingQueue,kozlov.kirill.queue.OwnBlockingQueue)" class="member-name-link">RunnableBaker</a><wbr>(<a href="../data/Baker.html" title="class in kozlov.kirill.pizzeria.data">Baker</a>&nbsp;bakerData,
+ <a href="../../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;newOrders,
+ <a href="../../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;warehouse)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -126,11 +126,15 @@ implements <a href="RunnableWorker.html" title="interface in kozlov.kirill.pizze
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasEndedJob()" class="member-name-link">hasEndedJob</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasFinishedJob()" class="member-name-link">hasFinishedJob</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Job finished marker.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offerEndJob()" class="member-name-link">offerEndJob</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offerToFinishJob()" class="member-name-link">offerToFinishJob</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Job finishing starter.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -152,11 +156,11 @@ implements <a href="RunnableWorker.html" title="interface in kozlov.kirill.pizze
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(kozlov.kirill.pizzeria.data.Baker,kozlov.kirill.pizzeria.queue.OwnBlockingQueue,kozlov.kirill.pizzeria.queue.OwnBlockingQueue)">
+<section class="detail" id="&lt;init&gt;(kozlov.kirill.pizzeria.data.Baker,kozlov.kirill.queue.OwnBlockingQueue,kozlov.kirill.queue.OwnBlockingQueue)">
 <h3>RunnableBaker</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RunnableBaker</span><wbr><span class="parameters">(<a href="../data/Baker.html" title="class in kozlov.kirill.pizzeria.data">Baker</a>&nbsp;bakerData,
- <a href="../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.pizzeria.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;newOrders,
- <a href="../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.pizzeria.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;warehouse)</span></div>
+ <a href="../../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;newOrders,
+ <a href="../../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;warehouse)</span></div>
 </section>
 </li>
 </ul>
@@ -168,22 +172,30 @@ implements <a href="RunnableWorker.html" title="interface in kozlov.kirill.pizze
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="offerEndJob()">
-<h3>offerEndJob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">offerEndJob</span>()</div>
+<section class="detail" id="offerToFinishJob()">
+<h3>offerToFinishJob</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">offerToFinishJob</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="RunnableEmployee.html#offerToFinishJob()">RunnableEmployee</a></code></span></div>
+<div class="block">Job finishing starter.
+ <br>
+ Sends signal to employee to show them that it should end its job</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RunnableWorker.html#offerEndJob()">offerEndJob</a></code>&nbsp;in interface&nbsp;<code><a href="RunnableWorker.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableWorker</a></code></dd>
+<dd><code><a href="RunnableEmployee.html#offerToFinishJob()">offerToFinishJob</a></code>&nbsp;in interface&nbsp;<code><a href="RunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableEmployee</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="hasEndedJob()">
-<h3>hasEndedJob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasEndedJob</span>()</div>
+<section class="detail" id="hasFinishedJob()">
+<h3>hasFinishedJob</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasFinishedJob</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="RunnableEmployee.html#hasFinishedJob()">RunnableEmployee</a></code></span></div>
+<div class="block">Job finished marker.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RunnableWorker.html#hasEndedJob()">hasEndedJob</a></code>&nbsp;in interface&nbsp;<code><a href="RunnableWorker.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableWorker</a></code></dd>
+<dd><code><a href="RunnableEmployee.html#hasFinishedJob()">hasFinishedJob</a></code>&nbsp;in interface&nbsp;<code><a href="RunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableEmployee</a></code></dd>
+<dt>Returns:</dt>
+<dd>true when employee has finished its job</dd>
 </dl>
 </section>
 </li>

@@ -52,29 +52,29 @@ loadScripts(document, 'script');</script>
 <span class="package-hierarchy-label">Package Hierarchies:</span>
 <ul class="horizontal contents-list">
 <li><a href="kozlov/kirill/package-tree.html">kozlov.kirill</a>, </li>
+<li><a href="kozlov/kirill/jsonutil/package-tree.html">kozlov.kirill.jsonutil</a>, </li>
 <li><a href="kozlov/kirill/pizzeria/package-tree.html">kozlov.kirill.pizzeria</a>, </li>
 <li><a href="kozlov/kirill/pizzeria/data/package-tree.html">kozlov.kirill.pizzeria.data</a>, </li>
-<li><a href="kozlov/kirill/pizzeria/data/utils/package-tree.html">kozlov.kirill.pizzeria.data.utils</a>, </li>
-<li><a href="kozlov/kirill/pizzeria/queue/package-tree.html">kozlov.kirill.pizzeria.queue</a>, </li>
-<li><a href="kozlov/kirill/pizzeria/workers/package-tree.html">kozlov.kirill.pizzeria.workers</a></li>
+<li><a href="kozlov/kirill/pizzeria/workers/package-tree.html">kozlov.kirill.pizzeria.workers</a>, </li>
+<li><a href="kozlov/kirill/queue/package-tree.html">kozlov.kirill.queue</a></li>
 </ul>
 <section class="hierarchy">
 <h2 title="Class Hierarchy">Class Hierarchy</h2>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" class="type-name-link external-link" title="class or interface in java.lang">Object</a>
 <ul>
-<li class="circle">kozlov.kirill.pizzeria.data.utils.<a href="kozlov/kirill/pizzeria/data/utils/JsonUtils.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data.utils">JsonUtils</a></li>
-<li class="circle">kozlov.kirill.pizzeria.<a href="kozlov/kirill/pizzeria/Main.html" class="type-name-link" title="class in kozlov.kirill.pizzeria">Main</a></li>
-<li class="circle">kozlov.kirill.pizzeria.queue.<a href="kozlov/kirill/pizzeria/queue/OwnBlockingQueue.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.queue">OwnBlockingQueue</a>&lt;T&gt;</li>
-<li class="circle">kozlov.kirill.pizzeria.<a href="kozlov/kirill/pizzeria/Pizzeria.html" class="type-name-link" title="class in kozlov.kirill.pizzeria">Pizzeria</a> (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>)</li>
-<li class="circle">kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableBaker.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.workers">RunnableBaker</a> (implements kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableWorker.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableWorker</a>)</li>
-<li class="circle">kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableCourier.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.workers">RunnableCourier</a> (implements kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableWorker.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableWorker</a>)</li>
+<li class="circle">kozlov.kirill.jsonutil.<a href="kozlov/kirill/jsonutil/JsonUtils.html" class="type-name-link" title="class in kozlov.kirill.jsonutil">JsonUtils</a></li>
+<li class="circle">kozlov.kirill.<a href="kozlov/kirill/Main.html" class="type-name-link" title="class in kozlov.kirill">Main</a></li>
+<li class="circle">kozlov.kirill.queue.<a href="kozlov/kirill/queue/OwnBlockingQueue.html" class="type-name-link" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;T&gt;</li>
+<li class="circle">kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableBaker.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.workers">RunnableBaker</a> (implements kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableEmployee</a>)</li>
+<li class="circle">kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableCourier.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.workers">RunnableCourier</a> (implements kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.workers">RunnableEmployee</a>)</li>
+<li class="circle">kozlov.kirill.pizzeria.<a href="kozlov/kirill/pizzeria/RunnablePizzeria.html" class="type-name-link" title="class in kozlov.kirill.pizzeria">RunnablePizzeria</a> (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>)</li>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" class="type-name-link external-link" title="class or interface in java.lang">Throwable</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Exception.html" class="type-name-link external-link" title="class or interface in java.lang">Exception</a>
 <ul>
-<li class="circle">kozlov.kirill.pizzeria.data.utils.<a href="kozlov/kirill/pizzeria/data/utils/EndOfStreamException.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data.utils">EndOfStreamException</a></li>
-<li class="circle">kozlov.kirill.pizzeria.data.utils.<a href="kozlov/kirill/pizzeria/data/utils/ParsingException.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data.utils">ParsingException</a></li>
+<li class="circle">kozlov.kirill.jsonutil.<a href="kozlov/kirill/jsonutil/EndOfStreamException.html" class="type-name-link" title="class in kozlov.kirill.jsonutil">EndOfStreamException</a></li>
+<li class="circle">kozlov.kirill.jsonutil.<a href="kozlov/kirill/jsonutil/ParsingException.html" class="type-name-link" title="class in kozlov.kirill.jsonutil">ParsingException</a></li>
 </ul>
 </li>
 </ul>
@@ -88,10 +88,10 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" class="type-name-link external-link" title="class or interface in java.lang">Runnable</a>
 <ul>
-<li class="circle">kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableWorker.html" class="type-name-link" title="interface in kozlov.kirill.pizzeria.workers">RunnableWorker</a></li>
+<li class="circle">kozlov.kirill.pizzeria.workers.<a href="kozlov/kirill/pizzeria/workers/RunnableEmployee.html" class="type-name-link" title="interface in kozlov.kirill.pizzeria.workers">RunnableEmployee</a></li>
 </ul>
 </li>
-<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Serializable.html" class="type-name-link" title="interface in kozlov.kirill.pizzeria.data">Serializable</a></li>
+<li class="circle">kozlov.kirill.jsonutil.<a href="kozlov/kirill/jsonutil/Serializable.html" class="type-name-link" title="interface in kozlov.kirill.jsonutil">Serializable</a></li>
 </ul>
 </section>
 <section class="hierarchy">
@@ -108,10 +108,10 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" class="type-name-link external-link" title="class or interface in java.lang">Record</a>
 <ul>
-<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Baker.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data">Baker</a> (implements kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Serializable.html" title="interface in kozlov.kirill.pizzeria.data">Serializable</a>)</li>
-<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Courier.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data">Courier</a> (implements kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Serializable.html" title="interface in kozlov.kirill.pizzeria.data">Serializable</a>)</li>
-<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Order.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data">Order</a> (implements kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Serializable.html" title="interface in kozlov.kirill.pizzeria.data">Serializable</a>)</li>
-<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Setup.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data">Setup</a> (implements kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Serializable.html" title="interface in kozlov.kirill.pizzeria.data">Serializable</a>)</li>
+<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Baker.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data">Baker</a> (implements kozlov.kirill.jsonutil.<a href="kozlov/kirill/jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a>)</li>
+<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Courier.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data">Courier</a> (implements kozlov.kirill.jsonutil.<a href="kozlov/kirill/jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a>)</li>
+<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Order.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data">Order</a> (implements kozlov.kirill.jsonutil.<a href="kozlov/kirill/jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a>)</li>
+<li class="circle">kozlov.kirill.pizzeria.data.<a href="kozlov/kirill/pizzeria/data/Setup.html" class="type-name-link" title="class in kozlov.kirill.pizzeria.data">Setup</a> (implements kozlov.kirill.jsonutil.<a href="kozlov/kirill/jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a>)</li>
 </ul>
 </li>
 </ul>
