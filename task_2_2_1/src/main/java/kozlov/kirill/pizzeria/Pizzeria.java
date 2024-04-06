@@ -7,34 +7,36 @@ import kozlov.kirill.pizzeria.data.Setup;
 import kozlov.kirill.pizzeria.data.utils.EndOfStreamException;
 import kozlov.kirill.pizzeria.data.utils.JsonUtils;
 import kozlov.kirill.pizzeria.data.utils.ParsingException;
+import kozlov.kirill.pizzeria.queue.OwnBlockingQueue;
+import kozlov.kirill.pizzeria.workers.RunnableBaker;
+import kozlov.kirill.pizzeria.workers.RunnableCourier;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class Pizzeria {
-    final static int TIME_MS_QUANTUM = 100; //< One time step in pizzeria's world
+public class Pizzeria implements Runnable {
+    public final static long TIME_MS_QUANTUM = 100; //< One time step in pizzeria's world
+    public final static long ORDER_WAITING_MS = 1000;
 
-    private final int timeForClosing;
+    private final long timeForClosing;
     private final ArrayList<Baker> bakers;
-    private final ExecutorService bakersThreadPool;
+    private final ArrayList<RunnableBaker> runnableBakers = new ArrayList<>();
     private final ArrayList<Courier> couriers;
-    private final ExecutorService couriersThreadPool;
+    private final ArrayList<RunnableCourier> runnableCouriers = new ArrayList<>();
     private final OwnBlockingQueue<Order> warehouse;
     private final OwnBlockingQueue<Order> newOrders;
+    private final String setupSavePath;
 
-    public Pizzeria(int timeForClosing, String setupPath) throws FileNotFoundException {
+    public Pizzeria(
+        int timeForClosing, String setupLoadPath, String setupSavePath
+    ) throws FileNotFoundException {
         this.timeForClosing = timeForClosing;
-        Setup setup = getSetup(setupPath);
+        this.setupSavePath = setupSavePath;
+        Setup setup = getSetup(setupLoadPath);
         bakers = setup.bakers();
-        bakers.add(new Baker("Ivan", 99));
-        bakersThreadPool = Executors.newFixedThreadPool(bakers.size());
         couriers = setup.couriers();
-        couriersThreadPool = Executors.newFixedThreadPool(couriers.size());
         warehouse = new OwnBlockingQueue<>(setup.warehouseCapacity());
         newOrders = new OwnBlockingQueue<>(setup.orders());
-        saveSetup("./testData/newSetup.json");
     }
 
     private Setup getSetup(String setupPath) throws FileNotFoundException {
@@ -62,17 +64,51 @@ public class Pizzeria {
         return loadedSetup;
     }
 
-    private void saveSetup(String setupPath) throws FileNotFoundException {
+    private void saveSetup() {
         Setup setup = new Setup(
             bakers, couriers, warehouse.maxSize(), newOrders.getListCopy()
         );
         try (
-            OutputStream outputStream = new FileOutputStream(setupPath)
+            OutputStream outputStream = new FileOutputStream(setupSavePath)
         ) {
             JsonUtils.serialize(setup, outputStream);
         } catch (IOException e) {
             System.err.println("Failed to save setup");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void run() {
+        runWorkers();
+        System.out.println("All workers have started");
+        try {
+            Thread.sleep(timeForClosing * TIME_MS_QUANTUM);
+        } catch (InterruptedException ignored) {}
+        endWorkDay();
+    }
+
+    private void runWorkers() {
+        for (var baker : bakers) {
+            RunnableBaker runnableBaker = new RunnableBaker(baker, newOrders, warehouse);
+            new Thread(runnableBaker).start();
+            runnableBakers.add(runnableBaker);
+        }
+        for (var courier : couriers) {
+            RunnableCourier runnableCourier = new RunnableCourier(courier, warehouse);
+            new Thread(runnableCourier).start();
+            runnableCouriers.add(runnableCourier);
+        }
+    }
+
+    private void endWorkDay() {
+        for (var runnableBaker : runnableBakers) {
+            runnableBaker.offerEndJob();
+        }
+        while (runnableCouriers.stream().filter(RunnableCourier::hasEndedJob).count() == runnableBakers.size());
+        for (var runnableCourier : runnableCouriers) {
+            runnableCourier.offerEndJob();
+        }
+        saveSetup();
     }
 }

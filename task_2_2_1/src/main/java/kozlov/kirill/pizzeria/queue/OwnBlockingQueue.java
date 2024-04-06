@@ -1,11 +1,13 @@
-package kozlov.kirill.pizzeria;
+package kozlov.kirill.pizzeria.queue;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class OwnBlockingQueue<T> {
-    private int maxSize;
+    private final int maxSize;
     private final LinkedList<T> list = new LinkedList<>();
 
     private final ReentrantLock queueLock = new ReentrantLock();
@@ -21,7 +23,7 @@ public class OwnBlockingQueue<T> {
         list.addAll(data); // Лучше добавить полноценное копирование
     }
 
-    int maxSize() {
+    public int maxSize() {
         return maxSize;
     }
 
@@ -44,12 +46,13 @@ public class OwnBlockingQueue<T> {
         return copyList;
     }
 
-    Optional<T> poll() throws InterruptedException {
+    public Optional<T> poll() throws InterruptedException {
         T result = null;
         try {
             queueLock.lock();
-            while (list.isEmpty())
+            while (list.isEmpty()) {
                 notEmpty.await();
+            }
             result = list.poll();
             notFull.signal();
         } finally {
@@ -60,11 +63,50 @@ public class OwnBlockingQueue<T> {
         return Optional.of(result);
     }
 
-    void add(T element) throws InterruptedException {
+    public Optional<T> poll(
+        long timeoutMs
+    ) throws TimeoutException, InterruptedException {
+        T result = null;
         try {
             queueLock.lock();
-            while (list.size() == maxSize)
+            while (list.isEmpty()) {
+                if (!notEmpty.await(timeoutMs, TimeUnit.MILLISECONDS)) {
+                    throw new TimeoutException("Timeout while polling");
+                }
+            }
+            result = list.poll();
+            notFull.signal();
+        } finally {
+            queueLock.unlock();
+        }
+        if (result == null)
+            return Optional.empty();
+        return Optional.of(result);
+    }
+
+    public void add(T element) throws InterruptedException {
+        try {
+            queueLock.lock();
+            while (list.size() == maxSize) {
                 notFull.await();
+            }
+            list.add(element);
+            notEmpty.signal();
+        } finally {
+            queueLock.unlock();
+        }
+    }
+
+    public void add(
+        T element, long timeoutMs
+    ) throws TimeoutException, InterruptedException {
+        try {
+            queueLock.lock();
+            while (list.size() == maxSize) {
+                if (!notFull.await(timeoutMs, TimeUnit.MILLISECONDS)) {
+                    throw new TimeoutException("Timeout while adding");
+                }
+            }
             list.add(element);
             notEmpty.signal();
         } finally {

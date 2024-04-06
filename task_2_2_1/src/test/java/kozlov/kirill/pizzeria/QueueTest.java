@@ -1,14 +1,10 @@
 package kozlov.kirill.pizzeria;
 
+import kozlov.kirill.pizzeria.queue.OwnBlockingQueue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
-import java.util.function.IntBinaryOperator;
 
 public class QueueTest {
     @Test
