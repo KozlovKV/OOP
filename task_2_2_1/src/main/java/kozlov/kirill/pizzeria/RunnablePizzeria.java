@@ -84,7 +84,7 @@ public class RunnablePizzeria implements Runnable {
     private void saveSetup() {
         System.out.println("Saving setup...");
         Setup setup = new Setup(
-            bakers, couriers, warehouse.maxSize(), newOrders.getListCopy()
+            bakers, couriers, warehouse.maxSize(), newOrders.getListCopyUnreliable()
         );
         try (
             OutputStream outputStream = new FileOutputStream(setupSavePath)
@@ -128,11 +128,12 @@ public class RunnablePizzeria implements Runnable {
     private void finishWorkDay() {
         System.out.println("Finishing work day...");
         for (var runnableBaker : runnableBakers) {
+            newOrders.prohibitPolling();
             runnableBaker.offerToFinishJob();
         }
         while (
-            runnableCouriers.stream()
-                .filter(RunnableCourier::hasFinishedJob)
+            runnableBakers.stream()
+                .filter(RunnableBaker::hasFinishedJob)
                 .count() == runnableBakers.size()
         ) {
             try {

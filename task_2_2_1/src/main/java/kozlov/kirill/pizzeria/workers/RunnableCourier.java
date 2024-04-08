@@ -7,6 +7,7 @@ import kozlov.kirill.pizzeria.RunnablePizzeria;
 import kozlov.kirill.pizzeria.data.Courier;
 import kozlov.kirill.pizzeria.data.Order;
 import kozlov.kirill.queue.OwnBlockingQueue;
+import kozlov.kirill.queue.ProhibitedQueueActionException;
 
 public class RunnableCourier implements RunnableEmployee {
     private final Courier courierData;
@@ -39,14 +40,12 @@ public class RunnableCourier implements RunnableEmployee {
     }
 
     private void fillTrunk() {
-        while (!(warehouse.isEmpty() || isTrunkFull())) {
+        while (!(warehouse.isEmptyUnreliable() || isTrunkFull())) {
             Optional<Order> potentialOrder = Optional.empty();
             boolean error = false;
             try {
-                potentialOrder = warehouse.poll(RunnablePizzeria.ORDER_WAITING_MS);
-            } catch (TimeoutException timeoutException) {
-                break;
-            } catch (InterruptedException interruptedException) {
+                potentialOrder = warehouse.poll();
+            } catch (ProhibitedQueueActionException | InterruptedException e) {
                 error = true;
             }
             if (error || potentialOrder.isEmpty()) {
@@ -88,7 +87,7 @@ public class RunnableCourier implements RunnableEmployee {
 
     @Override
     public void run() {
-        while (!(aboutToFinish && warehouse.isEmpty())) {
+        while (!(aboutToFinish && warehouse.isEmptyUnreliable())) {
             fillTrunk();
             deliverOrders();
         }

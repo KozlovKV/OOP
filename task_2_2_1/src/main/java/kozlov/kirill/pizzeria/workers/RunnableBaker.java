@@ -6,6 +6,7 @@ import kozlov.kirill.pizzeria.RunnablePizzeria;
 import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Order;
 import kozlov.kirill.queue.OwnBlockingQueue;
+import kozlov.kirill.queue.ProhibitedQueueActionException;
 
 public class RunnableBaker implements RunnableEmployee {
     private final Baker bakerData;
@@ -37,10 +38,10 @@ public class RunnableBaker implements RunnableEmployee {
         Optional<Order> potentialOrder = Optional.empty();
         boolean error = false;
         try {
-            potentialOrder = newOrders.poll(RunnablePizzeria.ORDER_WAITING_MS);
-        } catch (TimeoutException timeoutException) {
+            potentialOrder = newOrders.poll();
+        } catch (ProhibitedQueueActionException prohibitedQueueActionException) {
             return;
-        } catch (InterruptedException interruptedException) {
+        } catch (InterruptedException e) {
             error = true;
         }
         if (error || potentialOrder.isEmpty()) {
@@ -58,16 +59,40 @@ public class RunnableBaker implements RunnableEmployee {
             Thread.sleep(
                 (long) bakerData.speed() * RunnablePizzeria.TIME_MS_QUANTUM
             );
-            warehouse.add(order);
-            System.out.println(
-                "Baker " + bakerData.name() + " has cooked "
-                    + "and placed to warehouse order " + order.id()
-            );
         } catch (InterruptedException e) {
             System.out.println(
                 "Baker " + bakerData.name() + " was interrupted while cooking"
             );
-            // Добавить больше логики для этой ситуации. Возможно, возвращать заказ обратно в новые
+            error = true;
+        }
+        if (!error) {
+            System.out.println(
+                "Baker " + bakerData.name() + " has cooked order "
+                    + "order " + order.id()
+            );
+            try {
+                warehouse.add(order);
+                System.out.println(
+                    "Baker " + bakerData.name() + " has placed "
+                        + "to warehouse order " + order.id()
+                );
+            } catch (ProhibitedQueueActionException | InterruptedException e) {
+                System.out.println(
+                    "Baker " + bakerData.name() + " cannot place "
+                        + "order " + order.id() + " to warehouse"
+                );
+                error = true;
+            }
+        }
+        if (error) {
+            try {
+                newOrders.add(order);
+            } catch (ProhibitedQueueActionException | InterruptedException e) {
+                System.out.println(
+                    "Baker " + bakerData.name() + " cannot return "
+                        + "failed order " + order.id() + " to new orders list"
+                );
+            }
         }
     }
 

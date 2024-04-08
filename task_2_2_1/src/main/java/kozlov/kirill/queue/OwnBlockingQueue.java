@@ -16,6 +16,9 @@ public class OwnBlockingQueue<T> {
     private final Condition notEmpty = queueLock.newCondition();
     private final Condition notFull = queueLock.newCondition();
 
+    private volatile boolean pollingpPohibited = false;
+    private volatile boolean addingPohibited = false;
+
     public OwnBlockingQueue(int maxSize) {
         this.maxSize = maxSize;
     }
@@ -29,7 +32,7 @@ public class OwnBlockingQueue<T> {
         return maxSize;
     }
 
-    public int size() {
+    public int sizeUnreliable() {
         int size;
         queueLock.lock();
         size = list.size();
@@ -37,44 +40,37 @@ public class OwnBlockingQueue<T> {
         return size;
     }
 
-    public boolean isEmpty() {
-        return size() == 0;
+    public boolean isEmptyUnreliable() {
+        return sizeUnreliable() == 0;
     }
 
-    public ArrayList<T> getListCopy() {
+    public ArrayList<T> getListCopyUnreliable() {
         queueLock.lock();
         ArrayList<T> copyList = new ArrayList<>(list);
         queueLock.unlock();
         return copyList;
     }
 
-    public Optional<T> poll() throws InterruptedException {
-        T result = null;
-        try {
-            queueLock.lock();
-            while (list.isEmpty()) {
-                notEmpty.await();
-            }
-            result = list.poll();
-            notFull.signal();
-        } finally {
-            queueLock.unlock();
-        }
-        if (result == null)
-            return Optional.empty();
-        return Optional.of(result);
+    public void prohibitPolling() {
+        queueLock.lock();
+        pollingpPohibited = true;
+        notEmpty.signalAll();
+        queueLock.unlock();
     }
 
     public Optional<T> poll(
-        long timeoutMs
-    ) throws TimeoutException, InterruptedException {
+    ) throws ProhibitedQueueActionException, InterruptedException {
+        if (pollingpPohibited) {
+            throw new ProhibitedQueueActionException();
+        }
         T result = null;
         try {
             queueLock.lock();
-            while (list.isEmpty()) {
-                if (!notEmpty.await(timeoutMs, TimeUnit.MILLISECONDS)) {
-                    throw new TimeoutException("Timeout while polling");
-                }
+            while (!pollingpPohibited && list.isEmpty()) {
+                notEmpty.await();
+            }
+            if (pollingpPohibited) {
+                throw new ProhibitedQueueActionException();
             }
             result = list.poll();
             notFull.signal();
@@ -86,11 +82,47 @@ public class OwnBlockingQueue<T> {
         return Optional.of(result);
     }
 
-    public void add(T element) throws InterruptedException {
+//    public Optional<T> poll(
+//        long timeoutMs
+//    ) throws TimeoutException, InterruptedException {
+//        T result = null;
+//        try {
+//            queueLock.lock();
+//            while (list.isEmpty()) {
+//                if (!notEmpty.await(timeoutMs, TimeUnit.MILLISECONDS)) {
+//                    throw new TimeoutException("Timeout while polling");
+//                }
+//            }
+//            result = list.poll();
+//            notFull.signal();
+//        } finally {
+//            queueLock.unlock();
+//        }
+//        if (result == null)
+//            return Optional.empty();
+//        return Optional.of(result);
+//    }
+
+    public void prohibitAdding() {
+        queueLock.lock();
+        addingPohibited = true;
+        notFull.signalAll();
+        queueLock.unlock();
+    }
+
+    public void add(
+        T element
+    ) throws ProhibitedQueueActionException, InterruptedException {
+        if (addingPohibited) {
+            throw new ProhibitedQueueActionException();
+        }
         try {
             queueLock.lock();
-            while (list.size() == maxSize) {
+            while (!addingPohibited && list.size() == maxSize) {
                 notFull.await();
+            }
+            if (addingPohibited) {
+                throw new ProhibitedQueueActionException();
             }
             list.add(element);
             notEmpty.signal();
@@ -99,20 +131,20 @@ public class OwnBlockingQueue<T> {
         }
     }
 
-    public void add(
-        T element, long timeoutMs
-    ) throws TimeoutException, InterruptedException {
-        try {
-            queueLock.lock();
-            while (list.size() == maxSize) {
-                if (!notFull.await(timeoutMs, TimeUnit.MILLISECONDS)) {
-                    throw new TimeoutException("Timeout while adding");
-                }
-            }
-            list.add(element);
-            notEmpty.signal();
-        } finally {
-            queueLock.unlock();
-        }
-    }
+//    public void add(
+//        T element, long timeoutMs
+//    ) throws TimeoutException, InterruptedException {
+//        try {
+//            queueLock.lock();
+//            while (list.size() == maxSize) {
+//                if (!notFull.await(timeoutMs, TimeUnit.MILLISECONDS)) {
+//                    throw new TimeoutException("Timeout while adding");
+//                }
+//            }
+//            list.add(element);
+//            notEmpty.signal();
+//        } finally {
+//            queueLock.unlock();
+//        }
+//    }
 }
