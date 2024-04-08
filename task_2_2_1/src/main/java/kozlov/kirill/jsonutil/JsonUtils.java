@@ -1,8 +1,8 @@
 package kozlov.kirill.jsonutil;
 
-import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public final class JsonUtils {
+    @ExcludeConstructorFromJacocoGeneratedReport
     private JsonUtils() {}
 
     /**

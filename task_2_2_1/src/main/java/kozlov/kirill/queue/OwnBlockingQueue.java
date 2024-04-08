@@ -82,26 +82,32 @@ public class OwnBlockingQueue<T> {
         return Optional.of(result);
     }
 
-//    public Optional<T> poll(
-//        long timeoutMs
-//    ) throws TimeoutException, InterruptedException {
-//        T result = null;
-//        try {
-//            queueLock.lock();
-//            while (list.isEmpty()) {
-//                if (!notEmpty.await(timeoutMs, TimeUnit.MILLISECONDS)) {
-//                    throw new TimeoutException("Timeout while polling");
-//                }
-//            }
-//            result = list.poll();
-//            notFull.signal();
-//        } finally {
-//            queueLock.unlock();
-//        }
-//        if (result == null)
-//            return Optional.empty();
-//        return Optional.of(result);
-//    }
+    public Optional<T> poll(
+        long timeoutMs
+    ) throws TimeoutException, ProhibitedQueueActionException, InterruptedException {
+        if (pollingpPohibited) {
+            throw new ProhibitedQueueActionException();
+        }
+        T result = null;
+        try {
+            queueLock.lock();
+            while (list.isEmpty()) {
+                if (!notEmpty.await(timeoutMs, TimeUnit.MILLISECONDS)) {
+                    throw new TimeoutException("Timeout while polling");
+                }
+            }
+            if (pollingpPohibited) {
+                throw new ProhibitedQueueActionException();
+            }
+            result = list.poll();
+            notFull.signal();
+        } finally {
+            queueLock.unlock();
+        }
+        if (result == null)
+            return Optional.empty();
+        return Optional.of(result);
+    }
 
     public void prohibitAdding() {
         queueLock.lock();
@@ -131,20 +137,26 @@ public class OwnBlockingQueue<T> {
         }
     }
 
-//    public void add(
-//        T element, long timeoutMs
-//    ) throws TimeoutException, InterruptedException {
-//        try {
-//            queueLock.lock();
-//            while (list.size() == maxSize) {
-//                if (!notFull.await(timeoutMs, TimeUnit.MILLISECONDS)) {
-//                    throw new TimeoutException("Timeout while adding");
-//                }
-//            }
-//            list.add(element);
-//            notEmpty.signal();
-//        } finally {
-//            queueLock.unlock();
-//        }
-//    }
+    public void add(
+        T element, long timeoutMs
+    ) throws TimeoutException, ProhibitedQueueActionException, InterruptedException {
+        if (addingPohibited) {
+            throw new ProhibitedQueueActionException();
+        }
+        try {
+            queueLock.lock();
+            while (list.size() == maxSize) {
+                if (!notFull.await(timeoutMs, TimeUnit.MILLISECONDS)) {
+                    throw new TimeoutException("Timeout while adding");
+                }
+            }
+            if (addingPohibited) {
+                throw new ProhibitedQueueActionException();
+            }
+            list.add(element);
+            notEmpty.signal();
+        } finally {
+            queueLock.unlock();
+        }
+    }
 }

@@ -20,7 +20,7 @@ public class JsonUtilsTest {
             Assertions.assertEquals(serialized, "{\"intField\":5}");
             TestObjectType parsedObj = JsonUtils.parse(serialized, TestObjectType.class);
             Assertions.assertEquals(obj, parsedObj);
-        } catch (IOException | ParsingException e) {
+        } catch (IOException e) {
             Assertions.fail(e);
         }
     }
@@ -34,7 +34,7 @@ public class JsonUtilsTest {
             JsonUtils.serialize(obj, pipedOutputStream);
             TestObjectType parsedObj = JsonUtils.parse(pipedInputStream, TestObjectType.class);
             Assertions.assertEquals(obj, parsedObj);
-        } catch (IOException | ParsingException e) {
+        } catch (IOException e) {
             Assertions.fail(e);
         }
     }

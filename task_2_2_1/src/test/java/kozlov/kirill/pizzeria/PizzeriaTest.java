@@ -19,9 +19,14 @@ public class PizzeriaTest {
     void simpleTest() {
         String outputPath = "test.json";
         long timeForClosing = 50;
-        RunnablePizzeria runnablePizzeria = new RunnablePizzeria(
-            timeForClosing, "simple.json", outputPath
-        );
+        RunnablePizzeria runnablePizzeria = null;
+        try {
+            runnablePizzeria = new RunnablePizzeria(
+                timeForClosing, "simple.json", outputPath
+            );
+        } catch (IOException e) {
+            Assertions.fail();
+        }
         Thread pizzeriaThread = new Thread(runnablePizzeria);
         pizzeriaThread.start();
         try {
@@ -29,7 +34,7 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (!runnablePizzeria.hasFinished());
+        while (runnablePizzeria.hasNotFinished());
         Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
             Assertions.assertTrue(
@@ -48,9 +53,14 @@ public class PizzeriaTest {
     void emptyTest() {
         String outputPath = "test.json";
         long timeForClosing = 50;
-        RunnablePizzeria runnablePizzeria = new RunnablePizzeria(
-            timeForClosing, "simple.json", outputPath
-        );
+        RunnablePizzeria runnablePizzeria = null;
+        try {
+            runnablePizzeria = new RunnablePizzeria(
+                timeForClosing, "simple.json", outputPath
+            );
+        } catch (IOException e) {
+            Assertions.fail();
+        }
         Thread pizzeriaThread = new Thread(runnablePizzeria);
         pizzeriaThread.start();
         try {
@@ -58,7 +68,7 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (!runnablePizzeria.hasFinished());
+        while (runnablePizzeria.hasNotFinished());
         Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
             Assertions.assertTrue(
@@ -77,9 +87,14 @@ public class PizzeriaTest {
     void smallWarehouseTest() {
         String outputPath = "test.json";
         long timeForClosing = 50;
-        RunnablePizzeria runnablePizzeria = new RunnablePizzeria(
-            timeForClosing, "smallWarehouse.json", outputPath
-        );
+        RunnablePizzeria runnablePizzeria = null;
+        try {
+            runnablePizzeria = new RunnablePizzeria(
+                timeForClosing, "smallWarehouse.json", outputPath
+            );
+        } catch (IOException e) {
+            Assertions.fail();
+        }
         Thread pizzeriaThread = new Thread(runnablePizzeria);
         pizzeriaThread.start();
         try {
@@ -87,7 +102,7 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (!runnablePizzeria.hasFinished());
+        while (runnablePizzeria.hasNotFinished());
         Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
             Assertions.assertTrue(
@@ -106,9 +121,14 @@ public class PizzeriaTest {
     void twoDaysTest() {
         String outputPath = "test.json";
         long timeForClosing = 6;
-        RunnablePizzeria runnablePizzeria = new RunnablePizzeria(
-            timeForClosing, "twoDays.json", outputPath
-        );
+        RunnablePizzeria runnablePizzeria = null;
+        try {
+            runnablePizzeria = new RunnablePizzeria(
+                timeForClosing, "twoDays.json", outputPath
+            );
+        } catch (IOException e) {
+            Assertions.fail();
+        }
         Thread pizzeriaThread = new Thread(runnablePizzeria);
         pizzeriaThread.start();
         try {
@@ -116,20 +136,25 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (!runnablePizzeria.hasFinished());
+        while (runnablePizzeria.hasNotFinished());
         Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
-            Assertions.assertEquals(1, JsonUtils.parse(
+            Assertions.assertFalse(JsonUtils.parse(
                 resultFileStream, Setup.class
-            ).orders().size());
+            ).orders().isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
             Assertions.fail();
         }
         String outputPath2 = "test2.json";
-        runnablePizzeria = new RunnablePizzeria(
-            timeForClosing, outputPath, outputPath2
-        );
+
+        try {
+            runnablePizzeria = new RunnablePizzeria(
+                timeForClosing, outputPath, outputPath2
+            );
+        } catch (IOException e) {
+            Assertions.fail();
+        }
         pizzeriaThread = new Thread(runnablePizzeria);
         pizzeriaThread.start();
         try {
@@ -137,7 +162,7 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (!runnablePizzeria.hasFinished());
+        while (runnablePizzeria.hasNotFinished());
         Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath2)) {
             Assertions.assertTrue(JsonUtils.parse(

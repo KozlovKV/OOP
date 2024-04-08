@@ -2,10 +2,12 @@ package kozlov.kirill.jsonutil;
 
 import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
 
+import java.io.IOException;
+
 /**
  * Exception for any parsing error.
  */
-public class ParsingException extends Exception {
+public class ParsingException extends IOException {
     /**
      * Unused default constructor.
      */

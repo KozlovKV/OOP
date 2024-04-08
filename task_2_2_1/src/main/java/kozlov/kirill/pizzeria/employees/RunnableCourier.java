@@ -1,38 +1,46 @@
-package kozlov.kirill.pizzeria.workers;
+package kozlov.kirill.pizzeria.employees;
 
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.locks.Condition;
+
 import kozlov.kirill.pizzeria.RunnablePizzeria;
 import kozlov.kirill.pizzeria.data.Courier;
 import kozlov.kirill.pizzeria.data.Order;
 import kozlov.kirill.queue.OwnBlockingQueue;
 import kozlov.kirill.queue.ProhibitedQueueActionException;
 
-public class RunnableCourier implements RunnableEmployee {
+public class RunnableCourier implements ManagedRunnableEmployee {
     private final Courier courierData;
+    private final OwnBlockingQueue<Order> newOrders;
     private final OwnBlockingQueue<Order> warehouse;
     private final LinkedList<Order> trunk;
     private volatile boolean aboutToFinish = false;
-    private volatile boolean finishedJob = false;
+
+    private CountDownLatch finishLatch = null;
 
     public RunnableCourier(
         Courier courierData,
+        OwnBlockingQueue<Order> newOrders,
         OwnBlockingQueue<Order> warehouse
     ) {
         this.courierData = courierData;
+        this.newOrders = newOrders;
         this.warehouse = warehouse;
         this.trunk = new LinkedList<>();
     }
 
     @Override
-    public void offerToFinishJob() {
-        aboutToFinish = true;
+    public void setFinishLatch(CountDownLatch finishLatch) {
+        this.finishLatch = finishLatch;
     }
 
     @Override
-    public boolean hasFinishedJob() {
-        return finishedJob;
+    public void offerToFinishJob() {
+        aboutToFinish = true;
     }
 
     private boolean isTrunkFull() {
@@ -44,7 +52,9 @@ public class RunnableCourier implements RunnableEmployee {
             Optional<Order> potentialOrder = Optional.empty();
             boolean error = false;
             try {
-                potentialOrder = warehouse.poll();
+                potentialOrder = warehouse.poll(RunnablePizzeria.ORDER_WAITING_MS);
+            } catch (TimeoutException timeoutException) {
+                return;
             } catch (ProhibitedQueueActionException | InterruptedException e) {
                 error = true;
             }
@@ -64,7 +74,7 @@ public class RunnableCourier implements RunnableEmployee {
         }
     }
 
-    private void deliverOrders() {
+    private boolean deliverOrders() {
         while (!trunk.isEmpty()) {
             Order order = trunk.poll();
             try {
@@ -79,8 +89,22 @@ public class RunnableCourier implements RunnableEmployee {
                 System.out.println(
                     "Courier " + courierData.name() + " was interrupted while delivering"
                 );
-                // Добавить больше логики
-                return;
+                trunk.add(order);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void returnOrders() {
+        for (Order order : trunk) {
+            try {
+                newOrders.add(order);
+            } catch (ProhibitedQueueActionException | InterruptedException e) {
+                System.out.println(
+                    "Courier " + courierData.name() + " cannot return "
+                        + "failed order " + order.id() + " to new orders list"
+                );
             }
         }
     }
@@ -89,11 +113,15 @@ public class RunnableCourier implements RunnableEmployee {
     public void run() {
         while (!(aboutToFinish && warehouse.isEmptyUnreliable())) {
             fillTrunk();
-            deliverOrders();
+            if (!deliverOrders()) {
+                returnOrders();
+            }
         }
         System.out.println(
             "Courier " + courierData.name() + " has finished job"
         );
-        finishedJob = true;
+        if (finishLatch != null) {
+            finishLatch.countDown();
+        }
     }
 }

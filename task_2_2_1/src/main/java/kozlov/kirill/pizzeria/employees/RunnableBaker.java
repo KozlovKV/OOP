@@ -1,19 +1,24 @@
-package kozlov.kirill.pizzeria.workers;
+package kozlov.kirill.pizzeria.employees;
 
 import java.util.Optional;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+
 import kozlov.kirill.pizzeria.RunnablePizzeria;
 import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Order;
 import kozlov.kirill.queue.OwnBlockingQueue;
 import kozlov.kirill.queue.ProhibitedQueueActionException;
 
-public class RunnableBaker implements RunnableEmployee {
+public class RunnableBaker implements ManagedRunnableEmployee {
     private final Baker bakerData;
     private final OwnBlockingQueue<Order> newOrders;
+    private Order currentOrder;
     private final OwnBlockingQueue<Order> warehouse;
     private volatile boolean aboutToFinish = false;
-    private volatile boolean finishedJob = false;
+
+    private CountDownLatch finishLatch = null;
 
     public RunnableBaker(
         Baker bakerData, OwnBlockingQueue<Order> newOrders,
@@ -25,22 +30,22 @@ public class RunnableBaker implements RunnableEmployee {
     }
 
     @Override
+    public void setFinishLatch(CountDownLatch finishLatch) {
+        this.finishLatch = finishLatch;
+    }
+
+    @Override
     public void offerToFinishJob() {
         aboutToFinish = true;
     }
 
-    @Override
-    public boolean hasFinishedJob() {
-        return finishedJob;
-    }
-
-    private void cookOrder() {
+    private boolean acceptOrder() {
         Optional<Order> potentialOrder = Optional.empty();
         boolean error = false;
         try {
             potentialOrder = newOrders.poll();
         } catch (ProhibitedQueueActionException prohibitedQueueActionException) {
-            return;
+            return false;
         } catch (InterruptedException e) {
             error = true;
         }
@@ -48,13 +53,18 @@ public class RunnableBaker implements RunnableEmployee {
             System.out.println(
                 "Baker " + bakerData.name() + " cannot get order"
             );
-            return;
+            return false;
         }
-        Order order = potentialOrder.get();
+        currentOrder = potentialOrder.get();
         System.out.println(
             "Baker " + bakerData.name() + " has accepted "
-                + "order " + order.id()
+                + "order " + currentOrder.id()
         );
+        return true;
+    }
+
+    private void cookOrder() {
+        boolean error = false;
         try {
             Thread.sleep(
                 (long) bakerData.speed() * RunnablePizzeria.TIME_MS_QUANTUM
@@ -68,29 +78,29 @@ public class RunnableBaker implements RunnableEmployee {
         if (!error) {
             System.out.println(
                 "Baker " + bakerData.name() + " has cooked order "
-                    + "order " + order.id()
+                    + "order " + currentOrder.id()
             );
             try {
-                warehouse.add(order);
+                warehouse.add(currentOrder);
                 System.out.println(
                     "Baker " + bakerData.name() + " has placed "
-                        + "to warehouse order " + order.id()
+                        + "to warehouse order " + currentOrder.id()
                 );
             } catch (ProhibitedQueueActionException | InterruptedException e) {
                 System.out.println(
                     "Baker " + bakerData.name() + " cannot place "
-                        + "order " + order.id() + " to warehouse"
+                        + "order " + currentOrder.id() + " to warehouse"
                 );
                 error = true;
             }
         }
         if (error) {
             try {
-                newOrders.add(order);
+                newOrders.add(currentOrder);
             } catch (ProhibitedQueueActionException | InterruptedException e) {
                 System.out.println(
                     "Baker " + bakerData.name() + " cannot return "
-                        + "failed order " + order.id() + " to new orders list"
+                        + "failed order " + currentOrder.id() + " to new orders list"
                 );
             }
         }
@@ -99,11 +109,15 @@ public class RunnableBaker implements RunnableEmployee {
     @Override
     public void run() {
         while (! aboutToFinish) {
-            cookOrder();
+            if (acceptOrder()) {
+                cookOrder();
+            }
         }
         System.out.println(
             "Baker " + bakerData.name() + " has finished job"
         );
-        finishedJob = true;
+        if (finishLatch != null) {
+            finishLatch.countDown();
+        }
     }
 }

@@ -1,10 +1,6 @@
 package kozlov.kirill.pizzeria;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 import kozlov.kirill.jsonutil.JsonUtils;
@@ -13,8 +9,9 @@ import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Courier;
 import kozlov.kirill.pizzeria.data.Order;
 import kozlov.kirill.pizzeria.data.Setup;
-import kozlov.kirill.pizzeria.workers.RunnableBaker;
-import kozlov.kirill.pizzeria.workers.RunnableCourier;
+import kozlov.kirill.pizzeria.employees.EmployeesManager;
+import kozlov.kirill.pizzeria.employees.RunnableBaker;
+import kozlov.kirill.pizzeria.employees.RunnableCourier;
 import kozlov.kirill.queue.OwnBlockingQueue;
 
 public class RunnablePizzeria implements Runnable {
@@ -22,35 +19,36 @@ public class RunnablePizzeria implements Runnable {
     public final static long ORDER_WAITING_MS = 1000;
 
     private final long timeForClosing;
+    private volatile boolean finished = false;
+
     private ArrayList<Baker> bakers;
-    private final ArrayList<RunnableBaker> runnableBakers = new ArrayList<>();
+    private EmployeesManager<RunnableBaker> bakersManager;
     private ArrayList<Courier> couriers;
-    private final ArrayList<RunnableCourier> runnableCouriers = new ArrayList<>();
+    private EmployeesManager<RunnableCourier> couriersManager;
     private OwnBlockingQueue<Order> warehouse;
     private OwnBlockingQueue<Order> newOrders;
+
     private final String setupSavePath;
-    private volatile boolean finished = false;
 
     public RunnablePizzeria(
         long timeForClosing, String setupLoadPath, String setupSavePath
-    ) {
+    ) throws IOException {
         this.timeForClosing = timeForClosing;
         this.setupSavePath = setupSavePath;
         Setup setup = getSetup(setupLoadPath);
-        if (setup == null) {
-            return;
-        }
         bakers = setup.bakers();
         couriers = setup.couriers();
         warehouse = new OwnBlockingQueue<>(setup.warehouseCapacity());
         newOrders = new OwnBlockingQueue<>(setup.orders());
     }
 
-    public boolean hasFinished() {
-        return finished;
+    public boolean hasNotFinished() {
+        return ! finished;
     }
 
-    private Setup getSetup(String setupPath) {
+    private Setup getSetup(
+        String setupPath
+    ) throws IOException {
         InputStream inputStream;
         Setup loadedSetup = null;
         try {
@@ -61,23 +59,13 @@ public class RunnablePizzeria implements Runnable {
             );
         }
         if (inputStream == null) {
-            System.err.println(
+            throw new FileNotFoundException(
                 "Couldn't find setup JSON file either in specified path "
-                + "either in this path in resources"
+                + "either in this path in resources using path " + setupPath
             );
-            return null;
         }
-        try {
-            loadedSetup = JsonUtils.parse(inputStream, Setup.class);
-        } catch (ParsingException e) {
-            System.err.println("Parsing failed");
-            return null;
-        }
-        try {
-            inputStream.close();
-        } catch (IOException ignored) {
-            System.err.println("Failed to close file input stream");
-        }
+        loadedSetup = JsonUtils.parse(inputStream, Setup.class);
+        inputStream.close();
         return loadedSetup;
     }
 
@@ -104,51 +92,45 @@ public class RunnablePizzeria implements Runnable {
 
     @Override
     public void run() {
-        runWorkers();
+        runEmployees();
         try {
             Thread.sleep(timeForClosing * TIME_MS_QUANTUM);
         } catch (InterruptedException ignored) {}
         finishWorkDay();
     }
 
-    private void runWorkers() {
+    private void runEmployees() {
+        ArrayList<RunnableBaker> runnableBakers = new ArrayList<>();
         for (var baker : bakers) {
-            RunnableBaker runnableBaker = new RunnableBaker(baker, newOrders, warehouse);
-            new Thread(runnableBaker).start();
-            runnableBakers.add(runnableBaker);
+            runnableBakers.add(new RunnableBaker(baker, newOrders, warehouse));
         }
+        bakersManager = new EmployeesManager<>(runnableBakers);
+        bakersManager.startEmployees();
+        ArrayList<RunnableCourier> runnableCouriers = new ArrayList<>();
         for (var courier : couriers) {
-            RunnableCourier runnableCourier = new RunnableCourier(courier, warehouse);
-            new Thread(runnableCourier).start();
-            runnableCouriers.add(runnableCourier);
+            runnableCouriers.add(new RunnableCourier(courier, newOrders, warehouse));
         }
+        couriersManager = new EmployeesManager<>(runnableCouriers);
+        couriersManager.startEmployees();
         System.out.println("All employees have started");
     }
 
     private void finishWorkDay() {
         System.out.println("Finishing work day...");
-        for (var runnableBaker : runnableBakers) {
-            newOrders.prohibitPolling();
-            runnableBaker.offerToFinishJob();
+        bakersManager.offerEmployeesFinishJob();
+        newOrders.prohibitPolling();
+        try {
+            bakersManager.waitForAllEmployeesFinished();
+        } catch (InterruptedException interruptedException) {
+            System.err.println("Bakers waiting interrupted");
         }
-        // TODO: избавиться каким-нибудь образом от спинлока. Идея - создать класс менеджера работников, который будет каким-то особым образом связываться со своими работниками
-        while (
-            runnableBakers.stream()
-                .filter(RunnableBaker::hasFinishedJob)
-                .count() == runnableBakers.size()
-        ) {
-            try {
-                System.out.println("Waiting while all bakers finish their job...");
-                Thread.sleep(TIME_MS_QUANTUM);
-            } catch (InterruptedException interruptedException) {
-                System.err.println("Bakers waiting interrupted");
-            }
-        }
-        newOrders.prohibitAdding();
         warehouse.prohibitAdding();
         System.out.println("All bakers finished their job. \nWaiting couriers...");
-        for (var runnableCourier : runnableCouriers) {
-            runnableCourier.offerToFinishJob();
+        couriersManager.offerEmployeesFinishJob();
+        try {
+            couriersManager.waitForAllEmployeesFinished();
+        } catch (InterruptedException interruptedException) {
+            System.err.println("Couriers waiting interrupted");
         }
         System.out.println("All couriers finished their job");
         saveSetup();

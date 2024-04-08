@@ -3,6 +3,7 @@ package kozlov.kirill.queue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
 public class QueueTest {
@@ -94,6 +95,45 @@ public class QueueTest {
             }
         } catch (ProhibitedQueueActionException | InterruptedException e) {
             Assertions.fail();
+        }
+    }
+
+    @Test
+    void timeoutPollingTest() {
+        OwnBlockingQueue<Integer> myQueue = new OwnBlockingQueue<>(2);
+        try {
+            myQueue.add(1, 1000);
+            myQueue.poll(1000);
+        } catch (
+            TimeoutException | ProhibitedQueueActionException | InterruptedException e
+        ) {
+            Assertions.fail();
+        }
+        try {
+            myQueue.poll(1000);
+        } catch (ProhibitedQueueActionException | InterruptedException e) {
+            Assertions.fail();
+        } catch (TimeoutException timeoutException) {
+            return;
+        }
+    }
+
+    @Test
+    void timeoutAddingTest() {
+        OwnBlockingQueue<Integer> myQueue = new OwnBlockingQueue<>(1);
+        try {
+            myQueue.add(1, 1000);
+        } catch (
+            TimeoutException | ProhibitedQueueActionException | InterruptedException e
+        ) {
+            Assertions.fail();
+        }
+        try {
+            myQueue.add(2, 1000);
+        } catch (ProhibitedQueueActionException | InterruptedException e) {
+            Assertions.fail();
+        } catch (TimeoutException timeoutException) {
+            return;
         }
     }
 }

@@ -2,14 +2,20 @@ package kozlov.kirill;
 
 import kozlov.kirill.pizzeria.RunnablePizzeria;
 
+import java.io.IOException;
+
 @ExcludeClassFromJacocoGeneratedReport
 public class Main {
     public static void main(String[] args) {
-        new Thread(
-            new RunnablePizzeria(
-                50, "simple.json",
-                "simpleTest.json"
-            )
-        ).start();
+        try {
+            new Thread(
+                new RunnablePizzeria(
+                    50, "setup.json",
+                    "simpleTest.json"
+                )
+            ).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
