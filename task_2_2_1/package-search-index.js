@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"kozlov.kirill"},{"l":"kozlov.kirill.jsonutil"},{"l":"kozlov.kirill.pizzeria"},{"l":"kozlov.kirill.pizzeria.data"},{"l":"kozlov.kirill.pizzeria.workers"},{"l":"kozlov.kirill.queue"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"kozlov.kirill"},{"l":"kozlov.kirill.jsonutil"},{"l":"kozlov.kirill.pizzeria"},{"l":"kozlov.kirill.pizzeria.data"},{"l":"kozlov.kirill.pizzeria.employees"},{"l":"kozlov.kirill.queue"}];updateSearchResults();
