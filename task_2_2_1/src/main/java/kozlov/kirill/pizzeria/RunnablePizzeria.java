@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import kozlov.kirill.jsonutil.EndOfStreamException;
+
 import kozlov.kirill.jsonutil.JsonUtils;
 import kozlov.kirill.jsonutil.ParsingException;
 import kozlov.kirill.pizzeria.data.Baker;
@@ -69,7 +69,7 @@ public class RunnablePizzeria implements Runnable {
         }
         try {
             loadedSetup = JsonUtils.parse(inputStream, Setup.class);
-        } catch (ParsingException | EndOfStreamException e) {
+        } catch (ParsingException e) {
             System.err.println("Parsing failed");
             return null;
         }

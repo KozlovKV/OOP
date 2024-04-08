@@ -1,6 +1,5 @@
-package kozlov.kirill.pizzeria;
+package kozlov.kirill.queue;
 
-import kozlov.kirill.queue.OwnBlockingQueue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,6 @@
 package kozlov.kirill.jsonutil;
 
+import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import java.io.BufferedReader;
@@ -72,11 +73,10 @@ public final class JsonUtils {
      * @return parsed object or null if input stream was closed
      *
      * @throws ParsingException throws up any exception which can be produced during parsing process
-     * @throws EndOfStreamException specific exception for closed stream situation
      */
     public static <T extends Serializable> T parse(
         InputStream inputStream, Class<T> type
-    ) throws ParsingException, EndOfStreamException {
+    ) throws ParsingException {
         ObjectMapper mapper = new ObjectMapper();
         BufferedReader reader = new BufferedReader(new InputStreamReader(
             inputStream, StandardCharsets.UTF_8
@@ -84,8 +84,6 @@ public final class JsonUtils {
         try {
             var parser = mapper.createParser(reader);
             return parser.readValueAs(type);
-        } catch (MismatchedInputException endOfFileException) {
-            throw new EndOfStreamException(endOfFileException);
         } catch (IOException e) {
             throw new ParsingException(e);
         }
