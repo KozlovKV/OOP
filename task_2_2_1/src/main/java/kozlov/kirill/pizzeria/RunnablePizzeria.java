@@ -131,6 +131,7 @@ public class RunnablePizzeria implements Runnable {
             newOrders.prohibitPolling();
             runnableBaker.offerToFinishJob();
         }
+        // TODO: избавиться каким-нибудь образом от спинлока. Идея - создать класс менеджера работников, который будет каким-то особым образом связываться со своими работниками
         while (
             runnableBakers.stream()
                 .filter(RunnableBaker::hasFinishedJob)
@@ -143,6 +144,8 @@ public class RunnablePizzeria implements Runnable {
                 System.err.println("Bakers waiting interrupted");
             }
         }
+        newOrders.prohibitAdding();
+        warehouse.prohibitAdding();
         System.out.println("All bakers finished their job. \nWaiting couriers...");
         for (var runnableCourier : runnableCouriers) {
             runnableCourier.offerToFinishJob();
