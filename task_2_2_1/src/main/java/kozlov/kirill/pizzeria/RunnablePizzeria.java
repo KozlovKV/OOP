@@ -1,10 +1,13 @@
 package kozlov.kirill.pizzeria;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
-
 import kozlov.kirill.jsonutil.JsonUtils;
-import kozlov.kirill.jsonutil.ParsingException;
 import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Courier;
 import kozlov.kirill.pizzeria.data.Order;
@@ -83,7 +86,7 @@ public class RunnablePizzeria implements Runnable {
             System.err.println("Failed to save setup: " + streamSerializeException.getMessage());
             System.err.println("Printing setup to STDERR:");
             try {
-                System.err.println(JsonUtils.serialize(setup));
+                System.out.println(JsonUtils.serialize(setup));
             } catch (IOException stringSerializeException) {
                 System.err.println("Failed to serialize setup");
             }

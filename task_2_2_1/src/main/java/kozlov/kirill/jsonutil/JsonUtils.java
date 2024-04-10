@@ -1,14 +1,13 @@
 package kozlov.kirill.jsonutil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
 
 public final class JsonUtils {
     @ExcludeConstructorFromJacocoGeneratedReport

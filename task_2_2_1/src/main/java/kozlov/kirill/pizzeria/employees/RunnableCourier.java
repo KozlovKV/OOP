@@ -1,17 +1,14 @@
 package kozlov.kirill.pizzeria.employees;
 
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.locks.Condition;
-
 import kozlov.kirill.pizzeria.RunnablePizzeria;
 import kozlov.kirill.pizzeria.data.Courier;
 import kozlov.kirill.pizzeria.data.Order;
 import kozlov.kirill.queue.OwnBlockingQueue;
 import kozlov.kirill.queue.ProhibitedQueueActionException;
+
 
 public class RunnableCourier implements ManagedRunnableEmployee {
     private final Courier courierData;
@@ -48,24 +45,19 @@ public class RunnableCourier implements ManagedRunnableEmployee {
     }
 
     private void fillTrunk() {
-        while (!(warehouse.isEmptyUnreliable() || isTrunkFull())) {
-            Optional<Order> potentialOrder = Optional.empty();
-            boolean error = false;
+        while (!isTrunkFull()) {
+            Order order;
             try {
-                potentialOrder = warehouse.poll(RunnablePizzeria.ORDER_WAITING_MS);
+                order = warehouse.poll(RunnablePizzeria.ORDER_WAITING_MS);
             } catch (TimeoutException timeoutException) {
                 return;
             } catch (ProhibitedQueueActionException | InterruptedException e) {
-                error = true;
-            }
-            if (error || potentialOrder.isEmpty()) {
                 System.out.println(
                     "Courier " + courierData.name()
                         + " cannot get order from warehouse"
                 );
                 break;
             }
-            Order order = potentialOrder.get();
             trunk.add(order);
             System.out.println(
                 "Courier " + courierData.name()
@@ -111,7 +103,7 @@ public class RunnableCourier implements ManagedRunnableEmployee {
 
     @Override
     public void run() {
-        while (!(aboutToFinish && warehouse.isEmptyUnreliable())) {
+        while (! aboutToFinish || ! warehouse.isEmptyUnreliable()) {
             fillTrunk();
             if (!deliverOrders()) {
                 returnOrders();

@@ -1,10 +1,6 @@
 package kozlov.kirill.pizzeria.employees;
 
-import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.Condition;
-
 import kozlov.kirill.pizzeria.RunnablePizzeria;
 import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Order;
@@ -40,22 +36,16 @@ public class RunnableBaker implements ManagedRunnableEmployee {
     }
 
     private boolean acceptOrder() {
-        Optional<Order> potentialOrder = Optional.empty();
-        boolean error = false;
         try {
-            potentialOrder = newOrders.poll();
+            currentOrder = newOrders.poll();
         } catch (ProhibitedQueueActionException prohibitedQueueActionException) {
             return false;
         } catch (InterruptedException e) {
-            error = true;
-        }
-        if (error || potentialOrder.isEmpty()) {
             System.out.println(
                 "Baker " + bakerData.name() + " cannot get order"
             );
             return false;
         }
-        currentOrder = potentialOrder.get();
         System.out.println(
             "Baker " + bakerData.name() + " has accepted "
                 + "order " + currentOrder.id()

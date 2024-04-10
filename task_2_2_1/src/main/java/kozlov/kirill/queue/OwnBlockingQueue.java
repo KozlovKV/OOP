@@ -2,7 +2,6 @@ package kozlov.kirill.queue;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Condition;
@@ -58,12 +57,11 @@ public class OwnBlockingQueue<T> {
         queueLock.unlock();
     }
 
-    public Optional<T> poll(
+    public T poll(
     ) throws ProhibitedQueueActionException, InterruptedException {
         if (pollingpPohibited) {
             throw new ProhibitedQueueActionException();
         }
-        T result = null;
         try {
             queueLock.lock();
             while (!pollingpPohibited && list.isEmpty()) {
@@ -72,23 +70,19 @@ public class OwnBlockingQueue<T> {
             if (pollingpPohibited) {
                 throw new ProhibitedQueueActionException();
             }
-            result = list.poll();
             notFull.signal();
+            return list.poll();
         } finally {
             queueLock.unlock();
         }
-        if (result == null)
-            return Optional.empty();
-        return Optional.of(result);
     }
 
-    public Optional<T> poll(
+    public T poll(
         long timeoutMs
     ) throws TimeoutException, ProhibitedQueueActionException, InterruptedException {
         if (pollingpPohibited) {
             throw new ProhibitedQueueActionException();
         }
-        T result = null;
         try {
             queueLock.lock();
             while (list.isEmpty()) {
@@ -99,14 +93,11 @@ public class OwnBlockingQueue<T> {
             if (pollingpPohibited) {
                 throw new ProhibitedQueueActionException();
             }
-            result = list.poll();
             notFull.signal();
+            return list.poll();
         } finally {
             queueLock.unlock();
         }
-        if (result == null)
-            return Optional.empty();
-        return Optional.of(result);
     }
 
     public void prohibitAdding() {

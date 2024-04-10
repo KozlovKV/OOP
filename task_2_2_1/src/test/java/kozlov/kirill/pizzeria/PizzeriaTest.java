@@ -1,11 +1,13 @@
 package kozlov.kirill.pizzeria;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import kozlov.kirill.pizzeria.data.Setup;
 import kozlov.kirill.jsonutil.JsonUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.*;
 
 public class PizzeriaTest {
     static void removeFile(String path) {

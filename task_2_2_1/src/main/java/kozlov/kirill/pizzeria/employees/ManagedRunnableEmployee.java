@@ -1,7 +1,6 @@
 package kozlov.kirill.pizzeria.employees;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Semaphore;
 
 /**
  * Interface for employees.

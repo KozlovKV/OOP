@@ -1,10 +1,9 @@
 package kozlov.kirill.queue;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicIntegerArray;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class QueueTest {
     @Test
@@ -19,14 +18,10 @@ public class QueueTest {
         for (int i = 0; i < 100; ++i) {
             new Thread(() -> {
                 try {
-                    var optionalInteger = myQueue.poll();
-                    if (optionalInteger.isPresent()) {
-                        int num = optionalInteger.get();
-                        myQueue.add(num + 1);
-                        array.accumulateAndGet(num, 1, Integer::sum);
-                    } else {
-                        Assertions.fail();
-                    }
+                    var num = myQueue.poll();
+                    Assertions.assertNotNull(num);
+                    myQueue.add(num + 1);
+                    array.accumulateAndGet(num, 1, Integer::sum);
                 } catch (ProhibitedQueueActionException | InterruptedException e) {
                     Assertions.fail();
                 }
@@ -45,12 +40,7 @@ public class QueueTest {
             myQueue.add(1);
             myQueue.add(2);
             myQueue.prohibitAdding();
-            var optionalInteger = myQueue.poll();
-            if (optionalInteger.isPresent()) {
-                Assertions.assertEquals(1, optionalInteger.get());
-            } else {
-                Assertions.fail();
-            }
+            Assertions.assertEquals(1, myQueue.poll());
         } catch (ProhibitedQueueActionException | InterruptedException e) {
             Assertions.fail();
         }
@@ -81,18 +71,8 @@ public class QueueTest {
             Assertions.fail();
         }
         try {
-            var optionalInteger = myQueue.poll();
-            if (optionalInteger.isPresent()) {
-                Assertions.assertEquals(1, optionalInteger.get());
-            } else {
-                Assertions.fail();
-            }
-            optionalInteger = myQueue.poll();
-            if (optionalInteger.isPresent()) {
-                Assertions.assertEquals(2, optionalInteger.get());
-            } else {
-                Assertions.fail();
-            }
+            Assertions.assertEquals(1, myQueue.poll());
+            Assertions.assertEquals(2, myQueue.poll());
         } catch (ProhibitedQueueActionException | InterruptedException e) {
             Assertions.fail();
         }

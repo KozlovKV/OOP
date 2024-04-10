@@ -1,8 +1,7 @@
 package kozlov.kirill;
 
-import kozlov.kirill.pizzeria.RunnablePizzeria;
-
 import java.io.IOException;
+import kozlov.kirill.pizzeria.RunnablePizzeria;
 
 @ExcludeClassFromJacocoGeneratedReport
 public class Main {
