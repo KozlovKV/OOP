@@ -8,9 +8,13 @@ import kozlov.kirill.pizzeria.data.Courier;
 import kozlov.kirill.pizzeria.data.Order;
 import kozlov.kirill.queue.OwnBlockingQueue;
 import kozlov.kirill.queue.ProhibitedQueueActionException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class RunnableCourier implements ManagedRunnableEmployee {
+    private final static Logger logger = LogManager.getLogger(RunnableCourier.class);
+
     private final Courier courierData;
     private final OwnBlockingQueue<Order> newOrders;
     private final OwnBlockingQueue<Order> warehouse;
@@ -52,16 +56,16 @@ public class RunnableCourier implements ManagedRunnableEmployee {
             } catch (TimeoutException timeoutException) {
                 return;
             } catch (ProhibitedQueueActionException | InterruptedException e) {
-                System.out.println(
-                    "Courier " + courierData.name()
-                        + " cannot get order from warehouse"
+                logger.warn(
+                    "Courier {} cannot get order from warehouse",
+                    courierData.name(), e
                 );
                 break;
             }
             trunk.add(order);
-            System.out.println(
-                "Courier " + courierData.name()
-                    + " got order " + order.id() + " from warehouse "
+            logger.info(
+                "Courier {} got order {} from warehouse",
+                courierData.name(), order.id()
             );
         }
     }
@@ -73,13 +77,14 @@ public class RunnableCourier implements ManagedRunnableEmployee {
                 Thread.sleep(
                     (long) order.distance() * RunnablePizzeria.TIME_MS_QUANTUM
                 );
-                System.out.println(
-                    "Courier " + courierData.name() + " has delivered"
-                        + " order " + order.id()
+                logger.info(
+                    "Courier {} has delivered order {}",
+                    courierData.name(), order.id()
                 );
             } catch (InterruptedException e) {
-                System.out.println(
-                    "Courier " + courierData.name() + " was interrupted while delivering"
+                logger.warn(
+                    "Courier {} was interrupted while delivering order {}",
+                    courierData.name(), order.id(), e
                 );
                 trunk.add(order);
                 return false;
@@ -93,9 +98,9 @@ public class RunnableCourier implements ManagedRunnableEmployee {
             try {
                 newOrders.add(order);
             } catch (ProhibitedQueueActionException | InterruptedException e) {
-                System.out.println(
-                    "Courier " + courierData.name() + " cannot return "
-                        + "failed order " + order.id() + " to new orders list"
+                logger.error(
+                    "Courier {} cannot return failed order {} to new orders list",
+                    courierData.name(), order.id(), e
                 );
             }
         }
@@ -109,9 +114,7 @@ public class RunnableCourier implements ManagedRunnableEmployee {
                 returnOrders();
             }
         }
-        System.out.println(
-            "Courier " + courierData.name() + " has finished job"
-        );
+        logger.info("Courier {} has finished job", courierData.name());
         if (finishLatch != null) {
             finishLatch.countDown();
         }

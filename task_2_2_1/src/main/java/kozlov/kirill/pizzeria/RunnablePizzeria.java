@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+
 import kozlov.kirill.jsonutil.JsonUtils;
 import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Courier;
@@ -16,10 +17,14 @@ import kozlov.kirill.pizzeria.employees.EmployeesManager;
 import kozlov.kirill.pizzeria.employees.RunnableBaker;
 import kozlov.kirill.pizzeria.employees.RunnableCourier;
 import kozlov.kirill.queue.OwnBlockingQueue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RunnablePizzeria implements Runnable {
     public final static long TIME_MS_QUANTUM = 100; //< One time step in pizzeria's world
     public final static long ORDER_WAITING_MS = 1000;
+
+    private final static Logger logger = LogManager.getLogger(RunnablePizzeria.class);
 
     private final long timeForClosing;
     private volatile boolean finished = false;
@@ -36,6 +41,7 @@ public class RunnablePizzeria implements Runnable {
     public RunnablePizzeria(
         long timeForClosing, String setupLoadPath, String setupSavePath
     ) throws IOException {
+        logger.info("Initializing Pizzeria");
         this.timeForClosing = timeForClosing;
         this.setupSavePath = setupSavePath;
         Setup setup = getSetup(setupLoadPath);
@@ -43,6 +49,7 @@ public class RunnablePizzeria implements Runnable {
         couriers = setup.couriers();
         warehouse = new OwnBlockingQueue<>(setup.warehouseCapacity());
         newOrders = new OwnBlockingQueue<>(setup.orders());
+        logger.info("Pizzeria initialized");
     }
 
     public boolean hasNotFinished() {
@@ -52,6 +59,7 @@ public class RunnablePizzeria implements Runnable {
     private Setup getSetup(
         String setupPath
     ) throws IOException {
+        logger.info("Loading setup from {}", setupPath);
         InputStream inputStream;
         Setup loadedSetup = null;
         try {
@@ -62,18 +70,21 @@ public class RunnablePizzeria implements Runnable {
             );
         }
         if (inputStream == null) {
-            throw new FileNotFoundException(
+            var e = new FileNotFoundException(
                 "Couldn't find setup JSON file either in specified path "
                 + "either in this path in resources using path " + setupPath
             );
+            logger.error("Failed to load setup", e);
+            throw e;
         }
         loadedSetup = JsonUtils.parse(inputStream, Setup.class);
         inputStream.close();
+        logger.info("Loaded setup from {}", setupPath);
         return loadedSetup;
     }
 
     private void saveSetup() {
-        System.out.println("Saving setup...");
+        logger.info("Saving setup in {}", setupSavePath);
         Setup setup = new Setup(
             bakers, couriers, warehouse.maxSize(), newOrders.getListCopyUnreliable()
         );
@@ -81,25 +92,28 @@ public class RunnablePizzeria implements Runnable {
             OutputStream outputStream = new FileOutputStream(setupSavePath)
         ) {
             JsonUtils.serialize(setup, outputStream);
-            System.out.println("Setup saved");
+            logger.info("Saved setup in {}", setupSavePath);
         } catch (IOException streamSerializeException) {
-            System.err.println("Failed to save setup: " + streamSerializeException.getMessage());
-            System.err.println("Printing setup to STDERR:");
+            logger.error("Failed to save setup", streamSerializeException);
             try {
                 System.out.println(JsonUtils.serialize(setup));
             } catch (IOException stringSerializeException) {
-                System.err.println("Failed to serialize setup");
+                logger.error("Failed to serialize setup", stringSerializeException);
             }
         }
     }
 
     @Override
     public void run() {
+        logger.info("Starting Pizzeria");
         runEmployees();
+        logger.info("All employees have started");
         try {
             Thread.sleep(timeForClosing * TIME_MS_QUANTUM);
         } catch (InterruptedException ignored) {}
+        logger.info("Finishing work day");
         finishWorkDay();
+        logger.info("Work day finished");
     }
 
     private void runEmployees() {
@@ -115,27 +129,25 @@ public class RunnablePizzeria implements Runnable {
         }
         couriersManager = new EmployeesManager<>(runnableCouriers);
         couriersManager.startEmployees();
-        System.out.println("All employees have started");
     }
 
     private void finishWorkDay() {
-        System.out.println("Finishing work day...");
         bakersManager.offerEmployeesFinishJob();
         newOrders.prohibitPolling();
         try {
             bakersManager.waitForAllEmployeesFinished();
         } catch (InterruptedException interruptedException) {
-            System.err.println("Bakers waiting interrupted");
+            logger.warn("Bakers waiting interrupted");
         }
         warehouse.prohibitAdding();
-        System.out.println("All bakers finished their job. \nWaiting couriers...");
+        logger.info("All bakers have finished their job");
         couriersManager.offerEmployeesFinishJob();
         try {
             couriersManager.waitForAllEmployeesFinished();
         } catch (InterruptedException interruptedException) {
-            System.err.println("Couriers waiting interrupted");
+            logger.warn("Couriers waiting interrupted");
         }
-        System.out.println("All couriers finished their job");
+        logger.info("All couriers finished their job");
         saveSetup();
         finished = true;
     }

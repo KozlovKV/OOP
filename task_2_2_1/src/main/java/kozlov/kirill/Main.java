@@ -10,7 +10,7 @@ public class Main {
             new Thread(
                 new RunnablePizzeria(
                     50, "setup.json",
-                    "simpleTest.json"
+                    "./testData/simpleTest.json"
                 )
             ).start();
         } catch (IOException e) {

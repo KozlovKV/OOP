@@ -6,8 +6,12 @@ import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Order;
 import kozlov.kirill.queue.OwnBlockingQueue;
 import kozlov.kirill.queue.ProhibitedQueueActionException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RunnableBaker implements ManagedRunnableEmployee {
+    private final static Logger logger = LogManager.getLogger(RunnableBaker.class);
+
     private final Baker bakerData;
     private final OwnBlockingQueue<Order> newOrders;
     private Order currentOrder;
@@ -41,14 +45,15 @@ public class RunnableBaker implements ManagedRunnableEmployee {
         } catch (ProhibitedQueueActionException prohibitedQueueActionException) {
             return false;
         } catch (InterruptedException e) {
-            System.out.println(
-                "Baker " + bakerData.name() + " cannot get order"
+            logger.warn(
+                "Baker {} was interrupted while getting order",
+                bakerData.name(), e
             );
             return false;
         }
-        System.out.println(
-            "Baker " + bakerData.name() + " has accepted "
-                + "order " + currentOrder.id()
+        logger.info(
+            "Baker {} has accepted order {}",
+            bakerData.name(), currentOrder.id()
         );
         return true;
     }
@@ -59,27 +64,28 @@ public class RunnableBaker implements ManagedRunnableEmployee {
             Thread.sleep(
                 (long) bakerData.speed() * RunnablePizzeria.TIME_MS_QUANTUM
             );
-        } catch (InterruptedException e) {
-            System.out.println(
-                "Baker " + bakerData.name() + " was interrupted while cooking"
+        } catch (InterruptedException interruptedException) {
+            logger.warn(
+                "Baker {} was interrupted while cooking",
+                bakerData.name(), interruptedException
             );
             error = true;
         }
         if (!error) {
-            System.out.println(
-                "Baker " + bakerData.name() + " has cooked order "
-                    + "order " + currentOrder.id()
+            logger.info(
+                "Baker {} has cooked order {}",
+                bakerData.name(), currentOrder.id()
             );
             try {
                 warehouse.add(currentOrder);
-                System.out.println(
-                    "Baker " + bakerData.name() + " has placed "
-                        + "to warehouse order " + currentOrder.id()
+                logger.info(
+                    "Baker {} has placed order {} to warehouse",
+                    bakerData.name(), currentOrder.id()
                 );
             } catch (ProhibitedQueueActionException | InterruptedException e) {
-                System.out.println(
-                    "Baker " + bakerData.name() + " cannot place "
-                        + "order " + currentOrder.id() + " to warehouse"
+                logger.warn(
+                    "Baker {} cannot place order {} to warehouse",
+                    bakerData.name(), currentOrder.id(), e
                 );
                 error = true;
             }
@@ -88,9 +94,9 @@ public class RunnableBaker implements ManagedRunnableEmployee {
             try {
                 newOrders.add(currentOrder);
             } catch (ProhibitedQueueActionException | InterruptedException e) {
-                System.out.println(
-                    "Baker " + bakerData.name() + " cannot return "
-                        + "failed order " + currentOrder.id() + " to new orders list"
+                logger.error(
+                    "Baker {} cannot return failed order {} to new orders list",
+                    bakerData.name(), currentOrder.id(), e
                 );
             }
         }
@@ -103,9 +109,7 @@ public class RunnableBaker implements ManagedRunnableEmployee {
                 cookOrder();
             }
         }
-        System.out.println(
-            "Baker " + bakerData.name() + " has finished job"
-        );
+        logger.info("Baker {} has finished", bakerData.name());
         if (finishLatch != null) {
             finishLatch.countDown();
         }

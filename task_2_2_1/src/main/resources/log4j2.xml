@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="console">
+            <PatternLayout>
+                <Pattern>%d %p %c{1} [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </Console>
+        <File name="all" fileName="log/log.log">
+            <PatternLayout>
+                <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="pizzeria" fileName="log/pizzeria.log">
+            <PatternLayout>
+                <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="couriers" fileName="log/couriers.log">
+            <PatternLayout>
+                <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="bakers" fileName="log/bakers.log">
+            <PatternLayout>
+                <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="console" level="DEBUG"/>
+            <AppenderRef ref="all" level="DEBUG"/>
+        </Root>
+        <Logger name="kozlov.kirill.pizzeria.RunnablePizzeria" level="trace">
+            <AppenderRef ref="pizzeria" level="DEBUG"/>
+        </Logger>
+        <Logger name="kozlov.kirill.pizzeria.employees.RunnableBaker" level="trace">
+            <AppenderRef ref="bakers" level="DEBUG"/>
+        </Logger>
+        <Logger name="kozlov.kirill.pizzeria.employees.RunnableCourier" level="trace">
+            <AppenderRef ref="couriers" level="DEBUG"/>
+        </Logger>
+    </Loggers>
+</Configuration>
