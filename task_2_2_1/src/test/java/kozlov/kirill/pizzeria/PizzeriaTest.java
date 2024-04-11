@@ -139,7 +139,6 @@ public class PizzeriaTest {
             Assertions.fail();
         }
         while (runnablePizzeria.hasNotFinished());
-        Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
             Assertions.assertFalse(JsonUtils.parse(
                 resultFileStream, Setup.class
@@ -148,6 +147,7 @@ public class PizzeriaTest {
             e.printStackTrace();
             Assertions.fail();
         }
+        Assertions.assertFalse(pizzeriaThread.isAlive());
         String outputPath2 = "test2.json";
 
         try {
@@ -165,7 +165,6 @@ public class PizzeriaTest {
             Assertions.fail();
         }
         while (runnablePizzeria.hasNotFinished());
-        Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath2)) {
             Assertions.assertTrue(JsonUtils.parse(
                 resultFileStream, Setup.class
@@ -174,6 +173,7 @@ public class PizzeriaTest {
             e.printStackTrace();
             Assertions.fail();
         }
+        Assertions.assertFalse(pizzeriaThread.isAlive());
         removeFile(outputPath);
         removeFile(outputPath2);
     }
