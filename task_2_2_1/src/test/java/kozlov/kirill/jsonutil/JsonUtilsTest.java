@@ -1,14 +1,14 @@
 package kozlov.kirill.jsonutil;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import kozlov.kirill.pizzeria.data.Baker;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for JsonUtils class.
+ */
 public class JsonUtilsTest {
     private record TestObjectType(int intField) implements Serializable {}
 

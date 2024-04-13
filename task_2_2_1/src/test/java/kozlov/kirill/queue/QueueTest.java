@@ -5,6 +5,9 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for OwnBlockingQueue class.
+ */
 public class QueueTest {
     @Test
     void pipeIncrementing() {

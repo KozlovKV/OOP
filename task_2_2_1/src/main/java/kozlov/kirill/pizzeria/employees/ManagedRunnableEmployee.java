@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public interface ManagedRunnableEmployee extends Runnable {
     /**
-     * Sets finish semaphore which employee will release when finished job.
+     * Sets finish count-down latch which employee will count down when finished job.
      *
      * @param finishLatch condition for releasing
      */

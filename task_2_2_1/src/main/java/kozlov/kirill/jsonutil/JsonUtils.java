@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
 
+/**
+ * Utils for working with jackson serializer/parser.
+ */
 public final class JsonUtils {
     @ExcludeConstructorFromJacocoGeneratedReport
     private JsonUtils() {}

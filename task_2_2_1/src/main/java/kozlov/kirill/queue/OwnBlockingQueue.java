@@ -7,6 +7,11 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Own blocking queue with locks.
+ *
+ * @param <T> element's type
+ */
 public class OwnBlockingQueue<T> {
     private final int maxSize;
     private final LinkedList<T> list = new LinkedList<>();
@@ -18,19 +23,41 @@ public class OwnBlockingQueue<T> {
     private volatile boolean pollingpPohibited = false;
     private volatile boolean addingPohibited = false;
 
+    /**
+     * Max size constructor.
+     *
+     * @param maxSize queue size
+     */
     public OwnBlockingQueue(int maxSize) {
         this.maxSize = maxSize;
     }
 
+    /**
+     * Pre-defined data constructor.
+     * <br>
+     * Max size is assigned as data list size
+     *
+     * @param data data for queue
+     */
     public OwnBlockingQueue(ArrayList<T> data) {
         this.maxSize = data.size();
-        list.addAll(data); // Лучше добавить полноценное копирование
+        list.addAll(data);
     }
 
+    /**
+     * Max size getter.
+     *
+     * @return max size
+     */
     public int maxSize() {
         return maxSize;
     }
 
+    /**
+     * UNRELIABLE getter for current temporal queue size.
+     *
+     * @return current temporal size
+     */
     public int sizeUnreliable() {
         int size;
         queueLock.lock();
@@ -39,10 +66,20 @@ public class OwnBlockingQueue<T> {
         return size;
     }
 
+    /**
+     * UNRELIABLE predicate for checking queue is empty.
+     *
+     * @return true when queue is empty at this moment
+     */
     public boolean isEmptyUnreliable() {
         return sizeUnreliable() == 0;
     }
 
+    /**
+     * UNRELIABLE method for getting temporal queue copy
+     *
+     * @return list temporal shallow copy
+     */
     public ArrayList<T> getListCopyUnreliable() {
         queueLock.lock();
         ArrayList<T> copyList = new ArrayList<>(list);
@@ -50,6 +87,9 @@ public class OwnBlockingQueue<T> {
         return copyList;
     }
 
+    /**
+     * Prohibits next poll requests.
+     */
     public void prohibitPolling() {
         queueLock.lock();
         pollingpPohibited = true;
@@ -57,6 +97,14 @@ public class OwnBlockingQueue<T> {
         queueLock.unlock();
     }
 
+    /**
+     * Simple blocking poll.
+     *
+     * @return the first queue element
+     *
+     * @throws ProhibitedQueueActionException when polling was prohibited
+     * @throws InterruptedException when thread was interrupted
+     */
     public T poll(
     ) throws ProhibitedQueueActionException, InterruptedException {
         if (pollingpPohibited) {
@@ -77,6 +125,18 @@ public class OwnBlockingQueue<T> {
         }
     }
 
+    /**
+     * Timeout blocking poll.
+     *
+     * @param timeoutMs time in ms which thread will wait for element
+     *     when there are no elements now
+     *
+     * @return the first queue element
+     *
+     * @throws TimeoutException when time's up
+     * @throws ProhibitedQueueActionException when polling was prohibited
+     * @throws InterruptedException when thread was interrupted
+     */
     public T poll(
         long timeoutMs
     ) throws TimeoutException, ProhibitedQueueActionException, InterruptedException {
@@ -100,6 +160,9 @@ public class OwnBlockingQueue<T> {
         }
     }
 
+    /**
+     * Prohibits next add requests.
+     */
     public void prohibitAdding() {
         queueLock.lock();
         addingPohibited = true;
@@ -107,6 +170,14 @@ public class OwnBlockingQueue<T> {
         queueLock.unlock();
     }
 
+    /**
+     * Simple blocking add.
+     *
+     * @param element element for adding
+     *
+     * @throws ProhibitedQueueActionException when adding was prohibited
+     * @throws InterruptedException when thread was interrupted
+     */
     public void add(
         T element
     ) throws ProhibitedQueueActionException, InterruptedException {
@@ -128,6 +199,17 @@ public class OwnBlockingQueue<T> {
         }
     }
 
+    /**
+     * Timeout blocking adding.
+     *
+     * @param element element for adding
+     * @param timeoutMs time in ms which thread will wait for
+     *     available place in queue
+     *
+     * @throws TimeoutException when time's up
+     * @throws ProhibitedQueueActionException when adding was prohibited
+     * @throws InterruptedException when thread was interrupted
+     */
     public void add(
         T element, long timeoutMs
     ) throws TimeoutException, ProhibitedQueueActionException, InterruptedException {

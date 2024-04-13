@@ -9,6 +9,9 @@ import kozlov.kirill.queue.ProhibitedQueueActionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Baker class for thread launching.
+ */
 public class RunnableBaker implements ManagedRunnableEmployee {
     private final static Logger logger = LogManager.getLogger(RunnableBaker.class);
 
@@ -20,6 +23,13 @@ public class RunnableBaker implements ManagedRunnableEmployee {
 
     private CountDownLatch finishLatch = null;
 
+    /**
+     * Constructor.
+     *
+     * @param bakerData baker data
+     * @param newOrders link to blocking queue with new orders
+     * @param warehouse link to blocking queue with warehouse
+     */
     public RunnableBaker(
         Baker bakerData, OwnBlockingQueue<Order> newOrders,
         OwnBlockingQueue<Order> warehouse
@@ -62,7 +72,7 @@ public class RunnableBaker implements ManagedRunnableEmployee {
         boolean error = false;
         try {
             Thread.sleep(
-                (long) bakerData.speed() * RunnablePizzeria.TIME_MS_QUANTUM
+                (long) bakerData.cookingTime() * RunnablePizzeria.TIME_MS_QUANTUM
             );
         } catch (InterruptedException interruptedException) {
             logger.warn(
@@ -102,6 +112,12 @@ public class RunnableBaker implements ManagedRunnableEmployee {
         }
     }
 
+    /**
+     * Method for launching in thread.
+     * <br>
+     * Tries to accept new order, cooks it and then tries to place it to warehouse.
+     * Finishes job when has got signal for finishing and (perhaps) failed to accept order.
+     */
     @Override
     public void run() {
         while (! aboutToFinish) {

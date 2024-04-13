@@ -1,7 +1,7 @@
 {
   "bakers":[
-    {"name":"Kirill","speed":5},
-    {"name":"Artyom","speed":8}
+    {"name":"Kirill","cookingTime":5},
+    {"name":"Artyom","cookingTime":8}
   ],
   "couriers":[
     {"name":"Igor","capacity":1},

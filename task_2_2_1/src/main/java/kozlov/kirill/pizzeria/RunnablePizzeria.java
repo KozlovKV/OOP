@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-
 import kozlov.kirill.jsonutil.JsonUtils;
 import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Courier;
@@ -20,6 +19,9 @@ import kozlov.kirill.queue.OwnBlockingQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Pizzeria class for thread launching.
+ */
 public class RunnablePizzeria implements Runnable {
     public final static long TIME_MS_QUANTUM = 100; //< One time step in pizzeria's world
     public final static long ORDER_WAITING_MS = 1000;

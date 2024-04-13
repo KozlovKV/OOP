@@ -11,7 +11,9 @@ import kozlov.kirill.queue.ProhibitedQueueActionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/**
+ * Courier class for thread launching.
+ */
 public class RunnableCourier implements ManagedRunnableEmployee {
     private final static Logger logger = LogManager.getLogger(RunnableCourier.class);
 
@@ -23,6 +25,13 @@ public class RunnableCourier implements ManagedRunnableEmployee {
 
     private CountDownLatch finishLatch = null;
 
+    /**
+     * Constructor.
+     *
+     * @param courierData courier data
+     * @param newOrders link to blocking queue with new orders
+     * @param warehouse link to blocking queue with warehouse
+     */
     public RunnableCourier(
         Courier courierData,
         OwnBlockingQueue<Order> newOrders,
@@ -106,6 +115,13 @@ public class RunnableCourier implements ManagedRunnableEmployee {
         }
     }
 
+    /**
+     * Method for launching in thread.
+     * <br>
+     * Tries to fill trunk while don't get finishing signal and warehouse isn't empty.
+     * It there is any error while delivering orders courier return all orders from trunk
+     * to new orders.
+     */
     @Override
     public void run() {
         while (! aboutToFinish || ! warehouse.isEmptyUnreliable()) {

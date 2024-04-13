@@ -9,6 +9,9 @@ import kozlov.kirill.jsonutil.JsonUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for whole pizzeria's lifecycle.
+ */
 public class PizzeriaTest {
     static void removeFile(String path) {
         File file = new File(path);

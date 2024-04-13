@@ -1,5 +1,6 @@
 package kozlov.kirill.pizzeria;
 
+import java.util.ArrayList;
 import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Courier;
 import kozlov.kirill.pizzeria.data.Order;
@@ -9,8 +10,9 @@ import kozlov.kirill.queue.OwnBlockingQueue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
+/**
+ * Tests for specific situations with employees.
+ */
 public class EmployeesSpecificTest {
     @Test
     void barkerFailOrderTest() {
