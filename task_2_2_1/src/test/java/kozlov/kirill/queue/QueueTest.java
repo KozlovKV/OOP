@@ -48,13 +48,10 @@ public class QueueTest {
             Assertions.fail();
         }
         myQueue.prohibitPolling();
-        try {
-            myQueue.poll();
-        } catch (ProhibitedQueueActionException prohibited) {
-            return;
-        } catch (InterruptedException e) {
-            Assertions.fail();
-        }
+        Assertions.assertThrows(
+            ProhibitedQueueActionException.class,
+            myQueue::poll
+        );
     }
 
     @Test
@@ -67,12 +64,9 @@ public class QueueTest {
             Assertions.fail();
         }
         myQueue.prohibitAdding();
-        try {
-            myQueue.add(3);
-        } catch (ProhibitedQueueActionException prohibited) {
-        } catch (InterruptedException e) {
-            Assertions.fail();
-        }
+        Assertions.assertThrows(
+            ProhibitedQueueActionException.class, () -> myQueue.add(3)
+        );
         try {
             Assertions.assertEquals(1, myQueue.poll());
             Assertions.assertEquals(2, myQueue.poll());
@@ -92,13 +86,10 @@ public class QueueTest {
         ) {
             Assertions.fail();
         }
-        try {
-            myQueue.poll(1000);
-        } catch (ProhibitedQueueActionException | InterruptedException e) {
-            Assertions.fail();
-        } catch (TimeoutException timeoutException) {
-            return;
-        }
+        Assertions.assertThrows(
+            TimeoutException.class,
+            () -> myQueue.poll(1000)
+        );
     }
 
     @Test
@@ -106,17 +97,12 @@ public class QueueTest {
         OwnBlockingQueue<Integer> myQueue = new OwnBlockingQueue<>(1);
         try {
             myQueue.add(1, 1000);
-        } catch (
-            TimeoutException | ProhibitedQueueActionException | InterruptedException e
-        ) {
+        } catch (TimeoutException | ProhibitedQueueActionException | InterruptedException e) {
             Assertions.fail();
         }
-        try {
-            myQueue.add(2, 1000);
-        } catch (ProhibitedQueueActionException | InterruptedException e) {
-            Assertions.fail();
-        } catch (TimeoutException timeoutException) {
-            return;
-        }
+        Assertions.assertThrows(
+            TimeoutException.class,
+            () -> myQueue.add(2, 1000)
+        );
     }
 }

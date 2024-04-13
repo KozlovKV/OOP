@@ -39,7 +39,11 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (runnablePizzeria.hasNotFinished());
+        while (true) {
+            if (! runnablePizzeria.hasNotFinished()) {
+                break;
+            }
+        }
         Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
             Assertions.assertTrue(
@@ -73,7 +77,11 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (runnablePizzeria.hasNotFinished());
+        while (true) {
+            if (! runnablePizzeria.hasNotFinished()) {
+                break;
+            }
+        }
         Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
             Assertions.assertTrue(
@@ -107,7 +115,11 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (runnablePizzeria.hasNotFinished());
+        while (true) {
+            if (! runnablePizzeria.hasNotFinished()) {
+                break;
+            }
+        }
         Assertions.assertFalse(pizzeriaThread.isAlive());
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
             Assertions.assertTrue(
@@ -141,7 +153,11 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (runnablePizzeria.hasNotFinished());
+        while (true) {
+            if (! runnablePizzeria.hasNotFinished()) {
+                break;
+            }
+        }
         try (InputStream resultFileStream = new FileInputStream(outputPath)) {
             Assertions.assertFalse(JsonUtils.parse(
                 resultFileStream, Setup.class
@@ -167,7 +183,11 @@ public class PizzeriaTest {
         } catch (InterruptedException interruptedException) {
             Assertions.fail();
         }
-        while (runnablePizzeria.hasNotFinished());
+        while (true) {
+            if (! runnablePizzeria.hasNotFinished()) {
+                break;
+            }
+        }
         try (InputStream resultFileStream = new FileInputStream(outputPath2)) {
             Assertions.assertTrue(JsonUtils.parse(
                 resultFileStream, Setup.class

@@ -1,10 +1,9 @@
 package kozlov.kirill.pizzeria;
 
+import java.io.IOException;
 import kozlov.kirill.jsonutil.ParsingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 /**
  * Tests for specific pizzeria situations.
