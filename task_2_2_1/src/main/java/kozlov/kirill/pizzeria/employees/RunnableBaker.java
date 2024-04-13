@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
  * Baker class for thread launching.
  */
 public class RunnableBaker implements ManagedRunnableEmployee {
-    private final static Logger logger = LogManager.getLogger(RunnableBaker.class);
+    private static final Logger logger = LogManager.getLogger(RunnableBaker.class);
 
     private final Baker bakerData;
     private final OwnBlockingQueue<Order> newOrders;

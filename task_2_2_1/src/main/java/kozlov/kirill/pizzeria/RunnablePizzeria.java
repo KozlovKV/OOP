@@ -24,10 +24,10 @@ import org.apache.logging.log4j.Logger;
  * Pizzeria class for thread launching.
  */
 public class RunnablePizzeria implements Runnable {
-    public final static long TIME_MS_QUANTUM = 100; //< One time step in pizzeria's world
-    public final static long ORDER_WAITING_MS = 1000;
+    public static final long TIME_MS_QUANTUM = 100; //< One time step in pizzeria's world
+    public static final long ORDER_WAITING_MS = 1000;
 
-    private final static Logger logger = LogManager.getLogger(RunnablePizzeria.class);
+    private static final Logger logger = LogManager.getLogger(RunnablePizzeria.class);
 
     private final long timeForClosing;
     private volatile boolean finished = false;
@@ -41,6 +41,18 @@ public class RunnablePizzeria implements Runnable {
 
     private final String setupSavePath;
 
+    /**
+     * Constructor.
+     * <br>
+     * Loads data from specified load path and tires to initialize its internal data
+     *
+     * @param timeForClosing time in conventional units
+     * @param setupLoadPath path to initialize json setup
+     * @param setupSavePath path for final json setup
+     *
+     * @throws IOException when any error occurs while parsing input json setup
+     * @throws IllegalSetupDataException when input json setup has some illegal data
+     */
     public RunnablePizzeria(
         long timeForClosing, String setupLoadPath, String setupSavePath
     ) throws IOException, IllegalSetupDataException {
@@ -136,7 +148,9 @@ public class RunnablePizzeria implements Runnable {
         logger.info("All employees have started");
         try {
             Thread.sleep(timeForClosing * TIME_MS_QUANTUM);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException e) {
+            logger.info("Pizzeria was interrupted while waiting work day finish");
+        }
         logger.info("Finishing work day");
         finishWorkDay();
         logger.info("Work day finished");

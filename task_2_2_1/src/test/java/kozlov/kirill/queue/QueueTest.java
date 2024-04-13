@@ -81,9 +81,7 @@ public class QueueTest {
         try {
             myQueue.add(1, 1000);
             myQueue.poll(1000);
-        } catch (
-            TimeoutException | ProhibitedQueueActionException | InterruptedException e
-        ) {
+        } catch (TimeoutException | ProhibitedQueueActionException | InterruptedException e) {
             Assertions.fail();
         }
         Assertions.assertThrows(

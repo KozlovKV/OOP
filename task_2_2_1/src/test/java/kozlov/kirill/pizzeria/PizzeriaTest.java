@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import kozlov.kirill.pizzeria.data.Setup;
 import kozlov.kirill.jsonutil.JsonUtils;
+import kozlov.kirill.pizzeria.data.Setup;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

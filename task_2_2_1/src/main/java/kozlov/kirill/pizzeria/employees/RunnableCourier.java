@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
  * Courier class for thread launching.
  */
 public class RunnableCourier implements ManagedRunnableEmployee {
-    private final static Logger logger = LogManager.getLogger(RunnableCourier.class);
+    private static final Logger logger = LogManager.getLogger(RunnableCourier.class);
 
     private final Courier courierData;
     private final OwnBlockingQueue<Order> newOrders;
