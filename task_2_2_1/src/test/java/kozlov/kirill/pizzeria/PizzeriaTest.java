@@ -29,7 +29,7 @@ public class PizzeriaTest {
             runnablePizzeria = new RunnablePizzeria(
                 timeForClosing, "simple.json", outputPath
             );
-        } catch (IOException e) {
+        } catch (IOException | IllegalSetupDataException e) {
             Assertions.fail();
         }
         Thread pizzeriaThread = new Thread(runnablePizzeria);
@@ -63,7 +63,7 @@ public class PizzeriaTest {
             runnablePizzeria = new RunnablePizzeria(
                 timeForClosing, "simple.json", outputPath
             );
-        } catch (IOException e) {
+        } catch (IOException | IllegalSetupDataException e) {
             Assertions.fail();
         }
         Thread pizzeriaThread = new Thread(runnablePizzeria);
@@ -97,7 +97,7 @@ public class PizzeriaTest {
             runnablePizzeria = new RunnablePizzeria(
                 timeForClosing, "smallWarehouse.json", outputPath
             );
-        } catch (IOException e) {
+        } catch (IOException | IllegalSetupDataException e) {
             Assertions.fail();
         }
         Thread pizzeriaThread = new Thread(runnablePizzeria);
@@ -131,7 +131,7 @@ public class PizzeriaTest {
             runnablePizzeria = new RunnablePizzeria(
                 timeForClosing, "twoDays.json", outputPath
             );
-        } catch (IOException e) {
+        } catch (IOException | IllegalSetupDataException e) {
             Assertions.fail();
         }
         Thread pizzeriaThread = new Thread(runnablePizzeria);
@@ -157,7 +157,7 @@ public class PizzeriaTest {
             runnablePizzeria = new RunnablePizzeria(
                 timeForClosing, outputPath, outputPath2
             );
-        } catch (IOException e) {
+        } catch (IOException | IllegalSetupDataException e) {
             Assertions.fail();
         }
         pizzeriaThread = new Thread(runnablePizzeria);

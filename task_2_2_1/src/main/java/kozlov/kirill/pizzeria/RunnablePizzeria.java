@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import kozlov.kirill.jsonutil.JsonUtils;
+import kozlov.kirill.jsonutil.ParsingException;
 import kozlov.kirill.pizzeria.data.Baker;
 import kozlov.kirill.pizzeria.data.Courier;
 import kozlov.kirill.pizzeria.data.Order;
@@ -42,11 +43,12 @@ public class RunnablePizzeria implements Runnable {
 
     public RunnablePizzeria(
         long timeForClosing, String setupLoadPath, String setupSavePath
-    ) throws IOException {
+    ) throws IOException, IllegalSetupDataException {
         logger.info("Initializing Pizzeria");
         this.timeForClosing = timeForClosing;
         this.setupSavePath = setupSavePath;
         Setup setup = getSetup(setupLoadPath);
+        checkSetupValidness(setup);
         bakers = setup.bakers();
         couriers = setup.couriers();
         warehouse = new OwnBlockingQueue<>(setup.warehouseCapacity());
@@ -79,7 +81,12 @@ public class RunnablePizzeria implements Runnable {
             logger.error("Failed to load setup", e);
             throw e;
         }
-        loadedSetup = JsonUtils.parse(inputStream, Setup.class);
+        try {
+            loadedSetup = JsonUtils.parse(inputStream, Setup.class);
+        } catch (ParsingException e) {
+            logger.error("Failed to parse setup", e);
+            throw e;
+        }
         inputStream.close();
         logger.info("Loaded setup from {}", setupPath);
         return loadedSetup;
@@ -102,6 +109,23 @@ public class RunnablePizzeria implements Runnable {
             } catch (IOException stringSerializeException) {
                 logger.error("Failed to serialize setup", stringSerializeException);
             }
+        }
+    }
+
+    private void checkSetupValidness(
+        Setup setup
+    ) throws IllegalSetupDataException {
+        if (setup.bakers().isEmpty()) {
+            logger.error("Invalid setup: no bakers found");
+            throw new IllegalSetupDataException("There are no bakers");
+        }
+        if (setup.couriers().isEmpty()) {
+            logger.error("Invalid setup: no couriers found");
+            throw new IllegalSetupDataException("There are no couriers");
+        }
+        if (setup.warehouseCapacity() <= 0) {
+            logger.error("Invalid setup: non-positive warehouse capacity");
+            throw new IllegalSetupDataException("There is invalid warehouse capacity");
         }
     }
 

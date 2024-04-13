@@ -1,6 +1,8 @@
 package kozlov.kirill;
 
 import java.io.IOException;
+
+import kozlov.kirill.pizzeria.IllegalSetupDataException;
 import kozlov.kirill.pizzeria.RunnablePizzeria;
 
 /**
@@ -21,7 +23,7 @@ public class Main {
                     "./testData/simpleTest.json"
                 )
             ).start();
-        } catch (IOException e) {
+        } catch (IOException | IllegalSetupDataException e) {
             e.printStackTrace();
         }
     }
