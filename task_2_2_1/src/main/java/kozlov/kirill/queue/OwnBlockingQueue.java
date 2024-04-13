@@ -76,7 +76,7 @@ public class OwnBlockingQueue<T> {
     }
 
     /**
-     * UNRELIABLE method for getting temporal queue copy
+     * UNRELIABLE method for getting temporal queue copy.
      *
      * @return list temporal shallow copy
      */

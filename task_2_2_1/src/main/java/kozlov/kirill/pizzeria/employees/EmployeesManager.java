@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Manager for thread-safe working with employees' list
+ * Manager for thread-safe working with employees' list.
  *
  * @param <T> employees' type
  */

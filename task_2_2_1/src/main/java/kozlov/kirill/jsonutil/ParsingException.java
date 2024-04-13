@@ -1,8 +1,7 @@
 package kozlov.kirill.jsonutil;
 
-import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
-
 import java.io.IOException;
+import kozlov.kirill.ExcludeConstructorFromJacocoGeneratedReport;
 
 /**
  * Exception for any parsing error.

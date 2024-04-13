@@ -1,7 +1,6 @@
 package kozlov.kirill;
 
 import java.io.IOException;
-
 import kozlov.kirill.pizzeria.IllegalSetupDataException;
 import kozlov.kirill.pizzeria.RunnablePizzeria;
 
