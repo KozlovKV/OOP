@@ -129,7 +129,9 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,java.lang.String,java.lang.String)" class="member-name-link">RunnablePizzeria</a><wbr>(long&nbsp;timeForClosing,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;setupLoadPath,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;setupSavePath)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -211,10 +213,17 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;setupSavePath)</span>
                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a>,
 <a href="IllegalSetupDataException.html" title="class in kozlov.kirill.pizzeria">IllegalSetupDataException</a></span></div>
+<div class="block">Constructor.
+ <br>
+ Loads data from specified load path and tires to initialize its internal data</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>timeForClosing</code> - time in conventional units</dd>
+<dd><code>setupLoadPath</code> - path to initialize json setup</dd>
+<dd><code>setupSavePath</code> - path for final json setup</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
-<dd><code><a href="IllegalSetupDataException.html" title="class in kozlov.kirill.pizzeria">IllegalSetupDataException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - when any error occurs while parsing input json setup</dd>
+<dd><code><a href="IllegalSetupDataException.html" title="class in kozlov.kirill.pizzeria">IllegalSetupDataException</a></code> - when input json setup has some illegal data</dd>
 </dl>
 </section>
 </li>
