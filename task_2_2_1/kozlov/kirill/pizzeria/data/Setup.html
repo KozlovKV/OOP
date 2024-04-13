@@ -91,6 +91,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
+<dt>Record Components:</dt>
+<dd><code><span id="param-bakers">bakers</span></code> - bakers' list</dd>
+<dd><code><span id="param-couriers">couriers</span></code> - couriers' list</dd>
+<dd><code><span id="param-warehouseCapacity">warehouseCapacity</span></code> - warehouse size</dd>
+<dd><code><span id="param-orders">orders</span></code> - orders' list</dd>
+</dl>
+<dl class="notes">
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../../jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a></code></dd>
 </dl>
@@ -98,6 +105,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Setup</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Baker.html" title="class in kozlov.kirill.pizzeria.data">Baker</a>&gt;&nbsp;bakers, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Courier.html" title="class in kozlov.kirill.pizzeria.data">Courier</a>&gt;&nbsp;couriers, int&nbsp;warehouseCapacity, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;orders)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a>
 implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a></span></div>
+<div class="block">Record-class with all data for pizzeria.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -133,12 +141,12 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;<a href="Baker.html" title="class in kozlov.kirill.pizzeria.data">Baker</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bakers()" class="member-name-link">bakers</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>bakers</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-bakers"><code>bakers</code></a> record component.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;<a href="Courier.html" title="class in kozlov.kirill.pizzeria.data">Courier</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#couriers()" class="member-name-link">couriers</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>couriers</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-couriers"><code>couriers</code></a> record component.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
@@ -153,7 +161,7 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;<a href="Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#orders()" class="member-name-link">orders</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>orders</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-orders"><code>orders</code></a> record component.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -163,7 +171,7 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#warehouseCapacity()" class="member-name-link">warehouseCapacity</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>warehouseCapacity</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-warehouseCapacity"><code>warehouseCapacity</code></a> record component.</div>
 </div>
 </div>
 </div>
@@ -192,10 +200,10 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="block">Creates an instance of a <code>Setup</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>bakers</code> - the value for the <code>bakers</code> record component</dd>
-<dd><code>couriers</code> - the value for the <code>couriers</code> record component</dd>
-<dd><code>warehouseCapacity</code> - the value for the <code>warehouseCapacity</code> record component</dd>
-<dd><code>orders</code> - the value for the <code>orders</code> record component</dd>
+<dd><code>bakers</code> - the value for the <a href="#param-bakers"><code>bakers</code></a> record component</dd>
+<dd><code>couriers</code> - the value for the <a href="#param-couriers"><code>couriers</code></a> record component</dd>
+<dd><code>warehouseCapacity</code> - the value for the <a href="#param-warehouseCapacity"><code>warehouseCapacity</code></a> record component</dd>
+<dd><code>orders</code> - the value for the <a href="#param-orders"><code>orders</code></a> record component</dd>
 </dl>
 </section>
 </li>
@@ -252,10 +260,10 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <section class="detail" id="bakers()">
 <h3>bakers</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Baker.html" title="class in kozlov.kirill.pizzeria.data">Baker</a>&gt;</span>&nbsp;<span class="element-name">bakers</span>()</div>
-<div class="block">Returns the value of the <code>bakers</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-bakers"><code>bakers</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>bakers</code> record component</dd>
+<dd>the value of the <a href="#param-bakers"><code>bakers</code></a> record component</dd>
 </dl>
 </section>
 </li>
@@ -263,10 +271,10 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <section class="detail" id="couriers()">
 <h3>couriers</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Courier.html" title="class in kozlov.kirill.pizzeria.data">Courier</a>&gt;</span>&nbsp;<span class="element-name">couriers</span>()</div>
-<div class="block">Returns the value of the <code>couriers</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-couriers"><code>couriers</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>couriers</code> record component</dd>
+<dd>the value of the <a href="#param-couriers"><code>couriers</code></a> record component</dd>
 </dl>
 </section>
 </li>
@@ -274,10 +282,10 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <section class="detail" id="warehouseCapacity()">
 <h3>warehouseCapacity</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">warehouseCapacity</span>()</div>
-<div class="block">Returns the value of the <code>warehouseCapacity</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-warehouseCapacity"><code>warehouseCapacity</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>warehouseCapacity</code> record component</dd>
+<dd>the value of the <a href="#param-warehouseCapacity"><code>warehouseCapacity</code></a> record component</dd>
 </dl>
 </section>
 </li>
@@ -285,10 +293,10 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <section class="detail" id="orders()">
 <h3>orders</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;</span>&nbsp;<span class="element-name">orders</span>()</div>
-<div class="block">Returns the value of the <code>orders</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-orders"><code>orders</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>orders</code> record component</dd>
+<dd>the value of the <a href="#param-orders"><code>orders</code></a> record component</dd>
 </dl>
 </section>
 </li>

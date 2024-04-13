@@ -88,9 +88,14 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">kozlov.kirill.queue.OwnBlockingQueue&lt;T&gt;</div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - element's type</dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">OwnBlockingQueue&lt;T&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Own blocking queue with locks.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -103,9 +108,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">OwnBlockingQueue</a><wbr>(int&nbsp;maxSize)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Max size constructor.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.util.ArrayList)" class="member-name-link">OwnBlockingQueue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a>&gt;&nbsp;data)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Pre-defined data constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -122,35 +131,55 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add(T)" class="member-name-link">add</a><wbr>(<a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a>&nbsp;element)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Simple blocking add.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add(T,long)" class="member-name-link">add</a><wbr>(<a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a>&nbsp;element,
  long&nbsp;timeoutMs)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Timeout blocking adding.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a><wbr>&lt;<a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getListCopyUnreliable()" class="member-name-link">getListCopyUnreliable</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">UNRELIABLE method for getting temporal queue copy</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEmptyUnreliable()" class="member-name-link">isEmptyUnreliable</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">UNRELIABLE predicate for checking queue is empty.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxSize()" class="member-name-link">maxSize</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Max size getter.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#poll()" class="member-name-link">poll</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Simple blocking poll.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#poll(long)" class="member-name-link">poll</a><wbr>(long&nbsp;timeoutMs)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Timeout blocking poll.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#prohibitAdding()" class="member-name-link">prohibitAdding</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Prohibits next add requests.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#prohibitPolling()" class="member-name-link">prohibitPolling</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Prohibits next poll requests.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sizeUnreliable()" class="member-name-link">sizeUnreliable</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">UNRELIABLE getter for current temporal queue size.</div>
+</div>
 </div>
 </div>
 </div>
@@ -172,12 +201,24 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>OwnBlockingQueue</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">OwnBlockingQueue</span><wbr><span class="parameters">(int&nbsp;maxSize)</span></div>
+<div class="block">Max size constructor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>maxSize</code> - queue size</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(java.util.ArrayList)">
 <h3>OwnBlockingQueue</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">OwnBlockingQueue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a>&gt;&nbsp;data)</span></div>
+<div class="block">Pre-defined data constructor.
+ <br>
+ Max size is assigned as data list size</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>data</code> - data for queue</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -192,30 +233,51 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="maxSize()">
 <h3>maxSize</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">maxSize</span>()</div>
+<div class="block">Max size getter.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>max size</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="sizeUnreliable()">
 <h3>sizeUnreliable</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">sizeUnreliable</span>()</div>
+<div class="block">UNRELIABLE getter for current temporal queue size.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>current temporal size</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="isEmptyUnreliable()">
 <h3>isEmptyUnreliable</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEmptyUnreliable</span>()</div>
+<div class="block">UNRELIABLE predicate for checking queue is empty.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true when queue is empty at this moment</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getListCopyUnreliable()">
 <h3>getListCopyUnreliable</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a>&gt;</span>&nbsp;<span class="element-name">getListCopyUnreliable</span>()</div>
+<div class="block">UNRELIABLE method for getting temporal queue copy</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>list temporal shallow copy</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="prohibitPolling()">
 <h3>prohibitPolling</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prohibitPolling</span>()</div>
+<div class="block">Prohibits next poll requests.</div>
 </section>
 </li>
 <li>
@@ -224,10 +286,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a></span>&nbsp;<span class="element-name">poll</span>()
        throws <span class="exceptions"><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a>,
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="block">Simple blocking poll.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>the first queue element</dd>
 <dt>Throws:</dt>
-<dd><code><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
+<dd><code><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a></code> - when polling was prohibited</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code> - when thread was interrupted</dd>
 </dl>
 </section>
 </li>
@@ -238,11 +303,17 @@ loadScripts(document, 'script');</script>
        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/TimeoutException.html" title="class or interface in java.util.concurrent" class="external-link">TimeoutException</a>,
 <a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a>,
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="block">Timeout blocking poll.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>timeoutMs</code> - time in ms which thread will wait for element
+     when there are no elements now</dd>
+<dt>Returns:</dt>
+<dd>the first queue element</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/TimeoutException.html" title="class or interface in java.util.concurrent" class="external-link">TimeoutException</a></code></dd>
-<dd><code><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/TimeoutException.html" title="class or interface in java.util.concurrent" class="external-link">TimeoutException</a></code> - when time's up</dd>
+<dd><code><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a></code> - when polling was prohibited</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code> - when thread was interrupted</dd>
 </dl>
 </section>
 </li>
@@ -250,6 +321,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="prohibitAdding()">
 <h3>prohibitAdding</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prohibitAdding</span>()</div>
+<div class="block">Prohibits next add requests.</div>
 </section>
 </li>
 <li>
@@ -258,10 +330,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="OwnBlockingQueue.html" title="type parameter in OwnBlockingQueue">T</a>&nbsp;element)</span>
          throws <span class="exceptions"><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a>,
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="block">Simple blocking add.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>element</code> - element for adding</dd>
 <dt>Throws:</dt>
-<dd><code><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
+<dd><code><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a></code> - when adding was prohibited</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code> - when thread was interrupted</dd>
 </dl>
 </section>
 </li>
@@ -273,11 +348,16 @@ loadScripts(document, 'script');</script>
          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/TimeoutException.html" title="class or interface in java.util.concurrent" class="external-link">TimeoutException</a>,
 <a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a>,
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="block">Timeout blocking adding.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>element</code> - element for adding</dd>
+<dd><code>timeoutMs</code> - time in ms which thread will wait for
+     available place in queue</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/TimeoutException.html" title="class or interface in java.util.concurrent" class="external-link">TimeoutException</a></code></dd>
-<dd><code><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/TimeoutException.html" title="class or interface in java.util.concurrent" class="external-link">TimeoutException</a></code> - when time's up</dd>
+<dd><code><a href="ProhibitedQueueActionException.html" title="class in kozlov.kirill.queue">ProhibitedQueueActionException</a></code> - when adding was prohibited</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code> - when thread was interrupted</dd>
 </dl>
 </section>
 </li>

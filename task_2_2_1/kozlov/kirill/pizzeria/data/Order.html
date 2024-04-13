@@ -91,6 +91,11 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
+<dt>Record Components:</dt>
+<dd><code><span id="param-id">id</span></code> - order id</dd>
+<dd><code><span id="param-distance">distance</span></code> - distance to destination in conventional units (aka time for delivering)</dd>
+</dl>
+<dl class="notes">
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../../jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a></code></dd>
 </dl>
@@ -98,6 +103,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Order</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id, int&nbsp;distance)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a>
 implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a></span></div>
+<div class="block">Order record-class.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -131,7 +137,7 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#distance()" class="member-name-link">distance</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>distance</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-distance"><code>distance</code></a> record component.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
@@ -146,7 +152,7 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#id()" class="member-name-link">id</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>id</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-id"><code>id</code></a> record component.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -178,8 +184,8 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="block">Creates an instance of a <code>Order</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>id</code> - the value for the <code>id</code> record component</dd>
-<dd><code>distance</code> - the value for the <code>distance</code> record component</dd>
+<dd><code>id</code> - the value for the <a href="#param-id"><code>id</code></a> record component</dd>
+<dd><code>distance</code> - the value for the <a href="#param-distance"><code>distance</code></a> record component</dd>
 </dl>
 </section>
 </li>
@@ -236,10 +242,10 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <section class="detail" id="id()">
 <h3>id</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">id</span>()</div>
-<div class="block">Returns the value of the <code>id</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-id"><code>id</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>id</code> record component</dd>
+<dd>the value of the <a href="#param-id"><code>id</code></a> record component</dd>
 </dl>
 </section>
 </li>
@@ -247,10 +253,10 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <section class="detail" id="distance()">
 <h3>distance</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">distance</span>()</div>
-<div class="block">Returns the value of the <code>distance</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-distance"><code>distance</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>distance</code> record component</dd>
+<dd>the value of the <a href="#param-distance"><code>distance</code></a> record component</dd>
 </dl>
 </section>
 </li>

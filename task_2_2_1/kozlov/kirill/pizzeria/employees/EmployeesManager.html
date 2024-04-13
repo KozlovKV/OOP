@@ -88,9 +88,14 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">kozlov.kirill.pizzeria.employees.EmployeesManager&lt;T&gt;</div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - employees' type</dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">EmployeesManager&lt;T extends <a href="ManagedRunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.employees">ManagedRunnableEmployee</a>&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Manager for thread-safe working with employees' list</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -103,7 +108,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.ArrayList)" class="member-name-link">EmployeesManager</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="EmployeesManager.html" title="type parameter in EmployeesManager">T</a>&gt;&nbsp;employees)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -120,13 +127,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offerEmployeesFinishJob()" class="member-name-link">offerEmployeesFinishJob</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sends to employees signal for finishing job.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startEmployees()" class="member-name-link">startEmployees</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Runs employees in separated threads.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#waitForAllEmployeesFinished()" class="member-name-link">waitForAllEmployeesFinished</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Waits for all employees finish their job.</div>
+</div>
 </div>
 </div>
 </div>
@@ -148,6 +161,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(java.util.ArrayList)">
 <h3>EmployeesManager</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">EmployeesManager</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="EmployeesManager.html" title="type parameter in EmployeesManager">T</a>&gt;&nbsp;employees)</span></div>
+<div class="block">Constructor.
+ <br>
+ Initialize count-down latch with count as employees' list size</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>employees</code> - employees' list for running in separated threads</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -162,12 +182,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="startEmployees()">
 <h3>startEmployees</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">startEmployees</span>()</div>
+<div class="block">Runs employees in separated threads.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="offerEmployeesFinishJob()">
 <h3>offerEmployeesFinishJob</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">offerEmployeesFinishJob</span>()</div>
+<div class="block">Sends to employees signal for finishing job.</div>
 </section>
 </li>
 <li>
@@ -175,9 +197,13 @@ loadScripts(document, 'script');</script>
 <h3>waitForAllEmployeesFinished</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">waitForAllEmployeesFinished</span>()
                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="block">Waits for all employees finish their job.
+ <br>
+ Waits using count-down latch which will unlock when all employees' threads
+ call .countDown() method</div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code> - when latch's waiting was interrupted</dd>
 </dl>
 </section>
 </li>

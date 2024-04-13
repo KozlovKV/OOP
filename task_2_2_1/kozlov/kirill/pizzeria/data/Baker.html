@@ -91,13 +91,19 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
+<dt>Record Components:</dt>
+<dd><code><span id="param-name">name</span></code> - baker name</dd>
+<dd><code><span id="param-cookingTime">cookingTime</span></code> - time for cooking in conventional units</dd>
+</dl>
+<dl class="notes">
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../../jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Baker</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name, int&nbsp;speed)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Baker</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name, int&nbsp;cookingTime)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a>
 implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov.kirill.jsonutil">Serializable</a></span></div>
+<div class="block">Baker record-class</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -110,7 +116,7 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,int)" class="member-name-link">Baker</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- int&nbsp;speed)</code></div>
+ int&nbsp;cookingTime)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>Baker</code> record class.</div>
 </div>
@@ -128,25 +134,25 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cookingTime()" class="member-name-link">cookingTime</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-cookingTime"><code>cookingTime</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a hash code value for this object.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>name</code> record component.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#speed()" class="member-name-link">speed</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>speed</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-name"><code>name</code></a> record component.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -174,12 +180,12 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <section class="detail" id="&lt;init&gt;(java.lang.String,int)">
 <h3>Baker</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Baker</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- int&nbsp;speed)</span></div>
+ int&nbsp;cookingTime)</span></div>
 <div class="block">Creates an instance of a <code>Baker</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>name</code> - the value for the <code>name</code> record component</dd>
-<dd><code>speed</code> - the value for the <code>speed</code> record component</dd>
+<dd><code>name</code> - the value for the <a href="#param-name"><code>name</code></a> record component</dd>
+<dd><code>cookingTime</code> - the value for the <a href="#param-cookingTime"><code>cookingTime</code></a> record component</dd>
 </dl>
 </section>
 </li>
@@ -236,21 +242,21 @@ implements <a href="../../jsonutil/Serializable.html" title="interface in kozlov
 <section class="detail" id="name()">
 <h3>name</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">name</span>()</div>
-<div class="block">Returns the value of the <code>name</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-name"><code>name</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>name</code> record component</dd>
+<dd>the value of the <a href="#param-name"><code>name</code></a> record component</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="speed()">
-<h3>speed</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">speed</span>()</div>
-<div class="block">Returns the value of the <code>speed</code> record component.</div>
+<section class="detail" id="cookingTime()">
+<h3>cookingTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">cookingTime</span>()</div>
+<div class="block">Returns the value of the <a href="#param-cookingTime"><code>cookingTime</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>speed</code> record component</dd>
+<dd>the value of the <a href="#param-cookingTime"><code>cookingTime</code></a> record component</dd>
 </dl>
 </section>
 </li>

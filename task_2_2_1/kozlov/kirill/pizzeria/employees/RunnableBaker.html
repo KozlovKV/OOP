@@ -96,6 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RunnableBaker</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="ManagedRunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.employees">ManagedRunnableEmployee</a></span></div>
+<div class="block">Baker class for thread launching.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -110,7 +111,9 @@ implements <a href="ManagedRunnableEmployee.html" title="interface in kozlov.kir
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(kozlov.kirill.pizzeria.data.Baker,kozlov.kirill.queue.OwnBlockingQueue,kozlov.kirill.queue.OwnBlockingQueue)" class="member-name-link">RunnableBaker</a><wbr>(<a href="../data/Baker.html" title="class in kozlov.kirill.pizzeria.data">Baker</a>&nbsp;bakerData,
  <a href="../../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;newOrders,
  <a href="../../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;warehouse)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -132,11 +135,13 @@ implements <a href="ManagedRunnableEmployee.html" title="interface in kozlov.kir
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for launching in thread.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFinishLatch(java.util.concurrent.CountDownLatch)" class="member-name-link">setFinishLatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CountDownLatch.html" title="class or interface in java.util.concurrent" class="external-link">CountDownLatch</a>&nbsp;finishLatch)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets finish semaphore which employee will release when finished job.</div>
+<div class="block">Sets finish count-down latch which employee will count down when finished job.</div>
 </div>
 </div>
 </div>
@@ -161,6 +166,13 @@ implements <a href="ManagedRunnableEmployee.html" title="interface in kozlov.kir
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RunnableBaker</span><wbr><span class="parameters">(<a href="../data/Baker.html" title="class in kozlov.kirill.pizzeria.data">Baker</a>&nbsp;bakerData,
  <a href="../../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;newOrders,
  <a href="../../queue/OwnBlockingQueue.html" title="class in kozlov.kirill.queue">OwnBlockingQueue</a>&lt;<a href="../data/Order.html" title="class in kozlov.kirill.pizzeria.data">Order</a>&gt;&nbsp;warehouse)</span></div>
+<div class="block">Constructor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>bakerData</code> - baker data</dd>
+<dd><code>newOrders</code> - link to blocking queue with new orders</dd>
+<dd><code>warehouse</code> - link to blocking queue with warehouse</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -176,7 +188,7 @@ implements <a href="ManagedRunnableEmployee.html" title="interface in kozlov.kir
 <h3>setFinishLatch</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setFinishLatch</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CountDownLatch.html" title="class or interface in java.util.concurrent" class="external-link">CountDownLatch</a>&nbsp;finishLatch)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="ManagedRunnableEmployee.html#setFinishLatch(java.util.concurrent.CountDownLatch)">ManagedRunnableEmployee</a></code></span></div>
-<div class="block">Sets finish semaphore which employee will release when finished job.</div>
+<div class="block">Sets finish count-down latch which employee will count down when finished job.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ManagedRunnableEmployee.html#setFinishLatch(java.util.concurrent.CountDownLatch)">setFinishLatch</a></code>&nbsp;in interface&nbsp;<code><a href="ManagedRunnableEmployee.html" title="interface in kozlov.kirill.pizzeria.employees">ManagedRunnableEmployee</a></code></dd>
@@ -203,6 +215,10 @@ implements <a href="ManagedRunnableEmployee.html" title="interface in kozlov.kir
 <section class="detail" id="run()">
 <h3>run</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run</span>()</div>
+<div class="block">Method for launching in thread.
+ <br>
+ Tries to accept new order, cooks it and then tries to place it to warehouse.
+ Finishes job when has got signal for finishing and (perhaps) failed to accept order.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html#run()" title="class or interface in java.lang" class="external-link">run</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></code></dd>
