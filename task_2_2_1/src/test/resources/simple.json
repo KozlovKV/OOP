@@ -1,0 +1,17 @@
+{
+  "bakers":[
+    {"name":"Kirill","cookingTime":5},
+    {"name":"Artyom","cookingTime":8}
+  ],
+  "couriers":[
+    {"name":"Igor","capacity":1},
+    {"name":"Anton","capacity":2}
+  ],
+  "warehouseCapacity":10,
+  "orders":[
+    {"id":"a1","distance":1},
+    {"id":"c3","distance":4},
+    {"id":"a5","distance":10},
+    {"id":"a9","distance":3}
+  ]
+}
