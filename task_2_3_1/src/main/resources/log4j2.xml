@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="console">
+            <PatternLayout>
+                <Pattern>%d %p %c{1} [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </Console>
+        <File name="all" fileName="log/log.log">
+            <PatternLayout>
+                <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="model" fileName="log/model.log">
+            <PatternLayout>
+                <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="view" fileName="log/view.log">
+            <PatternLayout>
+                <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+        <File name="model-view" fileName="log/model-view.log">
+            <PatternLayout>
+                <Pattern>%d %p %c [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="console" level="DEBUG"/>
+            <AppenderRef ref="all" level="DEBUG"/>
+        </Root>
+        <Logger name="model" level="trace">
+            <AppenderRef ref="model" level="DEBUG"/>
+        </Logger>
+        <Logger name="view" level="trace">
+            <AppenderRef ref="view" level="DEBUG"/>
+        </Logger>
+        <Logger name="model-view" level="trace">
+            <AppenderRef ref="model-view" level="DEBUG"/>
+        </Logger>
+    </Loggers>
+</Configuration>
