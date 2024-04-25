@@ -26,8 +26,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'kozlov.kirill.snake.task_2_3_1'
-    mainClass = 'kozlov.kirill.snake.task_2_3_1.HelloApplication'
+    mainModule = 'kozlov.kirill.snake'
+    mainClass = 'kozlov.kirill.snake.HelloApplication'
 }
 
 javafx {
@@ -47,6 +47,12 @@ dependencies {
 
     implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
     implementation 'org.apache.logging.log4j:log4j-core:2.23.1'
+
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.32'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 }
 
 test {
