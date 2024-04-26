@@ -20,6 +20,7 @@ public class GameModel {
 
     @Getter
     private final LinkedList<Point> snake = new LinkedList<>();
+    private boolean died = false;
 
     @Getter
     @Setter
@@ -34,7 +35,17 @@ public class GameModel {
             snake.addFirst(head.copy());
             head.move(vector);
         }
-        updateApple();
+        updateAppleRandomly();
+    }
+
+    public GameModel(int startX, int startY) {
+        Point head = new Point(startX, startY);
+        Vector invertedVector = vector.getInvertedVector();
+        for (int i = 0; i < INITIAL_SNAKE_SIZE; ++i) {
+            snake.add(head.copy());
+            head.move(invertedVector);
+        }
+        updateAppleRandomly();
     }
 
     public Point getSnakeHead() {
@@ -50,24 +61,29 @@ public class GameModel {
         newHead.move(vector, 0, fieldWidth - 1, 0, fieldHeight - 1);
         snake.addFirst(newHead);
         if (newHead.equals(apple)) {
-            updateApple();
+            updateAppleRandomly();
             logger.info("Snake grew up");
         } else {
             snake.removeLast();
         }
+        checkSnakeLives();
     }
 
-    public boolean shouldDie() {
+    private void checkSnakeLives() {
         Point head = getSnakeHead();
         for (int i = 1; i < snake.size(); ++i) {
             if (head.equals(snake.get(i))) {
-                return true;
+                died = true;
+                return;
             }
         }
-        return false;
     }
 
-    private void updateApple() {
+    public boolean isDied() {
+        return died;
+    }
+
+    private void updateAppleRandomly() {
         Random random = new Random();
         do {
             apple = new Point(random.nextInt(fieldWidth), random.nextInt(fieldHeight));

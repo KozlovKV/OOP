@@ -1,6 +1,5 @@
 package kozlov.kirill.snake.model_view;
 
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
@@ -140,7 +139,7 @@ public class GameController implements SceneManagerAccessible {
         setCellColor(currentHead.getX(), currentHead.getY(), SNAKE_HEX_CODE);
 
         gameModel.moveSnake();
-        if (gameModel.shouldDie()) {
+        if (gameModel.isDied()) {
             animationTimer.stop();
             sceneManager.changeScene(SceneEnum.GAME_OVER);
             // TODO: проверить, надо ли чистить какие-то данные в этот момент
