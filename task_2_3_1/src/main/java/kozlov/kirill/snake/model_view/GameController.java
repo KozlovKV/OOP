@@ -1,5 +1,7 @@
 package kozlov.kirill.snake.model_view;
 
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -8,6 +10,7 @@ import javafx.scene.shape.Rectangle;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
 import kozlov.kirill.snake.model.game.Vector;
+import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,8 +31,24 @@ public class GameController implements SceneManagerAccessible {
     @FXML
     private GridPane fieldGrid;
     private ArrayList<ArrayList<Rectangle>> fieldRects;
+    private boolean updatedAfterKeyPressed = false;
 
     private GameModel gameModel;
+
+    private final AnimationTimer animationTimer = new AnimationTimer() {
+        public static final long UPDATE_MS = 33;
+        private long lastUpdateTimestamp = 0;
+
+        @Override
+        public void handle(long nanoSecTimestamp) {
+            long msTimestamp = nanoSecTimestamp / 1000000;
+            if (msTimestamp - lastUpdateTimestamp < UPDATE_MS) {
+                return;
+            }
+            updateSnakeCells();
+            lastUpdateTimestamp = msTimestamp;
+        }
+    };
 
     @Override
     public void setSceneManager(SceneManager sceneManager) {
@@ -39,9 +58,14 @@ public class GameController implements SceneManagerAccessible {
         constructField();
 
         sceneManager.getCurrentScene().setOnKeyPressed(this::keyHandler);
+
+        animationTimer.start();
     }
 
     private void keyHandler(KeyEvent event) {
+        if (!updatedAfterKeyPressed) {
+            return;
+        }
         Vector currentVector = gameModel.getVector();
         switch (event.getCode()) {
             case UP:
@@ -69,13 +93,16 @@ public class GameController implements SceneManagerAccessible {
                 }
                 break;
         }
-        updateSnakeCells();
+        updatedAfterKeyPressed = false;
     }
 
+    // TODO: Вынести чисто стилевые статические штуки в отдельный класс
     private static Rectangle getCell() {
         Rectangle rectangle = new Rectangle(
-            32, 32, Paint.valueOf(FIELD_HEX_CODE)
+            30, 30, Paint.valueOf(FIELD_HEX_CODE)
         );
+        rectangle.getStyleClass().clear();
+        rectangle.getStyleClass().add("cell");
         return rectangle;
     }
 
@@ -113,10 +140,19 @@ public class GameController implements SceneManagerAccessible {
         setCellColor(currentHead.getX(), currentHead.getY(), SNAKE_HEX_CODE);
 
         gameModel.moveSnake();
+        if (gameModel.shouldDie()) {
+            animationTimer.stop();
+            sceneManager.changeScene(SceneEnum.GAME_OVER);
+            // TODO: проверить, надо ли чистить какие-то данные в этот момент
+            return;
+        }
+
         Point newHead = gameModel.getSnakeHead();
         setCellColor(newHead.getX(), newHead.getY(), SNAKE_HEAD_HEX_CODE);
 
         Point apple = gameModel.getApple();
         setCellColor(apple.getX(), apple.getY(), APPLE_HEX_CODE);
+
+        updatedAfterKeyPressed = true;
     }
 }

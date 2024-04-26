@@ -57,6 +57,16 @@ public class GameModel {
         }
     }
 
+    public boolean shouldDie() {
+        Point head = getSnakeHead();
+        for (int i = 1; i < snake.size(); ++i) {
+            if (head.equals(snake.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void updateApple() {
         Random random = new Random();
         do {

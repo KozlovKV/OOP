@@ -15,8 +15,9 @@ public class AppEntryPoint extends Application {
     private SceneManager sceneManager;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         stage.setTitle("Snake game");
+        stage.setResizable(false);
         sceneManager = new SceneManager(stage);
         sceneManager.changeScene(SceneEnum.MENU);
     }

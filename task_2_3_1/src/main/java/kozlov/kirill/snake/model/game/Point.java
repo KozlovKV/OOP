@@ -10,9 +10,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Point {
     @NonNull
-    int x;
+    Integer x;
     @NonNull
-    int y;
+    Integer y;
 
     public void move(Vector vector) {
         x += vector.getDirection().x;

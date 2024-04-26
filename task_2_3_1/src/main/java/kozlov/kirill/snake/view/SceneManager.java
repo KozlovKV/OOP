@@ -30,6 +30,7 @@ public class SceneManager {
         );
 
         Scene scene = new Scene(loader.load(), WIDTH, HEIGHT);
+        scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -41,10 +42,10 @@ public class SceneManager {
 
     public void changeScene(SceneEnum sceneEnum) {
         try {
-            if (sceneEnum == SceneEnum.MENU) {
-                loadScene("menu-scene.fxml");
-            } else if (sceneEnum == SceneEnum.GAME) {
-                loadScene("game-scene.fxml");
+            switch (sceneEnum) {
+                case MENU -> loadScene("menu-scene.fxml");
+                case GAME -> loadScene("game-scene.fxml");
+                case GAME_OVER -> loadScene("game-over-scene.fxml");
             }
         } catch (IOException e) {
             logger.error("Error loading scene {}", sceneEnum, e);
