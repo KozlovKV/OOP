@@ -43,9 +43,9 @@ public class SceneManager {
     public void changeScene(SceneEnum sceneEnum) {
         try {
             switch (sceneEnum) {
-                case MENU -> loadScene("menu-scene.fxml");
-                case GAME -> loadScene("game-scene.fxml");
-                case GAME_OVER -> loadScene("game-over-scene.fxml");
+                case MENU: loadScene("menu-scene.fxml"); break;
+                case GAME: loadScene("game-scene.fxml"); break;
+                case GAME_OVER: loadScene("game-over-scene.fxml"); break;
             }
         } catch (IOException e) {
             logger.error("Error loading scene {}", sceneEnum, e);

@@ -19,18 +19,14 @@ public enum Vector {
     @NonNull
     public Vector getInvertedVector() {
         switch (this) {
-            case UP -> {
+            case UP:
                 return DOWN;
-            }
-            case DOWN -> {
+            case DOWN:
                 return UP;
-            }
-            case LEFT -> {
+            case LEFT:
                 return RIGHT;
-            }
-            case RIGHT -> {
+            case RIGHT:
                 return LEFT;
-            }
         }
         return null;
     }
