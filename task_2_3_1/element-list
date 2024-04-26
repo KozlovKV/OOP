@@ -1,0 +1,5 @@
+module:kozlov.kirill.snake
+kozlov.kirill.snake
+kozlov.kirill.snake.model_view
+kozlov.kirill.snake.model.game
+kozlov.kirill.snake.view

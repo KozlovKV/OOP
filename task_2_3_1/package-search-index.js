@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"m":"kozlov.kirill.snake","l":"kozlov.kirill.snake"},{"m":"kozlov.kirill.snake","l":"kozlov.kirill.snake.model_view"},{"m":"kozlov.kirill.snake","l":"kozlov.kirill.snake.model.game"},{"m":"kozlov.kirill.snake","l":"kozlov.kirill.snake.view"}]
