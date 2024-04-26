@@ -62,7 +62,7 @@ public class GameModel {
         snake.addFirst(newHead);
         if (newHead.equals(apple)) {
             updateAppleRandomly();
-            logger.info("Snake grew up");
+            logger.info("Snake grew up"); // TODO: Хорошо бы вынести рост в отдельный метод
         } else {
             snake.removeLast();
         }
