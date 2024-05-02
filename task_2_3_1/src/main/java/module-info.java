@@ -2,7 +2,6 @@ module kozlov.kirill.snake {
     requires javafx.controls;
     requires javafx.fxml;
 
-    requires org.kordamp.bootstrapfx.core;
     requires org.apache.logging.log4j.core;
     requires static lombok;
     requires com.fasterxml.jackson.databind;
