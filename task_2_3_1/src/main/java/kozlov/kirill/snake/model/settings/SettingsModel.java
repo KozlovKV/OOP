@@ -9,6 +9,8 @@ public class SettingsModel implements ModelFragment {
     private int fieldHeight = 20;
     private int applesCount = 3;
 
+    // TODO: добавить сохранение из/в JSON
+
     @Override
     public SettingsModel restartModel() {
         return this;
