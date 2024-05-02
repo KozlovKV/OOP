@@ -3,11 +3,13 @@ package kozlov.kirill.snake.view;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model.game.Point;
 import lombok.Getter;
 
 import java.util.ArrayList;
 
+@ExcludeClassFromJacocoGeneratedReport
 public class GameView {
     public enum Color {
         FIELD("#7CFF7F"),
@@ -46,7 +48,6 @@ public class GameView {
 
     private void constructField() {
         fieldRects = new ArrayList<>();
-//        fieldGrid.getRowConstraints().clear();
 
         for (int rowIndex = 0; rowIndex < rowsCnt; rowIndex++) {
             ArrayList<Rectangle> fieldRow = new ArrayList<>();

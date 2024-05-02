@@ -1,9 +1,11 @@
 package kozlov.kirill.snake.model_view;
 
 import javafx.fxml.FXML;
+import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;
 
+@ExcludeClassFromJacocoGeneratedReport
 public class MenuController implements SceneManagerAccessible {
     private SceneManager sceneManager;
 
@@ -20,5 +22,10 @@ public class MenuController implements SceneManagerAccessible {
     @FXML
     protected void settings() {
         sceneManager.changeScene(SceneEnum.SETTINGS);
+    }
+
+    @FXML
+    protected void exit() {
+        sceneManager.close();
     }
 }

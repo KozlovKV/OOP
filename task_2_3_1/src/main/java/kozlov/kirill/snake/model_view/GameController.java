@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
@@ -15,6 +16,8 @@ import kozlov.kirill.snake.view.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+// TODO: хотя этот класс я и исключил из тестирования, надо проверить, могу ли я вынести из него чистую логику в модель или ещё куда-нибудь
+@ExcludeClassFromJacocoGeneratedReport
 public class GameController implements SceneManagerAccessible {
 
     private final Logger logger = LogManager.getLogger("model-view");

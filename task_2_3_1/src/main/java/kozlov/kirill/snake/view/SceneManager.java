@@ -6,12 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import kozlov.kirill.snake.AppEntryPoint;
+import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model_view.SceneManagerAccessible;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+@ExcludeClassFromJacocoGeneratedReport
 public class SceneManager {
     Logger logger = LogManager.getLogger("view");
 
@@ -23,6 +25,10 @@ public class SceneManager {
 
     public SceneManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public void close() {
+        primaryStage.close();
     }
 
     private void loadScene(String fxmlPath) throws IOException {
@@ -52,7 +58,7 @@ public class SceneManager {
         } catch (IOException e) {
             logger.error("Error loading scene {}", sceneEnum, e);
             // TODO: Add more logic
-            primaryStage.close();
+            close();
         }
     }
 

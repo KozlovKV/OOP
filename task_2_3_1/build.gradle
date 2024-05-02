@@ -22,9 +22,15 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(19)
+    }
+}
+
 application {
     mainModule = 'kozlov.kirill.snake'
-    mainClass = 'kozlov.kirill.snake.HelloApplication'
+    mainClass = 'kozlov.kirill.snake.AppEntryPoint'
 }
 
 javafx {

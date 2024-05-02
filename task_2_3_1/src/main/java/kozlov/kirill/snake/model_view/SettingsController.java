@@ -6,11 +6,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
+import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.settings.SettingsModel;
 import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;
 
+@ExcludeClassFromJacocoGeneratedReport
 public class SettingsController implements SceneManagerAccessible {
 
     private SceneManager sceneManager;
