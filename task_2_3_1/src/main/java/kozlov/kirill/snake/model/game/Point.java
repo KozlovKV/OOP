@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @RequiredArgsConstructor
@@ -42,5 +44,14 @@ public class Point {
 
     public Point copy() {
         return new Point(x, y);
+    }
+
+    public boolean isInList(List<Point> list) {
+        for (var point : list) {
+            if (equals(point)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

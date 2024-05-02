@@ -15,8 +15,10 @@ public class GameModel {
     private final int fieldWidth = 20;
     @Getter
     private final int fieldHeight = 20;
+    @Getter
+    private final int applesCount = 5;
 
-    private static final int INITIAL_SNAKE_SIZE = 4;
+    private static final int INITIAL_SNAKE_SIZE = 1;
 
     @Getter
     private final LinkedList<Point> snake = new LinkedList<>();
@@ -27,7 +29,7 @@ public class GameModel {
     private Vector vector = Vector.RIGHT;
 
     @Getter
-    private Point apple;
+    private final LinkedList<Point> apples = new LinkedList<>();
 
     public GameModel() {
         Point head = new Point(fieldWidth / 2, fieldHeight / 2);
@@ -35,7 +37,9 @@ public class GameModel {
             snake.addFirst(head.copy());
             head.move(vector);
         }
-        updateAppleRandomly();
+        for (int i = 0; i < applesCount; ++i) {
+            addAppleRandomly();
+        }
     }
 
     public GameModel(int startX, int startY) {
@@ -45,7 +49,7 @@ public class GameModel {
             snake.add(head.copy());
             head.move(invertedVector);
         }
-        updateAppleRandomly();
+        addAppleRandomly();
     }
 
     public Point getSnakeHead() {
@@ -60,8 +64,10 @@ public class GameModel {
         Point newHead = getSnakeHead().copy();
         newHead.move(vector, 0, fieldWidth - 1, 0, fieldHeight - 1);
         snake.addFirst(newHead);
-        if (newHead.equals(apple)) {
-            updateAppleRandomly();
+        int appleIndex = getAteApple();
+        if (appleIndex > -1) {
+            apples.remove(appleIndex);
+            addAppleRandomly();
             logger.info("Snake grew up"); // TODO: Хорошо бы вынести рост в отдельный метод
         } else {
             snake.removeLast();
@@ -83,10 +89,26 @@ public class GameModel {
         return died;
     }
 
-    private void updateAppleRandomly() {
+    private int getAteApple() {
+        Point head = getSnakeHead();
+        int i = 0;
+        for (var apple : apples) {
+            if (apple.equals(head)) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
+    private void addAppleRandomly() {
         Random random = new Random();
+        Point apple;
         do {
             apple = new Point(random.nextInt(fieldWidth), random.nextInt(fieldHeight));
-        } while (snake.stream().anyMatch(point -> point.equals(apple)));
+        } while (
+            apple.isInList(snake) || apple.isInList(apples)
+        );
+        apples.add(apple);
     }
 }
