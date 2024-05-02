@@ -1,4 +1,5 @@
-./settings.json
+settings.json
+!resources/settings.json
 
 .gradle
 build/
