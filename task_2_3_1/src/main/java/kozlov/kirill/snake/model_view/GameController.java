@@ -91,6 +91,8 @@ public class GameController implements SceneManagerAccessible {
                     logger.info("Changed direction to LEFT");
                 }
                 break;
+            case ESCAPE:
+                gameOver();
         }
         updatedAfterKeyPressed = false;
     }
@@ -104,8 +106,7 @@ public class GameController implements SceneManagerAccessible {
         gameModel.moveSnake();
         scores.setText(gameModel.getScores().toString());
         if (gameModel.isDied()) {
-            animationTimer.stop();
-            sceneManager.changeScene(SceneEnum.GAME_OVER);
+            gameOver();
             return;
         }
 
@@ -117,5 +118,10 @@ public class GameController implements SceneManagerAccessible {
         }
 
         updatedAfterKeyPressed = true;
+    }
+
+    public void gameOver() {
+        animationTimer.stop();
+        sceneManager.changeScene(SceneEnum.GAME_OVER);
     }
 }

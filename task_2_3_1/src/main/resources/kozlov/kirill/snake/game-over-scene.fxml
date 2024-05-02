@@ -8,6 +8,7 @@
 
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.layout.HBox?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="kozlov.kirill.snake.model_view.GameOverController">
     <padding>
@@ -15,6 +16,9 @@
     </padding>
 
     <Label>Game over</Label>
-    <Label fx:id="score"/>
+    <HBox alignment="CENTER">
+        <Label text="Your scores: "/>
+        <Label fx:id="score"/>
+    </HBox>
     <Button text="Back to menu" onAction="#back" styleClass="button"/>
 </VBox>
