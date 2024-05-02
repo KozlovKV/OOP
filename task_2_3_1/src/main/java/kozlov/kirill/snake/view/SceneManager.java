@@ -15,8 +15,9 @@ import java.io.IOException;
 public class SceneManager {
     Logger logger = LogManager.getLogger("view");
 
+    // TODO: По хорошему, надо дать возможность немного менять значение этого поля
     public static final int WIDTH = 640;
-    public static final int HEIGHT = 640;
+    public static final int HEIGHT = 700;
 
     private final Stage primaryStage;
 
@@ -44,6 +45,7 @@ public class SceneManager {
         try {
             switch (sceneEnum) {
                 case MENU: loadScene("menu-scene.fxml"); break;
+                case SETTINGS: loadScene("settings-scene.fxml"); break;
                 case GAME: loadScene("game-scene.fxml"); break;
                 case GAME_OVER: loadScene("game-over-scene.fxml"); break;
             }

@@ -14,4 +14,5 @@
 
     <Label>Snake game</Label>
     <Button text="Start game" onAction="#start"/>
+    <Button text="Settings" onAction="#settings"/>
 </VBox>

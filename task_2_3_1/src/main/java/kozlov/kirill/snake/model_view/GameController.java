@@ -2,10 +2,10 @@ package kozlov.kirill.snake.model_view;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
+import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
 import kozlov.kirill.snake.model.game.Vector;
@@ -15,13 +15,14 @@ import kozlov.kirill.snake.view.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-
 public class GameController implements SceneManagerAccessible {
 
     private final Logger logger = LogManager.getLogger("model-view");
 
     private SceneManager sceneManager;
+
+    @FXML
+    private Label scores;
 
     @FXML
     private GridPane fieldGrid;
@@ -48,13 +49,14 @@ public class GameController implements SceneManagerAccessible {
     @Override
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
-        this.gameModel = new GameModel(); // TODO: заменить на загрузку из менджера
+        this.gameModel = (GameModel) Model.GAME.get().restartModel();
         this.gameView = new GameView(
             fieldGrid,
-            gameModel.getFieldHeight(), gameModel.getFieldHeight()
+            gameModel.getCurrentFieldHeight(), gameModel.getCurrentFieldWidth()
         );
 
         sceneManager.getCurrentScene().setOnKeyPressed(this::keyHandler);
+        sceneManager.getCurrentScene().widthProperty();
 
         animationTimer.start();
     }
@@ -100,6 +102,7 @@ public class GameController implements SceneManagerAccessible {
         gameView.setCellColor(tail.getX(), tail.getY(), GameView.Color.FIELD);
 
         gameModel.moveSnake();
+        scores.setText(gameModel.getScores().toString());
         if (gameModel.isDied()) {
             animationTimer.stop();
             sceneManager.changeScene(SceneEnum.GAME_OVER);

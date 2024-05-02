@@ -16,4 +16,9 @@ public class MenuController implements SceneManagerAccessible {
     protected void start() {
         sceneManager.changeScene(SceneEnum.GAME);
     }
+
+    @FXML
+    protected void settings() {
+        sceneManager.changeScene(SceneEnum.SETTINGS);
+    }
 }

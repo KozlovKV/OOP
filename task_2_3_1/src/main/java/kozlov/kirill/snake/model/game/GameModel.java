@@ -1,5 +1,8 @@
 package kozlov.kirill.snake.model.game;
 
+import kozlov.kirill.snake.model.Model;
+import kozlov.kirill.snake.model.ModelFragment;
+import kozlov.kirill.snake.model.settings.SettingsModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
@@ -8,15 +11,15 @@ import org.apache.logging.log4j.Logger;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class GameModel {
+public class GameModel implements ModelFragment {
     private static final Logger logger = LogManager.getLogger("model");
 
     @Getter
-    private final int fieldWidth = 20;
+    private int currentFieldWidth;
     @Getter
-    private final int fieldHeight = 20;
+    private int currentFieldHeight;
     @Getter
-    private final int applesCount = 5;
+    private int currentMaxApplesCount;
 
     private static final int INITIAL_SNAKE_SIZE = 1;
 
@@ -31,25 +34,27 @@ public class GameModel {
     @Getter
     private final LinkedList<Point> apples = new LinkedList<>();
 
-    public GameModel() {
-        Point head = new Point(fieldWidth / 2, fieldHeight / 2);
+    @Override
+    public GameModel restartModel() {
+        var settingsModel = (SettingsModel) Model.SETTINGS.get();
+        currentFieldWidth = settingsModel.getFieldWidth();
+        currentFieldHeight = settingsModel.getFieldHeight();
+        currentMaxApplesCount = settingsModel.getApplesCount();
+
+        snake.clear();
+        apples.clear();
+        died = false;
+        vector = Vector.RIGHT;
+
+        Point head = new Point(currentFieldWidth / 2, currentFieldHeight / 2);
         for (int i = 0; i < INITIAL_SNAKE_SIZE; ++i) {
             snake.addFirst(head.copy());
             head.move(vector);
         }
-        for (int i = 0; i < applesCount; ++i) {
+        for (int i = 0; i < currentMaxApplesCount; ++i) {
             addAppleRandomly();
         }
-    }
-
-    public GameModel(int startX, int startY) {
-        Point head = new Point(startX, startY);
-        Vector invertedVector = vector.getInvertedVector();
-        for (int i = 0; i < INITIAL_SNAKE_SIZE; ++i) {
-            snake.add(head.copy());
-            head.move(invertedVector);
-        }
-        addAppleRandomly();
+        return this;
     }
 
     public Point getSnakeHead() {
@@ -60,9 +65,13 @@ public class GameModel {
         return snake.getLast();
     }
 
+    public Integer getScores() {
+        return this.snake.size();
+    }
+
     public void moveSnake() {
         Point newHead = getSnakeHead().copy();
-        newHead.move(vector, 0, fieldWidth - 1, 0, fieldHeight - 1);
+        newHead.move(vector, 0, currentFieldWidth - 1, 0, currentFieldHeight - 1);
         snake.addFirst(newHead);
         int appleIndex = getAteApple();
         if (appleIndex > -1) {
@@ -105,7 +114,7 @@ public class GameModel {
         Random random = new Random();
         Point apple;
         do {
-            apple = new Point(random.nextInt(fieldWidth), random.nextInt(fieldHeight));
+            apple = new Point(random.nextInt(currentFieldWidth), random.nextInt(currentFieldHeight));
         } while (
             apple.isInList(snake) || apple.isInList(apples)
         );

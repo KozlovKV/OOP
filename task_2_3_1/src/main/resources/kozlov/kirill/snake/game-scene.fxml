@@ -10,11 +10,15 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.control.PopupControl.CSSBridge?>
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="kozlov.kirill.snake.model_view.GameController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
+    <Text disable="true" text="aaa" />
+    <Label styleClass="text" fx:id="scores"/>
     <GridPane fx:id="fieldGrid">
     </GridPane>
 </VBox>
