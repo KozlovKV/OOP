@@ -30,7 +30,7 @@ public class SettingsController implements SceneManagerAccessible {
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
 
-        settingsModel = (SettingsModel) Model.SETTINGS.get().restartModel();
+        settingsModel = Model.SETTINGS.get().restartModel();
         widthProperty = new SimpleIntegerProperty(settingsModel.getFieldWidth());
         heightProperty = new SimpleIntegerProperty(settingsModel.getFieldHeight());
         applesCountProperty = new SimpleIntegerProperty(settingsModel.getApplesCount());
@@ -45,6 +45,7 @@ public class SettingsController implements SceneManagerAccessible {
         settingsModel.setFieldWidth(widthProperty.get());
         settingsModel.setFieldHeight(heightProperty.get());
         settingsModel.setApplesCount(applesCountProperty.get());
+        settingsModel.saveToJson();
         sceneManager.changeScene(SceneEnum.MENU);
     }
 

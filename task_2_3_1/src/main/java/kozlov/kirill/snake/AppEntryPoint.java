@@ -1,6 +1,7 @@
 package kozlov.kirill.snake;
 
 import javafx.application.Application;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;

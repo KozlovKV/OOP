@@ -49,7 +49,7 @@ public class GameController implements SceneManagerAccessible {
     @Override
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
-        this.gameModel = (GameModel) Model.GAME.get().restartModel();
+        this.gameModel = Model.GAME.get().restartModel();
         this.gameView = new GameView(
             fieldGrid,
             gameModel.getCurrentFieldHeight(), gameModel.getCurrentFieldWidth()

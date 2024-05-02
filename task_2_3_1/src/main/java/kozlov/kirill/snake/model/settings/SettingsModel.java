@@ -1,18 +1,87 @@
 package kozlov.kirill.snake.model.settings;
 
 import kozlov.kirill.snake.model.ModelFragment;
+import kozlov.kirill.util.JsonUtils;
+import kozlov.kirill.util.ParsingException;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.*;
 
 @Data
 public class SettingsModel implements ModelFragment {
-    private int fieldWidth = 20;
-    private int fieldHeight = 20;
-    private int applesCount = 3;
+    Logger logger = LogManager.getLogger("model");
 
-    // TODO: добавить сохранение из/в JSON
+    private int fieldWidth;
+    private int fieldHeight;
+    private int applesCount;
+
+    public SettingsModel() {
+        try {
+            loadFromJson();
+        } catch (IOException e) {
+            logger.error("Failed to load initial settings", e);
+        }
+    }
 
     @Override
     public SettingsModel restartModel() {
+        try {
+            loadFromJson();
+        } catch (IOException e) {
+            logger.error("Failed to reload settings", e);
+        }
         return this;
+    }
+
+    private static final String SETTINGS_PATH = "settings.json";
+    private void loadFromJson() throws IOException {
+        logger.info("Loading settings...");
+        InputStream inputStream;
+        SettingsRecord settingsRecord = null;
+        try {
+            inputStream = new FileInputStream(SETTINGS_PATH);
+        } catch (IOException notFoundException) {
+            inputStream = getClass().getClassLoader().getResourceAsStream(
+                SETTINGS_PATH
+            );
+        }
+        if (inputStream == null) {
+            var e = new FileNotFoundException(
+                "Couldn't find settings JSON file either in specified path "
+                    + "either in this path in resources using path " + SETTINGS_PATH
+            );
+            logger.error("Failed to load settings file", e);
+            throw e;
+        }
+        try {
+            settingsRecord = JsonUtils.parse(inputStream, SettingsRecord.class);
+        } catch (ParsingException e) {
+            logger.error("Failed to parse settings", e);
+            throw e;
+        }
+        inputStream.close();
+        fieldWidth = settingsRecord.fieldWidth();
+        fieldHeight = settingsRecord.fieldHeight();
+        applesCount = settingsRecord.applesCount();
+        logger.info("Settings loaded");
+    }
+
+    public void saveToJson() {
+        logger.info("Saving settings...");
+        try (
+            var outputStream = new FileOutputStream(
+                SETTINGS_PATH
+            )
+        ) {
+            SettingsRecord settingsRecord = new SettingsRecord(
+                fieldWidth, fieldHeight, applesCount
+            );
+            JsonUtils.serialize(settingsRecord, outputStream);
+        } catch (IOException e) {
+            logger.error("Failed to save settings", e);
+        }
+        logger.info("Settings saved");
     }
 }
