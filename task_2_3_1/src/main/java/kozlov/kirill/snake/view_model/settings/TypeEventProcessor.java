@@ -1,4 +1,4 @@
-package kozlov.kirill.snake.model_view.settings;
+package kozlov.kirill.snake.view_model.settings;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.TextInputControl;
@@ -25,6 +25,7 @@ public class TypeEventProcessor implements EventHandler<KeyEvent> {
             previousValue = fxmlField.getText();
             return;
         }
+        // TODO: добавить какие-нибудь сообщения об ошибках. Возможно, добавить цепочку валидаторов или ещё как-нибудь
         System.err.println("Error while validating");
         fxmlField.setText(previousValue);
     }

@@ -1,4 +1,4 @@
-package kozlov.kirill.snake.model_view;
+package kozlov.kirill.snake.view_model;
 
 import javafx.fxml.FXML;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
@@ -6,7 +6,7 @@ import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;
 
 @ExcludeClassFromJacocoGeneratedReport
-public class MenuController implements SceneManagerAccessible {
+public class MenuViewModel implements SceneManagerAccessible {
     private SceneManager sceneManager;
 
     @Override

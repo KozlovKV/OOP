@@ -1,22 +1,19 @@
-package kozlov.kirill.snake.model_view.settings;
+package kozlov.kirill.snake.view_model.settings;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
-import javafx.scene.input.KeyEvent;
 import javafx.util.converter.NumberStringConverter;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.settings.SettingsModel;
-import kozlov.kirill.snake.model_view.SceneManagerAccessible;
+import kozlov.kirill.snake.view_model.SceneManagerAccessible;
 import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;
 
 @ExcludeClassFromJacocoGeneratedReport
-public class SettingsController implements SceneManagerAccessible {
+public class SettingsViewModel implements SceneManagerAccessible {
 
     private SceneManager sceneManager;
     private SettingsModel settingsModel;

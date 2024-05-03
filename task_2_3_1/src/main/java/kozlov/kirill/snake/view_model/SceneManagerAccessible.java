@@ -1,4 +1,4 @@
-package kozlov.kirill.snake.model_view;
+package kozlov.kirill.snake.view_model;
 
 import kozlov.kirill.snake.view.SceneManager;
 

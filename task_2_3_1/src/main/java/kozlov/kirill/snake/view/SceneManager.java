@@ -1,13 +1,11 @@
 package kozlov.kirill.snake.view;
 
-import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import kozlov.kirill.snake.AppEntryPoint;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
-import kozlov.kirill.snake.model_view.SceneManagerAccessible;
+import kozlov.kirill.snake.view_model.SceneManagerAccessible;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

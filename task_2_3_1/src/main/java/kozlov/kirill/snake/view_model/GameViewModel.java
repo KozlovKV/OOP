@@ -1,4 +1,4 @@
-package kozlov.kirill.snake.model_view;
+package kozlov.kirill.snake.view_model;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 // TODO: хотя этот класс я и исключил из тестирования, надо проверить, могу ли я вынести из него чистую логику в модель или ещё куда-нибудь
 @ExcludeClassFromJacocoGeneratedReport
-public class GameController implements SceneManagerAccessible {
+public class GameViewModel implements SceneManagerAccessible {
 
     private final Logger logger = LogManager.getLogger("model-view");
 
