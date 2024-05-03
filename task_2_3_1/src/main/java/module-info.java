@@ -15,4 +15,6 @@ module kozlov.kirill.snake {
 
     exports kozlov.kirill.util to com.fasterxml.jackson.databind;
     exports kozlov.kirill.snake.model.settings to com.fasterxml.jackson.databind;
+    exports kozlov.kirill.snake.model_view.settings;
+    opens kozlov.kirill.snake.model_view.settings to javafx.fxml;
 }
