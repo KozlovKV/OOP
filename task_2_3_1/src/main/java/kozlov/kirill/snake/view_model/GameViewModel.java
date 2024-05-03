@@ -68,29 +68,29 @@ public class GameViewModel implements SceneManagerAccessible {
         if (!updatedAfterKeyPressed) {
             return;
         }
-        Vector currentVector = gameModel.getVector();
+        Vector currentVector = gameModel.getSnake().getDirection();
         switch (event.getCode()) {
             case UP:
                 if (!currentVector.equals(Vector.DOWN)) {
-                    gameModel.setVector(Vector.UP);
+                    gameModel.getSnake().setDirection(Vector.UP);
                     logger.info("Changed direction to UP");
                 }
                 break;
             case RIGHT:
                 if (!currentVector.equals(Vector.LEFT)) {
-                    gameModel.setVector(Vector.RIGHT);
+                    gameModel.getSnake().setDirection(Vector.RIGHT);
                     logger.info("Changed direction to RIGHT");
                 }
                 break;
             case DOWN:
                 if (!currentVector.equals(Vector.UP)) {
-                    gameModel.setVector(Vector.DOWN);
+                    gameModel.getSnake().setDirection(Vector.DOWN);
                     logger.info("Changed direction to DOWN");
                 }
                 break;
             case LEFT:
                 if (!currentVector.equals(Vector.RIGHT)) {
-                    gameModel.setVector(Vector.LEFT);
+                    gameModel.getSnake().setDirection(Vector.LEFT);
                     logger.info("Changed direction to LEFT");
                 }
                 break;
@@ -101,19 +101,20 @@ public class GameViewModel implements SceneManagerAccessible {
     }
 
     private void updateSnakeCells() {
-        Point currentHead = gameModel.getSnakeHead();
+        // TODO: fix additional tail
+        Point currentHead = gameModel.getSnake().head();
         gameView.setCellColor(currentHead.getX(), currentHead.getY(), GameView.Color.SNAKE);
-        Point tail = gameModel.getSnakeTail();
+        Point tail = gameModel.getSnake().tail();
         gameView.setCellColor(tail.getX(), tail.getY(), GameView.Color.FIELD);
 
-        gameModel.moveSnake();
-        scores.setText(gameModel.getScores().toString());
-        if (gameModel.isDied()) {
+        gameModel.update();
+        if (gameModel.isGameOver()) {
             gameOver();
             return;
         }
+        scores.setText(gameModel.getScores().toString());
 
-        Point newHead = gameModel.getSnakeHead();
+        Point newHead = gameModel.getSnake().head();
         gameView.setCellColor(newHead.getX(), newHead.getY(), GameView.Color.SNAKE_HEAD);
 
         for (Point apple : gameModel.getApples()) {

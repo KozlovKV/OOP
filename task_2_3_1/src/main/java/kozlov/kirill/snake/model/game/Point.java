@@ -54,4 +54,13 @@ public class Point {
         }
         return false;
     }
+
+    public int getListCollision(List<Point> list) {
+        for (int i = 0; i < list.size(); ++i) {
+            if (equals(list.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

@@ -24,12 +24,7 @@ public class GameModel implements ModelFragment {
     private static final int INITIAL_SNAKE_SIZE = 1;
 
     @Getter
-    private final LinkedList<Point> snake = new LinkedList<>();
-    private boolean died = false;
-
-    @Getter
-    @Setter
-    private Vector vector = Vector.RIGHT;
+    private Snake snake;
 
     @Getter
     private final LinkedList<Point> apples = new LinkedList<>();
@@ -41,73 +36,35 @@ public class GameModel implements ModelFragment {
         currentFieldHeight = settingsModel.getFieldHeight();
         currentMaxApplesCount = settingsModel.getApplesCount();
 
-        snake.clear();
-        apples.clear();
-        died = false;
-        vector = Vector.RIGHT;
+        snake = new Snake(
+            INITIAL_SNAKE_SIZE,
+            new Point(currentFieldWidth / 2, currentFieldHeight / 2),
+            Vector.RIGHT, currentFieldWidth, currentFieldHeight
+        );
 
-        Point head = new Point(currentFieldWidth / 2, currentFieldHeight / 2);
-        for (int i = 0; i < INITIAL_SNAKE_SIZE; ++i) {
-            snake.addFirst(head.copy());
-            head.move(vector);
-        }
+        apples.clear();
         for (int i = 0; i < currentMaxApplesCount; ++i) {
             addAppleRandomly();
         }
         return this;
     }
 
-    public Point getSnakeHead() {
-        return snake.getFirst();
-    }
-
-    public Point getSnakeTail() {
-        return snake.getLast();
-    }
-
     public Integer getScores() {
         return this.snake.size();
     }
 
-    public void moveSnake() {
-        Point newHead = getSnakeHead().copy();
-        newHead.move(vector, 0, currentFieldWidth - 1, 0, currentFieldHeight - 1);
-        snake.addFirst(newHead);
-        int appleIndex = getAteApple();
-        if (appleIndex > -1) {
+    public void update() {
+        snake.move();
+        int appleIndex = snake.head().getListCollision(apples);
+        if (appleIndex != -1) {
+            snake.grow();
             apples.remove(appleIndex);
             addAppleRandomly();
-            logger.info("Snake grew up"); // TODO: Хорошо бы вынести рост в отдельный метод
-        } else {
-            snake.removeLast();
-        }
-        checkSnakeLives();
-    }
-
-    private void checkSnakeLives() {
-        Point head = getSnakeHead();
-        for (int i = 1; i < snake.size(); ++i) {
-            if (head.equals(snake.get(i))) {
-                died = true;
-                return;
-            }
         }
     }
 
-    public boolean isDied() {
-        return died;
-    }
-
-    private int getAteApple() {
-        Point head = getSnakeHead();
-        int i = 0;
-        for (var apple : apples) {
-            if (apple.equals(head)) {
-                return i;
-            }
-            i++;
-        }
-        return -1;
+    public boolean isGameOver() {
+        return snake.isDied();
     }
 
     private void addAppleRandomly() {
@@ -116,7 +73,7 @@ public class GameModel implements ModelFragment {
         do {
             apple = new Point(random.nextInt(currentFieldWidth), random.nextInt(currentFieldHeight));
         } while (
-            apple.isInList(snake) || apple.isInList(apples)
+            apple.equals(snake.head()) || apple.isInList(snake.body()) || apple.isInList(apples)
         );
         apples.add(apple);
     }
