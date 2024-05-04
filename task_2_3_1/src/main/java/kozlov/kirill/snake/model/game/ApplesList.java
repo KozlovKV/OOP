@@ -13,22 +13,12 @@ public class ApplesList {
         BLUE,
     }
 
-    private final int applesCount;
     private final LinkedList<Point> list = new LinkedList<>();
 
-    private final int fieldWidth;
-    private final int fieldHeight;
+    private final GameModel gameModel;
 
-    public ApplesList(
-        int applesCount, int fieldWidth, int fieldHeight,
-        List<Point> occupiedPoints
-    ) {
-        this.applesCount = applesCount;
-        this.fieldWidth = fieldWidth;
-        this.fieldHeight = fieldHeight;
-        for (int i = 0; i < applesCount; ++i) {
-            addRandomly(occupiedPoints);
-        }
+    public ApplesList(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
 
     public LinkedList<Point> list() {
@@ -45,14 +35,17 @@ public class ApplesList {
         return false;
     }
 
-    public void addRandomly(List<Point> occupiedPoints) {
+    public void addRandomly(int n) {
+        for (int i = 0; i < n; ++i) {
+            addRandomly();
+        }
+    }
+
+    public void addRandomly() {
         Random random = new Random();
-        Point apple;
-        do {
-            apple = new Point(random.nextInt(fieldWidth), random.nextInt(fieldHeight));
-        } while (
-            apple.isInList(occupiedPoints) || apple.isInList(list)
-        );
+        List<Point> freePoints = gameModel.getFreeFieldCells();
+        int pointIndex = random.nextInt(freePoints.size());
+        Point apple = freePoints.get(pointIndex).copy();
         list.add(apple);
     }
 }

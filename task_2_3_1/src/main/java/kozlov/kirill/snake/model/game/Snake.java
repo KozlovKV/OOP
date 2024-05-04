@@ -16,18 +16,21 @@ public class Snake {
     private final int fieldWidth;
     private final int fieldHeight;
     private boolean died = false;
+    private final GameModel gameModel;
 
     public Snake(
         int initialSize, Point startPoint, Vector initialDirection,
-        int fieldWidth, int fieldHeight
+        GameModel gameModel
     ) {
         if (initialSize < 1) {
             throw new IllegalArgumentException("Snake must have positive initial length");
         }
+        this.gameModel = gameModel;
+        this.fieldWidth = gameModel.getCurrentFieldWidth();
+        this.fieldHeight = gameModel.getCurrentFieldHeight();
+
         head = startPoint.copy();
         direction = initialDirection;
-        this.fieldWidth = fieldWidth;
-        this.fieldHeight = fieldHeight;
         for (int i = 0; i < initialSize - 1; ++i) {
             move();
             grow();
@@ -48,6 +51,10 @@ public class Snake {
 
     public Point head() {
         return head;
+    }
+
+    public LinkedList<Point> body() {
+        return body;
     }
 
     public LinkedList<Point> wholeBody() {
@@ -75,7 +82,7 @@ public class Snake {
         head.move(direction, 0, fieldWidth - 1, 0, fieldHeight - 1);
         previousTail = tail().copy();
         body.removeLast();
-        isStillAlive(null);
+        isStillAlive();
     }
 
     public void grow() {
@@ -83,13 +90,11 @@ public class Snake {
         previousTail = null; // TODO: проверить, не создаёт ли это проблем
     }
 
-    public boolean isStillAlive(List<Point> additionalDeadPoints) {
-        if (
-            head.isInList(body) || head.isInList(additionalDeadPoints)
-        ) {
-            died = true;
-            return false;
+    public boolean isStillAlive() {
+        if (head.isInList(gameModel.getNonKillingCells(this))) {
+            return true;
         }
-        return true;
+        died = true;
+        return false;
     }
 }

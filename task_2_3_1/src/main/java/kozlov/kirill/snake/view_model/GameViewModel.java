@@ -68,7 +68,6 @@ public class GameViewModel implements SceneManagerAccessible {
         if (!updatedAfterKeyPressed) {
             return;
         }
-        Vector currentVector = gameModel.getSnake().getDirection();
         switch (event.getCode()) {
             case UP:
                 if (gameModel.getSnake().setDirection(Vector.UP)) {
