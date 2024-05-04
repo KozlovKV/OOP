@@ -3,6 +3,7 @@ package kozlov.kirill.snake.view_model.settings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
@@ -20,13 +21,21 @@ public class SettingsViewModel implements SceneManagerAccessible {
 
     @FXML
     private TextField widthField;
-    private IntegerProperty widthProperty; // TODO: в перспективе от этих штук можно будет полностью избавиться, заменив их функционал логикой TypeEventProcessor
+    private IntegerProperty widthProperty;
+    @FXML
+    private Label widthError;
+
     @FXML
     private TextField heightField;
     private IntegerProperty heightProperty;
     @FXML
+    private Label heightError;
+
+    @FXML
     private TextField applesCountField;
     private IntegerProperty applesCountProperty;
+    @FXML
+    private Label applesCountError;
 
     @Override
     public void setSceneManager(SceneManager sceneManager) {
@@ -50,7 +59,8 @@ public class SettingsViewModel implements SceneManagerAccessible {
         widthField.onKeyTypedProperty().set(
             new TypeEventProcessor(
                 widthField, widthProperty.getValue().toString(),
-                positiveIntValidator
+                positiveIntValidator,
+                widthError, "Width should be a positive integer number"
             )
         );
         widthField.textProperty().bindBidirectional(widthProperty, new NumberStringConverter());
@@ -58,7 +68,8 @@ public class SettingsViewModel implements SceneManagerAccessible {
         heightField.onKeyTypedProperty().set(
             new TypeEventProcessor(
                 heightField, heightProperty.getValue().toString(),
-                positiveIntValidator
+                positiveIntValidator,
+                heightError, "Width should be a positive integer number"
             )
         );
         heightField.textProperty().bindBidirectional(heightProperty, new NumberStringConverter());
@@ -66,7 +77,8 @@ public class SettingsViewModel implements SceneManagerAccessible {
         applesCountField.onKeyTypedProperty().set(
             new TypeEventProcessor(
                 applesCountField, applesCountProperty.getValue().toString(),
-                positiveIntValidator
+                positiveIntValidator,
+                applesCountError, "Width should be a positive integer number"
             )
         );
         applesCountField.textProperty().bindBidirectional(applesCountProperty, new NumberStringConverter());

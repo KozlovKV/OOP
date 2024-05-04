@@ -4,5 +4,6 @@
 }
 
 .text {
-    -fx-font-family: "Comic Sans MS";
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 1.2rem;
 }
