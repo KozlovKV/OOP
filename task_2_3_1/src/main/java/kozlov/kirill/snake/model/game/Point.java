@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Data
@@ -58,15 +59,15 @@ public class Point {
         return false;
     }
 
-    public int getListCollision(List<Point> list) {
+    public Optional<Integer> getListCollision(List<Point> list) {
         if (list == null) {
-            return -1;
+            return Optional.empty();
         }
         for (int i = 0; i < list.size(); ++i) {
             if (equals(list.get(i))) {
-                return i;
+                return Optional.of(i);
             }
         }
-        return -1;
+        return Optional.empty();
     }
 }

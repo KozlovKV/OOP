@@ -7,12 +7,6 @@ import java.util.List;
 import java.util.Random;
 
 public class ApplesList {
-    public enum Type {
-        REB,
-        GREEN,
-        BLUE,
-    }
-
     private final LinkedList<Point> list = new LinkedList<>();
 
     private final GameModel gameModel;
@@ -26,13 +20,15 @@ public class ApplesList {
     }
 
     public boolean checkSnakeGrowing(Snake snake) {
-        int appleIndex = snake.head().getListCollision(list);
-        if (appleIndex != -1) {
-            snake.grow();
-            list.remove(appleIndex);
-            return true;
+        var collision = snake.head().getListCollision(list);
+        if (collision.isEmpty()) {
+            return false;
         }
-        return false;
+        collision.ifPresent(index -> {
+            snake.grow();
+            list.remove((int) index);
+        });
+        return true;
     }
 
     public void addRandomly(int n) {

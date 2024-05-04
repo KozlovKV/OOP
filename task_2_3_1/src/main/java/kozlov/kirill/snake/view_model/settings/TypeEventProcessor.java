@@ -4,7 +4,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyEvent;
+import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 
+@ExcludeClassFromJacocoGeneratedReport
 public class TypeEventProcessor implements EventHandler<KeyEvent> {
     private final TextInputControl fxmlField;
     private final Validator validator;

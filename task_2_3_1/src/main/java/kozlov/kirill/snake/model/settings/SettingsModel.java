@@ -11,7 +11,7 @@ import java.io.*;
 
 @Data
 public class SettingsModel implements ModelFragment {
-    Logger logger = LogManager.getLogger("model");
+    private final Logger logger = LogManager.getLogger("model");
 
     private int fieldWidth;
     private int fieldHeight;
@@ -35,22 +35,22 @@ public class SettingsModel implements ModelFragment {
         return this;
     }
 
-    private static final String SETTINGS_PATH = "settings.json";
+    private String settingsPath = "settings.json";
     private void loadFromJson() throws IOException {
         logger.info("Loading settings...");
         InputStream inputStream;
         SettingsRecord settingsRecord = null;
         try {
-            inputStream = new FileInputStream(SETTINGS_PATH);
+            inputStream = new FileInputStream(settingsPath);
         } catch (IOException notFoundException) {
             inputStream = getClass().getClassLoader().getResourceAsStream(
-                SETTINGS_PATH
+                settingsPath
             );
         }
         if (inputStream == null) {
             var e = new FileNotFoundException(
                 "Couldn't find settings JSON file either in specified path "
-                    + "either in this path in resources using path " + SETTINGS_PATH
+                    + "either in this path in resources using path " + settingsPath
             );
             logger.error("Failed to load settings file", e);
             throw e;
@@ -72,7 +72,7 @@ public class SettingsModel implements ModelFragment {
         logger.info("Saving settings...");
         try (
             var outputStream = new FileOutputStream(
-                SETTINGS_PATH
+                settingsPath
             )
         ) {
             SettingsRecord settingsRecord = new SettingsRecord(

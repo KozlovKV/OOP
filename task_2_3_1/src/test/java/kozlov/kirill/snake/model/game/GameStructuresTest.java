@@ -1,44 +1,95 @@
-//package kozlov.kirill.snake.model.game;
-//
-//import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Test;
-//
-//import java.lang.reflect.Field;
-//
-//public class GameStructuresTest {
-//    @Test
-//    void snakeGrowth() {
-//        GameModel gameModel = new GameModel(4, 0);
-//        try {
-//            Field apple = gameModel.getClass()
-//                .getDeclaredField("apple");
-//            apple.setAccessible(true);
-//            apple.set(gameModel, new Point(5, 0));
-//        } catch (NoSuchFieldException | IllegalAccessException e) {
-//            Assertions.fail();
-//        }
-//        gameModel.moveSnake();
-//        Assertions.assertEquals(5, gameModel.getSnake().size());
-//    }
-//
-//    @Test
-//    void snakeDies() {
-//        GameModel gameModel = new GameModel(4, 0);
-//        try {
-//            Field apple = gameModel.getClass()
-//                .getDeclaredField("apple");
-//            apple.setAccessible(true);
-//            apple.set(gameModel, new Point(5, 0));
-//        } catch (NoSuchFieldException | IllegalAccessException e) {
-//            Assertions.fail();
-//        }
-//        gameModel.moveSnake();
-//        gameModel.setVector(Vector.UP);
-//        gameModel.moveSnake();
-//        gameModel.setVector(Vector.LEFT);
-//        gameModel.moveSnake();
-//        gameModel.setVector(Vector.DOWN);
-//        gameModel.moveSnake();
-//        Assertions.assertTrue(gameModel.isDied());
-//    }
-//}
+package kozlov.kirill.snake.model.game;
+
+import kozlov.kirill.snake.model.Model;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Field;
+
+public class GameStructuresTest {
+    @Test
+    void testSnakeValidDirectionChanging() {
+        GameModel gameModel = Model.GAME.get().restartModel();
+        gameModel.getSnake().setDirection(Vector.RIGHT);
+        Assertions.assertEquals(Vector.RIGHT, gameModel.getSnake().getDirection());
+        gameModel.getSnake().setDirection(Vector.UP);
+        Assertions.assertEquals(Vector.UP, gameModel.getSnake().getDirection());
+        gameModel.getSnake().setDirection(Vector.LEFT);
+        Assertions.assertEquals(Vector.LEFT, gameModel.getSnake().getDirection());
+        gameModel.getSnake().setDirection(Vector.DOWN);
+        Assertions.assertEquals(Vector.DOWN, gameModel.getSnake().getDirection());
+    }
+
+    @Test
+    void testSnakeInvalidDirectionChanging() {
+        GameModel gameModel = Model.GAME.get().restartModel();
+
+        gameModel.getSnake().setDirection(Vector.RIGHT);
+        gameModel.getSnake().setDirection(Vector.LEFT);
+        Assertions.assertEquals(Vector.RIGHT, gameModel.getSnake().getDirection());
+
+        gameModel.getSnake().setDirection(Vector.UP);
+        gameModel.getSnake().setDirection(Vector.DOWN);
+        Assertions.assertEquals(Vector.UP, gameModel.getSnake().getDirection());
+
+        gameModel.getSnake().setDirection(Vector.LEFT);
+        gameModel.getSnake().setDirection(Vector.RIGHT);
+        Assertions.assertEquals(Vector.LEFT, gameModel.getSnake().getDirection());
+
+        gameModel.getSnake().setDirection(Vector.DOWN);
+        gameModel.getSnake().setDirection(Vector.UP);
+        Assertions.assertEquals(Vector.DOWN, gameModel.getSnake().getDirection());
+    }
+    @Test
+    void testGrowing() {
+        GameModel gameModel = Model.GAME.get().restartModel();
+        Point nextPoint = gameModel.getSnake().head().copy();
+        nextPoint.move(gameModel.getSnake().getDirection());
+        gameModel.getApples().list().add(nextPoint);
+
+        Assertions.assertEquals(1, gameModel.getScores());
+        Assertions.assertEquals(
+            gameModel.getSnake().head(),
+            gameModel.getSnake().tail()
+        );
+
+        gameModel.update();
+        Assertions.assertEquals(2, gameModel.getScores());
+        Assertions.assertEquals(
+            gameModel.getSnake().body().get(0),
+            gameModel.getSnake().tail()
+        );
+
+        nextPoint = gameModel.getSnake().head().copy();
+        nextPoint.move(gameModel.getSnake().getDirection());
+        gameModel.getApples().list().add(nextPoint);
+
+        gameModel.update();
+        Assertions.assertEquals(3, gameModel.getScores());
+        Assertions.assertNotEquals(
+            gameModel.getSnake().body().get(0),
+            gameModel.getSnake().head()
+        );
+        Assertions.assertNotEquals(
+            gameModel.getSnake().body().get(0),
+            gameModel.getSnake().tail()
+        );
+    }
+
+    @Test
+    void testGameOver() {
+        GameModel gameModel = Model.GAME.get().restartModel();
+        gameModel.getSnake().setDirection(Vector.RIGHT);
+        for (int i = 0; i < 5; ++i) {
+            gameModel.getSnake().move();
+            gameModel.getSnake().grow();
+        }
+        gameModel.getSnake().setDirection(Vector.UP);
+        gameModel.getSnake().move();
+        gameModel.getSnake().setDirection(Vector.LEFT);
+        gameModel.getSnake().move();
+        gameModel.getSnake().setDirection(Vector.DOWN);
+        gameModel.getSnake().move();
+        Assertions.assertTrue(gameModel.isGameOver());
+    }
+}

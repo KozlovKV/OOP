@@ -24,7 +24,6 @@ public class GameModel implements ModelFragment {
     @Getter
     private Snake snake;
 
-    @Getter
     private int currentMaxApplesCount;
     @Getter
     private ApplesList apples;
@@ -43,9 +42,8 @@ public class GameModel implements ModelFragment {
             Vector.RIGHT, this
         );
 
-        currentMaxApplesCount = settingsModel.getApplesCount();
         apples = new ApplesList(this);
-        apples.addRandomly(currentMaxApplesCount);
+        apples.addRandomly(settingsModel.getApplesCount());
 
         return this;
     }
