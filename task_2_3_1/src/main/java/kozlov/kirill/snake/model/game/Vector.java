@@ -16,18 +16,10 @@ public enum Vector {
         this.direction = p;
     }
 
-    @NonNull
-    public Vector getInvertedVector() {
-        switch (this) {
-            case UP:
-                return DOWN;
-            case DOWN:
-                return UP;
-            case LEFT:
-                return RIGHT;
-            case RIGHT:
-                return LEFT;
+    public boolean isCollinear(Vector otherVector) {
+        if (this.equals(UP) || this.equals(DOWN)) {
+            return otherVector.equals(UP) || otherVector.equals(DOWN);
         }
-        return null;
+        return otherVector.equals(LEFT) || otherVector.equals(RIGHT);
     }
 }

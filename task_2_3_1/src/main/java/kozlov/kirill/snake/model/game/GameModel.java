@@ -27,7 +27,7 @@ public class GameModel implements ModelFragment {
     private Snake snake;
 
     @Getter
-    private final LinkedList<Point> apples = new LinkedList<>();
+    private ApplesList apples;
 
     @Override
     public GameModel restartModel() {
@@ -42,10 +42,11 @@ public class GameModel implements ModelFragment {
             Vector.RIGHT, currentFieldWidth, currentFieldHeight
         );
 
-        apples.clear();
-        for (int i = 0; i < currentMaxApplesCount; ++i) {
-            addAppleRandomly();
-        }
+        apples = new ApplesList(
+            currentMaxApplesCount, currentFieldWidth, currentFieldHeight,
+            snake.wholeBody()
+        );
+
         return this;
     }
 
@@ -55,26 +56,12 @@ public class GameModel implements ModelFragment {
 
     public void update() {
         snake.move();
-        int appleIndex = snake.head().getListCollision(apples);
-        if (appleIndex != -1) {
-            snake.grow();
-            apples.remove(appleIndex);
-            addAppleRandomly();
+        if (apples.checkSnakeGrowing(snake)) {
+            apples.addRandomly(snake.wholeBody());
         }
     }
 
     public boolean isGameOver() {
         return snake.isDied();
-    }
-
-    private void addAppleRandomly() {
-        Random random = new Random();
-        Point apple;
-        do {
-            apple = new Point(random.nextInt(currentFieldWidth), random.nextInt(currentFieldHeight));
-        } while (
-            apple.equals(snake.head()) || apple.isInList(snake.body()) || apple.isInList(apples)
-        );
-        apples.add(apple);
     }
 }

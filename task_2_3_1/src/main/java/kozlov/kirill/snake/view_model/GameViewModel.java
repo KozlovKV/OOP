@@ -71,26 +71,22 @@ public class GameViewModel implements SceneManagerAccessible {
         Vector currentVector = gameModel.getSnake().getDirection();
         switch (event.getCode()) {
             case UP:
-                if (!currentVector.equals(Vector.DOWN)) {
-                    gameModel.getSnake().setDirection(Vector.UP);
+                if (gameModel.getSnake().setDirection(Vector.UP)) {
                     logger.info("Changed direction to UP");
                 }
                 break;
             case RIGHT:
-                if (!currentVector.equals(Vector.LEFT)) {
-                    gameModel.getSnake().setDirection(Vector.RIGHT);
+                if (gameModel.getSnake().setDirection(Vector.RIGHT)) {
                     logger.info("Changed direction to RIGHT");
                 }
                 break;
             case DOWN:
-                if (!currentVector.equals(Vector.UP)) {
-                    gameModel.getSnake().setDirection(Vector.DOWN);
+                if (gameModel.getSnake().setDirection(Vector.DOWN)) {
                     logger.info("Changed direction to DOWN");
                 }
                 break;
             case LEFT:
-                if (!currentVector.equals(Vector.RIGHT)) {
-                    gameModel.getSnake().setDirection(Vector.LEFT);
+                if (gameModel.getSnake().setDirection(Vector.LEFT)) {
                     logger.info("Changed direction to LEFT");
                 }
                 break;
@@ -101,7 +97,6 @@ public class GameViewModel implements SceneManagerAccessible {
     }
 
     private void updateSnakeCells() {
-        // TODO: fix additional tail
         Point currentHead = gameModel.getSnake().head();
         gameView.setCellColor(currentHead.getX(), currentHead.getY(), GameView.Color.SNAKE);
         Point tail = gameModel.getSnake().tail();
@@ -117,7 +112,7 @@ public class GameViewModel implements SceneManagerAccessible {
         Point newHead = gameModel.getSnake().head();
         gameView.setCellColor(newHead.getX(), newHead.getY(), GameView.Color.SNAKE_HEAD);
 
-        for (Point apple : gameModel.getApples()) {
+        for (Point apple : gameModel.getApples().list()) {
             gameView.setCellColor(apple.getX(), apple.getY(), GameView.Color.APPLE);
         }
 

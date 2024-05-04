@@ -47,6 +47,9 @@ public class Point {
     }
 
     public boolean isInList(List<Point> list) {
+        if (list == null) {
+            return false;
+        }
         for (var point : list) {
             if (equals(point)) {
                 return true;
@@ -56,6 +59,9 @@ public class Point {
     }
 
     public int getListCollision(List<Point> list) {
+        if (list == null) {
+            return -1;
+        }
         for (int i = 0; i < list.size(); ++i) {
             if (equals(list.get(i))) {
                 return i;
