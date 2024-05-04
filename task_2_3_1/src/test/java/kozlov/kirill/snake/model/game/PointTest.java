@@ -3,6 +3,9 @@ package kozlov.kirill.snake.model.game;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Additional tests for Point class.
+ */
 public class PointTest {
     @Test
     void testMinXBorder() {

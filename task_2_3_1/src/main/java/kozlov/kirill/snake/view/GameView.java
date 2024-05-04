@@ -1,16 +1,20 @@
 package kozlov.kirill.snake.view;
 
+import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
-import kozlov.kirill.snake.model.game.Point;
 import lombok.Getter;
 
-import java.util.ArrayList;
-
+/**
+ * Game view utils class.
+ */
 @ExcludeClassFromJacocoGeneratedReport
 public class GameView {
+    /**
+     * Fields' colors enum class.
+     */
     public enum Color {
         FIELD("#7CFF7F"),
         SNAKE("#72ADFF"),
@@ -30,6 +34,16 @@ public class GameView {
     private final int rowsCnt;
     private final int colsCnt;
 
+    /**
+     * Constructor.
+     * <br>
+     * Initialized field of specified sizes using
+     * `GridPane` as an FXML container for `Rectangle` instances
+     *
+     * @param fieldGrid link to GridPane
+     * @param rowsCnt rows count
+     * @param colsCnt cols count
+     */
     public GameView(GridPane fieldGrid, int rowsCnt, int colsCnt) {
         this.fieldGrid = fieldGrid;
         this.rowsCnt = rowsCnt;
@@ -60,6 +74,13 @@ public class GameView {
         }
     }
 
+    /**
+     * Color changer for specified cell.
+     *
+     * @param x aka column
+     * @param y aka row
+     * @param color color from enum
+     */
     public void setCellColor(int x, int y, Color color) {
         fieldRects.get(y).get(x).fillProperty().set(Paint.valueOf(color.hex));
     }

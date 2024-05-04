@@ -1,16 +1,16 @@
 package kozlov.kirill.snake.model.settings;
 
-import kozlov.kirill.snake.model.Model;
-import kozlov.kirill.util.JsonUtils;
-import kozlov.kirill.util.ParsingException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
+import kozlov.kirill.snake.model.Model;
+import kozlov.kirill.util.JsonUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for SettingsModel model fragment.
+ */
 public class SettingsTest {
     private final String TEST_SETTINGS_PATH = "testSettings.json";
 

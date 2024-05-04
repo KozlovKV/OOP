@@ -1,5 +1,6 @@
 package kozlov.kirill.snake.view;
 
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -9,26 +10,46 @@ import kozlov.kirill.snake.view_model.SceneManagerAccessible;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-
+/**
+ * Scene manager class.
+ * <br>
+ * Used for comfortable switching between scenes from other components
+ */
 @ExcludeClassFromJacocoGeneratedReport
 public class SceneManager {
     Logger logger = LogManager.getLogger("view");
 
-    // TODO: По хорошему, надо дать возможность немного менять значение этого поля
     public static final int WIDTH = 640;
     public static final int HEIGHT = 700;
 
     private final Stage primaryStage;
 
+    /**
+     * Constructor.
+     *
+     * @param primaryStage stage for placing scenes
+     */
     public SceneManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Closes primary stage.
+     */
     public void close() {
         primaryStage.close();
     }
 
+    /**
+     * Scene loading.
+     * <br>
+     * Loads scene from specified FXML and binds SceneManager
+     * with controller (view-model) specified in this file
+     *
+     * @param fxmlPath path to FXML file
+     *
+     * @throws IOException when there were some troubles with file's loading
+     */
     private void loadScene(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(
             AppEntryPoint.class.getResource(fxmlPath)
@@ -45,6 +66,11 @@ public class SceneManager {
         logger.info("Set scene from {}", fxmlPath);
     }
 
+    /**
+     * Scene changing.
+     *
+     * @param sceneEnum scene for opening instead of current
+     */
     public void changeScene(SceneEnum sceneEnum) {
         try {
             switch (sceneEnum) {
@@ -55,11 +81,15 @@ public class SceneManager {
             }
         } catch (IOException e) {
             logger.error("Error loading scene {}", sceneEnum, e);
-            // TODO: Add more logic
             close();
         }
     }
 
+    /**
+     * Current scene getter.
+     *
+     * @return scene which now showed in primary stage
+     */
     public Scene getCurrentScene() {
         return primaryStage.getScene();
     }

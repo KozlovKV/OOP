@@ -4,8 +4,11 @@ import kozlov.kirill.snake.model.Model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-
+/**
+ * Tests for GameModel model fragment.
+ * <br>
+ * Contains almost whole methods of internal objects
+ */
 public class GameStructuresTest {
     @Test
     void testSnakeValidDirectionChanging() {

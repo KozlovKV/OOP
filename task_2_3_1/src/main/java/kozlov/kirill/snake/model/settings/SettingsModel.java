@@ -1,5 +1,10 @@
 package kozlov.kirill.snake.model.settings;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import kozlov.kirill.snake.model.ModelFragment;
 import kozlov.kirill.util.JsonUtils;
 import kozlov.kirill.util.ParsingException;
@@ -7,8 +12,9 @@ import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-
+/**
+ * Model fragment for settings.
+ */
 @Data
 public class SettingsModel implements ModelFragment {
     private final Logger logger = LogManager.getLogger("model");
@@ -17,6 +23,12 @@ public class SettingsModel implements ModelFragment {
     private int fieldHeight;
     private int applesCount;
 
+    /**
+     * Constructor.
+     * <br>
+     * Calls `loadFromJson()` method. Programmers must ensure that first JSON reading
+     * will be successful
+     */
     public SettingsModel() {
         try {
             loadFromJson();

@@ -2,8 +2,10 @@ package kozlov.kirill.snake.model;
 
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.settings.SettingsModel;
-import lombok.Getter;
 
+/**
+ * Enum class for singletones ModelFragments
+ */
 public enum Model {
     SETTINGS(new SettingsModel()),
     GAME(new GameModel());
@@ -14,6 +16,11 @@ public enum Model {
         this.modelFragment = modelFragment;
     }
 
+    /**
+     * Model fragment getter.
+     *
+     * @return link to model fragment instance
+     */
     public ModelFragment get() {
         return modelFragment;
     }

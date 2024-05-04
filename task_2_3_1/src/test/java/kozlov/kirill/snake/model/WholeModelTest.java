@@ -3,10 +3,12 @@ package kozlov.kirill.snake.model;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
 import kozlov.kirill.snake.model.settings.SettingsModel;
-import org.apache.logging.log4j.core.util.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for complex usage of all model fragments.
+ */
 public class WholeModelTest {
     @Test
     void testGameProcessWithChangedSettings() {

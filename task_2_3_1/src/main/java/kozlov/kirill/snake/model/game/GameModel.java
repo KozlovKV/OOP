@@ -1,5 +1,7 @@
 package kozlov.kirill.snake.model.game;
 
+import java.util.ArrayList;
+import java.util.List;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.ModelFragment;
 import kozlov.kirill.snake.model.settings.SettingsModel;
@@ -7,9 +9,9 @@ import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Model fragment for game.
+ */
 public class GameModel implements ModelFragment {
     private static final Logger logger = LogManager.getLogger("model");
 
@@ -24,7 +26,6 @@ public class GameModel implements ModelFragment {
     @Getter
     private Snake snake;
 
-    private int currentMaxApplesCount;
     @Getter
     private ApplesList apples;
 
@@ -48,6 +49,9 @@ public class GameModel implements ModelFragment {
         return this;
     }
 
+    /**
+     * Creates field's list with all points.
+     */
     private void constructFieldPoints() {
         fieldPoints.clear();
         for (int x = 0; x < currentFieldWidth; ++x) {
@@ -57,6 +61,11 @@ public class GameModel implements ModelFragment {
         }
     }
 
+    /**
+     * Copy-getter for field's list.
+     *
+     * @return field's list with points' copies
+     */
     private List<Point> getFieldPointsCopy() {
         List<Point> copy = new ArrayList<>();
         for (var point : fieldPoints) {
@@ -65,12 +74,23 @@ public class GameModel implements ModelFragment {
         return copy;
     }
 
+    /**
+     * Non-killing points getter.
+     *
+     * @param snake snake for which returned points will be safe
+     * @return points' list which won't kill snake by collision
+     */
     public List<Point> getNonKillingCells(Snake snake) {
         List<Point> fieldCopy = getFieldPointsCopy();
         fieldCopy.removeAll(snake.body());
         return fieldCopy;
     }
 
+    /**
+     * Free points getter.
+     *
+     * @return points' list which can be used for placing some objects
+     */
     public List<Point> getFreeFieldCells() {
         List<Point> fieldCopy = getFieldPointsCopy();
         fieldCopy.removeAll(snake.wholeBody());
@@ -78,10 +98,20 @@ public class GameModel implements ModelFragment {
         return fieldCopy;
     }
 
+    /**
+     * Scores' getter.
+     *
+     * @return current game scores which now is equivalent to snake size
+     */
     public Integer getScores() {
         return this.snake.size();
     }
 
+    /**
+     * Update function.
+     * <br>
+     * Performs all action which must happen during game iteration
+     */
     public void update() {
         snake.move();
         if (apples.checkSnakeGrowing(snake)) {
@@ -89,6 +119,11 @@ public class GameModel implements ModelFragment {
         }
     }
 
+    /**
+     * Game over predicate.
+     *
+     * @return true when game is over (now it's equivalent to main snake death)
+     */
     public boolean isGameOver() {
         return snake.isDied();
     }
