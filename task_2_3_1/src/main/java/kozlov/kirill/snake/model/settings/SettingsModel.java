@@ -48,6 +48,7 @@ public class SettingsModel implements ModelFragment {
     }
 
     private String settingsPath = "settings.json";
+
     private void loadFromJson() throws IOException {
         logger.info("Loading settings...");
         InputStream inputStream;

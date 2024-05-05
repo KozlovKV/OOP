@@ -52,7 +52,7 @@ public class ApplesList {
     }
 
     /**
-     * Adds n apples using `addRandomly()`
+     * Adds n apples using `addRandomly()`.
      *
      * @param n apples count to add
      */
