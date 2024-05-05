@@ -22,7 +22,7 @@ public class GameOverViewModel implements SceneManagerAccessible {
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
         score.setText(
-            ((GameModel)Model.GAME.get()).getScores().toString()
+            ((GameModel) Model.GAME.get()).getScores().toString()
         );
     }
 

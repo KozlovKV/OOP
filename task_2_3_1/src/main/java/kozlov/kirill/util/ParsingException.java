@@ -1,8 +1,7 @@
 package kozlov.kirill.util;
 
-import kozlov.kirill.snake.ExcludeConstructorFromJacocoGeneratedReport;
-
 import java.io.IOException;
+import kozlov.kirill.snake.ExcludeConstructorFromJacocoGeneratedReport;
 
 /**
  * Exception for any parsing error.

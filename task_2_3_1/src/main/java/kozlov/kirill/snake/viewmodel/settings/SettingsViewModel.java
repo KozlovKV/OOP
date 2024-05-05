@@ -9,9 +9,9 @@ import javafx.util.converter.NumberStringConverter;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.settings.SettingsModel;
-import kozlov.kirill.snake.viewmodel.SceneManagerAccessible;
 import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;
+import kozlov.kirill.snake.viewmodel.SceneManagerAccessible;
 
 /**
  * Settings scene view-model class.
@@ -53,8 +53,9 @@ public class SettingsViewModel implements SceneManagerAccessible {
 
         Validator positiveIntValidator = (field, event) -> {
             try {
-                if (Integer.parseInt(field.getText()) < 1)
+                if (Integer.parseInt(field.getText()) < 1) {
                     return false;
+                }
             } catch (NumberFormatException e) {
                 return false;
             }
@@ -68,7 +69,9 @@ public class SettingsViewModel implements SceneManagerAccessible {
                 widthError, "Width should be a positive integer number"
             )
         );
-        widthField.textProperty().bindBidirectional(widthProperty, new NumberStringConverter());
+        widthField.textProperty().bindBidirectional(
+            widthProperty, new NumberStringConverter()
+        );
 
         heightField.onKeyTypedProperty().set(
             new TypeEventProcessor(
@@ -77,7 +80,9 @@ public class SettingsViewModel implements SceneManagerAccessible {
                 heightError, "Width should be a positive integer number"
             )
         );
-        heightField.textProperty().bindBidirectional(heightProperty, new NumberStringConverter());
+        heightField.textProperty().bindBidirectional(
+            heightProperty, new NumberStringConverter()
+        );
 
         applesCountField.onKeyTypedProperty().set(
             new TypeEventProcessor(
@@ -86,7 +91,9 @@ public class SettingsViewModel implements SceneManagerAccessible {
                 applesCountError, "Width should be a positive integer number"
             )
         );
-        applesCountField.textProperty().bindBidirectional(applesCountProperty, new NumberStringConverter());
+        applesCountField.textProperty().bindBidirectional(
+            applesCountProperty, new NumberStringConverter()
+        );
     }
 
     /**

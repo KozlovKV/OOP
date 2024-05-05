@@ -86,6 +86,9 @@ public class SceneManager {
                 case GAME_OVER:
                     loadScene("game-over-scene.fxml");
                     break;
+                default:
+                    logger.warn("Invalid scene enum value");
+                    break;
             }
         } catch (IOException e) {
             logger.error("Error loading scene {}", sceneEnum, e);

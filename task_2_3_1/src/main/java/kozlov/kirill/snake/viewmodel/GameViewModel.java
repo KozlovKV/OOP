@@ -103,6 +103,8 @@ public class GameViewModel implements SceneManagerAccessible {
                 break;
             case ESCAPE:
                 gameOver();
+            default:
+                break;
         }
         updatedAfterKeyPressed = false;
     }
