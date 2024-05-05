@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * Tests for SettingsModel model fragment.
  */
 public class SettingsTest {
-    private final String TEST_SETTINGS_PATH = "testSettings.json";
+    private static final String TEST_SETTINGS_PATH = "testSettings.json";
 
     @Test
     void testSettingsLoading() {

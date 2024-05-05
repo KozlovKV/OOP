@@ -4,7 +4,7 @@ import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.settings.SettingsModel;
 
 /**
- * Enum class for singletones ModelFragments
+ * Enum class for singletones ModelFragments.
  */
 public enum Model {
     SETTINGS(new SettingsModel()),

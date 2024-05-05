@@ -43,6 +43,7 @@ public class GameStructuresTest {
         gameModel.getSnake().setDirection(Vector.UP);
         Assertions.assertEquals(Vector.DOWN, gameModel.getSnake().getDirection());
     }
+
     @Test
     void testGrowing() {
         GameModel gameModel = Model.GAME.get().restartModel();

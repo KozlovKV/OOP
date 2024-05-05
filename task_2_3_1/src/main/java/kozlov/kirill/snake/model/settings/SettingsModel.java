@@ -80,6 +80,11 @@ public class SettingsModel implements ModelFragment {
         logger.info("Settings loaded");
     }
 
+    /**
+     * JSON saving.
+     * <br>
+     * Saves settings using SettingsRecord to path settingsPath
+     */
     public void saveToJson() {
         logger.info("Saving settings...");
         try (

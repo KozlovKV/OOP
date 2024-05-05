@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test;
  * Tests for JsonUtils class.
  */
 public class JsonUtilsTest {
+    /**
+     * Record class for testing.
+     *
+     * @param intField just int field
+     */
     public record TestObjectType(int intField) implements Serializable {}
 
     @Test
