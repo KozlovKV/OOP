@@ -1,4 +1,4 @@
-package kozlov.kirill.snake.view_model;
+package kozlov.kirill.snake.viewmodel;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
-import kozlov.kirill.snake.ExcludeConstructorFromJacocoGeneratedReport;
 import kozlov.kirill.snake.ExcludeMethodFromJacocoTestreport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.game.GameModel;
@@ -18,6 +17,9 @@ import kozlov.kirill.snake.view.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Game scene view-model class.
+ */
 @ExcludeClassFromJacocoGeneratedReport
 public class GameViewModel implements SceneManagerAccessible {
 
@@ -35,6 +37,9 @@ public class GameViewModel implements SceneManagerAccessible {
     private GameModel gameModel;
     private GameView gameView;
 
+    /**
+     * Extended animation timer for updating with specified delay.
+     */
     private final AnimationTimer animationTimer = new AnimationTimer() {
         public static final long UPDATE_MS = 50;
         private long lastUpdateTimestamp = 0;
@@ -65,6 +70,11 @@ public class GameViewModel implements SceneManagerAccessible {
         animationTimer.start();
     }
 
+    /**
+     * Key handler.
+     *
+     * @param event event with key code. Arrows may produce snake direction changing, ESC ends game
+     */
     @ExcludeMethodFromJacocoTestreport
     private void keyHandler(KeyEvent event) {
         if (!updatedAfterKeyPressed) {
@@ -97,6 +107,11 @@ public class GameViewModel implements SceneManagerAccessible {
         updatedAfterKeyPressed = false;
     }
 
+    /**
+     * Main update function for animation timer.
+     * <br>
+     * Repaint some cells, updates game model and maybe finishes the game
+     */
     private void updateSnakeCells() {
         Point currentHead = gameModel.getSnake().head();
         gameView.setCellColor(currentHead.getX(), currentHead.getY(), GameView.Color.SNAKE);
@@ -120,6 +135,11 @@ public class GameViewModel implements SceneManagerAccessible {
         updatedAfterKeyPressed = true;
     }
 
+    /**
+     * Game over function.
+     * <br>
+     * Stops animation timer and opens game over scene
+     */
     public void gameOver() {
         animationTimer.stop();
         sceneManager.changeScene(SceneEnum.GAME_OVER);

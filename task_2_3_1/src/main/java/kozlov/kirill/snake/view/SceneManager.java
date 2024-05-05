@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import kozlov.kirill.snake.AppEntryPoint;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
-import kozlov.kirill.snake.view_model.SceneManagerAccessible;
+import kozlov.kirill.snake.viewmodel.SceneManagerAccessible;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -74,10 +74,18 @@ public class SceneManager {
     public void changeScene(SceneEnum sceneEnum) {
         try {
             switch (sceneEnum) {
-                case MENU: loadScene("menu-scene.fxml"); break;
-                case SETTINGS: loadScene("settings-scene.fxml"); break;
-                case GAME: loadScene("game-scene.fxml"); break;
-                case GAME_OVER: loadScene("game-over-scene.fxml"); break;
+                case MENU:
+                    loadScene("menu-scene.fxml");
+                    break;
+                case SETTINGS:
+                    loadScene("settings-scene.fxml");
+                    break;
+                case GAME:
+                    loadScene("game-scene.fxml");
+                    break;
+                case GAME_OVER:
+                    loadScene("game-over-scene.fxml");
+                    break;
             }
         } catch (IOException e) {
             logger.error("Error loading scene {}", sceneEnum, e);

@@ -1,4 +1,4 @@
-package kozlov.kirill.snake.view_model.settings;
+package kozlov.kirill.snake.viewmodel.settings;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -9,10 +9,15 @@ import javafx.util.converter.NumberStringConverter;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.settings.SettingsModel;
-import kozlov.kirill.snake.view_model.SceneManagerAccessible;
+import kozlov.kirill.snake.viewmodel.SceneManagerAccessible;
 import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;
 
+/**
+ * Settings scene view-model class.
+ * <br>
+ * Bind to every setting value own field with TypeEventProcessor instance for additional validation
+ */
 @ExcludeClassFromJacocoGeneratedReport
 public class SettingsViewModel implements SceneManagerAccessible {
 
@@ -84,6 +89,11 @@ public class SettingsViewModel implements SceneManagerAccessible {
         applesCountField.textProperty().bindBidirectional(applesCountProperty, new NumberStringConverter());
     }
 
+    /**
+     * Save button handler.
+     * <br>
+     * Saves value to settings model fragment and to JSON, then opens MENU scene
+     */
     @FXML
     protected void save() {
         settingsModel.setFieldWidth(widthProperty.get());
@@ -93,6 +103,11 @@ public class SettingsViewModel implements SceneManagerAccessible {
         sceneManager.changeScene(SceneEnum.MENU);
     }
 
+    /**
+     * Discard button handler.
+     * <br>
+     * Opens MENU scene without saving
+     */
     @FXML
     protected void discard() {
         sceneManager.changeScene(SceneEnum.MENU);
