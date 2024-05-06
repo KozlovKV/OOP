@@ -117,9 +117,9 @@ public class GameViewModel implements SceneManagerAccessible {
      */
     private void updateSnakeCells() {
         Point currentHead = gameModel.getSnake().head();
-        gameView.setCellColor(currentHead.getxAxis(), currentHead.getyAxis(), GameView.Color.SNAKE);
+        gameView.setCellColor(currentHead.getX(), currentHead.getY(), GameView.Color.SNAKE);
         Point tail = gameModel.getSnake().tail();
-        gameView.setCellColor(tail.getxAxis(), tail.getyAxis(), GameView.Color.FIELD);
+        gameView.setCellColor(tail.getX(), tail.getY(), GameView.Color.FIELD);
 
         gameModel.update();
         if (gameModel.isGameOver()) {
@@ -129,10 +129,10 @@ public class GameViewModel implements SceneManagerAccessible {
         scores.setText(gameModel.getScores().toString());
 
         Point newHead = gameModel.getSnake().head();
-        gameView.setCellColor(newHead.getxAxis(), newHead.getyAxis(), GameView.Color.SNAKE_HEAD);
+        gameView.setCellColor(newHead.getX(), newHead.getY(), GameView.Color.SNAKE_HEAD);
 
         for (Point apple : gameModel.getApples().list()) {
-            gameView.setCellColor(apple.getxAxis(), apple.getyAxis(), GameView.Color.APPLE);
+            gameView.setCellColor(apple.getX(), apple.getY(), GameView.Color.APPLE);
         }
 
         updatedAfterKeyPressed = true;
