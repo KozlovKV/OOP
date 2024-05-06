@@ -77,7 +77,7 @@ public class SettingsViewModel implements SceneManagerAccessible {
             new TypeEventProcessor(
                 heightField, heightProperty.getValue().toString(),
                 positiveIntValidator,
-                heightError, "Width should be a positive integer number"
+                heightError, "Height should be a positive integer number"
             )
         );
         heightField.textProperty().bindBidirectional(
@@ -88,7 +88,7 @@ public class SettingsViewModel implements SceneManagerAccessible {
             new TypeEventProcessor(
                 applesCountField, applesCountProperty.getValue().toString(),
                 positiveIntValidator,
-                applesCountError, "Width should be a positive integer number"
+                applesCountError, "Apples count should be a positive integer number"
             )
         );
         applesCountField.textProperty().bindBidirectional(

@@ -16,9 +16,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Point {
     @NonNull
-    Integer x;
+    Integer axisX;
     @NonNull
-    Integer y;
+    Integer axisY;
 
     /**
      * Simple moving.
@@ -26,8 +26,8 @@ public class Point {
      * @param vector direction vector
      */
     public void move(Vector vector) {
-        x += vector.getDirection().x;
-        y += vector.getDirection().y;
+        axisX += vector.getDirection().axisX;
+        axisY += vector.getDirection().axisY;
     }
 
     /**
@@ -46,18 +46,18 @@ public class Point {
         int minX, int maxX,
         int minY, int maxY
     ) {
-        x += vector.getDirection().x;
-        if (x < minX) {
-            x = maxX;
-        } else if (x > maxX) {
-            x = minX;
+        axisX += vector.getDirection().axisX;
+        if (axisX < minX) {
+            axisX = maxX;
+        } else if (axisX > maxX) {
+            axisX = minX;
         }
 
-        y += vector.getDirection().y;
-        if (y < minY) {
-            y = maxY;
-        } else if (y > maxY) {
-            y = minY;
+        axisY += vector.getDirection().axisY;
+        if (axisY < minY) {
+            axisY = maxY;
+        } else if (axisY > maxY) {
+            axisY = minY;
         }
 
     }
@@ -68,7 +68,7 @@ public class Point {
      * @return new Point instance with same coordinates
      */
     public Point copy() {
-        return new Point(x, y);
+        return new Point(axisX, axisY);
     }
 
     /**
