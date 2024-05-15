@@ -154,6 +154,10 @@ public class Snake {
      * @return when snake is alive
      */
     public boolean isNowAlive() {
-        return !head.isInList(gameModel.getNonKillingCells(this));
+        if (head.isInList(gameModel.getNonKillingCells(this))) {
+            return false;
+        }
+        body.clear();
+        return true;
     }
 }

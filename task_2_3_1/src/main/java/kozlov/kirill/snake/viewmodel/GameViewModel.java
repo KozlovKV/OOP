@@ -10,6 +10,7 @@ import kozlov.kirill.snake.ExcludeMethodFromJacocoTestreport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
+import kozlov.kirill.snake.model.game.Snake;
 import kozlov.kirill.snake.model.game.Vector;
 import kozlov.kirill.snake.view.GameView;
 import kozlov.kirill.snake.view.SceneEnum;
@@ -110,16 +111,22 @@ public class GameViewModel implements SceneManagerAccessible {
         updatedAfterKeyPressed = false;
     }
 
+    void addSnake(Snake snake, GameView.Color bodyColor, GameView.Color headColor) {
+        for (var cell : snake.body()) {
+            gameView.setCellColor(cell.getAxisX(), cell.getAxisY(), bodyColor);
+        }
+        gameView.setCellColor(
+            snake.head().getAxisX(), snake.head().getAxisY(), headColor
+        );
+    }
+
     /**
      * Main update function for animation timer.
      * <br>
      * Repaint some cells, updates game model and maybe finishes the game
      */
     private void updateSnakeCells() {
-        Point currentHead = gameModel.getSnake().head();
-        gameView.setCellColor(currentHead.getAxisX(), currentHead.getAxisY(), GameView.Color.SNAKE);
-        Point tail = gameModel.getSnake().tail();
-        gameView.setCellColor(tail.getAxisX(), tail.getAxisY(), GameView.Color.FIELD);
+        gameView.fillAllCells(GameView.Color.FIELD);
 
         gameModel.update();
         if (gameModel.isGameOver()) {
@@ -128,12 +135,16 @@ public class GameViewModel implements SceneManagerAccessible {
         }
         scores.setText(gameModel.getScores().toString());
 
-        Point newHead = gameModel.getSnake().head();
-        gameView.setCellColor(newHead.getAxisX(), newHead.getAxisY(), GameView.Color.SNAKE_HEAD);
+        addSnake(gameModel.getSnake(), GameView.Color.SNAKE, GameView.Color.SNAKE_HEAD);
+        addSnake(
+            gameModel.getSnakeManager().getSnake(),
+            GameView.Color.ENEMY, GameView.Color.ENEMY_HEAD
+        );
 
         for (Point apple : gameModel.getApples().list()) {
             gameView.setCellColor(apple.getAxisX(), apple.getAxisY(), GameView.Color.APPLE);
         }
+
 
         updatedAfterKeyPressed = true;
     }

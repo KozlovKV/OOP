@@ -27,6 +27,9 @@ public class GameModel implements ModelFragment {
     private Snake snake;
 
     @Getter
+    private ComputerSnakeManager snakeManager;
+
+    @Getter
     private ApplesList apples;
 
     @Override
@@ -45,6 +48,8 @@ public class GameModel implements ModelFragment {
 
         apples = new ApplesList(this);
         apples.addRandomly(settingsModel.getApplesCount());
+
+        snakeManager = new ComputerSnakeManager(this);
 
         return this;
     }
@@ -82,7 +87,10 @@ public class GameModel implements ModelFragment {
      */
     public List<Point> getNonKillingCells(Snake snake) {
         List<Point> fieldCopy = getFieldPointsCopy();
-        fieldCopy.removeAll(snake.body());
+//        fieldCopy.removeAll(snake.body());
+        fieldCopy.removeAll(this.snake.body());
+        // TODO: придумать хорошее решение для получения данных о ещё неинициализированных змейках
+//        fieldCopy.removeAll(this.snakeManager.getSnake().body());
         return fieldCopy;
     }
 
@@ -104,6 +112,7 @@ public class GameModel implements ModelFragment {
      * @return current game scores which now is equivalent to snake size
      */
     public Integer getScores() {
+        // TODO: Сделать независимый от длины подсчёт очков
         return this.snake.size();
     }
 
@@ -117,6 +126,7 @@ public class GameModel implements ModelFragment {
         if (apples.checkSnakeGrowing(snake)) {
             apples.addRandomly();
         }
+        snakeManager.move();
     }
 
     /**

@@ -19,7 +19,9 @@ public class GameView {
         FIELD("#7CFF7F"),
         SNAKE("#72ADFF"),
         SNAKE_HEAD("#284CFF"),
-        APPLE("#FF5B4C");
+        APPLE("#FF5B4C"),
+        ENEMY("#FFAC63"),
+        ENEMY_HEAD("#FF8A23");
 
         @Getter
         private final String hex;
@@ -83,5 +85,18 @@ public class GameView {
      */
     public void setCellColor(int x, int y, Color color) {
         fieldRects.get(y).get(x).fillProperty().set(Paint.valueOf(color.hex));
+    }
+
+    /**
+     * All field coloring.
+     *
+     * @param color color for filling
+     */
+    public void fillAllCells(Color color) {
+        for (var row : fieldRects) {
+            for (var cell : row) {
+                cell.fillProperty().set(Paint.valueOf(color.hex));
+            }
+        }
     }
 }
