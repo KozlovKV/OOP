@@ -18,6 +18,8 @@ import kozlov.kirill.snake.view.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 /**
  * Game scene view-model class.
  */
@@ -111,10 +113,14 @@ public class GameViewModel implements SceneManagerAccessible {
         updatedAfterKeyPressed = false;
     }
 
-    void addSnake(Snake snake, GameView.Color bodyColor, GameView.Color headColor) {
-        for (var cell : snake.body()) {
-            gameView.setCellColor(cell.getAxisX(), cell.getAxisY(), bodyColor);
+    void addCellsList(List<Point> cells, GameView.Color color) {
+        for (Point cell : cells) {
+            gameView.setCellColor(cell.getAxisX(), cell.getAxisY(), color);
         }
+    }
+
+    void addSnake(Snake snake, GameView.Color bodyColor, GameView.Color headColor) {
+        addCellsList(snake.body(), bodyColor);
         gameView.setCellColor(
             snake.head().getAxisX(), snake.head().getAxisY(), headColor
         );
@@ -135,16 +141,12 @@ public class GameViewModel implements SceneManagerAccessible {
         }
         scores.setText(gameModel.getScores().toString());
 
-        addSnake(gameModel.getSnake(), GameView.Color.SNAKE, GameView.Color.SNAKE_HEAD);
+        addCellsList(gameModel.getApples().list(), GameView.Color.APPLE);
         addSnake(
             gameModel.getSnakeManager().getSnake(),
             GameView.Color.ENEMY, GameView.Color.ENEMY_HEAD
         );
-
-        for (Point apple : gameModel.getApples().list()) {
-            gameView.setCellColor(apple.getAxisX(), apple.getAxisY(), GameView.Color.APPLE);
-        }
-
+        addSnake(gameModel.getSnake(), GameView.Color.SNAKE, GameView.Color.SNAKE_HEAD);
 
         updatedAfterKeyPressed = true;
     }
