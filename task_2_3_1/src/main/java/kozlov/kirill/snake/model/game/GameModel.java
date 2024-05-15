@@ -16,11 +16,7 @@ public class GameModel implements ModelFragment {
     private static final Logger logger = LogManager.getLogger("model");
 
     @Getter
-    private int currentFieldWidth;
-    @Getter
-    private int currentFieldHeight;
-
-    private final List<Point> fieldPoints = new ArrayList<>();
+    private Field field;
 
     private static final int INITIAL_SNAKE_SIZE = 1;
     @Getter
@@ -32,88 +28,35 @@ public class GameModel implements ModelFragment {
     @Getter
     private ApplesList apples;
 
+    @Getter
+    private Integer scores;
+
     @Override
     public GameModel restartModel() {
         var settingsModel = (SettingsModel) Model.SETTINGS.get();
-        currentFieldWidth = settingsModel.getFieldWidth();
-        currentFieldHeight = settingsModel.getFieldHeight();
 
-        constructFieldPoints();
+        scores = 0;
+
+        field = new Field(
+            settingsModel.getFieldWidth(),
+            settingsModel.getFieldHeight()
+        );
 
         snake = new Snake(
             INITIAL_SNAKE_SIZE,
-            new Point(currentFieldWidth / 2, currentFieldHeight / 2),
-            Vector.RIGHT, this
+            new Point(field.getWidth() / 2, field.getHeight() / 2),
+            Vector.RIGHT, field
         );
+        field.handleObject(snake);
 
-        apples = new ApplesList(this);
+        apples = new ApplesList(field);
         apples.addRandomly(settingsModel.getApplesCount());
+        field.handleObject(apples);
 
-        snakeManager = new ComputerSnakeManager(this);
+        snakeManager = new ComputerSnakeManager(field);
+        field.handleObject(snakeManager);
 
         return this;
-    }
-
-    /**
-     * Creates field's list with all points.
-     */
-    private void constructFieldPoints() {
-        fieldPoints.clear();
-        for (int x = 0; x < currentFieldWidth; ++x) {
-            for (int y = 0; y < currentFieldHeight; ++y) {
-                fieldPoints.add(new Point(x, y));
-            }
-        }
-    }
-
-    /**
-     * Copy-getter for field's list.
-     *
-     * @return field's list with points' copies
-     */
-    private List<Point> getFieldPointsCopy() {
-        List<Point> copy = new ArrayList<>();
-        for (var point : fieldPoints) {
-            copy.add(point.copy());
-        }
-        return copy;
-    }
-
-    /**
-     * Non-killing points getter.
-     *
-     * @param snake snake for which returned points will be safe
-     * @return points' list which won't kill snake by collision
-     */
-    public List<Point> getNonKillingCells(Snake snake) {
-        List<Point> fieldCopy = getFieldPointsCopy();
-//        fieldCopy.removeAll(snake.body());
-        fieldCopy.removeAll(this.snake.body());
-        // TODO: придумать хорошее решение для получения данных о ещё неинициализированных змейках
-//        fieldCopy.removeAll(this.snakeManager.getSnake().body());
-        return fieldCopy;
-    }
-
-    /**
-     * Free points getter.
-     *
-     * @return points' list which can be used for placing some objects
-     */
-    public List<Point> getFreeFieldCells() {
-        List<Point> fieldCopy = getFieldPointsCopy();
-        fieldCopy.removeAll(snake.wholeBody());
-        fieldCopy.removeAll(apples.list());
-        return fieldCopy;
-    }
-
-    /**
-     * Scores' getter.
-     *
-     * @return current game scores which now is equivalent to snake size
-     */
-    public Integer getScores() {
-        // TODO: Сделать независимый от длины подсчёт очков
-        return this.snake.size();
     }
 
     /**
@@ -122,11 +65,12 @@ public class GameModel implements ModelFragment {
      * Performs all action which must happen during game iteration
      */
     public void update() {
+        snakeManager.move();
         snake.move();
         if (apples.checkSnakeGrowing(snake)) {
             apples.addRandomly();
+            scores++;
         }
-        snakeManager.move();
     }
 
     /**

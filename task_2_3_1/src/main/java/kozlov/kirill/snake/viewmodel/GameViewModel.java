@@ -62,7 +62,7 @@ public class GameViewModel implements SceneManagerAccessible {
         this.gameModel = Model.GAME.get().restartModel();
         this.gameView = new GameView(
             fieldGrid,
-            gameModel.getCurrentFieldHeight(), gameModel.getCurrentFieldWidth()
+            gameModel.getField().getWidth(), gameModel.getField().getHeight()
         );
 
         sceneManager.getCurrentScene().setOnKeyPressed(this::keyHandler);

@@ -1,22 +1,22 @@
 package kozlov.kirill.snake.model.game;
 
 import java.util.LinkedList;
+import java.util.List;
+
 import lombok.Getter;
 
 /**
  * Snake class.
  */
-public class Snake {
+public class Snake implements FieldObject {
     private final Point head;
     private final LinkedList<Point> body = new LinkedList<>();
     private Point previousTail;
     @Getter
     private Vector direction;
-    private final int fieldWidth;
-    private final int fieldHeight;
     @Getter
     private boolean died = false;
-    private final GameModel gameModel;
+    private final Field field;
 
     /**
      * Constructor.
@@ -27,18 +27,16 @@ public class Snake {
      * @param initialSize initial snake size
      * @param startPoint point where snake will be placed
      * @param initialDirection direction vector
-     * @param gameModel backlink to game model
+     * @param field game field
      */
     public Snake(
         int initialSize, Point startPoint, Vector initialDirection,
-        GameModel gameModel
+        Field field
     ) {
         if (initialSize < 1) {
             throw new IllegalArgumentException("Snake must have positive initial length");
         }
-        this.gameModel = gameModel;
-        this.fieldWidth = gameModel.getCurrentFieldWidth();
-        this.fieldHeight = gameModel.getCurrentFieldHeight();
+        this.field = field;
 
         head = startPoint.copy();
         direction = initialDirection;
@@ -85,6 +83,11 @@ public class Snake {
         return body;
     }
 
+    @Override
+    public List<Point> getKillingCells() {
+        return body();
+    }
+
     /**
      * Whole body copy-getter.
      * <br>
@@ -99,6 +102,11 @@ public class Snake {
             wholeBody.add(point.copy());
         }
         return wholeBody;
+    }
+
+    @Override
+    public List<Point> getOccupiedCells() {
+        return wholeBody();
     }
 
     /**
@@ -129,7 +137,7 @@ public class Snake {
      */
     public void move() {
         body.addFirst(head.copy());
-        head.move(direction, 0, fieldWidth - 1, 0, fieldHeight - 1);
+        head.move(direction, 0, field.getWidth() - 1, 0, field.getHeight() - 1);
         previousTail = tail().copy();
         body.removeLast();
         died = isNowAlive();
@@ -154,7 +162,7 @@ public class Snake {
      * @return when snake is alive
      */
     public boolean isNowAlive() {
-        if (head.isInList(gameModel.getNonKillingCells(this))) {
+        if (head.isInList(field.getNonKillingCells())) {
             return false;
         }
         body.clear();

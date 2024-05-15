@@ -8,28 +8,31 @@ import java.util.Random;
 /**
  * Manager for computer controlled snakes.
  */
-public class ComputerSnakeManager {
+public class ComputerSnakeManager implements FieldObject {
     @Getter
     private Snake snake;
 
-    private final GameModel gameModel;
+    private final Field field;
 
-    public ComputerSnakeManager(GameModel gameModel) {
-        this.gameModel = gameModel;
+    public ComputerSnakeManager(Field field) {
+        this.field = field;
         respawnSnake();
     }
 
     private void respawnSnake() {
         // TODO: Сделать более умную логику респеавна
         Random random = new Random();
-        List<Point> freePoints = gameModel.getFreeFieldCells();
+        List<Point> freePoints = field.getFreeFieldCells();
         int pointIndex = random.nextInt(freePoints.size());
         // TODO: Сделать рост змейки до определённого уровня постепенным (как вариант, дать ей возможность есть, но поставить верхнюю границу роста)
-        snake = new Snake(8, freePoints.get(pointIndex), Vector.RIGHT, gameModel);
+        snake = new Snake(3, freePoints.get(pointIndex), Vector.RIGHT, field);
     }
 
     private static final int UPDATES_FOR_RESPAWN = 10;
     private int remainingUpdatesForRespawn = UPDATES_FOR_RESPAWN;
+
+    private static final int UPDATES_FOR_MOVING = 2;
+    private int remainingUpdatesForMoving = UPDATES_FOR_MOVING;
 
     public void move() {
         if (snake.isDied()) {
@@ -40,6 +43,12 @@ public class ComputerSnakeManager {
                 remainingUpdatesForRespawn = UPDATES_FOR_RESPAWN;
             }
             return;
+        }
+        if (remainingUpdatesForMoving > 0) {
+            remainingUpdatesForMoving--;
+            return;
+        } else {
+            remainingUpdatesForMoving = UPDATES_FOR_MOVING;
         }
         int percent = new Random().nextInt(100);
         if (percent < 10) {
@@ -52,5 +61,15 @@ public class ComputerSnakeManager {
             snake.setDirection(Vector.DOWN);
         }
         snake.move();
+    }
+
+    @Override
+    public List<Point> getOccupiedCells() {
+        return snake.getOccupiedCells();
+    }
+
+    @Override
+    public List<Point> getKillingCells() {
+        return snake.getKillingCells();
     }
 }

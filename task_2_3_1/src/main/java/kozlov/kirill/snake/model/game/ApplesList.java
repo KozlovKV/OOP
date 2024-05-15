@@ -8,18 +8,18 @@ import java.util.Random;
 /**
  * Apples wrapper class.
  */
-public class ApplesList {
+public class ApplesList implements FieldObject {
     private final LinkedList<Point> list = new LinkedList<>();
 
-    private final GameModel gameModel;
+    private final Field field;
 
     /**
      * Constructor.
      *
-     * @param gameModel backlink to game model
+     * @param field game field
      */
-    public ApplesList(GameModel gameModel) {
-        this.gameModel = gameModel;
+    public ApplesList(Field field) {
+        this.field = field;
     }
 
     /**
@@ -29,6 +29,11 @@ public class ApplesList {
      */
     public LinkedList<Point> list() {
         return list;
+    }
+
+    @Override
+    public List<Point> getOccupiedCells() {
+        return list();
     }
 
     /**
@@ -69,7 +74,7 @@ public class ApplesList {
      */
     public void addRandomly() {
         Random random = new Random();
-        List<Point> freePoints = gameModel.getFreeFieldCells();
+        List<Point> freePoints = field.getFreeFieldCells();
         int pointIndex = random.nextInt(freePoints.size());
         Point apple = freePoints.get(pointIndex).copy();
         list.add(apple);
