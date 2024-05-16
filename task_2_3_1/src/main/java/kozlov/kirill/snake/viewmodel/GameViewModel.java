@@ -44,7 +44,7 @@ public class GameViewModel implements SceneManagerAccessible {
      * Extended animation timer for updating with specified delay.
      */
     private final AnimationTimer animationTimer = new AnimationTimer() {
-        public static final long UPDATE_MS = 50;
+        public static final long UPDATE_MS = 67;
         private long lastUpdateTimestamp = 0;
 
         @Override
@@ -142,8 +142,9 @@ public class GameViewModel implements SceneManagerAccessible {
         scores.setText(gameModel.getScores().toString());
 
         addCellsList(gameModel.getApples().list(), GameView.Color.APPLE);
+        // TODO: Исправить этот ужас
         addSnake(
-            gameModel.getSnakeManager().getSnake(),
+            gameModel.getSnakeManager().getSnakeAi().getSnake(),
             GameView.Color.ENEMY, GameView.Color.ENEMY_HEAD
         );
         addSnake(gameModel.getSnake(), GameView.Color.SNAKE, GameView.Color.SNAKE_HEAD);

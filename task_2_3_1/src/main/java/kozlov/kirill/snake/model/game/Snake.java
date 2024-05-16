@@ -136,11 +136,14 @@ public class Snake implements FieldObject {
      * Moves snake by internal direction, removes old tail and checks is snake still alive
      */
     public void move() {
+        if (died) {
+            return;
+        }
         body.addFirst(head.copy());
         head.move(direction, 0, field.getWidth() - 1, 0, field.getHeight() - 1);
         previousTail = tail().copy();
         body.removeLast();
-        died = isNowAlive();
+        checkAliveStatus();
     }
 
     /**
@@ -155,17 +158,15 @@ public class Snake implements FieldObject {
     }
 
     /**
-     * Still alive predicate.
+     * Still alive checker.
      * <br>
-     * Use for checking non-killing points' list provided by game model
-     *
-     * @return when snake is alive
+     * Use for checking non-killing points' list provided by game field
      */
-    public boolean isNowAlive() {
+    public void checkAliveStatus() {
         if (head.isInList(field.getNonKillingCells())) {
-            return false;
+            return;
         }
         body.clear();
-        return true;
+        died = true;
     }
 }

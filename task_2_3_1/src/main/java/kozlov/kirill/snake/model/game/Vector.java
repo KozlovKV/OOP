@@ -6,6 +6,7 @@ import lombok.Getter;
  * Vectors' extended enum class.
  */
 public enum Vector {
+    ZERO(new Point(0, 0)),
     UP(new Point(0, -1)),
     RIGHT(new Point(1, 0)),
     DOWN(new Point(0, 1)),
@@ -31,6 +32,9 @@ public enum Vector {
      * @return true when two vectors are collinear
      */
     public boolean isCollinear(Vector otherVector) {
+        if (this.equals(ZERO) || otherVector.equals(ZERO)) {
+            return true;
+        }
         if (this.equals(UP) || this.equals(DOWN)) {
             return otherVector.equals(UP) || otherVector.equals(DOWN);
         }
