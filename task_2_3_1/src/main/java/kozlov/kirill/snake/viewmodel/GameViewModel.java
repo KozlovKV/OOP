@@ -10,7 +10,7 @@ import kozlov.kirill.snake.ExcludeMethodFromJacocoTestreport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
-import kozlov.kirill.snake.model.game.Snake;
+import kozlov.kirill.snake.model.game.snake.Snake;
 import kozlov.kirill.snake.model.game.Vector;
 import kozlov.kirill.snake.view.GameView;
 import kozlov.kirill.snake.view.SceneEnum;
@@ -142,11 +142,11 @@ public class GameViewModel implements SceneManagerAccessible {
         scores.setText(gameModel.getScores().toString());
 
         addCellsList(gameModel.getApples().list(), GameView.Color.APPLE);
-        // TODO: Исправить этот ужас
-        addSnake(
-            gameModel.getSnakeManager().getSnakeAi().getSnake(),
-            GameView.Color.ENEMY, GameView.Color.ENEMY_HEAD
-        );
+        for (var snake : gameModel.getSnakeManager().getSnakes()) {
+            addSnake(
+                snake, GameView.Color.ENEMY, GameView.Color.ENEMY_HEAD
+            );
+        }
         addSnake(gameModel.getSnake(), GameView.Color.SNAKE, GameView.Color.SNAKE_HEAD);
 
         updatedAfterKeyPressed = true;

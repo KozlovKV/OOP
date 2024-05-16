@@ -1,4 +1,6 @@
-package kozlov.kirill.snake.model.game;
+package kozlov.kirill.snake.model.game.snake;
+
+import kozlov.kirill.snake.model.game.Vector;
 
 import java.util.Random;
 

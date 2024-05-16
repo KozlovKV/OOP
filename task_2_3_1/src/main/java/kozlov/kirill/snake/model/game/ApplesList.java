@@ -1,5 +1,7 @@
 package kozlov.kirill.snake.model.game;
 
+import kozlov.kirill.snake.model.game.snake.Snake;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;

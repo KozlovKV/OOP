@@ -1,9 +1,9 @@
 package kozlov.kirill.snake.model.game;
 
-import java.util.ArrayList;
-import java.util.List;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.ModelFragment;
+import kozlov.kirill.snake.model.game.snake.ComputerSnakeManager;
+import kozlov.kirill.snake.model.game.snake.Snake;
 import kozlov.kirill.snake.model.settings.SettingsModel;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
