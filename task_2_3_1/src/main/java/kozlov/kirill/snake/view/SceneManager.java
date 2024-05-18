@@ -19,8 +19,8 @@ import org.apache.logging.log4j.Logger;
 public class SceneManager {
     Logger logger = LogManager.getLogger("view");
 
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 700;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 840;
 
     private final Stage primaryStage;
 

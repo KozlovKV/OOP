@@ -20,10 +20,10 @@ import java.util.Random;
  * </ul>
  */
 public abstract class ComputerSnakeAi {
-    protected final int UPDATES_FOR_RESPAWN = 10;
+    protected int UPDATES_FOR_RESPAWN = 10;
     protected int remainingUpdatesForRespawn = UPDATES_FOR_RESPAWN;
 
-    protected final int UPDATES_FOR_MOVING = 1;
+    protected int UPDATES_FOR_MOVING = 1;
     protected int remainingUpdatesForMoving = UPDATES_FOR_MOVING;
 
     protected final Snake playerSnake;

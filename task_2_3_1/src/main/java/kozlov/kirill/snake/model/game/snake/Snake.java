@@ -144,7 +144,11 @@ public class Snake implements FieldObject {
             return;
         }
         body.addFirst(head.copy());
-        head.move(direction, 0, field.getWidth() - 1, 0, field.getHeight() - 1);
+        head.move(
+            direction,
+            0, field.getWidth() - 1,
+            0, field.getHeight() - 1
+        );
         previousTail = tail().copy();
         body.removeLast();
         checkAliveStatus();

@@ -53,8 +53,7 @@ public class GameModel implements ModelFragment {
         apples.addRandomly(settingsModel.getApplesCount());
         field.handleObject(apples);
 
-        snakeManager = new ComputerSnakeManager(field, snake);
-        field.handleObject(snakeManager);
+        snakeManager = new ComputerSnakeManager(field, snake); // Manager handled to field inside
 
         return this;
     }

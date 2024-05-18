@@ -15,7 +15,7 @@ public class RandomComputerSnakeAi extends ComputerSnakeAi {
 
     @Override
     protected Snake getNewSnake(Point spawnPoint) {
-        return new Snake(3, spawnPoint, Vector.RIGHT, field);
+        return new Snake(6, spawnPoint, Vector.RIGHT, field);
     }
 
     @Override
