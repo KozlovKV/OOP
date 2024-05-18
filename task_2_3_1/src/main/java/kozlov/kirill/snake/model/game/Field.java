@@ -1,9 +1,11 @@
 package kozlov.kirill.snake.model.game;
 
+import kozlov.kirill.snake.model.game.snake.Snake;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Field class.
@@ -53,12 +55,22 @@ public class Field {
     /**
      * Non-killing points getter.
      *
-     * @return points' list which won't kill snake by collision
+     * @param additionalPoint additional non-killing point. Usually it's a current snake head
+     * @return points' list which won't kill given snake by collision
      */
-    public List<Point> getNonKillingCells() {
+    public List<Point> getNonKillingCells(Point additionalPoint) {
         List<Point> fieldCopy = getFieldPointsCopy();
+        boolean noAdditionalPointCollision = true;
         for (var object : objects) {
-            fieldCopy.removeAll(object.getKillingCells());
+            List<Point> objectKillingPoints = object.getKillingCells();
+            if (noAdditionalPointCollision) {
+                Optional<Integer> collision = additionalPoint.getListCollision(objectKillingPoints);
+                if (collision.isPresent()) {
+                    objectKillingPoints.remove((int) collision.get());
+                    noAdditionalPointCollision = false;
+                }
+            }
+            fieldCopy.removeAll(objectKillingPoints);
         }
         return fieldCopy;
     }

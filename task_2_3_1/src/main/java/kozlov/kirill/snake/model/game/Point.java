@@ -85,15 +85,7 @@ public class Point {
      * @return true when this point is equivalent to some point in list
      */
     public boolean isInList(List<Point> list) {
-        if (list == null) {
-            return false;
-        }
-        for (var point : list) {
-            if (equals(point)) {
-                return true;
-            }
-        }
-        return false;
+        return list.contains(this);
     }
 
     /**

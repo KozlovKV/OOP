@@ -87,11 +87,6 @@ public class Snake implements FieldObject {
         return body;
     }
 
-    @Override
-    public List<Point> getKillingCells() {
-        return body();
-    }
-
     /**
      * Whole body copy-getter.
      * <br>
@@ -110,6 +105,11 @@ public class Snake implements FieldObject {
 
     @Override
     public List<Point> getOccupiedCells() {
+        return wholeBody();
+    }
+
+    @Override
+    public List<Point> getKillingCells() {
         return wholeBody();
     }
 
@@ -171,7 +171,7 @@ public class Snake implements FieldObject {
      * Use for checking non-killing points' list provided by game field
      */
     public void checkAliveStatus() {
-        if (head.isInList(field.getNonKillingCells())) {
+        if (head.isInList(field.getNonKillingCells(head))) {
             return;
         }
         body.clear();
