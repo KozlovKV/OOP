@@ -12,14 +12,21 @@ public class ComputerSnakeManager implements FieldObject {
 
     private final ArrayList<ComputerSnakeAi> computerSnakes = new ArrayList<>();
 
-    public ComputerSnakeManager(Field field, Snake playerSnake) {
+    public ComputerSnakeManager(
+        int randomsCount, int predatorsCount,
+        Field field, Snake playerSnake
+    ) {
         field.handleObject(this);
-        computerSnakes.add(
-            new RandomComputerSnakeAi(field, playerSnake)
-        );
-        computerSnakes.add(
-            new PredatorComputerSnakeAi(field, playerSnake)
-        );
+        for (int i = 0; i < randomsCount; ++i) {
+            computerSnakes.add(
+                new RandomComputerSnakeAi(field, playerSnake)
+            );
+        }
+        for (int i = 0; i < predatorsCount; ++i) {
+            computerSnakes.add(
+                new PredatorComputerSnakeAi(field, playerSnake)
+            );
+        }
     }
 
     /**

@@ -16,17 +16,17 @@
     </padding>
     <VBox alignment="CENTER">
         <HBox alignment="CENTER">
-            <Label text="Width: " />
-            <TextField fx:id="widthField" />
+            <Label text="Chaotic enemies count: " />
+            <TextField fx:id="randomsCountField" />
         </HBox>
-        <Label fx:id="widthError"/>
+        <Label fx:id="randomsCountError"/>
     </VBox>
     <VBox alignment="CENTER">
         <HBox alignment="CENTER">
-            <Label text="Height: " />
-            <TextField fx:id="heightField" />
+            <Label text="Predators count: " />
+            <TextField fx:id="predatorsCountField" />
         </HBox>
-        <Label fx:id="heightError"/>
+        <Label fx:id="predatorsCountError"/>
     </VBox>
     <VBox alignment="CENTER">
         <HBox alignment="CENTER">

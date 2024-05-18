@@ -25,16 +25,16 @@ public class SettingsViewModel implements SceneManagerAccessible {
     private SettingsModel settingsModel;
 
     @FXML
-    private TextField widthField;
-    private IntegerProperty widthProperty;
+    private TextField randomsCountField;
+    private IntegerProperty randomsCountProperty;
     @FXML
-    private Label widthError;
+    private Label randomsCountError;
 
     @FXML
-    private TextField heightField;
-    private IntegerProperty heightProperty;
+    private TextField predatorsCountField;
+    private IntegerProperty predatorsCountProperty;
     @FXML
-    private Label heightError;
+    private Label predatorsCountError;
 
     @FXML
     private TextField applesCountField;
@@ -47,13 +47,17 @@ public class SettingsViewModel implements SceneManagerAccessible {
         this.sceneManager = sceneManager;
 
         settingsModel = Model.SETTINGS.get().restartModel();
-        widthProperty = new SimpleIntegerProperty(settingsModel.getFieldWidth());
-        heightProperty = new SimpleIntegerProperty(settingsModel.getFieldHeight());
+        randomsCountProperty = new SimpleIntegerProperty(settingsModel.getRandomsCount());
+        predatorsCountProperty = new SimpleIntegerProperty(settingsModel.getPredatorsCount());
         applesCountProperty = new SimpleIntegerProperty(settingsModel.getApplesCount());
 
-        Validator positiveIntValidator = (field, event) -> {
+        // TODO: Хорошо бы вынести валидаторы куда-нибудь в отедльное место
+        Validator nonNegativeValidator = (field, event) -> {
+            if (field.getText().isEmpty()) {
+                field.setText("0");
+            }
             try {
-                if (Integer.parseInt(field.getText()) < 1) {
+                if (Integer.parseInt(field.getText()) < 0) {
                     return false;
                 }
             } catch (NumberFormatException e) {
@@ -62,33 +66,37 @@ public class SettingsViewModel implements SceneManagerAccessible {
             return true;
         };
 
-        widthField.onKeyTypedProperty().set(
+        randomsCountField.onKeyTypedProperty().set(
             new TypeEventProcessor(
-                widthField, widthProperty.getValue().toString(),
-                positiveIntValidator,
-                widthError, "Width should be a positive integer number"
+                randomsCountField, randomsCountProperty.getValue().toString(),
+                nonNegativeValidator,
+                randomsCountError,
+                "Count of chaotic enemies should be a positive integer number"
             )
         );
-        widthField.textProperty().bindBidirectional(
-            widthProperty, new NumberStringConverter()
+        // TODO: И всё же для максимально красивой работы моих валидаторов имеет смысл немного переписать TypeEventProcessor и избавиться от встроенных биндингов вовсе
+        randomsCountField.textProperty().bindBidirectional(
+            randomsCountProperty, new NumberStringConverter()
         );
 
-        heightField.onKeyTypedProperty().set(
+        predatorsCountField.onKeyTypedProperty().set(
             new TypeEventProcessor(
-                heightField, heightProperty.getValue().toString(),
-                positiveIntValidator,
-                heightError, "Height should be a positive integer number"
+                predatorsCountField, predatorsCountProperty.getValue().toString(),
+                nonNegativeValidator,
+                predatorsCountError,
+                "Count of predators should be a positive integer number"
             )
         );
-        heightField.textProperty().bindBidirectional(
-            heightProperty, new NumberStringConverter()
+        predatorsCountField.textProperty().bindBidirectional(
+            predatorsCountProperty, new NumberStringConverter()
         );
 
         applesCountField.onKeyTypedProperty().set(
             new TypeEventProcessor(
                 applesCountField, applesCountProperty.getValue().toString(),
-                positiveIntValidator,
-                applesCountError, "Apples count should be a positive integer number"
+                nonNegativeValidator,
+                applesCountError,
+                "Apples count should be a positive integer number"
             )
         );
         applesCountField.textProperty().bindBidirectional(
@@ -103,8 +111,8 @@ public class SettingsViewModel implements SceneManagerAccessible {
      */
     @FXML
     protected void save() {
-        settingsModel.setFieldWidth(widthProperty.get());
-        settingsModel.setFieldHeight(heightProperty.get());
+        settingsModel.setRandomsCount(randomsCountProperty.get());
+        settingsModel.setPredatorsCount(predatorsCountProperty.get());
         settingsModel.setApplesCount(applesCountProperty.get());
         settingsModel.saveToJson();
         sceneManager.changeScene(SceneEnum.MENU);

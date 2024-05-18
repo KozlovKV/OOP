@@ -5,12 +5,12 @@ import kozlov.kirill.util.Serializable;
 /**
  * Settings record class.
  *
- * @param fieldWidth field's width
- * @param fieldHeight field's height
+ * @param randomsCount count of random enemy snakes
+ * @param predatorsCount count of predator enemy snakes
  * @param applesCount apples count on the field
  */
 public record SettingsRecord(
-    int fieldWidth,
-    int fieldHeight,
+    int randomsCount,
+    int predatorsCount,
     int applesCount
 ) implements Serializable {}

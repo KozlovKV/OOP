@@ -38,8 +38,8 @@ public class GameModel implements ModelFragment {
         scores = 0;
 
         field = new Field(
-            settingsModel.getFieldWidth(),
-            settingsModel.getFieldHeight()
+            SettingsModel.FIELD_WIDTH,
+            SettingsModel.FIELD_HEIGHT
         );
 
         snake = new Snake(
@@ -53,7 +53,11 @@ public class GameModel implements ModelFragment {
         apples.addRandomly(settingsModel.getApplesCount());
         field.handleObject(apples);
 
-        snakeManager = new ComputerSnakeManager(field, snake); // Manager handled to field inside
+        snakeManager = new ComputerSnakeManager(
+            settingsModel.getRandomsCount(),
+            settingsModel.getPredatorsCount(),
+            field, snake
+        ); // Manager handled to field inside
 
         return this;
     }
@@ -64,12 +68,12 @@ public class GameModel implements ModelFragment {
      * Performs all action which must happen during game iteration
      */
     public void update() {
-        snakeManager.move();
         snake.move();
         if (apples.checkSnakeGrowing(snake)) {
             apples.addRandomly();
             scores++;
         }
+        snakeManager.move();
     }
 
     /**
