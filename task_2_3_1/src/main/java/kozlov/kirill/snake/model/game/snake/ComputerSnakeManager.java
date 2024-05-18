@@ -4,7 +4,6 @@ import kozlov.kirill.snake.model.game.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Manager for computer controlled snakes.
@@ -13,12 +12,15 @@ public class ComputerSnakeManager implements FieldObject {
 
     private final ArrayList<ComputerSnakeAi> computerSnakes = new ArrayList<>();
 
-    public ComputerSnakeManager(GameModel model) {
+    public ComputerSnakeManager(Field field, Snake playerSnake) {
         computerSnakes.add(
-            new RandomComputerSnakeAi(model)
+            new RandomComputerSnakeAi(field, playerSnake)
         );
     }
 
+    /**
+     * Calls move method for all computer snakes.
+     */
     public void move() {
         for (var snakeAi : computerSnakes) {
             snakeAi.move();
@@ -43,6 +45,11 @@ public class ComputerSnakeManager implements FieldObject {
         return killingsCells;
     }
 
+    /**
+     * Computer snakes' getter.
+     *
+     * @return Snake instances from ComputerSnakeAi instances
+     */
     public ArrayList<Snake> getSnakes() {
         ArrayList<Snake> snakes = new ArrayList<>();
         for (var snakeAi : computerSnakes) {

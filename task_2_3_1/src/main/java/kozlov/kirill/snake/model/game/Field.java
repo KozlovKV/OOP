@@ -75,4 +75,28 @@ public class Field {
         }
         return fieldCopy;
     }
+
+    public List<Point> getFreeFieldCells(
+        Point forbiddenPoint, double minimalDistance
+    ) {
+        List<Point> fieldCopy = getFreeFieldCells();
+        fieldCopy.removeIf(
+            point -> point.distance(forbiddenPoint) < minimalDistance
+        );
+        return fieldCopy;
+    }
+
+
+
+    public List<Point> getFreeFieldCells(
+        List<Point> forbiddenPoints, double minimalDistance
+    ) {
+        List<Point> fieldCopy = getFreeFieldCells();
+        for (var forbiddenPoint : forbiddenPoints) {
+            fieldCopy.removeIf(
+                point -> point.distance(forbiddenPoint) < minimalDistance
+            );
+        }
+        return fieldCopy;
+    }
 }

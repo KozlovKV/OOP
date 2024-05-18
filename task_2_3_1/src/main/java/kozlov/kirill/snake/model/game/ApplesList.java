@@ -13,6 +13,7 @@ import java.util.Random;
 public class ApplesList implements FieldObject {
     private final LinkedList<Point> list = new LinkedList<>();
 
+    private final Snake playerSnake;
     private final Field field;
 
     /**
@@ -20,8 +21,9 @@ public class ApplesList implements FieldObject {
      *
      * @param field game field
      */
-    public ApplesList(Field field) {
+    public ApplesList(Field field, Snake playerSnake) {
         this.field = field;
+        this.playerSnake = playerSnake;
     }
 
     /**
@@ -69,6 +71,8 @@ public class ApplesList implements FieldObject {
         }
     }
 
+    private static final int MINIMAL_DISTANCE_FROM_PLAYER_HEAD = 10;
+
     /**
      * Apple random adder.
      * <br>
@@ -76,7 +80,9 @@ public class ApplesList implements FieldObject {
      */
     public void addRandomly() {
         Random random = new Random();
-        List<Point> freePoints = field.getFreeFieldCells();
+        List<Point> freePoints = field.getFreeFieldCells(
+            playerSnake.head(), MINIMAL_DISTANCE_FROM_PLAYER_HEAD
+        );
         int pointIndex = random.nextInt(freePoints.size());
         Point apple = freePoints.get(pointIndex).copy();
         list.add(apple);

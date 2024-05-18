@@ -1,5 +1,6 @@
 package kozlov.kirill.snake.model.game.snake;
 
+import kozlov.kirill.snake.model.game.Field;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
 import kozlov.kirill.snake.model.game.Vector;
@@ -8,17 +9,13 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomComputerSnakeAi extends ComputerSnakeAi {
-    public RandomComputerSnakeAi(GameModel model) {
-        super(model);
+    public RandomComputerSnakeAi(Field field, Snake playerSnake) {
+        super(field, playerSnake);
     }
 
     @Override
-    protected Snake getNewSnake() {
-        // TODO: Сделать более умную логику респеавна
-        Random random = new Random();
-        List<Point> freePoints = model.getField().getFreeFieldCells();
-        int pointIndex = random.nextInt(freePoints.size());
-        return new Snake(3, freePoints.get(pointIndex), Vector.RIGHT, model.getField());
+    protected Snake getNewSnake(Point spawnPoint) {
+        return new Snake(3, spawnPoint, Vector.RIGHT, field);
     }
 
     @Override
