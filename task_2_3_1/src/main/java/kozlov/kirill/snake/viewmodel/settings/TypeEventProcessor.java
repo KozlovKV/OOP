@@ -5,17 +5,25 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyEvent;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
+import lombok.Getter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Extended event handler class.
+ * <br>
+ * Performs value validation after event and storing/getting of valid value
  */
 @ExcludeClassFromJacocoGeneratedReport
-public class TypeEventProcessor implements EventHandler<KeyEvent> {
+public class TypeEventProcessor<T> implements EventHandler<KeyEvent> {
+    private final Logger logger = LogManager.getLogger("view-model");
+
     private final TextInputControl fxmlField;
-    private final Validator validator;
+    private final Validator<T> validator;
     private final Label errorLabel;
     private final String errorMessage;
-    private String previousValue;
+    @Getter
+    private T value;
 
     /**
      * Constructor.
@@ -27,13 +35,13 @@ public class TypeEventProcessor implements EventHandler<KeyEvent> {
      * @param errorMessage message for showing in case of validation failed
      */
     public TypeEventProcessor(
-        TextInputControl fxmlField, String initialValue,
-        Validator validator,
+        TextInputControl fxmlField, T initialValue,
+        Validator<T> validator,
         Label errorLabel, String errorMessage
     ) {
         this.fxmlField = fxmlField;
-        fxmlField.setText(initialValue);
-        previousValue = initialValue;
+        this.value = initialValue;
+        fxmlField.setText(initialValue.toString());
         this.validator = validator;
         this.errorLabel = errorLabel;
         this.errorMessage = errorMessage;
@@ -41,13 +49,17 @@ public class TypeEventProcessor implements EventHandler<KeyEvent> {
 
     @Override
     public void handle(KeyEvent event) {
-        if (validator.isValid(fxmlField, event)) {
-            previousValue = fxmlField.getText();
-            errorLabel.setText("");
-            return;
-        }
-        System.err.println("Error while validating");
-        errorLabel.setText(errorMessage);
-        fxmlField.setText(previousValue);
+        validator.getValidValue(fxmlField, event).ifPresentOrElse(
+            successValue -> {
+                value = successValue;
+                errorLabel.setText("");
+            },
+            () -> {
+                logger.warn("Validation error");
+                errorLabel.setText(
+                    errorMessage + "\nLast valid value is " + value.toString()
+                );
+            }
+        );
     }
 }
