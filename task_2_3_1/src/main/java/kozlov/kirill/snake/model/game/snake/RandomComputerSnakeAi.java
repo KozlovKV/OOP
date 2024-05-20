@@ -1,14 +1,24 @@
 package kozlov.kirill.snake.model.game.snake;
 
+import java.util.Random;
 import kozlov.kirill.snake.model.game.Field;
-import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
 import kozlov.kirill.snake.model.game.Vector;
 
-import java.util.List;
-import java.util.Random;
-
+/**
+ * Random computer snake AI.
+ * <br>
+ * Moves ABSOLUTELY chaotically
+ */
 public class RandomComputerSnakeAi extends ComputerSnakeAi {
+    /**
+     * Random snake constructor.
+     * <br>
+     * Literally ComputerSnakeAi constructor
+     *
+     * @param field game field
+     * @param playerSnake player snake
+     */
     public RandomComputerSnakeAi(Field field, Snake playerSnake) {
         super(field, playerSnake);
     }

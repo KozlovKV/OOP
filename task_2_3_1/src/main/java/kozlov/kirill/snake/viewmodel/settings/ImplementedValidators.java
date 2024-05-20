@@ -2,6 +2,9 @@ package kozlov.kirill.snake.viewmodel.settings;
 
 import java.util.Optional;
 
+/**
+ * Static final class with Validator instances.
+ */
 public final class ImplementedValidators {
     private ImplementedValidators() {}
 

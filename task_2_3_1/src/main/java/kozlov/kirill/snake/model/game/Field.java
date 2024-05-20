@@ -1,11 +1,9 @@
 package kozlov.kirill.snake.model.game;
 
-import kozlov.kirill.snake.model.game.snake.Snake;
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import lombok.Getter;
 
 /**
  * Field class.

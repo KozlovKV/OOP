@@ -62,6 +62,12 @@ public class Point {
 
     }
 
+    /**
+     * Distance between points getter.
+     *
+     * @param other other point for distance calculation
+     * @return euclid distance between this point and other
+     */
     public double distance(Point other) {
         return Math.sqrt(
             Math.pow((other.axisX - axisX), 2) + Math.pow((other.axisY - axisY), 2)

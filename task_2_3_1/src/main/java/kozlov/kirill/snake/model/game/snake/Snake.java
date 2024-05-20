@@ -168,7 +168,7 @@ public class Snake implements FieldObject {
     /**
      * Still alive checker.
      * <br>
-     * Use for checking non-killing points' list provided by game field
+     * Use for checking non-killing points' list provided by game field and updating died flag
      */
     public void checkAliveStatus() {
         if (head.isInList(field.getNonKillingCells(head))) {

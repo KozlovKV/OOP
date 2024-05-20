@@ -31,6 +31,14 @@ public abstract class ComputerSnakeAi {
     @Getter
     protected Snake snake;
 
+    /**
+     * Constructor.
+     * <br>
+     * Binds game object with new computer snake and spawns it
+     *
+     * @param field game field
+     * @param playerSnake player snake
+     */
     public ComputerSnakeAi(Field field, Snake playerSnake) {
         this.field = field;
         this.playerSnake = playerSnake;
@@ -54,8 +62,19 @@ public abstract class ComputerSnakeAi {
         remainingUpdatesForMoving = UPDATES_FOR_MOVING;
     }
 
+    /**
+     * New snake getter.
+     *
+     * @param spawnPoint point for snake's spawn
+     * @return new snake which will be controlled by AI
+     */
     abstract protected Snake getNewSnake(Point spawnPoint);
 
+    /**
+     * Next direction getter.
+     *
+     * @return next direction which is chosen by current strategy
+     */
     abstract protected Vector getNextDirection();
 
     private boolean canBeUpdated() {
@@ -75,6 +94,11 @@ public abstract class ComputerSnakeAi {
         return true;
     }
 
+    /**
+     * Moving method.
+     * <br>
+     * Check aliveness, possibly changes direction and moves controlled snake
+     */
     public void move() {
         snake.checkAliveStatus();
         if (!canBeUpdated()) {

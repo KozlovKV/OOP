@@ -13,6 +13,16 @@ public class ComputerSnakeManager implements FieldObject {
     @Getter
     private final ArrayList<ComputerSnakeAi> computerSnakes = new ArrayList<>();
 
+    /**
+     * Computer snakes constructor.
+     * <br>
+     * Creates AI snakes and gives them game data
+     *
+     * @param randomsCount count of chaotic enemies
+     * @param predatorsCount count of predators
+     * @param field game field
+     * @param playerSnake player snake
+     */
     public ComputerSnakeManager(
         int randomsCount, int predatorsCount,
         Field field, Snake playerSnake

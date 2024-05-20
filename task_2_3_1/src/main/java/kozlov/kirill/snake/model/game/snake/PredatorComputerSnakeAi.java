@@ -7,9 +7,22 @@ import kozlov.kirill.snake.model.game.Vector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Predator computer snake AI.
+ * <br>
+ * Follow player snake with some prediction
+ */
 public class PredatorComputerSnakeAi extends ComputerSnakeAi {
     private final Logger logger = LogManager.getLogger("model");
 
+    /**
+     * Predator snake constructor.
+     * <br>
+     * Literally ComputerSnakeAi constructor
+     *
+     * @param field game field
+     * @param playerSnake player snake
+     */
     public PredatorComputerSnakeAi(Field field, Snake playerSnake) {
         super(field, playerSnake);
     }
