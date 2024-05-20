@@ -20,8 +20,10 @@ public class GameView {
         SNAKE("#72ADFF"),
         SNAKE_HEAD("#284CFF"),
         APPLE("#FF5B4C"),
-        ENEMY("#FFAC63"),
-        ENEMY_HEAD("#FF8A23");
+        RANDOM_ENEMY("#FFAC63"),
+        RANDOM_ENEMY_HEAD("#FF8A23"),
+        PREDATOR_ENEMY("#FF6163"),
+        PREDATOR_ENEMY_HEAD("#FF3D40");
 
         @Getter
         private final String hex;

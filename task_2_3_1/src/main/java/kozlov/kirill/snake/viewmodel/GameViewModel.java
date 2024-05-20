@@ -10,6 +10,8 @@ import kozlov.kirill.snake.ExcludeMethodFromJacocoTestreport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
+import kozlov.kirill.snake.model.game.snake.PredatorComputerSnakeAi;
+import kozlov.kirill.snake.model.game.snake.RandomComputerSnakeAi;
 import kozlov.kirill.snake.model.game.snake.Snake;
 import kozlov.kirill.snake.model.game.Vector;
 import kozlov.kirill.snake.view.GameView;
@@ -142,10 +144,17 @@ public class GameViewModel implements SceneManagerAccessible {
         scores.setText(gameModel.getScores().toString());
 
         addCellsList(gameModel.getApples().list(), GameView.Color.APPLE);
-        for (var snake : gameModel.getSnakeManager().getSnakes()) {
-            addSnake(
-                snake, GameView.Color.ENEMY, GameView.Color.ENEMY_HEAD
-            );
+        for (var snakeAi : gameModel.getSnakeManager().getComputerSnakes()) {
+            if (snakeAi instanceof RandomComputerSnakeAi) {
+                addSnake(
+                    snakeAi.getSnake(), GameView.Color.RANDOM_ENEMY, GameView.Color.RANDOM_ENEMY_HEAD
+                );
+            }
+            if (snakeAi instanceof PredatorComputerSnakeAi) {
+                addSnake(
+                    snakeAi.getSnake(), GameView.Color.PREDATOR_ENEMY, GameView.Color.PREDATOR_ENEMY_HEAD
+                );
+            }
         }
         addSnake(gameModel.getSnake(), GameView.Color.SNAKE, GameView.Color.SNAKE_HEAD);
 

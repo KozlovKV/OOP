@@ -1,6 +1,7 @@
 package kozlov.kirill.snake.model.game.snake;
 
 import kozlov.kirill.snake.model.game.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Manager for computer controlled snakes.
  */
 public class ComputerSnakeManager implements FieldObject {
-
+    @Getter
     private final ArrayList<ComputerSnakeAi> computerSnakes = new ArrayList<>();
 
     public ComputerSnakeManager(
@@ -54,18 +55,5 @@ public class ComputerSnakeManager implements FieldObject {
             killingsCells.addAll(snakeAi.getSnake().getKillingCells());
         }
         return killingsCells;
-    }
-
-    /**
-     * Computer snakes' getter.
-     *
-     * @return Snake instances from ComputerSnakeAi instances
-     */
-    public ArrayList<Snake> getSnakes() {
-        ArrayList<Snake> snakes = new ArrayList<>();
-        for (var snakeAi : computerSnakes) {
-            snakes.add(snakeAi.getSnake());
-        }
-        return snakes;
     }
 }
