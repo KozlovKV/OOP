@@ -18,11 +18,11 @@ import lombok.Getter;
  * </ul>
  */
 public abstract class ComputerSnakeAi {
-    protected int UPDATES_FOR_RESPAWN = 10;
-    protected int remainingUpdatesForRespawn = UPDATES_FOR_RESPAWN;
+    protected int updatesForRespawn = 10;
+    protected int remainingUpdatesForRespawn = updatesForRespawn;
 
-    protected int UPDATES_FOR_MOVING = 1;
-    protected int remainingUpdatesForMoving = UPDATES_FOR_MOVING;
+    protected int updatesForMoving = 1;
+    protected int remainingUpdatesForMoving = updatesForMoving;
 
     protected final Snake playerSnake;
     protected final Field field;
@@ -56,8 +56,8 @@ public abstract class ComputerSnakeAi {
 
     private void respawnSnake() {
         this.snake = getNewSnake(getSpawnPoint());
-        remainingUpdatesForRespawn = UPDATES_FOR_RESPAWN;
-        remainingUpdatesForMoving = UPDATES_FOR_MOVING;
+        remainingUpdatesForRespawn = updatesForRespawn;
+        remainingUpdatesForMoving = updatesForMoving;
     }
 
     /**
@@ -66,14 +66,14 @@ public abstract class ComputerSnakeAi {
      * @param spawnPoint point for snake's spawn
      * @return new snake which will be controlled by AI
      */
-    abstract protected Snake getNewSnake(Point spawnPoint);
+    protected abstract Snake getNewSnake(Point spawnPoint);
 
     /**
      * Next direction getter.
      *
      * @return next direction which is chosen by current strategy
      */
-    abstract protected Vector getNextDirection();
+    protected abstract Vector getNextDirection();
 
     private boolean canBeUpdated() {
         if (snake.isDied()) {
@@ -88,7 +88,7 @@ public abstract class ComputerSnakeAi {
             remainingUpdatesForMoving--;
             return false;
         }
-        remainingUpdatesForMoving = UPDATES_FOR_MOVING;
+        remainingUpdatesForMoving = updatesForMoving;
         return true;
     }
 

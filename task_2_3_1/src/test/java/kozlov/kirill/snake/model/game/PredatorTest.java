@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class for predator tests.
+ */
 public class PredatorTest {
     @BeforeAll
     static void setSettings() {

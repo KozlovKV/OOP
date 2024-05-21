@@ -1,8 +1,7 @@
 package kozlov.kirill.snake.viewmodel.settings;
 
-import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
-
 import java.util.Optional;
+import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 
 /**
  * Static final class with Validator instances.

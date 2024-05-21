@@ -1,10 +1,9 @@
 package kozlov.kirill.snake.viewmodel.settings;
 
+import java.util.Optional;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyEvent;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
-
-import java.util.Optional;
 
 /**
  * Lambda interface for checking validness of input text field.
