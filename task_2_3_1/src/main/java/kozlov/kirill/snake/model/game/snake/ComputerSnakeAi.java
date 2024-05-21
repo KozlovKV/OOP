@@ -1,13 +1,11 @@
 package kozlov.kirill.snake.model.game.snake;
 
+import java.util.List;
+import java.util.Random;
 import kozlov.kirill.snake.model.game.Field;
-import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
 import kozlov.kirill.snake.model.game.Vector;
 import lombok.Getter;
-
-import java.util.List;
-import java.util.Random;
 
 /**
  * Snake AI class.

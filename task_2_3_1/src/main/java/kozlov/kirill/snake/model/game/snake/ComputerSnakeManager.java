@@ -1,10 +1,11 @@
 package kozlov.kirill.snake.model.game.snake;
 
-import kozlov.kirill.snake.model.game.*;
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
+import kozlov.kirill.snake.model.game.Field;
+import kozlov.kirill.snake.model.game.FieldObject;
+import kozlov.kirill.snake.model.game.Point;
+import lombok.Getter;
 
 /**
  * Manager for computer controlled snakes.

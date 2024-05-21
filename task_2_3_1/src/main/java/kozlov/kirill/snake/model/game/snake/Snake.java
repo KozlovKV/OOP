@@ -2,7 +2,6 @@ package kozlov.kirill.snake.model.game.snake;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import kozlov.kirill.snake.model.game.Field;
 import kozlov.kirill.snake.model.game.FieldObject;
 import kozlov.kirill.snake.model.game.Point;

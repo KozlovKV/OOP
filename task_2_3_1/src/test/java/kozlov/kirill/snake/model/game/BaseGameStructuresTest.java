@@ -1,7 +1,9 @@
 package kozlov.kirill.snake.model.game;
 
 import kozlov.kirill.snake.model.Model;
+import kozlov.kirill.snake.model.settings.SettingsModel;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -9,7 +11,14 @@ import org.junit.jupiter.api.Test;
  * <br>
  * Contains almost whole methods of internal objects
  */
-public class GameStructuresTest {
+public class BaseGameStructuresTest {
+    @BeforeAll
+    static void setSettings() {
+        SettingsModel settingsModel = (SettingsModel) Model.SETTINGS.get();
+        settingsModel.setPredatorsCount(0);
+        settingsModel.setRandomsCount(0);
+    }
+
     @Test
     void testSnakeValidDirectionChanging() {
         GameModel gameModel = Model.GAME.get().restartModel();

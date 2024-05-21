@@ -19,8 +19,8 @@ public class SettingsTest {
         SettingsModel settingsModel = (SettingsModel) Model.SETTINGS.get();
         settingsModel.setSettingsPath(TEST_SETTINGS_PATH);
         settingsModel.restartModel();
-        Assertions.assertEquals(1, settingsModel.getFieldWidth());
-        Assertions.assertEquals(2, settingsModel.getFieldHeight());
+        Assertions.assertEquals(1, settingsModel.getRandomsCount());
+        Assertions.assertEquals(2, settingsModel.getPredatorsCount());
         Assertions.assertEquals(3, settingsModel.getApplesCount());
     }
 
@@ -30,8 +30,8 @@ public class SettingsTest {
         settingsModel.setSettingsPath(TEST_SETTINGS_PATH);
         settingsModel.restartModel();
         settingsModel.setApplesCount(4);
-        settingsModel.setFieldHeight(5);
-        settingsModel.setFieldWidth(6);
+        settingsModel.setPredatorsCount(5);
+        settingsModel.setRandomsCount(6);
         settingsModel.saveToJson();
 
         try (
@@ -40,8 +40,8 @@ public class SettingsTest {
             SettingsRecord savedSettings = JsonUtils.parse(
                 inputStream, SettingsRecord.class
             );
-            Assertions.assertEquals(6, savedSettings.fieldWidth());
-            Assertions.assertEquals(5, savedSettings.fieldHeight());
+            Assertions.assertEquals(6, savedSettings.randomsCount());
+            Assertions.assertEquals(5, savedSettings.predatorsCount());
             Assertions.assertEquals(4, savedSettings.applesCount());
         } catch (IOException e) {
             Assertions.fail();
@@ -57,13 +57,13 @@ public class SettingsTest {
         settingsModel.setSettingsPath(TEST_SETTINGS_PATH);
         settingsModel.restartModel();
         settingsModel.setApplesCount(4);
-        settingsModel.setFieldHeight(5);
-        settingsModel.setFieldWidth(6);
+        settingsModel.setPredatorsCount(5);
+        settingsModel.setRandomsCount(6);
 
         settingsModel.setSettingsPath("invalid/path.json");
         settingsModel.restartModel();
-        Assertions.assertEquals(6, settingsModel.getFieldWidth());
-        Assertions.assertEquals(5, settingsModel.getFieldHeight());
+        Assertions.assertEquals(6, settingsModel.getRandomsCount());
+        Assertions.assertEquals(5, settingsModel.getPredatorsCount());
         Assertions.assertEquals(4, settingsModel.getApplesCount());
     }
 }

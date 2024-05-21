@@ -46,6 +46,11 @@ public class Field {
         return copy;
     }
 
+    /**
+     * Handles field object for further getting occupied and killing cells.
+     *
+     * @param object implementation of FieldObject interface
+     */
     public void handleObject(FieldObject object) {
         objects.add(object);
     }
@@ -86,6 +91,13 @@ public class Field {
         return fieldCopy;
     }
 
+    /**
+     * Free points getter with forbidden area.
+     *
+     * @param forbiddenPoint center of forbidden area
+     * @param minimalDistance euclid radius of forbidden area
+     * @return free points not included in forbidden area
+     */
     public List<Point> getFreeFieldCells(
         Point forbiddenPoint, double minimalDistance
     ) {
@@ -93,20 +105,6 @@ public class Field {
         fieldCopy.removeIf(
             point -> point.distance(forbiddenPoint) < minimalDistance
         );
-        return fieldCopy;
-    }
-
-
-
-    public List<Point> getFreeFieldCells(
-        List<Point> forbiddenPoints, double minimalDistance
-    ) {
-        List<Point> fieldCopy = getFreeFieldCells();
-        for (var forbiddenPoint : forbiddenPoints) {
-            fieldCopy.removeIf(
-                point -> point.distance(forbiddenPoint) < minimalDistance
-            );
-        }
         return fieldCopy;
     }
 }

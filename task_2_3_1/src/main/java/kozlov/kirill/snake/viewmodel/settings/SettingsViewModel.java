@@ -1,6 +1,5 @@
 package kozlov.kirill.snake.viewmodel.settings;
 
-import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
