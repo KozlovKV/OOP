@@ -15,6 +15,7 @@ public class GameView {
     /**
      * Fields' colors enum class.
      */
+    @ExcludeClassFromJacocoGeneratedReport
     public enum Color {
         FIELD("#7CFF7F"),
         SNAKE("#72ADFF"),

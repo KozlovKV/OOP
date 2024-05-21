@@ -1,5 +1,6 @@
 package kozlov.kirill.snake.viewmodel;
 
+import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,8 +20,6 @@ import kozlov.kirill.snake.view.SceneEnum;
 import kozlov.kirill.snake.view.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 /**
  * Game scene view-model class.
@@ -147,16 +146,24 @@ public class GameViewModel implements SceneManagerAccessible {
         for (var snakeAi : gameModel.getSnakeManager().getComputerSnakes()) {
             if (snakeAi instanceof RandomComputerSnakeAi) {
                 addSnake(
-                    snakeAi.getSnake(), GameView.Color.RANDOM_ENEMY, GameView.Color.RANDOM_ENEMY_HEAD
+                    snakeAi.getSnake(),
+                    GameView.Color.RANDOM_ENEMY,
+                    GameView.Color.RANDOM_ENEMY_HEAD
                 );
             }
             if (snakeAi instanceof PredatorComputerSnakeAi) {
                 addSnake(
-                    snakeAi.getSnake(), GameView.Color.PREDATOR_ENEMY, GameView.Color.PREDATOR_ENEMY_HEAD
+                    snakeAi.getSnake(),
+                    GameView.Color.PREDATOR_ENEMY,
+                    GameView.Color.PREDATOR_ENEMY_HEAD
                 );
             }
         }
-        addSnake(gameModel.getSnake(), GameView.Color.SNAKE, GameView.Color.SNAKE_HEAD);
+        addSnake(
+            gameModel.getSnake(),
+            GameView.Color.SNAKE,
+            GameView.Color.SNAKE_HEAD
+        );
 
         updatedAfterKeyPressed = true;
     }
