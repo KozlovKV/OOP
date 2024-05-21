@@ -1,5 +1,6 @@
 package kozlov.kirill.snake.viewmodel;
 
+import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -10,6 +11,9 @@ import kozlov.kirill.snake.ExcludeMethodFromJacocoTestreport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.game.GameModel;
 import kozlov.kirill.snake.model.game.Point;
+import kozlov.kirill.snake.model.game.snake.PredatorComputerSnakeAi;
+import kozlov.kirill.snake.model.game.snake.RandomComputerSnakeAi;
+import kozlov.kirill.snake.model.game.snake.Snake;
 import kozlov.kirill.snake.model.game.Vector;
 import kozlov.kirill.snake.view.GameView;
 import kozlov.kirill.snake.view.SceneEnum;
@@ -41,7 +45,7 @@ public class GameViewModel implements SceneManagerAccessible {
      * Extended animation timer for updating with specified delay.
      */
     private final AnimationTimer animationTimer = new AnimationTimer() {
-        public static final long UPDATE_MS = 50;
+        public static final long UPDATE_MS = 67;
         private long lastUpdateTimestamp = 0;
 
         @Override
@@ -61,7 +65,7 @@ public class GameViewModel implements SceneManagerAccessible {
         this.gameModel = Model.GAME.get().restartModel();
         this.gameView = new GameView(
             fieldGrid,
-            gameModel.getCurrentFieldHeight(), gameModel.getCurrentFieldWidth()
+            gameModel.getField().getWidth(), gameModel.getField().getHeight()
         );
 
         sceneManager.getCurrentScene().setOnKeyPressed(this::keyHandler);
@@ -110,16 +114,26 @@ public class GameViewModel implements SceneManagerAccessible {
         updatedAfterKeyPressed = false;
     }
 
+    void addCellsList(List<Point> cells, GameView.Color color) {
+        for (Point cell : cells) {
+            gameView.setCellColor(cell.getAxisX(), cell.getAxisY(), color);
+        }
+    }
+
+    void addSnake(Snake snake, GameView.Color bodyColor, GameView.Color headColor) {
+        addCellsList(snake.body(), bodyColor);
+        gameView.setCellColor(
+            snake.head().getAxisX(), snake.head().getAxisY(), headColor
+        );
+    }
+
     /**
      * Main update function for animation timer.
      * <br>
      * Repaint some cells, updates game model and maybe finishes the game
      */
     private void updateSnakeCells() {
-        Point currentHead = gameModel.getSnake().head();
-        gameView.setCellColor(currentHead.getAxisX(), currentHead.getAxisY(), GameView.Color.SNAKE);
-        Point tail = gameModel.getSnake().tail();
-        gameView.setCellColor(tail.getAxisX(), tail.getAxisY(), GameView.Color.FIELD);
+        gameView.fillAllCells(GameView.Color.FIELD);
 
         gameModel.update();
         if (gameModel.isGameOver()) {
@@ -128,12 +142,28 @@ public class GameViewModel implements SceneManagerAccessible {
         }
         scores.setText(gameModel.getScores().toString());
 
-        Point newHead = gameModel.getSnake().head();
-        gameView.setCellColor(newHead.getAxisX(), newHead.getAxisY(), GameView.Color.SNAKE_HEAD);
-
-        for (Point apple : gameModel.getApples().list()) {
-            gameView.setCellColor(apple.getAxisX(), apple.getAxisY(), GameView.Color.APPLE);
+        addCellsList(gameModel.getApples().list(), GameView.Color.APPLE);
+        for (var snakeAi : gameModel.getSnakeManager().getComputerSnakes()) {
+            if (snakeAi instanceof RandomComputerSnakeAi) {
+                addSnake(
+                    snakeAi.getSnake(),
+                    GameView.Color.RANDOM_ENEMY,
+                    GameView.Color.RANDOM_ENEMY_HEAD
+                );
+            }
+            if (snakeAi instanceof PredatorComputerSnakeAi) {
+                addSnake(
+                    snakeAi.getSnake(),
+                    GameView.Color.PREDATOR_ENEMY,
+                    GameView.Color.PREDATOR_ENEMY_HEAD
+                );
+            }
         }
+        addSnake(
+            gameModel.getSnake(),
+            GameView.Color.SNAKE,
+            GameView.Color.SNAKE_HEAD
+        );
 
         updatedAfterKeyPressed = true;
     }

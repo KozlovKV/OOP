@@ -19,8 +19,11 @@ import org.apache.logging.log4j.Logger;
 public class SettingsModel implements ModelFragment {
     private final Logger logger = LogManager.getLogger("model");
 
-    private int fieldWidth;
-    private int fieldHeight;
+    public static final int FIELD_WIDTH = 25;
+    public static final int FIELD_HEIGHT = 25;
+
+    private int randomsCount;
+    private int predatorsCount;
     private int applesCount;
 
     /**
@@ -75,8 +78,8 @@ public class SettingsModel implements ModelFragment {
             throw e;
         }
         inputStream.close();
-        fieldWidth = settingsRecord.fieldWidth();
-        fieldHeight = settingsRecord.fieldHeight();
+        randomsCount = settingsRecord.randomsCount();
+        predatorsCount = settingsRecord.predatorsCount();
         applesCount = settingsRecord.applesCount();
         logger.info("Settings loaded");
     }
@@ -94,7 +97,7 @@ public class SettingsModel implements ModelFragment {
             )
         ) {
             SettingsRecord settingsRecord = new SettingsRecord(
-                fieldWidth, fieldHeight, applesCount
+                randomsCount, predatorsCount, applesCount
             );
             JsonUtils.serialize(settingsRecord, outputStream);
         } catch (IOException e) {

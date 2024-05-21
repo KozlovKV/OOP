@@ -1,11 +1,8 @@
 package kozlov.kirill.snake.viewmodel.settings;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.util.converter.NumberStringConverter;
 import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model.Model;
 import kozlov.kirill.snake.model.settings.SettingsModel;
@@ -25,20 +22,20 @@ public class SettingsViewModel implements SceneManagerAccessible {
     private SettingsModel settingsModel;
 
     @FXML
-    private TextField widthField;
-    private IntegerProperty widthProperty;
+    private TextField randomsCountField;
+    private TypeEventProcessor<Integer> randomsCountHandler;
     @FXML
-    private Label widthError;
+    private Label randomsCountError;
 
     @FXML
-    private TextField heightField;
-    private IntegerProperty heightProperty;
+    private TextField predatorsCountField;
+    private TypeEventProcessor<Integer> predatorsCountHandler;
     @FXML
-    private Label heightError;
+    private Label predatorsCountError;
 
     @FXML
     private TextField applesCountField;
-    private IntegerProperty applesCountProperty;
+    private TypeEventProcessor<Integer> applesCountHandler;
     @FXML
     private Label applesCountError;
 
@@ -47,52 +44,35 @@ public class SettingsViewModel implements SceneManagerAccessible {
         this.sceneManager = sceneManager;
 
         settingsModel = Model.SETTINGS.get().restartModel();
-        widthProperty = new SimpleIntegerProperty(settingsModel.getFieldWidth());
-        heightProperty = new SimpleIntegerProperty(settingsModel.getFieldHeight());
-        applesCountProperty = new SimpleIntegerProperty(settingsModel.getApplesCount());
 
-        Validator positiveIntValidator = (field, event) -> {
-            try {
-                if (Integer.parseInt(field.getText()) < 1) {
-                    return false;
-                }
-            } catch (NumberFormatException e) {
-                return false;
-            }
-            return true;
-        };
-
-        widthField.onKeyTypedProperty().set(
-            new TypeEventProcessor(
-                widthField, widthProperty.getValue().toString(),
-                positiveIntValidator,
-                widthError, "Width should be a positive integer number"
-            )
+        randomsCountHandler = new TypeEventProcessor<Integer>(
+            randomsCountField, settingsModel.getRandomsCount(),
+            ImplementedValidators.nonNegativeValidator,
+            randomsCountError,
+            "Count of chaotic enemies should be a non-negative integer number"
         );
-        widthField.textProperty().bindBidirectional(
-            widthProperty, new NumberStringConverter()
+        randomsCountField.onKeyTypedProperty().set(
+            randomsCountHandler
         );
 
-        heightField.onKeyTypedProperty().set(
-            new TypeEventProcessor(
-                heightField, heightProperty.getValue().toString(),
-                positiveIntValidator,
-                heightError, "Height should be a positive integer number"
-            )
+        predatorsCountHandler = new TypeEventProcessor<Integer>(
+            predatorsCountField, settingsModel.getPredatorsCount(),
+            ImplementedValidators.nonNegativeValidator,
+            predatorsCountError,
+            "Count of predators should be a non-negative integer number"
         );
-        heightField.textProperty().bindBidirectional(
-            heightProperty, new NumberStringConverter()
+        predatorsCountField.onKeyTypedProperty().set(
+            predatorsCountHandler
         );
 
+        applesCountHandler = new TypeEventProcessor<Integer>(
+            applesCountField, settingsModel.getApplesCount(),
+            ImplementedValidators.positiveValidator,
+            applesCountError,
+            "Apples count should be a positive integer number"
+        );
         applesCountField.onKeyTypedProperty().set(
-            new TypeEventProcessor(
-                applesCountField, applesCountProperty.getValue().toString(),
-                positiveIntValidator,
-                applesCountError, "Apples count should be a positive integer number"
-            )
-        );
-        applesCountField.textProperty().bindBidirectional(
-            applesCountProperty, new NumberStringConverter()
+            applesCountHandler
         );
     }
 
@@ -103,9 +83,9 @@ public class SettingsViewModel implements SceneManagerAccessible {
      */
     @FXML
     protected void save() {
-        settingsModel.setFieldWidth(widthProperty.get());
-        settingsModel.setFieldHeight(heightProperty.get());
-        settingsModel.setApplesCount(applesCountProperty.get());
+        settingsModel.setRandomsCount(randomsCountHandler.getValue());
+        settingsModel.setPredatorsCount(predatorsCountHandler.getValue());
+        settingsModel.setApplesCount(applesCountHandler.getValue());
         settingsModel.saveToJson();
         sceneManager.changeScene(SceneEnum.MENU);
     }

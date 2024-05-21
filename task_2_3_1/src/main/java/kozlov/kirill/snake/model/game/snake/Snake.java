@@ -1,22 +1,25 @@
-package kozlov.kirill.snake.model.game;
+package kozlov.kirill.snake.model.game.snake;
 
 import java.util.LinkedList;
+import java.util.List;
+import kozlov.kirill.snake.model.game.Field;
+import kozlov.kirill.snake.model.game.FieldObject;
+import kozlov.kirill.snake.model.game.Point;
+import kozlov.kirill.snake.model.game.Vector;
 import lombok.Getter;
 
 /**
  * Snake class.
  */
-public class Snake {
+public class Snake implements FieldObject {
     private final Point head;
     private final LinkedList<Point> body = new LinkedList<>();
     private Point previousTail;
     @Getter
     private Vector direction;
-    private final int fieldWidth;
-    private final int fieldHeight;
     @Getter
     private boolean died = false;
-    private final GameModel gameModel;
+    private final Field field;
 
     /**
      * Constructor.
@@ -27,18 +30,16 @@ public class Snake {
      * @param initialSize initial snake size
      * @param startPoint point where snake will be placed
      * @param initialDirection direction vector
-     * @param gameModel backlink to game model
+     * @param field game field
      */
     public Snake(
         int initialSize, Point startPoint, Vector initialDirection,
-        GameModel gameModel
+        Field field
     ) {
         if (initialSize < 1) {
             throw new IllegalArgumentException("Snake must have positive initial length");
         }
-        this.gameModel = gameModel;
-        this.fieldWidth = gameModel.getCurrentFieldWidth();
-        this.fieldHeight = gameModel.getCurrentFieldHeight();
+        this.field = field;
 
         head = startPoint.copy();
         direction = initialDirection;
@@ -101,6 +102,16 @@ public class Snake {
         return wholeBody;
     }
 
+    @Override
+    public List<Point> getOccupiedCells() {
+        return wholeBody();
+    }
+
+    @Override
+    public List<Point> getKillingCells() {
+        return wholeBody();
+    }
+
     /**
      * Tail getter.
      *
@@ -128,11 +139,18 @@ public class Snake {
      * Moves snake by internal direction, removes old tail and checks is snake still alive
      */
     public void move() {
+        if (died) {
+            return;
+        }
         body.addFirst(head.copy());
-        head.move(direction, 0, fieldWidth - 1, 0, fieldHeight - 1);
+        head.move(
+            direction,
+            0, field.getWidth() - 1,
+            0, field.getHeight() - 1
+        );
         previousTail = tail().copy();
         body.removeLast();
-        died = isNowAlive();
+        checkAliveStatus();
     }
 
     /**
@@ -147,13 +165,15 @@ public class Snake {
     }
 
     /**
-     * Still alive predicate.
+     * Still alive checker.
      * <br>
-     * Use for checking non-killing points' list provided by game model
-     *
-     * @return when snake is alive
+     * Use for checking non-killing points' list provided by game field and updating died flag
      */
-    public boolean isNowAlive() {
-        return !head.isInList(gameModel.getNonKillingCells(this));
+    public void checkAliveStatus() {
+        if (head.isInList(field.getNonKillingCells(head))) {
+            return;
+        }
+        body.clear();
+        died = true;
     }
 }

@@ -1,7 +1,9 @@
 package kozlov.kirill.snake.model.game;
 
 import kozlov.kirill.snake.model.Model;
+import kozlov.kirill.snake.model.settings.SettingsModel;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -9,7 +11,14 @@ import org.junit.jupiter.api.Test;
  * <br>
  * Contains almost whole methods of internal objects
  */
-public class GameStructuresTest {
+public class BaseGameStructuresTest {
+    @BeforeAll
+    static void setSettings() {
+        SettingsModel settingsModel = (SettingsModel) Model.SETTINGS.get();
+        settingsModel.setPredatorsCount(0);
+        settingsModel.setRandomsCount(0);
+    }
+
     @Test
     void testSnakeValidDirectionChanging() {
         GameModel gameModel = Model.GAME.get().restartModel();
@@ -51,14 +60,14 @@ public class GameStructuresTest {
         nextPoint.move(gameModel.getSnake().getDirection());
         gameModel.getApples().list().add(nextPoint);
 
-        Assertions.assertEquals(1, gameModel.getScores());
+        Assertions.assertEquals(0, gameModel.getScores());
         Assertions.assertEquals(
             gameModel.getSnake().head(),
             gameModel.getSnake().tail()
         );
 
         gameModel.update();
-        Assertions.assertEquals(2, gameModel.getScores());
+        Assertions.assertEquals(1, gameModel.getScores());
         Assertions.assertEquals(
             gameModel.getSnake().body().get(0),
             gameModel.getSnake().tail()
@@ -69,7 +78,7 @@ public class GameStructuresTest {
         gameModel.getApples().list().add(nextPoint);
 
         gameModel.update();
-        Assertions.assertEquals(3, gameModel.getScores());
+        Assertions.assertEquals(2, gameModel.getScores());
         Assertions.assertNotEquals(
             gameModel.getSnake().body().get(0),
             gameModel.getSnake().head()

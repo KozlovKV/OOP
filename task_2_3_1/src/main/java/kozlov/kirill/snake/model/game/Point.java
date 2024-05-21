@@ -63,6 +63,18 @@ public class Point {
     }
 
     /**
+     * Distance between points getter.
+     *
+     * @param other other point for distance calculation
+     * @return euclid distance between this point and other
+     */
+    public double distance(Point other) {
+        return Math.sqrt(
+            Math.pow((other.axisX - axisX), 2) + Math.pow((other.axisY - axisY), 2)
+        );
+    }
+
+    /**
      * Copy-getter.
      *
      * @return new Point instance with same coordinates
@@ -79,15 +91,7 @@ public class Point {
      * @return true when this point is equivalent to some point in list
      */
     public boolean isInList(List<Point> list) {
-        if (list == null) {
-            return false;
-        }
-        for (var point : list) {
-            if (equals(point)) {
-                return true;
-            }
-        }
-        return false;
+        return list.contains(this);
     }
 
     /**

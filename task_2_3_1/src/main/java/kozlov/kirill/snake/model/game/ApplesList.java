@@ -1,5 +1,7 @@
 package kozlov.kirill.snake.model.game;
 
+import kozlov.kirill.snake.model.game.snake.Snake;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -8,18 +10,20 @@ import java.util.Random;
 /**
  * Apples wrapper class.
  */
-public class ApplesList {
+public class ApplesList implements FieldObject {
     private final LinkedList<Point> list = new LinkedList<>();
 
-    private final GameModel gameModel;
+    private final Snake playerSnake;
+    private final Field field;
 
     /**
      * Constructor.
      *
-     * @param gameModel backlink to game model
+     * @param field game field
      */
-    public ApplesList(GameModel gameModel) {
-        this.gameModel = gameModel;
+    public ApplesList(Field field, Snake playerSnake) {
+        this.field = field;
+        this.playerSnake = playerSnake;
     }
 
     /**
@@ -29,6 +33,11 @@ public class ApplesList {
      */
     public LinkedList<Point> list() {
         return list;
+    }
+
+    @Override
+    public List<Point> getOccupiedCells() {
+        return list();
     }
 
     /**
@@ -62,6 +71,8 @@ public class ApplesList {
         }
     }
 
+    private static final int MINIMAL_DISTANCE_FROM_PLAYER_HEAD = 10;
+
     /**
      * Apple random adder.
      * <br>
@@ -69,7 +80,9 @@ public class ApplesList {
      */
     public void addRandomly() {
         Random random = new Random();
-        List<Point> freePoints = gameModel.getFreeFieldCells();
+        List<Point> freePoints = field.getFreeFieldCells(
+            playerSnake.head(), MINIMAL_DISTANCE_FROM_PLAYER_HEAD
+        );
         int pointIndex = random.nextInt(freePoints.size());
         Point apple = freePoints.get(pointIndex).copy();
         list.add(apple);

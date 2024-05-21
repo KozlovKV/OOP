@@ -1,5 +1,5 @@
 {
-  "fieldWidth": 20,
-  "fieldHeight": 20,
-  "applesCount": 3
+  "randomsCount": 2,
+  "predatorsCount": 1,
+  "applesCount": 5
 }
