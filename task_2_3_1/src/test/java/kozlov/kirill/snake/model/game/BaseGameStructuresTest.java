@@ -51,14 +51,14 @@ public class GameStructuresTest {
         nextPoint.move(gameModel.getSnake().getDirection());
         gameModel.getApples().list().add(nextPoint);
 
-        Assertions.assertEquals(1, gameModel.getScores());
+        Assertions.assertEquals(0, gameModel.getScores());
         Assertions.assertEquals(
             gameModel.getSnake().head(),
             gameModel.getSnake().tail()
         );
 
         gameModel.update();
-        Assertions.assertEquals(2, gameModel.getScores());
+        Assertions.assertEquals(1, gameModel.getScores());
         Assertions.assertEquals(
             gameModel.getSnake().body().get(0),
             gameModel.getSnake().tail()
@@ -69,7 +69,7 @@ public class GameStructuresTest {
         gameModel.getApples().list().add(nextPoint);
 
         gameModel.update();
-        Assertions.assertEquals(3, gameModel.getScores());
+        Assertions.assertEquals(2, gameModel.getScores());
         Assertions.assertNotEquals(
             gameModel.getSnake().body().get(0),
             gameModel.getSnake().head()
