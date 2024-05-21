@@ -1,8 +1,6 @@
 package kozlov.kirill.snake.model.game.snake;
 
 import java.util.Random;
-
-import kozlov.kirill.snake.ExcludeClassFromJacocoGeneratedReport;
 import kozlov.kirill.snake.model.game.Field;
 import kozlov.kirill.snake.model.game.Point;
 import kozlov.kirill.snake.model.game.Vector;
